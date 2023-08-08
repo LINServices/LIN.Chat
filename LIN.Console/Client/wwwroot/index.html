@@ -31,62 +31,31 @@
 <body>
 
 
-
     <style>
         .spinner {
-            width: 44px;
-            height: 44px;
-            animation: spinner-y0fdc1 2s infinite ease;
-            transform-style: preserve-3d;
+            width: 3em;
+            height: 3em;
+            cursor: not-allowed;
+            border-radius: 50%;
+            border: 2px solid #444;
+            box-shadow: -10px -10px 10px #6359f8, 0px -10px 10px 0px #9c32e2, 10px -10px 10px #f36896, 10px 0 10px #ff0b0b, 10px 10px 10px 0px#ff5500, 0 10px 10px 0px #ff9500, -10px 10px 10px 0px #ffb700;
+            animation: rot55 0.7s linear infinite;
         }
 
-            .spinner > div {
-                background-color: rgba(0,77,255,0.2);
-                height: 100%;
-                position: absolute;
-                width: 100%;
-                border: 2px solid #004dff;
-            }
+        .spinnerin {
+            border: 2px solid #444;
+            width: 1.5em;
+            height: 1.5em;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
 
-            .spinner div:nth-of-type(1) {
-                transform: translateZ(-22px) rotateY(180deg);
-            }
-
-            .spinner div:nth-of-type(2) {
-                transform: rotateY(-270deg) translateX(50%);
-                transform-origin: top right;
-            }
-
-            .spinner div:nth-of-type(3) {
-                transform: rotateY(270deg) translateX(-50%);
-                transform-origin: center left;
-            }
-
-            .spinner div:nth-of-type(4) {
-                transform: rotateX(90deg) translateY(-50%);
-                transform-origin: top center;
-            }
-
-            .spinner div:nth-of-type(5) {
-                transform: rotateX(-90deg) translateY(50%);
-                transform-origin: bottom center;
-            }
-
-            .spinner div:nth-of-type(6) {
-                transform: translateZ(22px);
-            }
-
-        @keyframes spinner-y0fdc1 {
-            0% {
-                transform: rotate(45deg) rotateX(-25deg) rotateY(25deg);
-            }
-
-            50% {
-                transform: rotate(45deg) rotateX(-385deg) rotateY(25deg);
-            }
-
-            100% {
-                transform: rotate(45deg) rotateX(-385deg) rotateY(385deg);
+        @keyframes rot55 {
+            to {
+                transform: rotate(360deg);
             }
         }
     </style>
@@ -97,17 +66,10 @@
         <div class="flex items-center justify-center h-screen">
 
             <div class="spinner">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
+                <div class="spinnerin"></div>
             </div>
 
         </div>
-
-
 
     </div>
 

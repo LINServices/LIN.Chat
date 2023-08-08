@@ -1,218 +1,72 @@
 ﻿<style>
 
-
-    .loader {
-        width: 6em;
-        height: 6em;
+    .pinwheel {
+        --uib-size: 45px;
+        --uib-speed: 0.8s;
+        --uib-color: #312f2b;
+        --uib-line-weight: 4px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: var(--uib-size);
+        width: var(--uib-size);
     }
 
-    .loader-ring {
-        animation: ringA 2s linear infinite;
+    .pinwheel__line {
+        position: absolute;
+        top: calc(50% - var(--uib-line-weight) / 2);
+        left: 0;
+        height: var(--uib-line-weight);
+        width: 100%;
+        border-radius: calc(var(--uib-line-weight) / 2);
+        background-color: var(--uib-color);
+        animation: rotate81232 var(--uib-speed) ease-in-out infinite;
     }
 
-    .loader-ring-a {
-        stroke: #3b82f6;
-    }
-
-    .loader-ring-b {
-        animation-name: ringB;
-        stroke: #3b82f6;
-    }
-
-    .loader-ring-c {
-        animation-name: ringC;
-        stroke: #3b82f6;
-    }
-
-    .loader-ring-d {
-        animation-name: ringD;
-        stroke: #3b82f6;
-    }
-
-
-
-    /* Animations */
-    @@keyframes ringA {
-        from, 4% {
-            stroke-dasharray: 0 660;
-            stroke-width: 20;
-            stroke-dashoffset: -330;
+        .pinwheel__line:nth-child(2) {
+            animation-delay: calc(var(--uib-speed) * 0.075);
+            opacity: 0.8;
         }
 
-        12% {
-            stroke-dasharray: 60 600;
-            stroke-width: 30;
-            stroke-dashoffset: -335;
+        .pinwheel__line:nth-child(3) {
+            animation-delay: calc(var(--uib-speed) * 0.15);
+            opacity: 0.6;
         }
 
-        32% {
-            stroke-dasharray: 60 600;
-            stroke-width: 30;
-            stroke-dashoffset: -595;
+        .pinwheel__line:nth-child(4) {
+            animation-delay: calc(var(--uib-speed) * 0.225);
+            opacity: 0.4;
         }
 
-        40%, 54% {
-            stroke-dasharray: 0 660;
-            stroke-width: 20;
-            stroke-dashoffset: -660;
+        .pinwheel__line:nth-child(5) {
+            animation-delay: calc(var(--uib-speed) * 0.3);
+            opacity: 0.2;
         }
 
-        62% {
-            stroke-dasharray: 60 600;
-            stroke-width: 30;
-            stroke-dashoffset: -665;
+        .pinwheel__line:nth-child(6) {
+            animation-delay: calc(var(--uib-speed) * 0.375);
+            opacity: 0.1;
         }
 
-        82% {
-            stroke-dasharray: 60 600;
-            stroke-width: 30;
-            stroke-dashoffset: -925;
+    @@keyframes rotate81232 {
+        0% {
+            transform: rotate(0deg);
         }
 
-        90%, to {
-            stroke-dasharray: 0 660;
-            stroke-width: 20;
-            stroke-dashoffset: -990;
+        100% {
+            transform: rotate(180deg);
         }
     }
 
-    @@keyframes ringB {
-        from, 12% {
-            stroke-dasharray: 0 220;
-            stroke-width: 20;
-            stroke-dashoffset: -110;
-        }
-
-        20% {
-            stroke-dasharray: 20 200;
-            stroke-width: 30;
-            stroke-dashoffset: -115;
-        }
-
-        40% {
-            stroke-dasharray: 20 200;
-            stroke-width: 30;
-            stroke-dashoffset: -195;
-        }
-
-        48%, 62% {
-            stroke-dasharray: 0 220;
-            stroke-width: 20;
-            stroke-dashoffset: -220;
-        }
-
-        70% {
-            stroke-dasharray: 20 200;
-            stroke-width: 30;
-            stroke-dashoffset: -225;
-        }
-
-        90% {
-            stroke-dasharray: 20 200;
-            stroke-width: 30;
-            stroke-dashoffset: -305;
-        }
-
-        98%, to {
-            stroke-dasharray: 0 220;
-            stroke-width: 20;
-            stroke-dashoffset: -330;
-        }
-    }
-
-    @@keyframes ringC {
-        from {
-            stroke-dasharray: 0 440;
-            stroke-width: 20;
-            stroke-dashoffset: 0;
-        }
-
-        8% {
-            stroke-dasharray: 40 400;
-            stroke-width: 30;
-            stroke-dashoffset: -5;
-        }
-
-        28% {
-            stroke-dasharray: 40 400;
-            stroke-width: 30;
-            stroke-dashoffset: -175;
-        }
-
-        36%, 58% {
-            stroke-dasharray: 0 440;
-            stroke-width: 20;
-            stroke-dashoffset: -220;
-        }
-
-        66% {
-            stroke-dasharray: 40 400;
-            stroke-width: 30;
-            stroke-dashoffset: -225;
-        }
-
-        86% {
-            stroke-dasharray: 40 400;
-            stroke-width: 30;
-            stroke-dashoffset: -395;
-        }
-
-        94%, to {
-            stroke-dasharray: 0 440;
-            stroke-width: 20;
-            stroke-dashoffset: -440;
-        }
-    }
-
-    @@keyframes ringD {
-        from, 8% {
-            stroke-dasharray: 0 440;
-            stroke-width: 20;
-            stroke-dashoffset: 0;
-        }
-
-        16% {
-            stroke-dasharray: 40 400;
-            stroke-width: 30;
-            stroke-dashoffset: -5;
-        }
-
-        36% {
-            stroke-dasharray: 40 400;
-            stroke-width: 30;
-            stroke-dashoffset: -175;
-        }
-
-        44%, 50% {
-            stroke-dasharray: 0 440;
-            stroke-width: 20;
-            stroke-dashoffset: -220;
-        }
-
-        58% {
-            stroke-dasharray: 40 400;
-            stroke-width: 30;
-            stroke-dashoffset: -225;
-        }
-
-        78% {
-            stroke-dasharray: 40 400;
-            stroke-width: 30;
-            stroke-dashoffset: -395;
-        }
-
-        86%, to {
-            stroke-dasharray: 0 440;
-            stroke-width: 20;
-            stroke-dashoffset: -440;
-        }
-    }
 </style>
 
 
-<svg viewBox="0 0 240 240" height="240" width="240" class="loader">
-    <circle stroke-linecap="round" stroke-dashoffset="-330" stroke-dasharray="0 660" stroke-width="20" stroke="#000" fill="none" r="105" cy="120" cx="120" class="loader-ring loader-ring-a"></circle>
-    <circle stroke-linecap="round" stroke-dashoffset="-110" stroke-dasharray="0 220" stroke-width="20" stroke="#000" fill="none" r="35" cy="120" cx="120" class="loader-ring loader-ring-b"></circle>
-    <circle stroke-linecap="round" stroke-dasharray="0 440" stroke-width="20" stroke="#000" fill="none" r="70" cy="120" cx="85" class="loader-ring loader-ring-c"></circle>
-    <circle stroke-linecap="round" stroke-dasharray="0 440" stroke-width="20" stroke="#000" fill="none" r="70" cy="120" cx="155" class="loader-ring loader-ring-d"></circle>
-</svg>
+<div class="pinwheel">
+    <div class="pinwheel__line"></div>
+    <div class="pinwheel__line"></div>
+    <div class="pinwheel__line"></div>
+    <div class="pinwheel__line"></div>
+    <div class="pinwheel__line"></div>
+    <div class="pinwheel__line"></div>
+</div>
