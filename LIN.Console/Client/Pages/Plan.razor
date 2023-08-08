@@ -1,0 +1,69 @@
+﻿@page "/plan"
+
+<!--Barra de navegacion-->
+<NavBar Precios="true" />
+
+@code{
+
+    const decimal VisionPrice = 10m;
+    const decimal NamePrice = 2m;
+    const decimal MapasPrice = 5m;
+    const decimal SentimentPrice = 7m;
+    const decimal LangPrice = 1m;
+
+    const int decuento = 15;
+
+}
+
+<section class="layoutMain">
+
+    <h1 class="text-2xl gilroy-bold">Plan Name</h1>
+    <p class="text-base gilroy mt-3">Descripcion del plan y precios.</p>
+
+
+    <div class="mt-7"></div>
+
+
+    <div class="flex flex-col mt-5 gap-3">
+
+        <PricingRow Name="LIN Inventory +" Picture="./img/box.png" Price="1" Size="Mes" />
+        <PricingRow Name="LIN Cloud" Picture="./img/cloud.png" Price="0,0001" Size="Consulta" />
+
+        <Separador Text="IA Apis" />
+
+        <PricingRow Name="Dynamic Vision" Picture="./img/telescope.png" Price="0,005" Size="1 MB" />
+        <PricingRow Name="Dynamic EmoSense" Picture="./img/heart.png" Price="0,001" Size="Frase" />
+        <PricingRow Name="Dynamic Lingua" Picture="./img/library.png" Price="0,005" Size="1 MB" />
+        <PricingRow Name="Dynamic Genderize" Picture="./img/wc.png" Price="0,001" Size="Frase" />
+
+        <Separador Text="Otros" />
+
+        <PricingRow Name="LIN Html To Pdf" Picture="./img/pdf.png" Price="0,010" Size="1 MB" />
+        <PricingRow Name="LIN Maps" Picture="./img/map.png" Price="0,001" Size="Visualizacion" />
+        <PricingRow Name="LIN IP Viewer" Picture="./img/web.png" Price="0" Size="Uso" />
+
+    </div>
+
+
+    <button type="button" class="px-3 mt-10 py-2 w-full text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Activar</button>
+    
+
+
+</section>
+
+
+
+
+@code{
+    /// <summary>
+    /// Calcula el precio total al aplicar un descuento
+    /// </summary>
+    /// <param name="originalPrice">Precio original</param>
+    internal decimal Discount(decimal originalPrice)
+    {
+
+        return LIN.Shared.Tools.Pricing.Discount(originalPrice, decuento);
+    }
+
+
+                            }

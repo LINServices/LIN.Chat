@@ -1,0 +1,255 @@
+﻿@page "/projects/{ID}/firewallblock"
+
+@inject IJSRuntime JSRuntime
+@inject NavigationManager nav
+
+<NavBar />
+
+<!-- Parametros -->
+@code
+{
+
+    [Parameter]
+    public string ID { get; set; } = "0";
+
+
+    protected override void OnInitialized()
+    {
+       
+
+        if (!int.TryParse(ID, out _))
+        {
+            ID = "0";
+        }
+
+        base.OnInitialized();
+    
+    }
+}
+
+
+<!-- Variables y Api -->
+@code
+{
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private List<FirewallBlockLogDataModel> Modelos { get; set; } = new();
+
+
+    /// <summary>
+    /// La informacion esta cargada
+    /// </summary>
+    private bool IsLoaded { get; set; } = false;
+
+
+    /// <summary>
+    /// Respuesta de API
+    /// </summary>
+    LIN.Shared.Responses.Responses? Response { get; set; } = null;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@code {
+
+
+    /// <summary>
+    /// Metodo de inicio
+    /// </summary>
+    protected override async Task OnInitializedAsync()
+    {
+
+        // Obtiene las api Keys
+        await LoadInfo();
+
+        // base
+        await base.OnInitializedAsync();
+
+    }
+
+
+    private async Task Delete()
+    {
+        IsLoaded = false;
+
+        // Obtiene los dispositivos
+        var result = await LIN.Access.Developer.Controllers.FirewallRule.DeleteBasAccess(int.Parse(ID), LIN.Access.Developer.Sesion.Instance.Token);
+
+        Response = result.Response;
+        IsLoaded = true;
+
+        if (result.Response == LIN.Shared.Responses.Responses.Success)
+        {
+            base.ShouldRender();
+        }
+
+    }
+
+
+    private async Task LoadInfo()
+    {
+        IsLoaded = false;
+
+        // Obtiene los dispositivos
+        var result = await LIN.Access.Developer.Controllers.FirewallRule.ReadAllBad(int.Parse(ID), LIN.Access.Developer.Sesion.Instance.Token);
+
+        Response = result.Response;
+        IsLoaded = true;
+
+        if (result.Response == LIN.Shared.Responses.Responses.Success)
+        {
+            Modelos = result.Models;
+            base.StateHasChanged();
+        }
+
+    }
+
+
+}
+
+
+
+@if (Response == null)
+{
+
+    <div class="flex items-center justify-center h-screen">
+        <CircleLoader />
+    </div>
+
+    return;
+}
+
+<!--Respuesta del -->
+@switch (Response)
+{
+
+    case LIN.Shared.Responses.Responses.Undefined:
+        {
+            <Alert Message="No tienes permiso o no existe este proyecto." Class="error" Svg="2" />
+            return;
+        }
+
+    case LIN.Shared.Responses.Responses.DontHavePermissions:
+        {
+            <Alert Message="No tienes permiso." Class="error" Svg="2" />
+            return;
+        }
+
+    case LIN.Shared.Responses.Responses.Success:
+        {
+            break;
+        }
+
+    default:
+        {
+            <Alert Message="No existe este proyecto." Class="error" Svg="2" />
+            return;
+        }
+
+}
+
+
+
+
+<div class="layoutMain">
+
+    @if (!IsLoaded)
+    {
+        <div style="box-shadow: rgba(0, 0, 0, 0.02) 0px 4px 12px;" class="flex items-center justify-center mt-5 bg-white h-20 w-full rounded-lg">
+            <CircleLoader />
+        </div>
+
+
+    }
+
+    else
+    {
+
+        @if (Modelos.Count == 0)
+        {
+            <div style="box-shadow: rgba(0, 0, 0, 0.02) 0px 4px 12px;" class="flex items-center justify-center mt-5 bg-white h-20 w-full rounded-lg">
+                <img class="h-6 w-6" src="./img/firewall.png" />
+                <label class="gilroy-bold ml-2">El Firewall no ha restringido ninguna IP.</label>
+            </div>
+        }
+
+        else
+        {
+
+            <div style="margin-left: 2px" class="relative sm:rounded-lg mt-5 mb-5">
+
+                <label style="font-size: 18px;" class="gilroy-bold mb-3 mt-3">Lista de IP bloqueadas.</label>
+
+                @foreach (var model in Modelos)
+                {
+                    <IPBadComponent Modelo="model"/>
+                }
+
+            </div>
+
+        }
+
+
+    }
+
+
+</div>
+
+
+
+<DrawerIP ID="@int.Parse(ID)" OnSuccessCreate="OnSuccesip" OnErrorCreate="OnE" />
+
+
+<!-- Funciones -->
+@code
+{
+
+    async void OnE(string message)
+    {
+        ModalError.Show(message);
+
+    }
+
+
+    async void OnSuccesip()
+    {
+
+        // Vuelve a cargar las llaves
+        await LoadInfo();
+
+        // Regresca la UI
+        base.StateHasChanged();
+    }
+
+
+    async void OnSucces()
+    {
+        // Regresca la UI
+        base.StateHasChanged();
+    }
+
+
+    private async Task OpenIPDrawer()
+    {
+
+        await JSRuntime.InvokeAsync<object>("ShowDrawer", "drawerIP", "btnCloseIP", "btnCloseIP1");
+
+        base.StateHasChanged();
+
+    }
+
+}

@@ -1,0 +1,25 @@
+﻿
+@code{
+
+    [Parameter]
+    public string Picture { get; set; }
+
+    [Parameter]
+    public string Name { get; set; }
+
+    [Parameter]
+    public string Price { get; set; }
+
+    [Parameter]
+    public string Size { get; set; }
+
+}
+
+
+<div class="flex flex-row items-center">
+    <img src="@Picture" class="h-8 w-8" />
+    <div class="flex flex-col ml-3">
+        <label class="gilroy-bold text-base">@Name</label>
+        <label style="margin-top: -5px" class="text-sm gilroy-bold text-green-600">$@Price <span class="gilroy-bold text-black">/</span> <span class="text-blue-600 gilroy-bold">@Size</span></label>
+    </div>
+</div>

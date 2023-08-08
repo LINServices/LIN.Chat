@@ -1,0 +1,194 @@
+﻿@page "/ia/playground"
+@inject NavigationManager nav
+
+<NavBar />
+
+@code{
+
+    private bool IsSending = false;
+    private string Value = "";
+    private string Clases = "";
+    private string Message = "";
+
+    private string src = "";
+
+}
+
+
+
+@if(!Access.Developer.Sesion.IsOpen)
+{
+    nav.NavigateTo("/login");
+    return;
+}
+
+
+
+<div class="layoutMain">
+
+    <h1 style="font-size: 35px" class="gilroy-bold">IA Playground</h1>
+
+    <h4 class="gilroy-bold mt-5">Bienvenido a LIN IA</h4>
+
+
+    <!-- Titulos -->
+    <div>
+
+        <div style="padding: 10px;" class="gilroy mt-2">
+
+            <div class="flex flex-row items-center">
+
+                <img src="./img/shines.png" style="height: 30px; width: 30px;" />
+
+                <div class="flex flex-col ml-2">
+
+                    <h1 class="gilroy-bold">LIN IA</h1>
+
+                    <span class="inline-flex items-center bg-blue-100 text-blue-900 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
+                        <span class="w-2 h-2 mr-1 bg-blue-500 rounded-full"></span>
+                        Experimento
+                    </span>
+
+                </div>
+
+                <div @onclick:stopPropagation="true" class="ml-auto flex-shrink-0 justify-center items-center mt-1 mr-2">
+
+
+
+                </div>
+
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Textarea de IA Names -->
+    <div>
+        @if (!IsSending)
+        {
+
+
+
+            <div class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 mt-3">
+
+
+               
+                <!-- Input Text -->
+                <div class="px-4 py-2 bg-white rounded-t-lg">
+                    <label for="comment" class="sr-only">¿Cual es el nombre?</label>
+                    <textarea @onkeypress="()=>{Clases = string.Empty; Message = string.Empty;}" @bind="Value" rows="4" class="w-full px-0 text-sm text-gray-900 bg-white border-0 focus:ring-0" placeholder="Comentario para LIN IA..." required></textarea>
+                </div>
+
+                <!-- Botones -->
+                <div class="flex items-center justify-between px-3 py-2 border-t">
+                    <button @onclick="Send" class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-600 rounded-lg focus:ring-4 focus:ring-blue-200  hover:bg-blue-800">
+                        Enviar a IA
+                    </button>
+
+                    <div class="flex items-center justify-center">
+
+                        @if(!string.IsNullOrEmpty(Message))
+                        {
+                              <img class="mr-1" style="height: 10px; width: 10px" src="@src">
+                        }
+                        <label style="font-size: 12px" class="gilroy-bold @Clases">@Message</label>
+                    </div>
+
+                    <div class="flex pl-0 space-x-1 sm:pl-2">
+                        <button type="button" class="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100">
+                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path></svg>
+                            <span class="sr-only">Upload image</span>
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="flex justify-center items-center mt-5 mb-5">
+                <CircleLoader />
+            </div>
+
+        }
+
+
+    </div>
+
+
+    <p class="ml-auto text-xs text-gray-500 ">Recuerda, los usos que generes en el playground seran cobrados a tu cuenta, ve a <a href="/transacciones" class="text-blue-600 hover:underline">Costos y adminstracion</a>.</p>
+
+
+</div>
+
+@code {
+
+
+    async void Send()
+    {
+
+        Clases = "";
+        IsSending = true;
+        base.StateHasChanged();
+
+
+        var predict = await LIN.Access.Developer.Controllers.IA.Categorizar(Value, LIN.Access.Developer.Sesion.Instance.Token, Developer.Types.Enumerations.PayWith.Account);
+
+
+
+
+        if (predict.Response == LIN.Shared.Responses.Responses.Success)
+        {
+
+            src = "";
+
+            if (predict.Model.Languaje == LangEnum.Spain)
+            {
+                src = "./img/spain.png";
+            }
+            else if (predict.Model.Languaje == LangEnum.English)
+            {
+                src = "./img/uk.png";
+            }
+
+
+            if (predict.Model.Sentiment == Sentiment.Positive)
+            {
+                Clases = "underline decoration-blue-500 decoration-2";
+                Message = $"Este es un comentario positivo";
+               
+            }
+            else if (predict.Model.Sentiment == Sentiment.Negative)
+            {
+                Clases = "underline decoration-red-500 decoration-2";
+                Message = $"Este es un comentario negativo";
+            }
+        }
+
+        else if (predict.Response == LIN.Shared.Responses.Responses.DontHaveCredits)
+        {
+            Clases = "text-red-500";
+            Message = "No tienes creditos suficientes";
+        }
+
+        else if (predict.Response == LIN.Shared.Responses.Responses.DontHavePermissions)
+        {
+            Clases = "text-red-500";
+            Message = "Intenta otra llave o desactiva el firewall";
+        }
+
+        else
+        {
+            Clases = "text-red-500";
+            Message = "Hubo un error, intenta mas tarde";
+        }
+
+        IsSending = false;
+        base.StateHasChanged();
+    }
+
+}

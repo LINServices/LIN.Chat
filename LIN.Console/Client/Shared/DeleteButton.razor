@@ -1,0 +1,65 @@
+﻿
+
+<style>
+
+    .delete {
+        position: relative;
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+    }
+
+    .delete-icon {
+        fill: #34495E;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 20px;
+        height: 20px;
+        transition: all 0.3s;
+        cursor: pointer;
+    }
+
+    .delete-icon:hover {
+            fill: #17202A
+    }
+  
+
+
+
+</style>
+
+
+@code {
+
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnPress { get; set; }
+
+
+}
+
+
+
+
+
+<label @onclick="Submit" class="delete">
+    <span class="delete-icon flex items-center justify-center">
+
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 64 64">
+            <path d="M56.6601 12.14H45.5901V7.14C45.5795 5.77485 45.0305 4.46906 44.0624 3.50654C43.0942 2.54401 41.7853 2.00259 40.4201 2H23.5801C22.208 2.00265 20.893 2.54957 19.9237 3.52072C18.9545 4.49187 18.4101 5.80791 18.4101 7.18V12.18H7.34009C6.80965 12.18 6.30095 12.3907 5.92587 12.7658C5.5508 13.1409 5.34009 13.6496 5.34009 14.18C5.34009 14.7104 5.5508 15.2191 5.92587 15.5942C6.30095 15.9693 6.80965 16.18 7.34009 16.18H10.9301V56.82C10.9301 58.1938 11.4758 59.5114 12.4473 60.4828C13.4187 61.4543 14.7363 62 16.1101 62H47.8901C49.2639 62 50.5815 61.4543 51.5529 60.4828C52.5243 59.5114 53.0701 58.1938 53.0701 56.82V16.14H56.6601C57.1905 16.14 57.6992 15.9293 58.0743 15.5542C58.4494 15.1791 58.6601 14.6704 58.6601 14.14C58.6601 13.6096 58.4494 13.1009 58.0743 12.7258C57.6992 12.3507 57.1905 12.14 56.6601 12.14ZM22.4101 7.14C22.4204 6.83575 22.5479 6.54726 22.7659 6.33481C22.984 6.12237 23.2757 6.00241 23.5801 6H40.4201C40.7313 6.00264 41.0289 6.12812 41.248 6.34913C41.4672 6.57014 41.5901 6.86877 41.5901 7.18V12.18H22.4101V7.14Z" />
+        </svg>
+
+    </span>
+</label>
+
+
+@code{
+
+    async void Submit(Microsoft.AspNetCore.Components.Web.MouseEventArgs e)
+    {
+       await OnPress.InvokeAsync();
+    }
+
+}

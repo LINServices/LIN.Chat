@@ -1,0 +1,121 @@
+﻿@page "/documentacion/visionia"
+
+
+<NavBar Documentacion="true" />
+
+<div class="layoutMain">
+
+    <h1 style="font-size: 35px" class="gilroy-bold">Documentacion de Vision IA</h1>
+
+    <h4 class="gilroy-bold mt-5 ">Antes de comenzar</h4>
+    <p class="gilroy text-justify">
+        Al crear su aplicación, tenga en cuenta que las tecnologías de visión de IA llevan el potencial
+        de reforzar o introducir sesgos injustos y de afectar a los derechos humanos. El desarrollo de su aplicación debe implicar
+        una reflexión ética basado en los valores de su empresa y la debida diligencia legal para su Caso de uso particular, incluidos
+        los casos de uso de alto riesgo.
+    </p>
+
+
+    <!--Creacion del proyecto-->
+    <div class="bg-gray-200 rounded-lg w-full p-3 mt-5">
+
+        <div class="flex flex-col ml-2">
+            <label style="font-size: 16px;" class="gilroy-bold">Crear proyecto</label>
+            <p style="font-size: 13px;">
+                Un proyecto permite agrupar reglas de firewall y llaves de acceso a las apis, permitiendo mayor seguridad 
+                y una mejor distribucion de recursos y control sobre las llaves.
+            </p>
+
+            <button type="button" class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mt-2">Crear proyecto</button>
+
+        </div>
+      
+    </div>
+
+
+    <!--Api key-->
+    <div class="bg-gray-200 rounded-lg w-full p-3 mt-5">
+
+        <div class="flex flex-col ml-2">
+            <label style="font-size: 16px;" class="gilroy-bold">Obtener llave</label>
+            <p style="font-size: 13px;">
+                Una vez creado el proyecto, crea una nueva api key, y utiliza un alias distintivo para la api y sea facil de recordar en donde esta implementada.
+            </p>
+
+            <button type="button" class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mt-2">Ir</button>
+
+        </div>
+
+    </div>
+
+
+    <h4  class="gilroy-bold mt-5">Uso de la Api</h4>
+
+
+    <!--Uso de la api-->
+    <h2 class="mt-4">Url base</h2>
+    <div class="bg-gray-800 p-5 rounded-xl">
+        <p class="text-gray-100">https://lindev.azurewebsites.net/IA/Vision/predict</p>
+    </div>
+
+    <!--Uso de la api-->
+    <h2 class="mt-4">Headers</h2>
+    <h2 style="font-size: 12px">En el header va tu apikey previamente creada</h2>
+    <div class="bg-gray-800 p-5 rounded-xl">
+        <p class="text-gray-100">apikey</p>
+    </div>
+
+    <!--Uso de la api-->
+    <h2 class="mt-4">Body</h2>
+    <h2 style="font-size: 12px">Aqui va la imagen tranformada en un byte array.</h2>
+    <div class="bg-gray-800 p-5 rounded-xl">
+        <p class="text-gray-100">{tu imagen en array}</p>
+    </div>
+
+
+    <h4 class="gilroy-bold mt-5">Respuestas</h4>
+    <h2 class="mt-4">Estructura</h2>
+    <h2 style="font-size: 12px">Esta es la estructura de la respuesta HTTP</h2>
+    <div class="bg-gray-800 rounded-xl">
+        <p class="text-gray-100 whitespace-pre-wrap">
+            {
+            "model": 1,
+            "response": 1,
+            "message": "La llave 'k' es invalida o esta desactivada."
+            }
+        </p>
+    </div>
+    <ul class="max-w-md space-y-1 text-gray-700 list-disc list-inside dark:text-gray-400 mt-2">
+        <li>Model: Es la categoria de tu imagen</li>
+        <li>Responses: Una respuesta del servidor</li>
+        <li>Message: Mensaje del servidor, util cuando hay errores</li>
+    </ul>
+
+
+
+    <!--Categorias-->
+    <h4 class="gilroy-bold mt-5">Categorias</h4>
+    <p class="gilroy mb-3">
+        Estas son las categorias que LIN Vision es capaz de reconocer:
+    </p>
+
+    <ul class="max-w-md space-y-1 text-gray-700 list-disc list-inside dark:text-gray-400">
+        <li>Indefinida: 0</li>
+        <li>Tecnologia: 1</li>
+        <li>Deportes y fitness: 2</li>
+        <li>Moda: 3</li>
+        <li>Salud: 4</li>
+        <li>Alimentos: 5</li>
+        <li>Limpieza: 6</li>
+        <li>Software: 7</li>
+        <li>Hogar y decoracion: 8</li>
+        <li>Juguetes: 9</li>
+        <li>Agricultura y jardineria: 10</li>
+        <li>Automoviles: 11</li>
+        <li>Animales: 12</li>
+        <li>Frutas: 13</li>
+        <li>Arte: 14</li>
+    </ul>
+
+ 
+</div>

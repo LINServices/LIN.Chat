@@ -1,0 +1,132 @@
+﻿@inject IJSRuntime JSRuntime;
+@inject NavigationManager nav;
+
+@code
+{
+    [Parameter]
+    public ProjectDataModel Modelo { get; set; }
+
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnDelete { get; set; }
+
+    string Message = "";
+
+    private string state = "";
+
+}
+
+
+
+<AskDeleteAccount Message="@("¿Seguro desea eliminar el proyecto '"+Modelo.Nombre+"'?")" Key="@Modelo.ID.ToString()" OnYes="Delete" />
+
+
+
+<style>
+    .div-shadow {
+        box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+        border-radius: 5px;
+        background-color: white;
+    }
+
+        .div-shadow:hover {
+            box-shadow: rgba(63, 155, 229, 0.2) 0px 6px 24px 0px, rgba(63, 155, 229, 0.2) 0px 0px 0px 1px;
+        }
+
+</style>
+
+
+
+
+<div @onclick="GotoProj" style="padding: 10px;" class="horizontal gilroy mt-2 div-shadow">
+
+    <div class="flex flex-row items-center">
+
+        <img src="./img/folder.png" style="height: 30px; width: 30px;" />
+
+        <div class="flex flex-col ml-2">
+
+            <h1 style="margin-top: -5px" class="gilroy-bold">@Modelo.Nombre</h1>
+
+           
+                <img src="./img/firewall.png" style="width: 10px; height: 10px; margin-top: -2px; margin-left: 0.5px" />
+           
+
+        </div>
+
+        <div @onclick:stopPropagation="true" class="ml-auto flex-shrink-0 justify-center items-center mt-1 mr-2">
+
+            <DeleteButton OnPress="DeleteAsk" />
+
+        </div>
+
+       
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@code
+{
+
+    async void DeleteAsk()
+    {
+
+        await JSRuntime.InvokeVoidAsync("ShowModal", $"ask-delete-modal-{Modelo.ID}", $"ask-close-btn-{Modelo.ID}", $"ask-close-btn2-{Modelo.ID}", $"ask-close-btn3-{Modelo.ID}");
+
+    }
+
+    async void Delete()
+    {
+        var response  =  await  LIN.Access.Developer.Controllers.Project.Delete(Modelo.ID, LIN.Access.Developer.Sesion.Instance.Token);
+
+        if (response.Response == LIN.Shared.Responses.Responses.Success)
+        {
+            Pages.Index.AreProjectLoaded = false;
+            Online.StaticHub.NotificateAccount("cl.UpdateProjects()");
+            await OnDelete.InvokeAsync();
+        }
+        else
+        {
+            ModalError.Show($"No se pudo eliminar el proyecto '{Modelo.Nombre}'");
+        }
+
+    }
+
+
+     void GotoProj()
+    {
+        nav.NavigateTo($"projects/{Modelo.ID}");
+    }
+
+
+}

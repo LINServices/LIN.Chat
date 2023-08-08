@@ -1,0 +1,95 @@
+﻿@inherits LayoutComponentBase
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+@inject NavigationManager nav
+@inject IJSRuntime js
+
+@code
+{
+
+    public static int LevelBattery { get; set; }
+    public static bool IsChargin { get; set; }
+
+    private bool IsSingIn = true;
+
+}
+
+<ContactModal Key="A12"></ContactModal>
+<ModalError Key="12" />
+<AddEmail></AddEmail>
+<main>
+    @if (IsSingIn)
+    {
+        <div class="flex items-center justify-center h-screen">
+            <LinesLoader />
+        </div>
+    }
+    else
+    {
+        @Body
+    }
+
+</main>
+
+
+
+@code {
+
+
+
+
+
+
+    protected async override Task OnInitializedAsync()
+    {
+        IsSingIn = true;
+
+
+        var token = await localStorage.GetItemAsync<string>("token");
+
+        try
+        {
+            var level = await js.InvokeAsync<int>("getLevel", "Hola");
+            var chargin = await js.InvokeAsync<bool>("getChargin", "Hola");
+            LevelBattery = level;
+            IsChargin = chargin;
+        }
+        catch
+        {
+
+        }
+
+
+
+        if (token == null)
+        {
+            IsSingIn = false;
+            return;
+        }
+
+
+        var result = await LIN.Access.Sesion.LoginWith(token, LIN.Shared.Enumerations.Platforms.Web);
+
+
+        if (result.Response != LIN.Shared.Responses.Responses.Success)
+        {
+            await localStorage.ClearAsync();
+        }
+        else
+        {
+
+
+            //NavBar.User = result.Sesion.Informacion.Usuario;
+            //NavBar.Name = result.Sesion.Informacion.Nombre;
+
+            Online.StaticHub.LoadHub();
+
+            await LIN.Access.Developer.Sesion.LoginWith(result.Sesion.Informacion.ID);
+        }
+
+        IsSingIn = false;
+        base.StateHasChanged();
+    }
+
+
+
+}

@@ -1,0 +1,77 @@
+﻿@code
+{
+
+    [Parameter]
+    public string Name { get; set; } = "";
+
+    [Parameter]
+    public decimal Credicts { get; set; } = 0m;
+
+}
+
+
+<style>
+    .card {
+        width: 260px;
+        height: 150px;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        border: 0px;
+        justify-content: space-between;
+    }
+
+    .card:hover {
+        box-shadow: #e0e7ff 0px 10px 50px;
+        border: 0px;
+    }
+
+    .card__logo {
+        height: 30px;
+        background-image: url('./img/moneda.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+
+    .card__number {
+        display: flex;
+        justify-content: space-between;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .card__number span {
+        padding-right: 10px;
+    }
+
+    .card__name {
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .card__expiration {
+        display: flex;
+        justify-content: space-between;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .card__expiration span:last-child {
+        text-align: right;
+    }
+</style>
+
+
+<div class="card gilroy">
+    <div class="card__logo"></div>
+    <div class="card__number">
+        <span class="gilroy-bold">Creditos</span>
+    </div>
+    <div class="card__name" style="font-size: 12px; color:dimgray">@Name</div>
+    <div class="card__expiration">
+        <span style="color: #6366f1">@Credicts$</span>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+﻿
+@code{
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public string Titulo { get; set; } = "";
+
+}
+
+<div class="flex justify-center items-center w-full h-screen">
+
+    <div class="flex px-5 flex-col self-center h-96 w-72 bg-white ring-gray-200 ring-1 rounded-lg content-start">
+
+        <div>
+            <div class="flex flex-row items-start mt-5">
+                <img class="h-4 w-4 self-center" src="./img/box.png" />
+                <label class="text-xs gilroy-bold ml-1">LIN <span class="text-blue-600">Account</span></label>
+            </div>
+
+            <label style="margin-top: 3px;" class="mb-4 text-sm text-gray-600">@Titulo</label>
+
+        </div>
+
+
+        <div class="flex h-full w-full mt-3 mb-2 justify-center flex-col">
+           @ChildContent
+        </div>
+
+    </div>
+
+</div>

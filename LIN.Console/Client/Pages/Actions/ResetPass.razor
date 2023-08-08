@@ -1,0 +1,183 @@
+﻿@page "/resetpassword/{User}/{Key}"
+@inject NavigationManager nav
+
+@code {
+
+
+    [Parameter]
+    public string User { get; set; } = "";
+
+    [Parameter]
+    public string Key { get; set; } = "";
+
+
+
+    public string Pass { get; set; } = "";
+
+    public string Pass2 { get; set; } = "";
+
+    public int Seccion = 0;
+
+    UserDataModel Model { get; set; } = new();
+
+
+    private string Img64
+    {
+        get
+        {
+            return Convert.ToBase64String(Model.Perfil);
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        bool can = int.TryParse(User, out int id);
+
+        if (!can)
+        {
+            Seccion = 2;
+            return;
+        }
+
+        var user = await LIN.Access.Controllers.User.ReadOneAsync(id);
+
+        if (user.Response == Responses.Success)
+        {
+            Model = user.Model;
+            Seccion = 1;
+        }
+        else
+        {
+            Seccion = 2;
+        }
+
+        base.StateHasChanged();
+        await base.OnInitializedAsync();
+    }
+
+
+
+}
+
+
+
+
+<div class="flex justify-center items-center w-full h-screen">
+
+
+    <LINAccountCard Titulo="Reestablecer la contraseña">
+
+        @if (Seccion == 0)
+        {
+            <div class="flex justify-center items-center h-full">
+                <CircleLoader Color="[#24292F]" />
+            </div>
+        }
+
+        else if (Seccion == 1)
+        {
+
+            <div class="mt-4 h-8 w-full bg-gray-50 rounded-md ring-2 ring-gray-200 hover:ring-gray-300">
+                <div class="flex flex-row items-center h-full w-full ml-2">
+
+                    <img class="w-5 h-5 p-1 rounded-full ring-2 ring-gray-300 self-center" src="data:image/png;base64,@Img64" alt="Bordered avatar">
+                    <label class="text-xs self-center ml-2 gilroy-bold">@Model.Nombre</label>
+
+                </div>
+            </div>
+
+
+            <!-- Contraseña -->
+            <div class="mb-3 mt-5">
+                <label class="mb-2 block text-sm font-medium text-gray-700">
+                    Contraseña
+                </label>
+                <input @bind="Pass" type="password" autocomplete="off" required=""
+                       class="block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-gray-900 placeholder-gray-400 focus:border-[#24292F] focus:bg-white focus:outline-none focus:ring-[#24292F] sm:text-sm">
+            </div>
+
+            <!-- Repetir  -->
+            <div>
+                <label class="mb-2 block text-sm font-medium text-gray-700">
+                    Repite la contraseña
+                </label>
+                <input @bind="Pass2" type="password" autocomplete="off" required=""
+                       class="block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-gray-900 placeholder-gray-400 focus:border-[#24292F] focus:bg-white focus:outline-none focus:ring-[#24292F] sm:text-sm">
+            </div>
+
+            <button @onclick="Send" type="button" class="text-white bg-[#24292F] hover:bg-[#24292F]/90 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-[#050708]/30 mt-6 flex flex-row items-center justify-center w-full">
+                <img style="height: 16px; width: 16px; margin-right: 6px" src="./img/aqwe.png" />
+                Cambiar contraseña
+            </button>
+
+        }
+
+        else if (Seccion == 2)
+        {
+            <div class="flex justify-center items-center flex-col">
+                <img class="h-4 w-4" src="./img/ban.png" />
+                <label style="margin-top: 4px;" class="text-xs">El enlace es invalido o ya caduco.</label>
+            </div>
+        }
+
+    </LINAccountCard>
+
+
+</div>
+
+
+
+
+
+
+
+
+@code {
+
+
+    async void Send()
+    {
+
+        if (Pass.Length < 4)
+        {
+            ModalError.Show("Las contraseñas debe tener mas de 4 digitos");
+            return;
+        }
+
+        if (Pass != Pass2)
+        {
+            ModalError.Show("Las contraseñas deben coincidir");
+            return;
+        }
+
+        Seccion = 0;
+        base.StateHasChanged();
+
+        var model = new UpdatePasswordModel()
+            {
+                NewPassword = Pass
+            };
+
+
+
+
+        var response = await LIN.Access.Controllers.User.ResetPassword(Key, model);
+
+        Seccion = 1;
+        base.StateHasChanged();
+        if (response.Response != Responses.Success)
+        {
+            Seccion = 2;
+            base.StateHasChanged();
+        }
+        else
+        {
+            nav.NavigateTo("/login");
+        }
+
+
+    }
+
+
+}

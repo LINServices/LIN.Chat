@@ -1,0 +1,75 @@
+﻿
+@code
+{
+    [Parameter]
+    public string Src { get; set; } = "./caja.png";
+
+    [Parameter]
+    public string Text1 { get; set; } = "";
+
+    [Parameter]
+    public string Text2 { get; set; } = "";
+
+}
+
+
+<style>
+
+    .base
+    {
+        width: 140px !important;
+        height: 180px !important;
+       
+
+        @@media (min-width: 100px) and (max-width: 768px) {
+            width: 140px !important;
+            height: 140px !important;
+            font-size: 12px;
+        }
+
+        @@media (min-width: 768px) and (max-width: 1024px) {
+            width: 140px !important;
+            height: 130px !important;
+            font-size: 10px;
+        }
+
+        @@media (min-width: 1024px) {
+            width: 140px !important;
+            height: 180px !important;
+            font-size: 13px;
+        }
+
+      
+
+    }
+
+    .imagen
+    {
+        height: 50px;
+
+        @@media (min-width: 100px) and (max-width: 768px) {
+            height: 30px;
+            margin-bottom: -10px;
+        }
+
+        @@media (min-width: 768px) and (max-width: 1024px) {
+            height: 30px;
+            margin-bottom: -5px;
+        }
+
+        @@media (min-width: 1024px) {
+            height: 50px;
+        }
+
+    }
+
+</style>
+
+
+<div class="bg-white rounded-xl flex flex-col justify-center shadow duration-300 hover:bg-slate-100 hover:shadow-xl flex-1 base">
+
+    <img class="self-center imagen" src="@Src" />
+
+    <span class="mt-6 font-semibold text-center">@Text1<br>@Text2</span>
+
+</div>

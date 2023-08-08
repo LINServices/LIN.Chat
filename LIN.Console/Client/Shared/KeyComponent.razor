@@ -1,0 +1,142 @@
+﻿@inject IJSRuntime JSRuntime;
+@inject NavigationManager nav;
+
+@code {
+
+    [Parameter]
+    public ApiKeyDataModel key { get; set; }
+
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnDelete { get; set; }
+
+
+    private string state = "";
+
+}
+
+<AskDelete Message="@("¿Seguro desea eliminar la llave '" + key.Nombre + "'?")" Key="@key.Key" OnYes="Delete" />
+
+<style>
+    .div-shadow {
+        box-shadow: rgba(0, 0, 0, 0.03) 0px 6px 24px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+        border-radius: 6px;
+        background-color: white;
+    }
+
+    .div-shadow:hover {
+        box-shadow: rgba(63, 131, 248, 0.2) 0px 6px 24px 0px, rgba(63, 131, 248, 0.2) 0px 0px 0px 1px;
+    }
+</style>
+
+
+
+
+<div style="padding: 12px;" class="horizontal gilroy mt-2 div-shadow">
+
+    <div class="flex flex-row items-center">
+
+        <img src="./img/key.png" style="height: 30px; width: 30px;" />
+
+        <div class="flex flex-col ml-2">
+
+            <h1 style="margin-top: -5px;" class="gilroy-bold">@key.Nombre</h1>
+            <h4 style="margin-top: -5px; font-size: 11px;">@key.Key</h4>
+
+        </div>
+
+        <div @onclick:stopPropagation="true" class="ml-auto flex justify-center items-center mr-2">
+
+            @if (key.Status == Developer.Types.Enumerations.ApiKeyStatus.Actived)
+            {
+                state = "yes";
+            }
+            else if (key.Status == Developer.Types.Enumerations.ApiKeyStatus.Disable)
+            {
+                state = "no";
+            }
+            else if (key.Status == Developer.Types.Enumerations.ApiKeyStatus.Deleted)
+            {
+                state = "no";
+            }
+
+            <LockButton OnActive="Enable" OnDesactive="Unable" state="@state" />
+            <DeleteButton OnPress="DeleteAsk" />
+
+        </div>
+
+
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@code
+{
+
+    string L()
+    {
+        return key.Key;
+    }
+
+
+
+    async void Copy()
+    {
+        await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", key.Key);
+
+    }
+
+    async void DeleteAsk()
+    {
+        await JSRuntime.InvokeVoidAsync("ShowModal", "ask-delete-modal-" + key.Key, $"ask-close-btn-{key.Key}",
+        $"ask-close-btn2-{key.Key}", $"ask-close-btn3-{key.Key}");
+
+    }
+
+    async void Delete()
+    {
+        await LIN.Access.Developer.Controllers.ApiKey.ChangeState(key.ID, Developer.Types.Enumerations.ApiKeyStatus.Disable);
+        key.Status = Developer.Types.Enumerations.ApiKeyStatus.Deleted;
+        await OnDelete.InvokeAsync();
+    }
+
+    async void Unable()
+    {
+        await LIN.Access.Developer.Controllers.ApiKey.ChangeState(key.ID, Developer.Types.Enumerations.ApiKeyStatus.Disable);
+        key.Status = Developer.Types.Enumerations.ApiKeyStatus.Disable;
+        StateHasChanged();
+    }
+
+    async void Enable()
+    {
+        await LIN.Access.Developer.Controllers.ApiKey.ChangeState(key.ID, Developer.Types.Enumerations.ApiKeyStatus.Actived);
+        key.Status = Developer.Types.Enumerations.ApiKeyStatus.Actived;
+        StateHasChanged();
+    }
+
+
+}
+

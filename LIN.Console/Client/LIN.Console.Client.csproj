@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+
+	  <ScopedCssEnabled>true</ScopedCssEnabled>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Blazored.LocalStorage" Version="4.3.0" />
+    <PackageReference Include="iTextSharp.LGPLv2.Core" Version="3.4.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.5" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\AccesoAPI\LIN.Access.Developer\LIN.Access.Developer.csproj" />
+    <ProjectReference Include="..\..\..\..\AccesoAPI\LIN.Access\LIN.Access.csproj" />
+    <ProjectReference Include="..\..\..\..\SILFScript\SILF.Script\SILF.Script\SILF.Script.csproj" />
+    <ProjectReference Include="..\..\..\..\Tipos\LIN.Developer.Types\LIN.Developer.Types.csproj" />
+    <ProjectReference Include="..\..\..\..\Tipos\LIN.Shared\LIN.Shared.csproj" />
+    <ProjectReference Include="..\Shared\LIN.Console.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Pages\Devices.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+    <Content Update="Pages\Chat.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+  </ItemGroup>
+
+</Project>

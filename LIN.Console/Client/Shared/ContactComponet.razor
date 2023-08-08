@@ -1,0 +1,156 @@
+﻿@inject IJSRuntime JSRuntime;
+@inject NavigationManager nav;
+
+@code
+{
+    [Parameter]
+    public ContactDataModel Modelo { get; set; }
+
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnDelete { get; set; }
+
+    string Message = "";
+
+    private string state = "";
+
+    private string Img64
+    {
+        get
+        {
+            return Convert.ToBase64String(Modelo.Picture);
+        }
+    }
+
+
+}
+
+
+
+<AskDelete Message="@("¿Seguro desea eliminar el contacto '"+Modelo.Name+"'?")" Key="@Modelo.ID.ToString()" OnYes="Delete" />
+
+
+
+<style>
+    .div-shadow {
+        box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+        border-radius: 5px;
+        background-color: white;
+    }
+
+        .div-shadow:hover {
+            box-shadow: rgba(63, 155, 229, 0.2) 0px 6px 24px 0px, rgba(63, 155, 229, 0.2) 0px 0px 0px 1px;
+        }
+
+</style>
+
+
+
+
+<div @onclick="GotoProj" style="padding: 10px;" class="horizontal gilroy mt-2 div-shadow">
+
+    <div class="flex flex-row items-center ml-1">
+
+        @if (Img64.Length <= 0)
+        {
+            <div class="flex w-8 h-8 p-1 rounded-full ring-2 ring-gray-300 items-center justify-center">
+                <label class="gilroy-bold">@Modelo.Name[0]</label>
+            </div>
+        }
+        else
+        {
+            <img class="w-8 h-8 p-1 rounded-full ring-2 ring-gray-300" src="data:image/png;base64,@Img64">
+        }
+
+
+        <div class="flex flex-col ml-2">
+
+            <h1 class="gilroy-bold">@Modelo.Name</h1>
+
+            <label class="text-sm -mt-1">@Modelo.Mail</label>
+
+
+
+        </div>
+
+        <div @onclick:stopPropagation="true" class="ml-auto flex-shrink-0 justify-center items-center mt-1 mr-2">
+
+            <DeleteButton OnPress="DeleteAsk" />
+
+        </div>
+
+
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@code
+{
+
+    async void DeleteAsk()
+    {
+        await JSRuntime.InvokeVoidAsync("ShowModal", $"ask-delete-modal-{Modelo.ID}", $"ask-close-btn-{Modelo.ID}", $"ask-close-btn2-{Modelo.ID}", $"ask-close-btn3-{Modelo.ID}");
+    }
+
+    async void Delete()
+    {
+
+        var response = await ((Modelo.State == ContactStatus.Normal) ?
+                              LIN.Access.Controllers.Contact.ToTrash(Modelo.ID, LIN.Access.Sesion.Instance.Token):
+                              LIN.Access.Controllers.Contact.Delete(Modelo.ID, LIN.Access.Sesion.Instance.Token));
+
+
+        if (response.Response == LIN.Shared.Responses.Responses.Success)
+        {
+            Pages.Contactos.Context?.Load();
+            base.StateHasChanged();
+        }
+        else
+        {
+            ModalError.Show($"No se pudo eliminar el contacto '{Modelo.Name}'");
+             }
+
+    }
+
+
+    async void GotoProj()
+    {
+        ContactModal.Modelo = Modelo;
+        await JSRuntime.InvokeVoidAsync("ShowModal", $"contact-modal-A12", "contact-close-btn-A12");
+        ContactModal.Context.Render();
+
+    }
+
+
+}
+

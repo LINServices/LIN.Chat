@@ -1,0 +1,104 @@
+﻿
+<style>
+    .loader {
+        position: relative;
+        width: 150px;
+        height: 150px;
+        background: transparent;
+        border-radius: 50%;
+        border: 1px solid #E8E8E8;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+        .loader::before {
+            content: '';
+            position: absolute;
+            inset: 20px;
+            background: transparent;
+            border: 1px dashed #898989;
+            border-radius: 50%;
+            -webkit-box-shadow: inset -5px -5px 25px rgba(0,0,0,0.25), inset 5px 5px 35px rgba(0,0,0,0.25);
+            box-shadow: inset -5px -5px 25px rgba(0,0,0,0.25), inset 5px 5px 35px rgba(0,0,0,0.25);
+        }
+
+        .loader::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 1px dashed #898989;
+            -webkit-box-shadow: inset -5px -5px 25px rgba(0,0,0,0.25), inset 5px 5px 35px rgba(0,0,0,0.25);
+            box-shadow: inset -5px -5px 25px rgba(0,0,0,0.25), inset 5px 5px 35px rgba(0,0,0,0.25);
+        }
+
+        .loader span {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 50%;
+            height: 100%;
+            background: transparent;
+            -webkit-transform-origin: top left;
+            -ms-transform-origin: top left;
+            transform-origin: top left;
+            -webkit-animation: radar81 2s linear infinite;
+            animation: radar81 2s linear infinite;
+            border-top: 1px dashed #fff;
+        }
+
+            .loader span::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: #1E40AF;
+                -webkit-transform-origin: top left;
+                -ms-transform-origin: top left;
+                transform-origin: top left;
+                -webkit-transform: rotate(-55deg);
+                -ms-transform: rotate(-55deg);
+                transform: rotate(-55deg);
+                -webkit-filter: blur(30px) drop-shadow(20px 20px 20px #1E40AF);
+                filter: blur(30px) drop-shadow(20px 20px 20px #1E40AF);
+            }
+
+    @@-webkit-keyframes radar81 {
+        0% {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+
+        100% {
+            -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+    }
+
+    @@keyframes radar81 {
+        0% {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+
+        100% {
+            -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+    }
+</style>
+
+<div class="loader">
+    <span></span>
+</div>

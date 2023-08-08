@@ -1,0 +1,32 @@
+﻿@inject IJSRuntime js
+
+
+
+@{
+    JS = js;
+}
+
+<Router AppAssembly="@typeof(App).Assembly">
+
+    @code
+    {
+        public static IJSRuntime JS { get; set; }
+        public static string MyAddress { get; set; } = "";
+
+    }
+
+
+
+    <Found Context="routeData">
+        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+    </Found>
+    <NotFound>
+
+       
+        <NotFound></NotFound>
+
+
+
+    </NotFound>
+</Router>
