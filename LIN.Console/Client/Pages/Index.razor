@@ -70,7 +70,7 @@
 
 
 <!--Mensaje-->
-@if (LIN.Access.Developer.Sesion.IsOpen)
+@if (LIN.Access.Developer.Session.IsOpen)
 {
      <div style="padding: 10px">
     <Alert Message="Tienes acceso a LIN Services" Class="success" />
@@ -85,7 +85,7 @@ else
 
 
 
-    @if(LIN.Access.Sesion.Instance.Informacion.Sexo == Sexos.Female)
+    @if(LIN.Access.Developer.Session.Instance.Account.Genero == Genders.Female)
     {
         <h1 class="gilroy-bold" style="font-size: 35px">Bienvenida a LIN</h1>
     }
@@ -97,7 +97,7 @@ else
     
 
 
-    @if (LIN.Access.Developer.Sesion.IsOpen)
+    @if (LIN.Access.Developer.Session.IsOpen)
     {
         <h5 class="gilroy" style="font-size: 15px">@Saludo(LIN.Access.Sesion.Instance.Informacion.Nombre.Split(" ")[0]), ¿Que quieres hacer hoy?</h5>
 
@@ -135,13 +135,13 @@ else
 
 
 
-    @if (LIN.Access.Developer.Sesion.IsOpen)
+    @if (LIN.Access.Developer.Session.IsOpen)
     {
 
         // Creditos actuales
         <div class="flex mt-8 credit">
 
-            <CreditsCard Credicts="@LIN.Access.Developer.Sesion.Instance.Informacion.Credito"
+            <CreditsCard Credicts="@LIN.Access.Developer.Session.Instance.Informacion.Credito"
                          Name="@LIN.Access.Sesion.Instance.Informacion.Nombre" />
 
         </div>

@@ -110,7 +110,7 @@ else
 
         var dd = await LIN.Access.Controllers.User.GetAll(TxtUser, LIN.Access.Sesion.Instance.Token);
 
-        if (dd.Response != LIN.Shared.Responses.Responses.Success)
+        if (dd.Response != Responses.Success)
             return;
 
             Modelos = dd.Models;

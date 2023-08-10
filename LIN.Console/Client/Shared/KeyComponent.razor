@@ -47,15 +47,15 @@
 
         <div @onclick:stopPropagation="true" class="ml-auto flex justify-center items-center mr-2">
 
-            @if (key.Status == Developer.Types.Enumerations.ApiKeyStatus.Actived)
+            @if (key.Status == Types.Developer.Enumerations.ApiKeyStatus.Actived)
             {
                 state = "yes";
             }
-            else if (key.Status == Developer.Types.Enumerations.ApiKeyStatus.Disable)
+            else if (key.Status == Types.Developer.Enumerations.ApiKeyStatus.Disable)
             {
                 state = "no";
             }
-            else if (key.Status == Developer.Types.Enumerations.ApiKeyStatus.Deleted)
+            else if (key.Status == Types.Developer.Enumerations.ApiKeyStatus.Deleted)
             {
                 state = "no";
             }
@@ -118,22 +118,25 @@
 
     async void Delete()
     {
-        await LIN.Access.Developer.Controllers.ApiKey.ChangeState(key.ID, Developer.Types.Enumerations.ApiKeyStatus.Disable);
-        key.Status = Developer.Types.Enumerations.ApiKeyStatus.Deleted;
+        var token = LIN.Access.Developer.Session.Instance.Token;
+        await LIN.Access.Developer.Controllers.ApiKey.ChangeState(key.ID, Types.Developer.Enumerations.ApiKeyStatus.Disable, token);
+        key.Status = Types.Developer.Enumerations.ApiKeyStatus.Deleted;
         await OnDelete.InvokeAsync();
     }
 
     async void Unable()
     {
-        await LIN.Access.Developer.Controllers.ApiKey.ChangeState(key.ID, Developer.Types.Enumerations.ApiKeyStatus.Disable);
-        key.Status = Developer.Types.Enumerations.ApiKeyStatus.Disable;
+        var token = LIN.Access.Developer.Session.Instance.Token;
+        await LIN.Access.Developer.Controllers.ApiKey.ChangeState(key.ID, Types.Developer.Enumerations.ApiKeyStatus.Disable, token);
+        key.Status = Types.Developer.Enumerations.ApiKeyStatus.Disable;
         StateHasChanged();
     }
 
     async void Enable()
     {
-        await LIN.Access.Developer.Controllers.ApiKey.ChangeState(key.ID, Developer.Types.Enumerations.ApiKeyStatus.Actived);
-        key.Status = Developer.Types.Enumerations.ApiKeyStatus.Actived;
+        var token = LIN.Access.Developer.Session.Instance.Token;
+        await LIN.Access.Developer.Controllers.ApiKey.ChangeState(key.ID, Types.Developer.Enumerations.ApiKeyStatus.Actived, token);
+        key.Status = Types.Developer.Enumerations.ApiKeyStatus.Actived;
         StateHasChanged();
     }
 

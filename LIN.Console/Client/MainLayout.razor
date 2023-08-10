@@ -67,10 +67,10 @@
         }
 
 
-        var result = await LIN.Access.Sesion.LoginWith(token, LIN.Shared.Enumerations.Platforms.Web);
+        var result = await LIN.Access.Sesion.LoginWith(token, LIN.Types.Enumerations.Platforms.Web);
 
 
-        if (result.Response != LIN.Shared.Responses.Responses.Success)
+        if (result.Response != Responses.Success)
         {
             await localStorage.ClearAsync();
         }
@@ -83,7 +83,7 @@
 
             Online.StaticHub.LoadHub();
 
-            await LIN.Access.Developer.Sesion.LoginWith(result.Sesion.Informacion.ID);
+            await LIN.Access.Developer.Session.LoginWith(result.Sesion.Informacion.ID);
         }
 
         IsSingIn = false;

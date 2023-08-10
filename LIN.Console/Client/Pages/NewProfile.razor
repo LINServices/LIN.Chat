@@ -113,7 +113,7 @@
     nav.NavigateTo("/login");
     return;
 }
-@if (LIN.Access.Developer.Sesion.IsOpen)
+@if (LIN.Access.Developer.Session.IsOpen)
 {
     nav.NavigateTo("/");
     return;
@@ -485,7 +485,7 @@
     /// </summary>
     async void Star()
     {
-        var loginDev = await LIN.Access.Developer.Sesion.LoginWith(LIN.Access.Sesion.Instance.Informacion.ID);
+        var loginDev = await LIN.Access.Developer.Session.LoginWith(LIN.Access.Sesion.Instance.Informacion.ID);
         nav.NavigateTo("/");
     }
 

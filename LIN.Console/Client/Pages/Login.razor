@@ -1,5 +1,5 @@
 ﻿@page "/login"
-<PageTitle>Iniciar Sesion</PageTitle>
+<PageTitle>Iniciar Sesión</PageTitle>
 
 @inject NavigationManager nav;
 @inject Blazored.LocalStorage.ILocalStorageService localStorage;
@@ -285,11 +285,11 @@
         }
 
         // Inicio de sesion
-        var login = await LIN.Access.Sesion.LoginWith(User, Password, LIN.Shared.Enumerations.Platforms.Web);
+        var login = await LIN.Access.Sesion.LoginWith(User, Password, Platforms.Web);
 
-        if (login.Response == LIN.Shared.Responses.Responses.Success)
+        if (login.Response == Responses.Success)
         {
-            var loginDev = await LIN.Access.Developer.Sesion.LoginWith(login.Sesion.Informacion.ID);
+            var loginDev = await LIN.Access.Developer.Session.LoginWith(login.Sesion.Informacion.ID);
 
 
             await localStorage.SetItemAsync("token", login.Sesion.Token);
@@ -298,12 +298,12 @@
             nav.NavigateTo("/");
             return;
         }
-        else if (login.Response == LIN.Shared.Responses.Responses.InvalidPassword)
+        else if (login.Response == Responses.InvalidPassword)
         {
             ShowControls();
             ShowError("La contraseña es incorrecta");
         }
-        else if (login.Response == LIN.Shared.Responses.Responses.NotExistAccount)
+        else if (login.Response == Responses.NotExistAccount)
         {
             ShowControls();
             ShowError($"No existe el usuario {User}");
@@ -384,11 +384,11 @@
              base.StateHasChanged();
 
              // Inicio de sesion
-             var login = await LIN.Access.Sesion.LoginWith(e.Token, LIN.Shared.Enumerations.Platforms.Web);
+             var login = await LIN.Access.Sesion.LoginWith(e.Token, Platforms.Web);
 
-             if (login.Response == LIN.Shared.Responses.Responses.Success)
+             if (login.Response == Responses.Success)
              {
-                 var loginDev = await LIN.Access.Developer.Sesion.LoginWith(login.Sesion.Informacion.ID);
+                 var loginDev = await LIN.Access.Developer.Session.LoginWith(login.Sesion.Informacion.ID);
 
                  //  Shared.NavBar.Name = login.Sesion.Informacion.Nombre;
                  //Shared.NavBar.User = login.Sesion.Informacion.Usuario;
@@ -400,12 +400,12 @@
                  return;
 
              }
-             else if (login.Response == LIN.Shared.Responses.Responses.InvalidPassword)
+             else if (login.Response == Responses.InvalidPassword)
              {
                  ShowControls();
                  ShowError("La sesion de passkey ha expirado");
              }
-             else if (login.Response == LIN.Shared.Responses.Responses.NotExistAccount)
+             else if (login.Response == Responses.NotExistAccount)
              {
                  ShowControls();
                  ShowError($"No existe el usuario {User}");

@@ -14,7 +14,7 @@ public partial class Index
 
         if (firstRender)
         {
-            await Access.Developer.Sesion.LoginWith(LIN.Access.Sesion.Instance.Informacion.ID);
+            await Access.Developer.Session.LoginWith(LIN.Access.Sesion.Instance.Informacion.ID);
             base.StateHasChanged();
         }
 
@@ -65,7 +65,7 @@ public partial class Index
 
     private async void LoadStatus()
     {
-        var res = await LIN.Access.Developer.Controllers.Server.IsRunnig();
+        var res = await LIN.Access.Developer.Controllers.Server.IsRunning();
         IsDevServerRunnig = res;
         base.StateHasChanged();
     }
@@ -96,11 +96,11 @@ public partial class Index
         AreProjectLoaded = false;
 
         // Obtiene los dispositivos
-        var result = await LIN.Access.Developer.Controllers.Project.ReadAllAsync(LIN.Access.Developer.Sesion.Instance.Token);
+        var result = await LIN.Access.Developer.Controllers.Project.ReadAllAsync(LIN.Access.Developer.Session.Instance.Token);
 
 
         // Evalua el resultado
-        if (result.Response == LIN.Shared.Responses.Responses.Success)
+        if (result.Response ==Responses.Success)
         {
             AreProjectLoaded = true;
             Proyectos = result.Models;

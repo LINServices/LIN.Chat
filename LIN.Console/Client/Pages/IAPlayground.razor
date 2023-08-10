@@ -16,7 +16,7 @@
 
 
 
-@if(!Access.Developer.Sesion.IsOpen)
+@if(!Access.Developer.Session.IsOpen)
 {
     nav.NavigateTo("/login");
     return;
@@ -135,47 +135,46 @@
         IsSending = true;
         base.StateHasChanged();
 
-
-        var predict = await LIN.Access.Developer.Controllers.IA.Categorizar(Value, LIN.Access.Developer.Sesion.Instance.Token, Developer.Types.Enumerations.PayWith.Account);
-
+        var predict = await LIN.Access.Developer.Controllers.IA.Categorizar(Value, LIN.Access.Developer.Session.Instance.Token, Types.Developer.Enumerations.PayWith.Account);
 
 
 
-        if (predict.Response == LIN.Shared.Responses.Responses.Success)
+
+        if (predict.Response == Responses.Success)
         {
 
             src = "";
 
-            if (predict.Model.Languaje == LangEnum.Spain)
+            if (predict.Model.Languaje == Languajes.Spain)
             {
                 src = "./img/spain.png";
             }
-            else if (predict.Model.Languaje == LangEnum.English)
+            else if (predict.Model.Languaje == Languajes.English)
             {
                 src = "./img/uk.png";
             }
 
 
-            if (predict.Model.Sentiment == Sentiment.Positive)
+            if (predict.Model.Sentiment == Sentiments.Positive)
             {
                 Clases = "underline decoration-blue-500 decoration-2";
                 Message = $"Este es un comentario positivo";
                
             }
-            else if (predict.Model.Sentiment == Sentiment.Negative)
+            else if (predict.Model.Sentiment == Sentiments.Negative)
             {
                 Clases = "underline decoration-red-500 decoration-2";
                 Message = $"Este es un comentario negativo";
             }
         }
 
-        else if (predict.Response == LIN.Shared.Responses.Responses.DontHaveCredits)
+        else if (predict.Response == Responses.WithoutCredits)
         {
             Clases = "text-red-500";
-            Message = "No tienes creditos suficientes";
+            Message = "No tienes créditos suficientes";
         }
 
-        else if (predict.Response == LIN.Shared.Responses.Responses.DontHavePermissions)
+        else if (predict.Response == Responses.Unauthorized)
         {
             Clases = "text-red-500";
             Message = "Intenta otra llave o desactiva el firewall";

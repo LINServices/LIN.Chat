@@ -79,16 +79,17 @@
             {
                 ProjectID = this.ProjectID,
                 Nombre = KeyName,
-                Status = LIN.Developer.Types.Enumerations.ApiKeyStatus.Actived
+                Status = LIN.Types.Developer.Enumerations.ApiKeyStatus.Actived
             };
 
         KeyName = "";
 
+        var token = LIN.Access.Developer.Session.Instance.Token;
         // Envia a la base de datos
-        var response = await LIN.Access.Developer.Controllers.ApiKey.Create(key);
+        var response = await LIN.Access.Developer.Controllers.ApiKey.Create(key, token);
 
         // Evaluacion
-        if (response.Response != LIN.Shared.Responses.Responses.Success)
+        if (response.Response != Responses.Success)
         {
             return;
         }

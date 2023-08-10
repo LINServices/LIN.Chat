@@ -130,7 +130,7 @@
                               LIN.Access.Controllers.Contact.Delete(Modelo.ID, LIN.Access.Sesion.Instance.Token));
 
 
-        if (response.Response == LIN.Shared.Responses.Responses.Success)
+        if (response.Response == Responses.Success)
         {
             Pages.Contactos.Context?.Load();
             base.StateHasChanged();

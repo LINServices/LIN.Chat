@@ -48,7 +48,7 @@
 
 
 
-@if (!Access.Developer.Sesion.IsOpen)
+@if (!Access.Developer.Session.IsOpen)
 {
     nav.NavigateTo("/login");
     return;
@@ -142,7 +142,7 @@
 
 
         // Evalua el resultado
-        if (result.Response == LIN.Shared.Responses.Responses.Success)
+        if (result.Response == Responses.Success)
         {
             load = true;
             DevicesList = result.Models;

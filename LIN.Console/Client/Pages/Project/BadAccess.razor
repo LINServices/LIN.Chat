@@ -47,7 +47,7 @@
     /// <summary>
     /// Respuesta de API
     /// </summary>
-    LIN.Shared.Responses.Responses? Response { get; set; } = null;
+    Responses? Response { get; set; } = null;
 
 }
 
@@ -87,12 +87,12 @@
         IsLoaded = false;
 
         // Obtiene los dispositivos
-        var result = await LIN.Access.Developer.Controllers.FirewallRule.DeleteBasAccess(int.Parse(ID), LIN.Access.Developer.Sesion.Instance.Token);
+        var result = await LIN.Access.Developer.Controllers.FirewallRule.DeleteBasAccess(int.Parse(ID), LIN.Access.Developer.Session.Instance.Token);
 
         Response = result.Response;
         IsLoaded = true;
 
-        if (result.Response == LIN.Shared.Responses.Responses.Success)
+        if (result.Response == Responses.Success)
         {
             base.ShouldRender();
         }
@@ -105,12 +105,12 @@
         IsLoaded = false;
 
         // Obtiene los dispositivos
-        var result = await LIN.Access.Developer.Controllers.FirewallRule.ReadAllBad(int.Parse(ID), LIN.Access.Developer.Sesion.Instance.Token);
+        var result = await LIN.Access.Developer.Controllers.FirewallRule.ReadAllBad(int.Parse(ID), LIN.Access.Developer.Session.Instance.Token);
 
         Response = result.Response;
         IsLoaded = true;
 
-        if (result.Response == LIN.Shared.Responses.Responses.Success)
+        if (result.Response == Responses.Success)
         {
             Modelos = result.Models;
             base.StateHasChanged();
@@ -137,19 +137,19 @@
 @switch (Response)
 {
 
-    case LIN.Shared.Responses.Responses.Undefined:
+    case Responses.Undefined:
         {
             <Alert Message="No tienes permiso o no existe este proyecto." Class="error" Svg="2" />
             return;
         }
 
-    case LIN.Shared.Responses.Responses.DontHavePermissions:
+    case Responses.Unauthorized:
         {
             <Alert Message="No tienes permiso." Class="error" Svg="2" />
             return;
         }
 
-    case LIN.Shared.Responses.Responses.Success:
+    case Responses.Success:
         {
             break;
         }

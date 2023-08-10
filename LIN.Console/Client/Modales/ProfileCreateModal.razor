@@ -86,10 +86,10 @@
         var result = await LIN.Access.Developer.Controllers.Profile.Generate(modelo);
 
         // Correcto
-        if (result.Response == LIN.Shared.Responses.Responses.Success)
+        if (result.Response == Responses.Success)
         {
 
-            var loginDev = await LIN.Access.Developer.Sesion.LoginWith(LIN.Access.Sesion.Instance.Informacion.ID);
+            var loginDev = await LIN.Access.Developer.Session.LoginWith(LIN.Access.Sesion.Instance.Informacion.ID);
 
             // Iniciar sesion dev 
             await JS.InvokeVoidAsync("ForceClick", $"aut-close");

@@ -4,7 +4,7 @@
 @code {
 
     [Parameter]
-    public LIN.Developer.Types.Models.FirewallRuleDataModel IP { get; set; }
+    public LIN.Types.Developer.Models.FirewallRuleDataModel IP { get; set; }
 
     [Parameter]
     public EventCallback<MouseEventArgs> OnDelete { get; set; }
@@ -79,7 +79,7 @@
 
     async void Delete()
     {
-        await LIN.Access.Developer.Controllers.FirewallRule.Delete(IP.ID, LIN.Access.Developer.Sesion.Instance.Token);
+        await LIN.Access.Developer.Controllers.FirewallRule.Delete(IP.ID, LIN.Access.Developer.Session.Instance.Token);
         await OnDelete.InvokeAsync();
     }
 

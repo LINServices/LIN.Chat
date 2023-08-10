@@ -40,7 +40,7 @@
     
 
     bool loadEmail = false;
-    List<EmailDataModel> Emails = new();
+    List<EmailModel> Emails = new();
 
     private string Img64
     {
@@ -76,11 +76,11 @@
         base.StateHasChanged();
 
 
-        var mails = await LIN.Access.Controllers.User.ReadEmails(LIN.Access.Sesion.Instance.Token);
+        //var mails = await LIN.Access.Controllers.User.ReadEmails(LIN.Access.Sesion.Instance.Token);
 
         loadEmail = true;
         base.StateHasChanged();
-        Emails = mails.Models;
+       // Emails = mails.Models;
         base.StateHasChanged();
     }
 
@@ -117,11 +117,11 @@
         <!-- Genero -->
         <div class="ring-1 ring-gray-300 rounded-lg p-5 mt-5 flex flex-row">
 
-            @if(LIN.Access.Sesion.Instance.Informacion.Sexo == Sexos.Female)
+            @if(LIN.Access.Developer.Session.Instance.Account.Genero == Genders.Female)
             {
                 <img class=" w-8 h-8" src="./img/femenino.png" alt="Bordered avatar">
             }
-            else if (LIN.Access.Sesion.Instance.Informacion.Sexo == Sexos.Male)
+            else if (LIN.Access.Developer.Session.Instance.Account.Genero == Genders.Male)
             {
                 <img class=" w-8 h-8" src="./img/masculino.png" alt="Bordered avatar">
             }
@@ -134,11 +134,11 @@
             <div class="flex flex-col ml-2">
                 <label class="gilroy-bold text-sm text-gray-700">Genero</label>
 
-                @if (LIN.Access.Sesion.Instance.Informacion.Sexo == Sexos.Female)
+                @if (LIN.Access.Developer.Session.Instance.Account.Genero == Genders.Female)
                 {
                     <label @onclick="UpdateGenero" id="lbOption" class="gilroy text-xs text-gray-500 -mt-1">Femenino</label>
                 }
-                else if (LIN.Access.Sesion.Instance.Informacion.Sexo == Sexos.Male)
+                else if (LIN.Access.Developer.Session.Instance.Account.Genero == Genders.Male)
                 {
                     <label @onclick="UpdateGenero" id="lbOption" class="gilroy text-xs text-gray-500 -mt-1">Masculino</label>
                 }
@@ -260,7 +260,7 @@
 
    async void UpdateGenero()
     {
-        await Options.Show("dropGenero", "lbOption", LIN.Access.Sesion.Instance.Informacion.Sexo);
+        await Options.Show("dropGenero", "lbOption", LIN.Access.Developer.Session.Instance.Account.Genero);
     }
 
 

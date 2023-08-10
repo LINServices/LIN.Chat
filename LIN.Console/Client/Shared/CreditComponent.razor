@@ -130,22 +130,22 @@
 
 @code{
 
-    public static string Humanize(Developer.Types.Enumerations.TransactionTypes type)
+    public static string Humanize(Types.Developer.Enumerations.TransactionTypes type)
     {
 
         switch(type)
         {
-            case Developer.Types.Enumerations.TransactionTypes.UsedService:
+            case Types.Developer.Enumerations.TransactionTypes.UsedService:
                 return "Usado en un servicio";
-            case Developer.Types.Enumerations.TransactionTypes.Refund:
+            case Types.Developer.Enumerations.TransactionTypes.Refund:
                 return "Reembolso";
-            case Developer.Types.Enumerations.TransactionTypes.Recharge:
+            case Types.Developer.Enumerations.TransactionTypes.Recharge:
                 return "Recarga";
-            case Developer.Types.Enumerations.TransactionTypes.Gift:
+            case Types.Developer.Enumerations.TransactionTypes.Gift:
                 return "Regalo";
-            case Developer.Types.Enumerations.TransactionTypes.Booted:
+            case Types.Developer.Enumerations.TransactionTypes.Booted:
                 return "Retenido";
-            case Developer.Types.Enumerations.TransactionTypes.Bonus:
+            case Types.Developer.Enumerations.TransactionTypes.Bonus:
                 return "Bunus";
             default:
                 return "Indefinido";
