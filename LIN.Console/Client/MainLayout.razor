@@ -67,7 +67,7 @@
         }
 
 
-        var result = await LIN.Access.Sesion.LoginWith(token, LIN.Types.Enumerations.Platforms.Web);
+       var result = await LIN.Access.Developer.Session.LoginWith(token);
 
 
         if (result.Response != Responses.Success)
@@ -76,14 +76,7 @@
         }
         else
         {
-
-
-            //NavBar.User = result.Sesion.Informacion.Usuario;
-            //NavBar.Name = result.Sesion.Informacion.Nombre;
-
             Online.StaticHub.LoadHub();
-
-            await LIN.Access.Developer.Session.LoginWith(result.Sesion.Informacion.ID);
         }
 
         IsSingIn = false;

@@ -6,9 +6,9 @@
 {
 
 
-    private string User = LIN.Access.Sesion.Instance.Informacion.Usuario;
+    private string User = LIN.Access.Developer.Session.Instance.Account.Usuario;
 
-    private string Name = LIN.Access.Sesion.Instance.Informacion.Nombre;
+    private string Name = LIN.Access.Developer.Session.Instance.Account.Nombre;
 
 
   
@@ -41,7 +41,7 @@
     {
         get
         {
-            return Convert.ToBase64String(LIN.Access.Sesion.Instance.Informacion.Perfil);
+            return Convert.ToBase64String(LIN.Access.Developer.Session.Instance.Account.Perfil);
         }
     }
 
@@ -67,18 +67,18 @@
 
         <div class="flex items-center md:order-2">
 
-            @if (LIN.Access.Sesion.IsOpen)
+            @if (LIN.Access.Developer.Session.IsOpen)
             {
 
-                @if (LIN.Access.Sesion.Instance.Informacion.Rol != UserRol.Undefined)
+                @if (LIN.Access.Developer.Session.Instance.Account.Rol != AccountRoles.Undefined)
                 {
                     <div class="h-6 bg-blue-600 rounded-xl mr-3 flex items-center justify-center hover:bg-blue-300">
 
-                        @if (LIN.Access.Sesion.Instance.Informacion.Rol == UserRol.User)
+                        @if (LIN.Access.Developer.Session.Instance.Account.Rol == AccountRoles.User)
                         {
                             <label class="text-xs text-white pl-3 pr-3">Usuario</label>
                         }
-                        else if (LIN.Access.Sesion.Instance.Informacion.Rol == UserRol.Admin)
+                        else if (LIN.Access.Developer.Session.Instance.Account.Rol == AccountRoles.Admin)
                         {
                             <label class="text-xs text-white pl-3 pr-3">Administrador</label>
                         }
@@ -112,11 +112,11 @@
 
                         <span class="block text-sm text-gray-500 truncate">@@@User</span>
 
-                        @if (LIN.Access.Sesion.Instance.Informacion.Insignia == LIN.Shared.Enumerations.Insignias.Verified)
+                        @if (LIN.Access.Developer.Session.Instance.Account.Insignia == AccountBadges.Verified)
                         {
                             <img class="ml-1 self-center" src="./img/verificado.png" style="width: 10px !important; height: 10px !important" />
                         }
-                        else if (LIN.Access.Sesion.Instance.Informacion.Insignia == LIN.Shared.Enumerations.Insignias.VerifiedGold)
+                        else if (LIN.Access.Developer.Session.Instance.Account.Insignia == AccountBadges.VerifiedGold)
                         {
                             <img class="ml-1 self-center" src="./img/verificadogold.png" style="width: 10px !important; height: 10px !important" />
                         }
@@ -135,7 +135,7 @@
                         <a href="/settings" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Configuracion</a>
                     </li>
 
-                    @if (LIN.Access.Sesion.Instance.Informacion.Rol == LIN.Shared.Enumerations.UserRol.Admin)
+                    @if (LIN.Access.Developer.Session.Instance.Account.Rol == AccountRoles.Admin)
                     {
                         <li>
                             <a href="/admincenter" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">LIN Admin Center</a>

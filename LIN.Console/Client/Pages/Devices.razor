@@ -135,7 +135,7 @@
         load = false;
         base.StateHasChanged();
 
-        var sesion = LIN.Access.Sesion.Instance.Informacion;
+        var sesion = LIN.Access.Developer.Session.Instance.Informacion;
 
         // Obtiene los dispositivos
         var result = await LIN.Access.Controllers.Devices.ReadAll(Online.StaticHub.HubID ?? "", sesion.ID);

@@ -41,7 +41,7 @@ public class StaticHub
             var model = new DeviceModel()
             {
                 Name = "Web",
-                Cuenta = Access.Sesion.Instance.Informacion.ID,
+                Cuenta = Access.Developer.Session.Instance.Account.ID,
                 Modelo = "Dispositivo web",
                 BateryConected = MainLayout.IsChargin,
                 BateryLevel = MainLayout.LevelBattery,
@@ -50,7 +50,7 @@ public class StaticHub
                 Platform = Platforms.Web,
                 App = LINApps.CloudConsole,
                 DeviceKey = Key,
-                Token = Access.Sesion.Instance.Token
+                Token = Access.Developer.Session.Instance.AccountToken
             };
 
             Hub = new(model);
@@ -105,7 +105,7 @@ public class StaticHub
 
         if (Hub != null)
         {
-            Hub.SendCommand(LIN.Access.Sesion.Instance.Informacion.ID, comando);
+            Hub.SendCommand(LIN.Access.Developer.Session.Instance.Informacion.ID, comando);
         }
 
     }

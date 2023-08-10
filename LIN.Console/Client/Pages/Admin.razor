@@ -26,7 +26,7 @@
 
 
 <!--Mensaje-->
-@if (LIN.Access.Sesion.Instance.Informacion.Rol == LIN.Shared.Enumerations.UserRol.Admin)
+@if (LIN.Access.Developer.Session.Instance.Account.Rol == AccountRoles.Admin)
 {
     <Alert Message="Administrador de platforma LIN Services" Class="success" Svg="0" />
 }
@@ -108,7 +108,7 @@ else
     private async void GoToSearh()
     {
 
-        var dd = await LIN.Access.Controllers.User.GetAll(TxtUser, LIN.Access.Sesion.Instance.Token);
+        var dd = await LIN.Access.Controllers.User.GetAll(TxtUser, LIN.Access.Developer.Session.Instance.Token);
 
         if (dd.Response != Responses.Success)
             return;

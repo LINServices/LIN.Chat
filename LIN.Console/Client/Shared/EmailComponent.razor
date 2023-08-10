@@ -170,7 +170,7 @@
 {
     async void Resend()
     {
-        var res = await LIN.Access.Controllers.User.ResendMail(Modelo.ID, LIN.Access.Sesion.Instance.Token);
+        var res = await LIN.Access.Controllers.User.ResendMail(Modelo.ID, LIN.Access.Developer.Session.Instance.Token);
      
     }
 

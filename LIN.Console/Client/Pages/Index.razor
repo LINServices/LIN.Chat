@@ -59,7 +59,7 @@
 
 
 
-@if (!LIN.Access.Sesion.IsOpen)
+@if (!LIN.Access.Developer.Session.IsOpen)
 {
     <div style="padding: 10px">
         <Alert Message="Debes iniciar sesion para acceder al tablero" Class="error" Svg="2" />
@@ -99,7 +99,7 @@ else
 
     @if (LIN.Access.Developer.Session.IsOpen)
     {
-        <h5 class="gilroy" style="font-size: 15px">@Saludo(LIN.Access.Sesion.Instance.Informacion.Nombre.Split(" ")[0]), ¿Que quieres hacer hoy?</h5>
+        <h5 class="gilroy" style="font-size: 15px">@Saludo(LIN.Access.Developer.Session.Instance.Account.Nombre.Split(" ")[0]), ¿Que quieres hacer hoy?</h5>
 
         <div class="flex mt-4">
 
@@ -112,9 +112,9 @@ else
         </div>
 
     }
-    else if (LIN.Access.Sesion.IsOpen)
+    else if (LIN.Access.Developer.Session.IsOpen)
     {
-        <h5 class="gilroy mb-8" style="font-size: 15px">@Saludo(LIN.Access.Sesion.Instance.Informacion.Nombre.Split(" ")[0]), Aun no tienes perfil de desarrollador</h5>
+        <h5 class="gilroy mb-8" style="font-size: 15px">@Saludo(LIN.Access.Developer.Session.Instance.Account.Nombre.Split(" ")[0]), Aun no tienes perfil de desarrollador</h5>
     }
     else
     {
@@ -142,7 +142,7 @@ else
         <div class="flex mt-8 credit">
 
             <CreditsCard Credicts="@LIN.Access.Developer.Session.Instance.Informacion.Credito"
-                         Name="@LIN.Access.Sesion.Instance.Informacion.Nombre" />
+                         Name="@LIN.Access.Developer.Session.Instance.Account.Nombre" />
 
         </div>
 

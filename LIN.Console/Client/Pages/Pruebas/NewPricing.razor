@@ -150,7 +150,7 @@
 
         IsMovLoaded = false;
         // Obtiene los dispositivos
-        var result = await LIN.Access.Developer.Controllers.Profile.ReadAllAsync(LIN.Access.Developer.Session.Instance.Informacion.ID);
+        var result = await LIN.Access.Developer.Controllers.Profile.ReadAllAsync(LIN.Access.Developer.Session.Instance.Informacion.ID, LIN.Access.Developer.Session.Instance.Token);
 
         if (result.Response == Responses.Success)
         {

@@ -4,7 +4,7 @@
 @inject NavigationManager nav
 
 
-@if(!Access.Sesion.IsOpen)
+@if(! Access.Developer.Session.IsOpen)
 {
     nav.NavigateTo("/login");
     return;
@@ -46,7 +46,7 @@
     {
         get
         {
-            return Convert.ToBase64String(LIN.Access.Sesion.Instance.Informacion.Perfil);
+            return Convert.ToBase64String(LIN.Access.Developer.Session.Instance.Account.Perfil);
         }
     }
 }
@@ -61,7 +61,7 @@
     protected override async Task OnInitializedAsync()
     {
 
-        var count = await LIN.Access.Controllers.Contact.Count(LIN.Access.Sesion.Instance.Token);
+        var count = await LIN.Access.Controllers.Contact.Count(LIN.Access.Developer.Session.Instance.Token);
         Count = count.Model;
 
         LoadEmails();
@@ -76,7 +76,7 @@
         base.StateHasChanged();
 
 
-        //var mails = await LIN.Access.Controllers.User.ReadEmails(LIN.Access.Sesion.Instance.Token);
+        //var mails = await LIN.Access.Controllers.User.ReadEmails(LIN.Access.Developer.Session.Instance.Token);
 
         loadEmail = true;
         base.StateHasChanged();
@@ -107,8 +107,8 @@
             <img class=" w-8 h-8 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500" src="data:image/png;base64,@Img64" alt="Bordered avatar">
 
             <div class="flex flex-col ml-2">
-                <label class="gilroy-bold text-sm text-gray-700">@LIN.Access.Sesion.Instance.Informacion.Nombre</label>
-                <label class="gilroy text-xs text-gray-500 -mt-1">@@@LIN.Access.Sesion.Instance.Informacion.Usuario</label>
+                <label class="gilroy-bold text-sm text-gray-700">@LIN.Access.Developer.Session.Instance.Account.Nombre</label>
+                <label class="gilroy text-xs text-gray-500 -mt-1">@@@LIN.Access.Developer.Session.Instance.Account.Usuario</label>
             </div>
 
         </div>
@@ -267,7 +267,7 @@
 
     async void Delete(string password)
     {
-        var response = await LIN.Access.Controllers.User.Disable(LIN.Access.Sesion.Instance.Informacion.ID, password);
+        var response = await LIN.Access.Controllers.User.Disable(LIN.Access.Developer.Session.Instance.Informacion.ID, password);
 
         switch (response.Response)
         {

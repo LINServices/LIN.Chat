@@ -285,18 +285,17 @@
         }
 
         // Inicio de sesion
-        var login = await LIN.Access.Sesion.LoginWith(User, Password, Platforms.Web);
+        var login = await LIN.Access.Developer.Session.LoginWith(User, Password);
 
         if (login.Response == Responses.Success)
         {
-            var loginDev = await LIN.Access.Developer.Session.LoginWith(login.Sesion.Informacion.ID);
 
-
-            await localStorage.SetItemAsync("token", login.Sesion.Token);
+            await localStorage.SetItemAsync("token", login.Sesion.AccountToken);
 
             Online.StaticHub.LoadHub();
             nav.NavigateTo("/");
             return;
+
         }
         else if (login.Response == Responses.InvalidPassword)
         {
@@ -384,16 +383,12 @@
              base.StateHasChanged();
 
              // Inicio de sesion
-             var login = await LIN.Access.Sesion.LoginWith(e.Token, Platforms.Web);
+             var login = await LIN.Access.Developer.Session.LoginWith(e.Token);
 
              if (login.Response == Responses.Success)
              {
-                 var loginDev = await LIN.Access.Developer.Session.LoginWith(login.Sesion.Informacion.ID);
-
-                 //  Shared.NavBar.Name = login.Sesion.Informacion.Nombre;
-                 //Shared.NavBar.User = login.Sesion.Informacion.Usuario;
-
-                 await localStorage.SetItemAsync("token", login.Sesion.Token);
+                 
+                 await localStorage.SetItemAsync("token", login.Sesion.AccountToken);
 
                  Online.StaticHub.LoadHub();
                  nav.NavigateTo("/");

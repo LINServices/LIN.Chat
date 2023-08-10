@@ -126,8 +126,8 @@
     {
 
         var response = await ((Modelo.State == ContactStatus.Normal) ?
-                              LIN.Access.Controllers.Contact.ToTrash(Modelo.ID, LIN.Access.Sesion.Instance.Token):
-                              LIN.Access.Controllers.Contact.Delete(Modelo.ID, LIN.Access.Sesion.Instance.Token));
+                              LIN.Access.Controllers.Contact.ToTrash(Modelo.ID, LIN.Access.Developer.Session.Instance.Token):
+                              LIN.Access.Controllers.Contact.Delete(Modelo.ID, LIN.Access.Developer.Session.Instance.Token));
 
 
         if (response.Response == Responses.Success)

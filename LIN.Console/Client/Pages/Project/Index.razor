@@ -128,7 +128,7 @@
 
         IsKeyLoaded = false;
 
-        var token = LIN.Access.Sesion.Instance.Token;
+        var token = LIN.Access.Developer.Session.Instance.Token;
 
         // Obtiene los dispositivos
         var result = await LIN.Access.Developer.Controllers.ApiKey.ReadAll(int.Parse(ID),token );

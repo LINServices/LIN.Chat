@@ -14,7 +14,7 @@ public partial class Index
 
         if (firstRender)
         {
-            await Access.Developer.Session.LoginWith(LIN.Access.Sesion.Instance.Informacion.ID);
+          //  await Access.Developer.Session.LoginWith(LIN.Access.Developer.Session.Instance.Informacion.ID);
             base.StateHasChanged();
         }
 

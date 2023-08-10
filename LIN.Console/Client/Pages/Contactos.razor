@@ -19,7 +19,7 @@
     {
         loaded = false;
 
-        var response = await LIN.Access.Controllers.Contact.ReadAll(LIN.Access.Sesion.Instance.Informacion.ID);
+        var response = await LIN.Access.Controllers.Contact.ReadAll(LIN.Access.Developer.Session.Instance.Informacion.ID);
 
 
         if (response.Response != Responses.Success)

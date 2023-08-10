@@ -277,21 +277,21 @@
 
 
 
-        var response = await Access.Sesion.LoginWith(res.Token, Platforms.Web);
+      //  var response = await Access.Sesion.LoginWith(res.Token, Platforms.Web);
 
 
-        if (response.Response == Responses.Success)
-        {
-            nav.NavigateTo("/");
-            await localStorage.SetItemAsync("token", res.Token);
-            Online.StaticHub.LoadHub();
-        }
-        else
-        {
-            ShowControls();
-            ShowError($"Hubo un error al iniciar sesion");
-            return;
-        }
+        // if (response.Response == Responses.Success)
+        // {
+        //     nav.NavigateTo("/");
+        //     await localStorage.SetItemAsync("token", res.Token);
+        //     Online.StaticHub.LoadHub();
+        // }
+        // else
+        // {
+        //     ShowControls();
+        //     ShowError($"Hubo un error al iniciar sesion");
+        //     return;
+        // }
 
 
 

@@ -77,9 +77,9 @@
 
         var modelo = new ProfileDataModel()
             {
-                Description = $"Hola, soy {LIN.Access.Sesion.Instance.Informacion.Nombre}",
-                Name = LIN.Access.Sesion.Instance.Informacion.Nombre,
-                UserID = LIN.Access.Sesion.Instance.Informacion.ID
+                Description = $"Hola, soy {LIN.Access.Developer.Session.Instance.Account.Nombre}",
+                Name = LIN.Access.Developer.Session.Instance.Account.Nombre,
+                UserID = LIN.Access.Developer.Session.Instance.Account.ID
             };
 
            
@@ -89,7 +89,7 @@
         if (result.Response == Responses.Success)
         {
 
-            var loginDev = await LIN.Access.Developer.Session.LoginWith(LIN.Access.Sesion.Instance.Informacion.ID);
+           // var loginDev = await LIN.Access.Developer.Session.LoginWith(LIN.Access.Developer.Session.Instance.Informacion.ID);
 
             // Iniciar sesion dev 
             await JS.InvokeVoidAsync("ForceClick", $"aut-close");

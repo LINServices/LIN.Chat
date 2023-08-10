@@ -13,7 +13,6 @@
 
     protected async override void OnInitialized()
     {
-        LIN.Access.Sesion.CloseSesion();
         LIN.Access.Developer.Session.CloseSession();
         Online.StaticHub.Leave();
         Index.AreProjectLoaded = false;
