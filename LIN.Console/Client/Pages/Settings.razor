@@ -137,15 +137,15 @@
 
                 @if (LIN.Access.Developer.Session.Instance.Account.Genero == Genders.Female)
                 {
-                    <label @onclick="UpdateGenero" id="lbOption" class="gilroy text-xs text-gray-500 -mt-1">Femenino</label>
+                    <label @onclick="UpdateGenero" id="lbOption" class="gilroy text-xs text-gray-500 -mt-1 hover:text-rose-600">Femenino</label>
                 }
                 else if (LIN.Access.Developer.Session.Instance.Account.Genero == Genders.Male)
                 {
-                    <label @onclick="UpdateGenero" id="lbOption" class="gilroy text-xs text-gray-500 -mt-1">Masculino</label>
+                    <label @onclick="UpdateGenero" id="lbOption" class="gilroy text-xs text-gray-500 -mt-1 hover:text-blue-600">Masculino</label>
                 }
                 else
                 {
-                    <label @onclick="UpdateGenero" id="lbOption" class="gilroy text-xs text-gray-500 -mt-1">Prefiero no decirlo</label>
+                    <label @onclick="UpdateGenero" id="lbOption" class="gilroy text-xs text-gray-500 -mt-1 hover:text-green-600">Prefiero no decirlo</label>
                 }
 
                
@@ -174,15 +174,15 @@
                 
                 @if (LIN.Access.Developer.Session.Instance.Account.Visibilidad == AccountVisibility.Visible)
                 {
-                    <label @onclick="UpdateVisibility" id="lbOption2" class="gilroy text-xs text-gray-500 -mt-1 hover:text-blue-500">Visible</label>
+                    <label @onclick="UpdateVisibility" id="lbOption2" class="gilroy text-xs text-gray-500 -mt-1 hover:text-slate-800">Visible</label>
                 }
                 else if (LIN.Access.Developer.Session.Instance.Account.Visibilidad == AccountVisibility.Hidden)
                 {
-                    <label @onclick="UpdateVisibility" id="lbOption2" class="gilroy text-xs text-gray-500 -mt-1 hover:text-blue-500">Oculto</label>
+                    <label @onclick="UpdateVisibility" id="lbOption2" class="gilroy text-xs text-gray-500 -mt-1 hover:text-slate-800">Oculto</label>
                 }
                 else
                 {
-                    <label @onclick="UpdateVisibility" id="lbOption2" class="gilroy text-xs text-gray-500 -mt-1 hover:text-blue-500">Indefinido</label>
+                    <label @onclick="UpdateVisibility" id="lbOption2" class="gilroy text-xs text-gray-500 -mt-1 hover:text-slate-800">Indefinido</label>
                 }
 
 
