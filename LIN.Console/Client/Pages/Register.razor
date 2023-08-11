@@ -240,7 +240,7 @@
 
 
         // Model
-        LIN.Shared.Models.UserDataModel modelo = new()
+        AccountModel modelo = new()
             {
                 Nombre = nombre,
                 Usuario = usuario,
@@ -248,7 +248,7 @@
             };
 
         // Creacion
-        var res = await LIN.Access.Controllers.User.CreateAsync(modelo);
+        var res = await LIN.Access.Auth.Controllers.Account.Create(modelo);
 
 
         // Respuesta
@@ -274,24 +274,21 @@
                 return;
         }
 
+       var response = await Access.Developer.Session.LoginWith(res.Token);
 
 
-
-      //  var response = await Access.Sesion.LoginWith(res.Token, Platforms.Web);
-
-
-        // if (response.Response == Responses.Success)
-        // {
-        //     nav.NavigateTo("/");
-        //     await localStorage.SetItemAsync("token", res.Token);
-        //     Online.StaticHub.LoadHub();
-        // }
-        // else
-        // {
-        //     ShowControls();
-        //     ShowError($"Hubo un error al iniciar sesion");
-        //     return;
-        // }
+        if (response.Response == Responses.Success)
+        {
+            nav.NavigateTo("/");
+            await localStorage.SetItemAsync("token", res.Token);
+            Online.StaticHub.LoadHub();
+        }
+        else
+        {
+            ShowControls();
+            ShowError($"Hubo un error al iniciar sesion");
+            return;
+        }
 
 
 

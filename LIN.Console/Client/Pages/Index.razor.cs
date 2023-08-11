@@ -4,7 +4,7 @@
 public partial class Index
 {
 
-    bool IsDevServerRunnig = false;
+    static bool IsDevServerRunnig = false;
 
     /// <summary>
     /// Informacion de desarrollador

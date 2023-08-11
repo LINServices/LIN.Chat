@@ -18,7 +18,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\AccesoAPI\LIN.Access.Auth\LIN.Access.Auth.csproj" />
     <ProjectReference Include="..\..\..\..\AccesoAPI\LIN.Access.Developer\LIN.Access.Developer.csproj" />
-    <ProjectReference Include="..\..\..\..\AccesoAPI\LIN.Access\LIN.Access.csproj" />
     <ProjectReference Include="..\..\..\..\SILFScript\SILF.Script\SILF.Script\SILF.Script.csproj" />
     <ProjectReference Include="..\..\..\..\Tipos\LIN.Modules\LIN.Modules.csproj" />
     <ProjectReference Include="..\..\..\..\Tipos\LIN.Shared\LIN.Shared.csproj" />

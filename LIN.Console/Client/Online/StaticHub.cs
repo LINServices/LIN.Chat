@@ -1,4 +1,4 @@
-﻿using LIN.Access.Hubs;
+﻿//using LIN.Access.Hubs;
 using LIN.Shared.Enumerations;
 using LIN.Shared.Models;
 
@@ -17,7 +17,7 @@ public class StaticHub
     /// <summary>
     /// Hub de conexion
     /// </summary>
-    public static AccountHub? Hub = null;
+    public static dynamic? Hub = null;
 
 
 
@@ -34,30 +34,30 @@ public class StaticHub
     public static void LoadHub()
     {
 
-        if (Hub == null)
-        {
+        //if (Hub == null)
+        //{
 
-            // Arma el modelo
-            var model = new DeviceModel()
-            {
-                Name = "Web",
-                Cuenta = Access.Developer.Session.Instance.Account.ID,
-                Modelo = "Dispositivo web",
-                BateryConected = MainLayout.IsChargin,
-                BateryLevel = MainLayout.LevelBattery,
-                Manufacter = "WEB",
-                OsVersion = "Navegador",
-                Platform = Platforms.Web,
-                App = LINApps.CloudConsole,
-                DeviceKey = Key,
-                Token = Access.Developer.Session.Instance.AccountToken
-            };
+        //    // Arma el modelo
+        //    var model = new DeviceModel()
+        //    {
+        //        Name = "Web",
+        //        Cuenta = Access.Developer.Session.Instance.Account.ID,
+        //        Modelo = "Dispositivo web",
+        //        BateryConected = MainLayout.IsChargin,
+        //        BateryLevel = MainLayout.LevelBattery,
+        //        Manufacter = "WEB",
+        //        OsVersion = "Navegador",
+        //        Platform = Platforms.Web,
+        //        App = LINApps.CloudConsole,
+        //        DeviceKey = Key,
+        //        Token = Access.Developer.Session.Instance.AccountToken
+        //    };
 
-            Hub = new(model);
+        //    Hub = new(model);
 
-        }
+        //}
 
-        Hub.OnReceiveCommand += Hub_OnReceiveCommand;
+        //Hub.OnReceiveCommand += Hub_OnReceiveCommand;
     }
 
 

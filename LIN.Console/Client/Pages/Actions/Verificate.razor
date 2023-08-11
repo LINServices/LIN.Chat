@@ -37,7 +37,7 @@
         Seccion = 0;
         base.StateHasChanged();
 
-        var res = await LIN.Access.Controllers.User.Verficate(Key);
+        var res = await LIN.Access.Auth.Controllers.Account.Verficate(Key);
 
         Seccion = (res.Response == Responses.Success) ? 1 : 2;
 

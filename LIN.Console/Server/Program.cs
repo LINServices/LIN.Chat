@@ -1,4 +1,3 @@
-using LIN.Access.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 

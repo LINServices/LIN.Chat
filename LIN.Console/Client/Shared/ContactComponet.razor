@@ -4,7 +4,7 @@
 @code
 {
     [Parameter]
-    public ContactDataModel Modelo { get; set; }
+    public dynamic Modelo { get; set; }
 
 
     [Parameter]
@@ -145,7 +145,7 @@
 
     async void GotoProj()
     {
-        ContactModal.Modelo = Modelo;
+      //  ContactModal.Modelo = Modelo;
         await JSRuntime.InvokeVoidAsync("ShowModal", $"contact-modal-A12", "contact-close-btn-A12");
         ContactModal.Context.Render();
 

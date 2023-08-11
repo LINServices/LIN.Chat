@@ -37,10 +37,10 @@ internal class Scripts
         Actions.Add("openCt", async (param) =>
         {
             var id = int.Parse(param);
-            var modelo =  await LIN.Access.Controllers.Contact.Read(id);
-            ContactModal.Modelo = modelo.Model;
-            await App.JS.InvokeVoidAsync("ShowModal", $"contact-modal-A12", "contact-close-btn-A12");
-            ContactModal.Context.Render();
+            //var modelo =  await LIN.Access.Auth.Controllers.Contact.Read(id);
+            //ContactModal.Modelo = modelo.Model;
+            //await App.JS.InvokeVoidAsync("ShowModal", $"contact-modal-A12", "contact-close-btn-A12");
+            //ContactModal.Context.Render();
         });
 
 

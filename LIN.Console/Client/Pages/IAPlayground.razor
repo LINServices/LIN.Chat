@@ -16,11 +16,18 @@
 
 
 
-@if(!Access.Developer.Session.IsOpen)
+@if(!Access.Developer.Session.IsAccountOpen)
 {
     nav.NavigateTo("/login");
     return;
 }
+
+@if (!Access.Developer.Session.IsDevOpen)
+{
+    <h1>Crea una cuenta</h1>
+    return;
+}
+
 
 
 

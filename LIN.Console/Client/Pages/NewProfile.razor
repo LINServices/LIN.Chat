@@ -32,7 +32,7 @@
     private int ProfileID { get; set; } = 0;
 
 
-    List<PaisDataModel> Paises = new();
+   // List<PaisDataModel> Paises = new();
 
 }
 
@@ -86,16 +86,16 @@
 
         var res = await LIN.Access.Developer.Controllers.Profile.Find(LIN.Access.Developer.Session.Instance.Informacion.ID);
 
-        var paises = await LIN.Access.Controllers.Api.GetPaises();
-        Paises = paises.Models;
+        // var paises = await LIN.Access.Controllers.Api.GetPaises();
+        // Paises = paises.Models;
 
-        if (res.Response == Responses.Success && res.Model.ID > 0)
-        {
-            Seccion = 2;
-            ProfileID = res.Model.ID;
-            EmailBind = res.Model.Email ?? "";
+        // if (res.Response == Responses.Success && res.Model.ID > 0)
+        // {
+        //     Seccion = 2;
+        //     ProfileID = res.Model.ID;
+        //     EmailBind = res.Model.Email ?? "";
 
-        }
+        // }
         base.StateHasChanged();
         base.OnInitialized();
     }
@@ -108,12 +108,12 @@
 }
 
 
-@if (!LIN.Access.Developer.Session.IsOpen)
+@if (!LIN.Access.Developer.Session.IsAccountOpen)
 {
     nav.NavigateTo("/login");
     return;
 }
-@if (LIN.Access.Developer.Session.IsOpen)
+@if (LIN.Access.Developer.Session.IsDevOpen)
 {
     nav.NavigateTo("/");
     return;
@@ -198,10 +198,10 @@
                                         <select @bind="CountryBind" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
 
                                             <option value="0" selected>Selecciona un pais</option>
-                                            @foreach (var pais in Paises)
+                                            @* @foreach (var pais in Paises)
                                             {
                                                 <option value="@pais.ShortName">@pais.Nombre</option>
-                                            }
+                                            } *@
 
                                         </select>
 

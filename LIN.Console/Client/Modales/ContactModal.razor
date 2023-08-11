@@ -3,7 +3,7 @@
 
     public static ContactModal Context { get; set; }
 
-    public static ContactDataModel Modelo { get; set; } = new();
+  //  public static ContactDataModel Modelo { get; set; } = new();
 
 
     [Parameter]
@@ -11,13 +11,13 @@
 
 
 
-    private string Img64
-    {
-        get
-        {
-            return Convert.ToBase64String(Modelo.Picture);
-        }
-    }
+    // private string Img64
+    // {
+    //     get
+    //     {
+    //         return Convert.ToBase64String(Modelo.Picture);
+    //     }
+    // }
 
 
     public void Render()
@@ -31,7 +31,7 @@
     Context = this;
 }
 
-
+@* 
 
 <div id="contact-modal-@Key" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
     <div class="relative w-full max-w-md max-h-full">
@@ -50,7 +50,7 @@
                     if (Modelo.Name.Length>0)
                     {
                          letter = Modelo.Name[0];
-                    }
+                    } 
                    
                     <div class="flex w-12 h-12 p-1 rounded-full ring-2 ring-gray-300 items-center justify-center">
                             <label class="gilroy-bold">@letter</label>
@@ -78,7 +78,7 @@
                 <div class="flex flex-row mt-2 p-2 w-full bg-gray-200 rounded-lg items-center">
                     <img class="ml-3 h-5 w-5" src="./img/directions.png" />
                     <h3 class="ml-2 text-base text-gray-500">@Modelo.Direction</h3>
-                </div>
+                </div> 
 
 
             </div>
@@ -87,3 +87,4 @@
 </div>
 
 
+ *@

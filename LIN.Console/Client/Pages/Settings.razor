@@ -4,7 +4,7 @@
 @inject NavigationManager nav
 
 
-@if(! Access.Developer.Session.IsOpen)
+@if(! Access.Developer.Session.IsAccountOpen)
 {
     nav.NavigateTo("/login");
     return;
@@ -61,8 +61,8 @@
     protected override async Task OnInitializedAsync()
     {
 
-        var count = await LIN.Access.Controllers.Contact.Count(LIN.Access.Developer.Session.Instance.Token);
-        Count = count.Model;
+      //  var count = await LIN.Access.Controllers.Contact.Count(LIN.Access.Developer.Session.Instance.Token);
+    //    Count = count.Model;
 
         LoadEmails();
 
@@ -267,7 +267,7 @@
 
     async void Delete(string password)
     {
-        var response = await LIN.Access.Controllers.User.Disable(LIN.Access.Developer.Session.Instance.Informacion.ID, password);
+        var response = await LIN.Access.Auth.Controllers.Account.Disable(LIN.Access.Developer.Session.Instance.Informacion.ID, password);
 
         switch (response.Response)
         {

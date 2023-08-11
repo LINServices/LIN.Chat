@@ -19,15 +19,15 @@
     {
         loaded = false;
 
-        var response = await LIN.Access.Controllers.Contact.ReadAll(LIN.Access.Developer.Session.Instance.Informacion.ID);
+       // var response = await LIN.Access.Controllers.Contact.ReadAll(LIN.Access.Developer.Session.Instance.Informacion.ID);
 
 
-        if (response.Response != Responses.Success)
-        {
-            return;
-        }
+        // if (response.Response != Responses.Success)
+        // {
+        //     return;
+        // }
 
-        Online.StaticHub.Hub.OnReceiveContact += Hub_OnReceiveContact;
+        // Online.StaticHub.Hub.OnReceiveContact += Hub_OnReceiveContact;
 
 
         //Modelos = response.Models.Where(T => T.State == ContactStatus.Normal).ToList();
@@ -65,7 +65,7 @@
         <div class="mt-4">
             @foreach (var model in Modelos)
             {
-                <ContactComponet Modelo="model"></ContactComponet>
+               // <ContactComponet Modelo="model"></ContactComponet>
             }
         </div>
 
@@ -92,11 +92,11 @@
 
     }
 
-    private async void Hub_OnReceiveContact(object? sender, ContactDataModel e)
-    {
+    // private async void Hub_OnReceiveContact(object? sender, ContactDataModel e)
+    // {
 
-        Modelos.Add(e);
-        base.StateHasChanged();
+    //     Modelos.Add(e);
+    //     base.StateHasChanged();
 
-    }
+    // }
 }

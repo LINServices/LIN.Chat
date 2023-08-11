@@ -18,16 +18,16 @@
 
     public int Seccion = 0;
 
-    UserDataModel Model { get; set; } = new();
+   // UserDataModel Model { get; set; } = new();
 
 
-    private string Img64
-    {
-        get
-        {
-            return Convert.ToBase64String(Model.Perfil);
-        }
-    }
+    // private string Img64
+    // {
+    //     get
+    //     {
+    //        // return Convert.ToBase64String(Model.Perfil);
+    //     }
+    // }
 
     protected override async Task OnInitializedAsync()
     {
@@ -40,17 +40,17 @@
             return;
         }
 
-        var user = await LIN.Access.Controllers.User.ReadOneAsync(id);
+       // var user = await LIN.Access.Auth.Controllers.Account.ReadOneAsync(id);
 
-        if (user.Response == Responses.Success)
-        {
-            Model = user.Model;
-            Seccion = 1;
-        }
-        else
-        {
-            Seccion = 2;
-        }
+        // if (user.Response == Responses.Success)
+        // {
+        //     Model = user.Model;
+        //     Seccion = 1;
+        // }
+        // else
+        // {
+        //     Seccion = 2;
+        // }
 
         base.StateHasChanged();
         await base.OnInitializedAsync();
@@ -81,8 +81,8 @@
             <div class="mt-4 h-8 w-full bg-gray-50 rounded-md ring-2 ring-gray-200 hover:ring-gray-300">
                 <div class="flex flex-row items-center h-full w-full ml-2">
 
-                    <img class="w-5 h-5 p-1 rounded-full ring-2 ring-gray-300 self-center" src="data:image/png;base64,@Img64" alt="Bordered avatar">
-                    <label class="text-xs self-center ml-2 gilroy-bold">@Model.Nombre</label>
+                    <img class="w-5 h-5 p-1 rounded-full ring-2 ring-gray-300 self-center" src="data:image/png;base64, " alt="Bordered avatar">
+                    <label class="text-xs self-center ml-2 gilroy-bold"></label>
 
                 </div>
             </div>
@@ -162,7 +162,7 @@
 
 
 
-        var response = await LIN.Access.Controllers.User.ResetPassword(Key, model);
+        var response = await LIN.Access.Auth.Controllers.Account.ResetPassword(Key, model);
 
         Seccion = 1;
         base.StateHasChanged();

@@ -13,7 +13,7 @@
 
 
 <!--Mensaje-->
-@if (!LIN.Access.Developer.Session.IsOpen)
+@if (!LIN.Access.Developer.Session.IsAccountOpen)
 {
     <Alert Message="Debes iniciar sesion para poder acceder a tus registros" Class="warning" Svg="1" />
     return;

@@ -71,13 +71,14 @@
 
     void GoPlayGround()
     {
-        if (!LIN.Access.Developer.Session.IsOpen)
+
+        if (!LIN.Access.Developer.Session.IsAccountOpen)
         {
             nav.NavigateTo("/login");
             return;
         }
 
-        if (!LIN.Access.Developer.Session.IsOpen)
+        if (!LIN.Access.Developer.Session.IsDevOpen)
         {
             nav.NavigateTo("/");
             return;
