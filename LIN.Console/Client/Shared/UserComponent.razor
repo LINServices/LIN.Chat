@@ -3,15 +3,21 @@
 
 @code {
 
-    [Parameter]
-    public LIN.Shared.Models.UserDataModel Modelo { get; set; }
 
-    //public List<LIN.Shared.Models.UserAccessLogDataModel> Logs { get; set; } = new();
+    [Parameter]
+    public AccountModel Modelo { get; set; } = new();
+
+
+
+
+    public List<LoginLogModel> Logs { get; set; } = new();
+
 
     public LIN.Types.Developer.Models.ProfileDataModel Profile { get; set; } = new();
 
     async void Click()
     {
+
         var profile = await LIN.Access.Developer.Controllers.Profile.ReadOneAsync(Modelo.ID);
 
         Profile = profile.Model;
@@ -33,6 +39,12 @@
 }
 
 
+
+
+
+
+
+
 <div @onclick="() => { Click(); }" class="flex items-center space-x-4 bg-white rounded p-2">
     <div class="flex-shrink-0">
         <img class="w-8 h-8 rounded-full" src="data:image/png;base64,@Img64" alt="Neil image">
@@ -49,13 +61,17 @@
 
         <div class="h-6 bg-gray-600 rounded-xl mr-3 flex items-center justify-center hover:bg-blue-600">
 
-            @if (Modelo.Rol == UserRol.User)
+            @if (Modelo.Rol == AccountRoles.User)
             {
                 <label class="text-xs text-white pl-3 pr-3">Usuario</label>
             }
-            else if (Modelo.Rol == UserRol.Admin)
+            else if (Modelo.Rol == AccountRoles.Admin)
             {
                 <label class="text-xs text-white pl-3 pr-3">Administrador</label>
+            }
+            else if (Modelo.Rol == AccountRoles.Employee)
+            {
+                <label class="text-xs text-white pl-3 pr-3">Interno</label>
             }
         </div>
     </div>
@@ -95,11 +111,11 @@
             <!-- Modal header -->
             <div class="px-6 py-4 border-b rounded-t">
 
-                @if (Modelo.Rol == UserRol.User)
+                @if (Modelo.Rol == AccountRoles.User)
                 {
                     <h3 class="text-base font-semibold text-gray-900 lg:text-xl">Usuario</h3>
                 }
-                else if (Modelo.Rol == UserRol.Admin)
+                else if (Modelo.Rol == AccountRoles.Admin)
                 {
                     <h3 class="text-base font-semibold text-gray-900 lg:text-xl">Administrador</h3>
                 }
@@ -155,13 +171,13 @@
 
                     <div class="flex flex-col">
 
-                     @*    @foreach (var e in Logs)
+                        @foreach (var e in Logs)
                         {
                             <div class="flex flex-col h-10 w-full bg-gray-100 rounded-lg mt-2 justify-center pl-3">
                                 <label style="font-size: 12px" class="gilroy-bold">Acceso</label>
                                 <p style="font-size: 10px" class="mt-1 font-normal text-gray-600 -mt-1">@e.Date.ToString("dd/MM/yyyy HH:mm:ss")</p>
                             </div>
-                        } *@
+                        }
 
                     </div>
 
@@ -177,7 +193,7 @@
 
                     <li>
 
-                        @if (Modelo.Estado == LIN.Shared.Enumerations.AccountStatus.Normal)
+                        @if (Modelo.Estado == AccountStatus.Normal)
                         {
                             <a @onclick="()=>{SendNewState(LIN.Shared.Enumerations.AccountStatus.Banned);}" class="flex items-center p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow">
 
@@ -188,7 +204,7 @@
                             </a>
                         }
 
-                        else if (Modelo.Estado == LIN.Shared.Enumerations.AccountStatus.Banned || Modelo.Estado == LIN.Shared.Enumerations.AccountStatus.Disable)
+                        else if (Modelo.Estado == AccountStatus.Banned || Modelo.Estado == AccountStatus.Disable)
                         {
                             <a @onclick="()=>{SendNewState(LIN.Shared.Enumerations.AccountStatus.Normal);}" class="flex items-center p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow">
 

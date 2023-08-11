@@ -75,12 +75,12 @@
         loadEmail = false;
         base.StateHasChanged();
 
-
-        //var mails = await LIN.Access.Controllers.User.ReadEmails(LIN.Access.Developer.Session.Instance.Token);
+        var token = LIN.Access.Developer.Session.Instance.AccountToken;
+        var mails = await Access.Auth.Controllers.Mail.ReadAll(token);
 
         loadEmail = true;
         base.StateHasChanged();
-       // Emails = mails.Models;
+       Emails = mails.Models;
         base.StateHasChanged();
     }
 

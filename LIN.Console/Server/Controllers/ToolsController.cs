@@ -9,6 +9,19 @@ public class ToolsController : Microsoft.AspNetCore.Mvc.Controller
 {
 
 
+    /// <summary>
+    /// Obtiene el estado del servidor
+    /// </summary>
+    [HttpGet("status")]
+    public dynamic Status()
+    {
+        return StatusCode(200, new
+        {
+            Status = "Running"
+        });
+    }
+
+
     [HttpGet("myip")]
     public async Task<ActionResult> WhatsMyIP([FromServices] IHttpContextAccessor http)
     {

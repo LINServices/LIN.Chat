@@ -12,7 +12,7 @@
 @code{
 
 
-    private List<LIN.Shared.Models.UserDataModel> Modelos = new();
+    private List<AccountModel> Modelos = new();
 
     private string TxtUser { get; set; } = "";
 
@@ -108,14 +108,13 @@ else
     private async void GoToSearh()
     {
 
-        var dd = await LIN.Access.Controllers.User.GetAll(TxtUser, LIN.Access.Developer.Session.Instance.Token);
+        var finds = await LIN.Access.Auth.Controllers.Account.GetAll(TxtUser, LIN.Access.Developer.Session.Instance.AccountToken);
 
-        if (dd.Response != Responses.Success)
+        if (finds.Response != Responses.Success)
             return;
 
-            Modelos = dd.Models;
-
-            base.StateHasChanged();
+        Modelos = finds.Models;
+        base.StateHasChanged();
     }
 
 

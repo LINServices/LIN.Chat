@@ -30,8 +30,8 @@
         Online.StaticHub.Hub.OnReceiveContact += Hub_OnReceiveContact;
 
 
-        Modelos = response.Models.Where(T => T.State == ContactStatus.Normal).ToList();
-        Papelera = response.Models.Where(T => T.State == ContactStatus.OnTrash).ToList();
+        //Modelos = response.Models.Where(T => T.State == ContactStatus.Normal).ToList();
+       // Papelera = response.Models.Where(T => T.State == ContactStatus.OnTrash).ToList();
         loaded = true;
         base.StateHasChanged();
 
