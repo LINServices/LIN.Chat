@@ -83,26 +83,26 @@
 
     async void Change()
     {
-        // var token = LIN.Access.Developer.Session.Instance.Token;
-        // // Validadar las contraseñas
-        // var s = await LIN.Access.Controllers.User.AddEmail(Password, new()
-        //     {
-        //         Email = Email,
-        //         UserID = LIN.Access.Developer.Session.Instance.Informacion.ID
-        //     }, token);
+       
+        // Validadar las contraseñas
+        var s = await LIN.Access.Auth.Controllers.Mail.Aggregate(Password, new()
+            {
+                Email = Email,
+                UserID = LIN.Access.Developer.Session.Instance.Account.ID
+            });
 
 
-        // if(s.Response == Responses.Success)
-        // {
-        //     ModalError.Show("Verica tu correo");
-        // }
-        // else
-        // {
-        //     ModalError.Show("Hubo un error al agregar el email");
-        // }
+        if(s.Response == Responses.Success)
+        {
+            ModalError.Show("Verica tu correo");
+        }
+        else
+        {
+            ModalError.Show("Hubo un error al agregar el email");
+        }
 
-        // Password = "";
-        // Email = "";
+        Password = "";
+        Email = "";
 
     }
 

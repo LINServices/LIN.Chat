@@ -20,6 +20,7 @@
 
 <Options Name="dropGenero" OnSuccess="StateHasChanged" />
 
+<VisibilityOptions Name="dropVisibilidad" OnSuccess="StateHasChanged" />
 
 
 
@@ -115,7 +116,7 @@
 
 
         <!-- Genero -->
-        <div class="ring-1 ring-gray-300 rounded-lg p-5 mt-5 flex flex-row">
+        <div class="ring-1 ring-gray-300 rounded-lg p-5 mt-3 flex flex-row">
 
             @if(LIN.Access.Developer.Session.Instance.Account.Genero == Genders.Female)
             {
@@ -153,8 +154,45 @@
         </div>
 
 
+        <!-- Visibilidad -->
+        <div class="ring-1 ring-gray-300 rounded-lg p-5 mt-3 flex flex-row">
+
+            @if (LIN.Access.Developer.Session.Instance.Account.Visibilidad == AccountVisibility.Visible)
+            {
+                <img class=" w-8 h-8" src="./img/visible.png" alt="Bordered avatar">
+            }
+            else if (LIN.Access.Developer.Session.Instance.Account.Visibilidad == AccountVisibility.Hidden)
+            {
+                <img class=" w-8 h-8" src="./img/hidden.png" alt="Bordered avatar">
+            }
+           
+
+
+            <div class="flex flex-col ml-2">
+                <label class="gilroy-bold text-sm text-gray-700">Visibilidad</label>
+
+                
+                @if (LIN.Access.Developer.Session.Instance.Account.Visibilidad == AccountVisibility.Visible)
+                {
+                    <label @onclick="UpdateVisibility" id="lbOption2" class="gilroy text-xs text-gray-500 -mt-1 hover:text-blue-500">Visible</label>
+                }
+                else if (LIN.Access.Developer.Session.Instance.Account.Visibilidad == AccountVisibility.Hidden)
+                {
+                    <label @onclick="UpdateVisibility" id="lbOption2" class="gilroy text-xs text-gray-500 -mt-1 hover:text-blue-500">Oculto</label>
+                }
+                else
+                {
+                    <label @onclick="UpdateVisibility" id="lbOption2" class="gilroy text-xs text-gray-500 -mt-1 hover:text-blue-500">Indefinido</label>
+                }
+
+
+            </div>
+
+        </div>
+
+
         <!-- Contactos -->
-        <div class="ring-1 ring-gray-300 rounded-lg p-5 mt-5 flex flex-row">
+        <div class="ring-1 ring-gray-300 rounded-lg p-5 mt-3 flex flex-row">
 
             
                 <img class=" w-8 h-8" src="./img/contactos.png" alt="Bordered avatar">
@@ -261,6 +299,11 @@
    async void UpdateGenero()
     {
         await Options.Show("dropGenero", "lbOption", LIN.Access.Developer.Session.Instance.Account.Genero);
+    }
+
+    async void UpdateVisibility()
+    {
+        await VisibilityOptions.Show("dropVisibilidad", "lbOption2", LIN.Access.Developer.Session.Instance.Account.Visibilidad);
     }
 
 
