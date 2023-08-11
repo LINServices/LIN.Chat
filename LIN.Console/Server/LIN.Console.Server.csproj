@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Client\LIN.Console.Client.csproj" />
-    <ProjectReference Include="..\Shared\LIN.Console.Shared.csproj" />
   </ItemGroup>
 
 

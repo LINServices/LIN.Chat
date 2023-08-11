@@ -23,7 +23,6 @@
     <ProjectReference Include="..\..\..\..\Tipos\LIN.Shared\LIN.Shared.csproj" />
     <ProjectReference Include="..\..\..\..\Tipos\LIN.Types.Auth\LIN.Types.Auth.csproj" />
     <ProjectReference Include="..\..\..\..\Tipos\LIN.Types.Developer\LIN.Types.Developer.csproj" />
-    <ProjectReference Include="..\Shared\LIN.Console.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>
