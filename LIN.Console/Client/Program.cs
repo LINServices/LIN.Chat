@@ -1,11 +1,8 @@
-global using Microsoft.JSInterop;
-global using LIN.Types.Responses;
-global using LIN.Types.Developer;
-global using LIN.Types.Developer.Models;
+global using LIN.Types.Auth.Enumerations;
 global using LIN.Types.Auth.Models;
 global using LIN.Types.Enumerations;
-global using LIN.Access;
-global using LIN.Types.Auth.Enumerations;
+global using LIN.Types.Responses;
+global using Microsoft.JSInterop;
 using Blazored.LocalStorage;
 using LIN.Console.Client;
 using LIN.Console.Client.Online;
@@ -27,6 +24,6 @@ App.MyAddress = builder.HostEnvironment.BaseAddress;
 
 Scripts.Build();
 
-StaticHub.Key =  LIN.Modules.KeyGen.Generate(20, "dv.");
+StaticHub.Key = LIN.Modules.KeyGen.Generate(20, "dv.");
 
 await builder.Build().RunAsync();
