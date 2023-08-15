@@ -418,27 +418,27 @@
 
         // };
 
-        var intent = new LIN.Shared.Models.PasskeyIntentDataModel()
-            {
-                ApplicationName = "LIN Cloud Console",
-                User = User
-            };
+        // var intent = new LIN.Shared.Models.PasskeyIntentDataModel()
+        //     {
+        //         ApplicationName = "LIN Cloud Console",
+        //         User = User
+        //     };
 
-        hub.SendIntent(intent);
+        // hub.SendIntent(intent);
 
-        await Task.Delay(3000);
-        cancelShow = true;
-        base.StateHasChanged();
+        // await Task.Delay(3000);
+        // cancelShow = true;
+        // base.StateHasChanged();
 
-        await Task.Delay(60000);
+        // await Task.Delay(60000);
 
-        if (reive)
-            return;
+        // if (reive)
+        //     return;
 
-        hub.Disconet();
-        hub = null;
-        ShowControls();
-        ShowError("La sesion de passkey ha expirado");
+        // hub.Disconet();
+        // hub = null;
+        // ShowControls();
+        // ShowError("La sesion de passkey ha expirado");
 
     }
 

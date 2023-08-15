@@ -29,7 +29,7 @@ public class ToolsController : Microsoft.AspNetCore.Mvc.Controller
         // Cual es mi IP
         var myIP = Firewall.HttpIPv4(http);
 
-        var isvalid = LIN.Shared.Validations.IP.ValidateIPv4(myIP);
+        var isvalid = LIN.Modules.IP.ValidateIPv4(myIP);
 
         if (isvalid)
             return Ok(myIP);

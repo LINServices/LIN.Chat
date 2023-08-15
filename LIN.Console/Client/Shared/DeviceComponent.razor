@@ -5,7 +5,7 @@
 
 
     [Parameter]
-    public LIN.Shared.Models.DeviceModel Modelo { get; set; }
+    public DeviceModel Modelo { get; set; }
 
 }
 
@@ -59,19 +59,19 @@
             <h1 style="margin-top: -1px;" class="gilroy-bold">@Modelo.Name</h1>
 
 
-          @*   @if (Modelo.App == LINApps.Inventory)
+            @if (Modelo.App == Applications.Inventory)
             {
                 <h4 style="margin-top: -5px; font-size: 11px;">LIN Inventario</h4>
             }
-            else if (Modelo.App == LINApps.Admin)
+            else if (Modelo.App == Applications.Admin)
             {
-                <h4 style="margin-top: -5px; font-size: 11px;">Administracion de LIN</h4>
+                <h4 style="margin-top: -5px; font-size: 11px;">Administración de LIN</h4>
             }
-            else if (Modelo.App == LINApps.CloudConsole)
+            else if (Modelo.App == Applications.CloudConsole)
             {
                 <h4 style="margin-top: -5px; font-size: 11px;">LIN Cloud Console</h4>
             }
- *@
+
         </div>
 
         <div @onclick:stopPropagation="true" class="ml-auto flex justify-center items-center mr-2">

@@ -362,7 +362,7 @@
 
         string? mail = null;
 
-        if (!LIN.Shared.Validations.Mail.Validar(EmailBind))
+        if (!LIN.Modules.Mail.Validar(EmailBind))
         {
             ModalError.Show("El Email es invalido");
             return;

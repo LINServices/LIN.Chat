@@ -5,7 +5,7 @@
 
 @code {
 
-    List<LIN.Shared.Models.DeviceModel> DevicesList = new();
+    List<DeviceModel> DevicesList = new();
 
     bool load = false;
 
@@ -13,11 +13,11 @@
 }
 
 @{
-    // if (Online.StaticHub.Hub != null)
-    // {
-    //     Online.StaticHub.Hub.OnReceiveDevice += R;
-    //     Online.StaticHub.Hub.OnSomeoneLeave += R;
-    // }
+    if (Online.StaticHub.Hub != null)
+    {
+        //Online.StaticHub.Hub.OnDeviceJoins += R;
+        Online.StaticHub.Hub.OnDeviceLeaves += R;
+    }
 }
 
 
@@ -32,7 +32,7 @@
     }
 
 
-    public void R(object obj, LIN.Shared.Models.DeviceModel mp)
+    public void R(object obj, DeviceModel mp)
     {
         var count = DevicesList.Where(T => T.ID == mp.ID).Count();
 
@@ -135,19 +135,19 @@
         load = false;
         base.StateHasChanged();
 
-        var sesion = LIN.Access.Developer.Session.Instance.Informacion;
+        var sesion = LIN.Access.Developer.Session.Instance;
 
-        // Obtiene los dispositivos
-        // var result = await LIN.Access.Controllers.Devices.ReadAll(Online.StaticHub.HubID ?? "", sesion.ID);
+       // Obtiene los dispositivos
+        var result = await LIN.Access.Auth.Controllers.Devices.ReadAll(sesion.AccountToken);
 
 
-        // // Evalua el resultado
-        // if (result.Response == Responses.Success)
-        // {
-        //     load = true;
-        //     DevicesList = result.Models;
-        //     base.StateHasChanged();
-        // }
+        // Evalua el resultado
+        if (result.Response == Responses.Success)
+        {
+            load = true;
+            DevicesList = result.Models;
+            base.StateHasChanged();
+        }
 
     }
 }

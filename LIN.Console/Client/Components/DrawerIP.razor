@@ -154,14 +154,14 @@
         }
 
         // Validar IP
-        if (!LIN.Shared.Validations.IP.ValidateIPv4(IPInicio))
+        if (!LIN.Modules.IP.ValidateIPv4(IPInicio))
         {
             await OnErrorCreate.InvokeAsync("Direccion IP de inico invalida");
             return;
         }
 
         // Validar IP
-        if (!LIN.Shared.Validations.IP.ValidateIPv4(IPFinal))
+        if (!LIN.Modules.IP.ValidateIPv4(IPFinal))
         {
             await OnErrorCreate.InvokeAsync("Direccion IP final invalida");
             return;

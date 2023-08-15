@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Console.Client", "LIN.C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Types.Developer", "D:\LIN Services\Tipos\LIN.Types.Developer\LIN.Types.Developer.csproj", "{50967570-E520-464C-B63D-D44669823B3D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Shared", "..\..\Tipos\LIN.Shared\LIN.Shared.csproj", "{6BAF7458-5AAF-4A9F-A2CD-E9190ACEC7D8}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SILF.Script", "..\..\SILFScript\SILF.Script\SILF.Script\SILF.Script.csproj", "{3FB19D49-9D55-4A2E-AE6A-304B889F9EA4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Access.Developer", "..\..\AccesoAPI\LIN.Access.Developer\LIN.Access.Developer.csproj", "{B66DB91E-10FB-44E6-9849-53271E7A2BF6}"
@@ -39,10 +37,6 @@ Global
 		{50967570-E520-464C-B63D-D44669823B3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{50967570-E520-464C-B63D-D44669823B3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{50967570-E520-464C-B63D-D44669823B3D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6BAF7458-5AAF-4A9F-A2CD-E9190ACEC7D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6BAF7458-5AAF-4A9F-A2CD-E9190ACEC7D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6BAF7458-5AAF-4A9F-A2CD-E9190ACEC7D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6BAF7458-5AAF-4A9F-A2CD-E9190ACEC7D8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3FB19D49-9D55-4A2E-AE6A-304B889F9EA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3FB19D49-9D55-4A2E-AE6A-304B889F9EA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3FB19D49-9D55-4A2E-AE6A-304B889F9EA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
