@@ -1,0 +1,14 @@
+﻿@code {
+
+    [Parameter]
+    public string Latitud { get; set; }
+
+    [Parameter]
+    public string Longitud { get; set; }
+
+    string cadena => $"http://linmaps.somee.com/mapa/light/{Longitud.Replace(',', '.')}/{Latitud.Replace(',', '.')}/pk.nG1P6Y7lEGTZrsdawGN8T1lsDofolu5UuOZF";
+
+}
+
+    <iframe class="h-full w-full rounded-lg" src="@cadena"></iframe>
+

@@ -71,49 +71,52 @@
 
 
     <!-- Textarea de IA Names -->
-    <div>
-
-            <div class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 mt-3">
+    <div class="mt-5">
 
 
-               
-                <!-- Input Text -->
-                <div class="px-4 py-2 bg-white rounded-t-lg">
-                    <label for="comment" class="sr-only">¿Cual es el nombre?</label>
-                    <textarea @onkeypress="()=>{Clases = string.Empty; Message = string.Empty;}" @bind="Value" rows="4" class="w-full px-0 text-sm text-gray-900 bg-white border-0 focus:ring-0" placeholder="Comentario para LIN IA..." required></textarea>
-                </div>
 
-                <!-- Botones -->
-                <div class="flex items-center justify-between px-3 py-2 border-t">
-                    <button @onclick="Send" class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-600 rounded-lg focus:ring-4 focus:ring-blue-200  hover:bg-blue-800">
-                        Enviar a IA
-                    </button>
+        <div class="mx-auto grid max-w-2xl gap-5 h-56 grid-cols-1 lg:max-w-none lg:grid-cols-2">
 
-                    <div class="flex items-center justify-center">
-
-                        @if(!string.IsNullOrEmpty(Message))
-                        {
-                              <img class="mr-1" style="height: 10px; width: 10px" src="@src">
-                        }
-                        <label style="font-size: 12px" class="gilroy-bold @Clases">@Message</label>
-                    </div>
-
-                    <div class="flex pl-0 space-x-1 sm:pl-2">
-                        <button type="button" class="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100">
-                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path></svg>
-                            <span class="sr-only">Upload image</span>
-                        </button>
-
-                    </div>
-                </div>
+            <div class="h-full">
+                <Map Latitud="7" Longitud="7" />
             </div>
-                
 
+            <div>
+
+
+
+                <div class="flex items-center">
+                    <label for="voice-search" class="sr-only">Search</label>
+                    <div class="relative w-full">
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                           
+
+                            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"  viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999zm2.493 8.574a.5.5 0 0 1-.411.575c-.712.118-1.28.295-1.655.493a1.319 1.319 0 0 0-.37.265.301.301 0 0 0-.057.09V14l.002.008a.147.147 0 0 0 .016.033.617.617 0 0 0 .145.15c.165.13.435.27.813.395.751.25 1.82.414 3.024.414s2.273-.163 3.024-.414c.378-.126.648-.265.813-.395a.619.619 0 0 0 .146-.15.148.148 0 0 0 .015-.033L12 14v-.004a.301.301 0 0 0-.057-.09 1.318 1.318 0 0 0-.37-.264c-.376-.198-.943-.375-1.655-.493a.5.5 0 1 1 .164-.986c.77.127 1.452.328 1.957.594C12.5 13 13 13.4 13 14c0 .426-.26.752-.544.977-.29.228-.68.413-1.116.558-.878.293-2.059.465-3.34.465-1.281 0-2.462-.172-3.34-.465-.436-.145-.826-.33-1.116-.558C3.26 14.752 3 14.426 3 14c0-.599.5-1 .961-1.243.505-.266 1.187-.467 1.957-.594a.5.5 0 0 1 .575.411z" />
+                            </svg>
+
+                        </div>
+                        <input type="text" id="voice-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-green-500 block w-full pl-10 p-2.5" placeholder="Buscar lugares, ciudades ..." required>
+
+                    </div>
+                    <button type="submit" class="inline-flex items-center py-2.5 px-3 ml-2 text-sm font-medium text-white bg-green-600 rounded-lg border border-green-600 hover:bg-green-800 focus:ring-2 focus:outline-none focus:ring-green-500">
+                        <svg class="w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                        </svg>Buscar
+                    </button>
+                </div>
+
+
+
+
+            </div>
+
+        </div>
 
     </div>
 
 
-    <p class="ml-auto text-xs text-gray-500 ">Recuerda, los usos que generes en el playground seran cobrados a tu cuenta, ve a <a href="/transacciones" class="text-blue-600 hover:underline">Costos y adminstracion</a>.</p>
+    <p class="ml-auto mt-4 text-xs text-gray-500 ">Recuerda, los usos que generes en el playground serán cobrados a tu cuenta, ve a <a href="/transacciones" class="text-green-600 hover:underline">Costos y administración</a>.</p>
 
 
 </div>
