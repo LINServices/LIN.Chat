@@ -2,6 +2,7 @@
 @inject NavigationManager nav
 @inject IJSRuntime JS
 
+
 <NavBar />
 
 @code{
@@ -9,7 +10,11 @@
     private bool IsSending = false;
     private string Value = "";
 
+    private bool IsJson = false;
+    private string json = "";
     private Map map;
+
+
 
 }
 
@@ -108,17 +113,31 @@
 
                 <div class="flex flex-col">
 
-                    @foreach(var m in Places)
+                    @if (IsJson)
                     {
-                        <div class="flex flex-col mt-3" @onclick="()=>click(m.Latitud, m.Longitud)">
-                            <label>@m.Text</label>
-                            <label>@m.Longitud | @m.Latitud</label>
-                            <label>@m.Nombre</label>
+                        <div class="w-full bg-gray-200 p-1">
+                            <p>@json</p>
                         </div>
+                       
+                    }
+                    else
+                    {
+                        @foreach (var m in Places)
+                        {
+                            <Place Model="m" OnClick="click" />
+                        }
                     }
 
                 </div>
 
+                @if (IsJson)
+                {
+                    <label @onclick="()=>IsJson= !IsJson">Ver resultado</label>
+                }
+                else
+                {
+                    <label @onclick="()=>IsJson= !IsJson">Ver JSON</label>
+                }
 
 
             </div>
@@ -136,19 +155,25 @@
 @code {
 
 
+
     List<LIN.Types.Maps.Models.PlaceDataModel> Places = new();
 
     async void Send()
     {
         var response = await LIN.Access.Maps.Controllers.Search.FindPlaces(Value, 4, "pk.nG1P6Y7lEGTZrsdawGN8T1lsDofolu5UuOZF");
+
+        json = Newtonsoft.Json.JsonConvert.SerializeObject(response);
+
         Places = response.Models;
         base.StateHasChanged();
     }
 
     void click(string latitud, string longitud)
     {
-        // map.Latitud = latitud;
-        // map.Longitud = longitud;
+        map.Latitud = latitud;
+        map.Longitud = longitud;
+
+
 
         map.GoToHome();
     }

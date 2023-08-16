@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Access.Auth", "..\..\Ac
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Types.Maps", "..\..\Tipos\LIN.Types.Maps\LIN.Types.Maps.csproj", "{ACAF7E01-2DF5-4514-9CB3-E4A2A2EBAC08}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LIN.Access.Maps", "..\..\AccesoAPI\LIN.Access.Maps\LIN.Access.Maps.csproj", "{E3CBF806-976A-44A0-9FA6-C80A8ED9E7CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Access.Maps", "..\..\AccesoAPI\LIN.Access.Maps\LIN.Access.Maps.csproj", "{E3CBF806-976A-44A0-9FA6-C80A8ED9E7CF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Types", "..\..\Tipos\LIN.Types\LIN.Types.csproj", "{AD6422B9-B706-485E-9ED6-552554EC3390}"
 EndProject
