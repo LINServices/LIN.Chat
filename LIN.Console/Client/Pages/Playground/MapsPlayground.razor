@@ -14,8 +14,6 @@
     private string json = "";
     private Map map;
 
-
-
 }
 
 
@@ -116,15 +114,14 @@
                     @if (IsJson)
                     {
                         <div class="w-full bg-gray-200 p-1">
-                            <p>@json</p>
+                            <p class="text-xs">@json</p>
                         </div>
-                       
                     }
                     else
                     {
-                        @foreach (var m in Places)
+                        @foreach (var place in Places)
                         {
-                            <Place Model="m" OnClick="click" />
+                            <Place Model="place" OnClick="click" />
                         }
                     }
 
@@ -132,11 +129,11 @@
 
                 @if (IsJson)
                 {
-                    <label @onclick="()=>IsJson= !IsJson">Ver resultado</label>
+                    <label class="text-xs" @onclick="()=>IsJson= !IsJson">Ver resultado</label>
                 }
                 else
                 {
-                    <label @onclick="()=>IsJson= !IsJson">Ver JSON</label>
+                    <label class="text-xs" @onclick="()=>IsJson= !IsJson">Ver JSON</label>
                 }
 
 
