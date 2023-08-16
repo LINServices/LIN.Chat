@@ -1,5 +1,6 @@
 ﻿@page "/maps/playground"
 @inject NavigationManager nav
+@inject IJSRuntime JS
 
 <NavBar />
 
@@ -7,10 +8,8 @@
 
     private bool IsSending = false;
     private string Value = "";
-    private string Clases = "";
-    private string Message = "";
 
-    private string src = "";
+    private Map map;
 
 }
 
@@ -75,10 +74,10 @@
 
 
 
-        <div class="mx-auto grid max-w-2xl gap-5 h-56 grid-cols-1 lg:max-w-none lg:grid-cols-2">
+        <div class="mx-auto grid max-w-2xl gap-5 grid-cols-1 lg:max-w-none lg:grid-cols-2">
 
-            <div class="h-full border rounded-lg">
-                <Map Latitud="7" Longitud="7" />
+            <div class="h-76 border rounded-lg">
+                <Map @ref="map" Latitud="7" Longitud="7" />
             </div>
 
             <div>
@@ -96,16 +95,29 @@
                             </svg>
 
                         </div>
-                        <input type="text" id="voice-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-green-500 block w-full pl-10 p-2.5" placeholder="Buscar lugares, ciudades ..." required>
+                        <input @bind="Value" type="text" id="voice-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-green-500 block w-full pl-10 p-2.5" placeholder="Buscar lugares, ciudades ..." required>
 
                     </div>
-                    <button type="submit" class="inline-flex items-center py-2.5 px-3 ml-2 text-sm font-medium text-white bg-green-600 rounded-lg border border-green-600 hover:bg-green-800 focus:ring-2 focus:outline-none focus:ring-green-500">
+                    <button @onclick="Send" type="submit" class="inline-flex items-center py-2.5 px-3 ml-2 text-sm font-medium text-white bg-green-600 rounded-lg border border-green-600 hover:bg-green-800 focus:ring-2 focus:outline-none focus:ring-green-500">
                         <svg class="w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                         </svg>Buscar
                     </button>
                 </div>
 
+
+                <div class="flex flex-col">
+
+                    @foreach(var m in Places)
+                    {
+                        <div class="flex flex-col mt-3" @onclick="()=>click(m.Latitud, m.Longitud)">
+                            <label>@m.Text</label>
+                            <label>@m.Longitud | @m.Latitud</label>
+                            <label>@m.Nombre</label>
+                        </div>
+                    }
+
+                </div>
 
 
 
@@ -124,66 +136,21 @@
 @code {
 
 
+    List<LIN.Types.Maps.Models.PlaceDataModel> Places = new();
+
     async void Send()
     {
-
-        Clases = "";
-        IsSending = true;
+        var response = await LIN.Access.Maps.Controllers.Search.FindPlaces(Value, 4, "pk.nG1P6Y7lEGTZrsdawGN8T1lsDofolu5UuOZF");
+        Places = response.Models;
         base.StateHasChanged();
+    }
 
-        var predict = await LIN.Access.Developer.Controllers.IA.Categorizar(Value, LIN.Access.Developer.Session.Instance.Token, Types.Developer.Enumerations.PayWith.Account);
+    void click(string latitud, string longitud)
+    {
+        // map.Latitud = latitud;
+        // map.Longitud = longitud;
 
-
-
-
-        if (predict.Response == Responses.Success)
-        {
-
-            src = "";
-
-            if (predict.Model.Languaje == Languajes.Spain)
-            {
-                src = "./img/spain.png";
-            }
-            else if (predict.Model.Languaje == Languajes.English)
-            {
-                src = "./img/uk.png";
-            }
-
-
-            if (predict.Model.Sentiment == Sentiments.Positive)
-            {
-                Clases = "underline decoration-blue-500 decoration-2";
-                Message = $"Este es un comentario positivo";
-               
-            }
-            else if (predict.Model.Sentiment == Sentiments.Negative)
-            {
-                Clases = "underline decoration-red-500 decoration-2";
-                Message = $"Este es un comentario negativo";
-            }
-        }
-
-        else if (predict.Response == Responses.WithoutCredits)
-        {
-            Clases = "text-red-500";
-            Message = "No tienes créditos suficientes";
-        }
-
-        else if (predict.Response == Responses.Unauthorized)
-        {
-            Clases = "text-red-500";
-            Message = "Intenta otra llave o desactiva el firewall";
-        }
-
-        else
-        {
-            Clases = "text-red-500";
-            Message = "Hubo un error, intenta mas tarde";
-        }
-
-        IsSending = false;
-        base.StateHasChanged();
+        map.GoToHome();
     }
 
 }

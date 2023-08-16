@@ -8,3 +8,15 @@ window.BlazorDownloadFile = (fileName, contentType, downloadUrl) => {
     link.click();
     document.body.removeChild(link);
 };
+
+
+
+function maper(v1, v2) {
+    // Obtenemos el iframe
+
+
+    var iframe = document.getElementById('mapper');
+
+    iframe.contentWindow.postMessage(v1+"|"+v2, '*');
+
+}
