@@ -1,5 +1,4 @@
-﻿
-namespace LIN.Console.Client.Online;
+﻿namespace LIN.Console.Client.Online;
 
 public class StaticHub
 {

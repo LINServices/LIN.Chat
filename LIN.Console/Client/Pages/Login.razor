@@ -323,7 +323,7 @@
 
 
 
-    dynamic? hub;
+    LIN.Access.Auth.Hubs.PassKeyHub? hub;
 
     /// <summary>
     /// Inicia sesion
@@ -345,100 +345,100 @@
 
 
         // Suscribir al Hub
-        //hub = new LIN.Access.Hubs.PasskeyHub(User);
+        hub = new LIN.Access.Auth.Hubs.PassKeyHub(User);
 
         await hub.Suscribe();
         bool reive = false;
 
-        // hub.OnRecieveResponse += async (o, e) =>
-        // {
-        //     await base.InvokeAsync(async () =>
-        //  {
-        //      reive = true;
+        hub.OnRecieveResponse += async (o, e) =>
+        {
+            await base.InvokeAsync(async () =>
+         {
+             reive = true;
 
-        //      switch (e.Status)
-        //      {
-        //          case LIN.Shared.Enumerations.PassKeyStatus.Success:
-        //              break;
+             switch (e.Status)
+             {
+                 case PassKeyStatus.Success:
+                     break;
 
-        //          case LIN.Shared.Enumerations.PassKeyStatus.Rejected:
-        //              ShowControls();
-        //              ShowError("Passkey rechazada");
-        //              return;
+                 case PassKeyStatus.Rejected:
+                     ShowControls();
+                     ShowError("Passkey rechazada");
+                     return;
 
-        //          case LIN.Shared.Enumerations.PassKeyStatus.Expired:
-        //              ShowControls();
-        //              ShowError("La sesion expiro");
-        //              return;
+                 case PassKeyStatus.Expired:
+                     ShowControls();
+                     ShowError("La sesion expiro");
+                     return;
 
-        //          default:
-        //              ShowControls();
-        //              ShowError("Hubo un error en Passkey");
-        //              return;
-        //      }
+                 default:
+                     ShowControls();
+                     ShowError("Hubo un error en Passkey");
+                     return;
+             }
 
 
-        //      cancelShow = false;
-        //      LogMessage = "Iniciando Sesion";
-        //      base.StateHasChanged();
+             cancelShow = false;
+             LogMessage = "Iniciando Sesion";
+             base.StateHasChanged();
 
-        //      // Inicio de sesion
-        //      var login = await LIN.Access.Developer.Session.LoginWith(e.Token);
+             // Inicio de sesion
+             var login = await LIN.Access.Developer.Session.LoginWith(e.Token);
 
-        //      if (login.Response == Responses.Success)
-        //      {
+             if (login.Response == Responses.Success)
+             {
                  
-        //          await localStorage.SetItemAsync("token", login.Sesion.AccountToken);
+                 await localStorage.SetItemAsync("token", login.Sesion.AccountToken);
 
-        //          Online.StaticHub.LoadHub();
-        //          nav.NavigateTo("/");
-        //          return;
+                 Online.StaticHub.LoadHub();
+                 nav.NavigateTo("/");
+                 return;
 
-        //      }
-        //      else if (login.Response == Responses.InvalidPassword)
-        //      {
-        //          ShowControls();
-        //          ShowError("La sesion de passkey ha expirado");
-        //      }
-        //      else if (login.Response == Responses.NotExistAccount)
-        //      {
-        //          ShowControls();
-        //          ShowError($"No existe el usuario {User}");
-        //      }
-        //      else
-        //      {
-        //          ShowControls();
-        //          ShowError("Intentalo de nuevo mas tarde");
-        //      }
-        //  });
+             }
+             else if (login.Response == Responses.InvalidPassword)
+             {
+                 ShowControls();
+                 ShowError("La sesion de passkey ha expirado");
+             }
+             else if (login.Response == Responses.NotExistAccount)
+             {
+                 ShowControls();
+                 ShowError($"No existe el usuario {User}");
+             }
+             else
+             {
+                 ShowControls();
+                 ShowError("Intentalo de nuevo mas tarde");
+             }
+         });
 
-        //     // Hace el inicio
+            // Hace el inicio
 
 
 
-        // };
+        };
 
-        // var intent = new LIN.Shared.Models.PasskeyIntentDataModel()
-        //     {
-        //         ApplicationName = "LIN Cloud Console",
-        //         User = User
-        //     };
+        var intent = new PassKeyModel()
+            {
+                ApplicationName = "LIN Cloud Console",
+                User = User
+            };
 
-        // hub.SendIntent(intent);
+        hub.SendIntent(intent);
 
-        // await Task.Delay(3000);
-        // cancelShow = true;
-        // base.StateHasChanged();
+        await Task.Delay(3000);
+        cancelShow = true;
+        base.StateHasChanged();
 
-        // await Task.Delay(60000);
+        await Task.Delay(60000);
 
-        // if (reive)
-        //     return;
+        if (reive)
+            return;
 
-        // hub.Disconet();
-        // hub = null;
-        // ShowControls();
-        // ShowError("La sesion de passkey ha expirado");
+        hub.Disconet();
+        hub = null;
+        ShowControls();
+        ShowError("La sesion de passkey ha expirado");
 
     }
 
