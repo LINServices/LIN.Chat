@@ -191,27 +191,23 @@
         </div>
 
 
-        <!-- Contactos -->
-        <div class="ring-1 ring-gray-300 rounded-lg p-5 mt-3 flex flex-row">
 
-            
-                <img class=" w-8 h-8" src="./img/contactos.png" alt="Bordered avatar">
-            
+        @if (LIN.Access.Developer.Session.Instance.Account.Organization != null)
+        {
+            <!-- Organización -->
+            <div class="ring-1 ring-gray-300 rounded-lg p-5 mt-3 flex flex-row">
 
+                <img class=" w-8 h-8" src="./img/empresa.png" alt="Bordered avatar">
 
-            <div class="flex flex-col ml-2">
+                <div class="flex flex-col ml-2">
 
-                <label class="gilroy-bold text-sm text-gray-700">Contactos</label>
+                    <label class="gilroy-bold text-sm text-gray-700">Organización</label>
+                    <label @onclick="GoContacts" class="gilroy text-xs text-gray-500 -mt-1 hover:text-blue-600">@(LIN.Access.Developer.Session.Instance.Account.Organization.Name)</label>
 
-
-                <label @onclick="GoContacts" class="gilroy text-xs text-gray-500 -mt-1 hover:text-pink-600">Administrar @Count contactos</label>
-             
-
+                </div>
 
             </div>
-
-        </div>
-
+        }
 
     </div>
 

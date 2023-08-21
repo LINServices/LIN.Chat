@@ -307,10 +307,15 @@
             ShowControls();
             ShowError($"No existe el usuario {User}");
         }
+        else if (login.Response == Responses.UnauthorizedByOrg)
+        {
+            ShowControls();
+            ShowError($"Tu organización no permite que accedas a esta app");
+        }
         else
         {
             ShowControls();
-            ShowError("Intentalo mas tarde");
+            ShowError("Inténtalo mas tarde");
         }
 
 
