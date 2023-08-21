@@ -192,7 +192,7 @@
 
 
 
-        @if (LIN.Access.Developer.Session.Instance.Account.Organization != null)
+        @if (LIN.Access.Developer.Session.Instance.Account.OrganizationAccess != null)
         {
             <!-- Organización -->
             <div class="ring-1 ring-gray-300 rounded-lg p-5 mt-3 flex flex-row">
@@ -202,7 +202,7 @@
                 <div class="flex flex-col ml-2">
 
                     <label class="gilroy-bold text-sm text-gray-700">Organización</label>
-                    <label @onclick="GoContacts" class="gilroy text-xs text-gray-500 -mt-1 hover:text-blue-600">@(LIN.Access.Developer.Session.Instance.Account.Organization.Name)</label>
+                    <label @onclick="GoContacts" class="gilroy text-xs text-gray-500 -mt-1 hover:text-blue-600">@(LIN.Access.Developer.Session.Instance.Account.OrganizationAccess.Organization.Name)</label>
 
                 </div>
 
