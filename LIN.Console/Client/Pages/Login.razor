@@ -350,7 +350,7 @@
 
 
         // Suscribir al Hub
-        hub = new LIN.Access.Auth.Hubs.PassKeyHub(User);
+        hub = new LIN.Access.Auth.Hubs.PassKeyHub(User, "win24443");
 
         await hub.Suscribe();
         bool reive = false;
@@ -425,7 +425,6 @@
 
         var intent = new PassKeyModel()
             {
-                ApplicationName = "LIN Cloud Console",
                 User = User
             };
 
