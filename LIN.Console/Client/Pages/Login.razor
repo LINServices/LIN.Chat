@@ -373,7 +373,12 @@
 
                  case PassKeyStatus.Expired:
                      ShowControls();
-                     ShowError("La sesion expiro");
+                     ShowError("La sesión expiro");
+                     return;
+
+                 case PassKeyStatus.BlockedByOrg:
+                     ShowControls();
+                     ShowError("Tu organización no permite que inicies en esta aplicación.");
                      return;
 
                  default:
@@ -384,7 +389,7 @@
 
 
              cancelShow = false;
-             LogMessage = "Iniciando Sesion";
+             LogMessage = "Iniciando Sesión";
              base.StateHasChanged();
 
              // Inicio de sesion
