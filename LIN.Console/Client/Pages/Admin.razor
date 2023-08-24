@@ -108,7 +108,10 @@ else
     private async void GoToSearh()
     {
 
-        var finds = await LIN.Access.Auth.Controllers.Account.GetAll(TxtUser, LIN.Access.Developer.Session.Instance.AccountToken);
+
+        var token = LIN.Access.Developer.Session.Instance.AccountToken;
+
+        var finds = await LIN.Access.Auth.Controllers.Account.Search(TxtUser, token, true);
 
         if (finds.Response != Responses.Success)
             return;
