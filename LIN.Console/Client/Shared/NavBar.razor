@@ -132,7 +132,7 @@
                         <a href="/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Tablero</a>
                     </li>
                     <li>
-                        <a href="/settings" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Configuracion</a>
+                        <a href="/settings" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Configuración</a>
                     </li>
 
                     @if (LIN.Access.Developer.Session.Instance.Account.Rol == AccountRoles.Admin)
@@ -144,7 +144,7 @@
 
 
                     <li>
-                        <a @onclick="CloseSesion" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Cerrar sesion</a>
+                        <a @onclick="CloseSesion" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Cerrar sesión</a>
                     </li>
                 </ul>
             </div>
@@ -179,7 +179,7 @@
                 </li>
                 <li>
 
-                    <a href="/documentacion" class="@(Documentacion ? selectValue : unselectValue)">Documentacion</a>
+                    <a href="/documentacion" class="@(Documentacion ? selectValue : unselectValue)">Documentación</a>
 
                 </li>
               
