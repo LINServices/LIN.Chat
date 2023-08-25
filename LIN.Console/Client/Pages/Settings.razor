@@ -230,7 +230,7 @@
             <div class="flex flex-col ml-2">
                 <label class="gilroy-bold text-sm text-gray-700">Aplicaciones</label>
 
-                    <label class="gilroy text-xs text-gray-500 -mt-1 hover:text-blue-600">Ver mi historial de aplicaciones.</label>
+                    <label @onclick="GoLogs" class="gilroy text-xs text-gray-500 -mt-1 hover:text-blue-600">Ver mi historial de aplicaciones.</label>
               
             </div>
 
@@ -366,6 +366,12 @@
     void GoContacts()
     {
         nav.NavigateTo("/contactos");
+    }
+
+
+    void GoLogs()
+    {
+        nav.NavigateTo("/history");
     }
 
     void OpenModal()
