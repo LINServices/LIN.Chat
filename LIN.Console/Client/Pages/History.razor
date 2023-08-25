@@ -84,7 +84,7 @@
                         </span>
                         <div class="items-center justify-between p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:flex dark:bg-gray-700 dark:border-gray-600">
                             <time class="mb-1 text-xs font-normal text-gray-400 sm:order-last sm:mb-0">@(log.Date.ToString("HH:mm  dd/MM/yyyy"))</time>
-                            <div class="text-sm font-normal text-gray-500 dark:text-gray-300">Inicio sesión en <a class="font-semibold text-blue-600 hover:underline">@log.Application.Name</a> usando <span class="bg-gray-100 text-gray-800 text-xs font-normal mr-2 px-2.5 py-0.5 rounded dark:bg-gray-600 dark:text-gray-300">Credenciales</span></div>
+                            <div class="text-sm font-normal text-gray-500 dark:text-gray-300">Inicio sesión en <a class="font-semibold text-blue-600 hover:underline">@log.Application.Name</a> usando <span class="bg-gray-100 text-gray-800 text-xs font-normal mr-2 px-2.5 py-0.5 rounded dark:bg-gray-600 dark:text-gray-300">@(log.Type == LoginTypes.Credentials ? "Credenciales":"Passkey")</span></div>
                         </div>
                     </li>
                 }
