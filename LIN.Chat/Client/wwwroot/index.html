@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <base href="/" />
+
+    <link rel="icon" type="image/png" href="icono.png" />
+
+
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+
+    <title>LIN CHAT</title>
+
+    <link href="./css/site.css" rel="stylesheet" />
+
+
+    <link href="./css/Tailwind/Alerts.css" rel="stylesheet" type="text/css" />
+
+    <link href="./css/Flowbyte.min.css" rel="stylesheet" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script src="_content/Texnomic.Blazor.JsonViewer/scripts/JsonViewer.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+
+
+    <style>
+
+        .spinner {
+            width: 3em;
+            height: 3em;
+            cursor: not-allowed;
+            border-radius: 50%;
+            border: 2px solid #444;
+            box-shadow: -10px -10px 10px #6359f8, 0px -10px 10px 0px #9c32e2, 10px -10px 10px #f36896, 10px 0 10px #ff0b0b, 10px 10px 10px 0px#ff5500, 0 10px 10px 0px #ff9500, -10px 10px 10px 0px #ffb700;
+            animation: rot55 0.7s linear infinite;
+        }
+
+        .spinnerin {
+            border: 2px solid #444;
+            width: 1.5em;
+            height: 1.5em;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        @keyframes rot55 {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+
+
+    <div id="app">
+
+        <div class="flex items-center justify-center h-screen">
+
+            <div class="spinner">
+                <div class="spinnerin"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div id="blazor-error-ui">
+        <a href="" class="reload"></a>
+        <a class="dismiss">🗙</a>
+    </div>
+
+
+    <script src="_framework/blazor.webassembly.js"></script>
+
+
+    <script src="https://flowbite.com/docs/flowbite.min.js?v=1.6.5a"></script>
+
+
+
+
+</body>
+
+</html>
