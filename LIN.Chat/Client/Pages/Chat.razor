@@ -1,4 +1,12 @@
 ﻿@page "/"
+@inject NavigationManager nav
+
+
+@if (!LIN.Access.Communication.Session.IsOpen)
+{
+    nav.NavigateTo("/login");
+}
+
 
 <style>
     .chat {
@@ -50,44 +58,85 @@
     string Alias = "";
 
 
-    ProfileModel Profile = new();
+    List<ConversaciónModel> ConversaciónModels = new();
 
-
-
-    void Generate()
+    protected override async Task OnInitializedAsync()
     {
-        Profile.ID = Me;
-        Profile.Alias = Alias;
 
-        A = true;
-        base.StateHasChanged();
+        var token = LIN.Access.Communication.Session.Instance.Token;
+        var o = await LIN.Access.Communication.Controllers.Profile.ReadConver(token);
+
+        ConversaciónModels = o.Models;
+
+        OpenChats.Clear();
+        foreach (var c in o.Models)
+        {
+
+            Shared.ChatSection section = new Shared.ChatSection(c);
+
+            OpenChats.Add(section);
+        }
+
+
+        await  base.OnInitializedAsync();
     }
 
-    Shared.ChatSection Seccion;
-    bool A = false;
+
+
+    List<Shared.ChatSection> OpenChats = new();
+
+
+
+    void Select(ConversaciónModel c)
+    {
+        var chat =  OpenChats.Where(a => a.conversación == c).FirstOrDefault();
+        if (chat != null)
+        {
+
+            Seccion2 = chat;
+            base.StateHasChanged();
+
+        }
+    }
+
+
+    public Shared.ChatSection Seccion { get; set; }
+    public Shared.ChatSection Seccion2 { get; set; }
+
+
 }
 
 <div class="layoutMain h-full">
 
 
-   <input @bind="Me" placeholder="ID" />
+    <label class="text-3xl gilroy-bold mt-2">Hola, @LIN.Access.Communication.Session.Instance.Informacion.Alias</label>
 
-    <input @bind="Alias" placeholder="Alias" />
+    <div class="mt-10">
 
-    <input @bind="Other" placeholder="ID del otro" />
+    @foreach(var aa in ConversaciónModels)
+        {
+            <div @onclick="()=>Select(aa)" class="flex flex-col bg-gray-200 rounded">
+                <label>@aa.UsuarioA.Alias</label>
+                <label>@aa.UsuarioB.Alias</label>
+            </div>
+        }
 
-    <button @onclick="Generate">Conectar Me</button>
+    </div>
 
 
 
     <div class="mt-10">
 
-        @if (A)
-        {
-            <LIN.Chat.Client.Shared.ChatSection Me="Profile" OtherID="Other"  @ref="Seccion"></LIN.Chat.Client.Shared.ChatSection>
-        }
-        
 
+        @if (Seccion2 != null)
+        {
+            <LIN.Chat.Client.Shared.ChatSection Hub="Seccion2.Hub" conversación="Seccion2.conversación" Me="Seccion2.Me" OtherID="Seccion2.OtherID" />
+        }
+
+       
+
+       
+       
     </div>
  
 

@@ -3,14 +3,41 @@
 
 
     [Parameter]
-    public int OtherID { get; set; }
+    public ConversaciónModel conversación { get; set; }
 
+
+
+    public ChatSection()
+    {
+
+    }
+
+
+    public ChatSection(ConversaciónModel conversación)
+    {
+        this.conversación = conversación;
+        int other = 0;
+        if (conversación.UsuarioA.ID == LIN.Access.Communication.Session.Instance.Informacion.ID)
+        {
+            other = conversación.UsuarioB.ID;
+            Me = conversación.UsuarioA;
+        }
+        else
+        {
+            other = conversación.UsuarioA.ID;
+            Me = conversación.UsuarioB;
+        }
+
+        OtherID = other;
+    }
+
+    [Parameter]
+    public int OtherID { get; set; }
 
     [Parameter]
     public ProfileModel Me { get; set; }
 
-
-
+    [Parameter]
     public LIN.Access.Communication.Hubs.ChatHub Hub { get; set; }
 
 
@@ -19,6 +46,7 @@
 
 
     public List<MessageModel> Messages = new();
+
 
     private string Message { get; set; } = "";
 
@@ -45,19 +73,22 @@
 
 
     private void ChatHub_OnReceivingMessage(object? sender, (int, string, string) e)
-    {
+    {  
 
         Messages.Add(new()
             {
-                Contenido = e.Item3,
-                Remitente = new()
-                {
-                    ID = e.Item1,
-                    Alias = e.Item2
-                }
+               ID = e.Item1,
+               Conversacion = new()
+               {
+                   UsuarioA = new()
+                   {
+                       Alias = e.Item2
+                   }
+               },
+               Contenido = e.Item3
             });
 
-            base.StateHasChanged();
+base.StateHasChanged();
 
     }
 
@@ -70,12 +101,23 @@
   
     <div class="flex flex-col w-96 bg-gray-100">
 
+        @("Yo soy " +  Me.Alias)
 
         @foreach(var message in Messages)
         {
-            <div class="@OtherClass">
-                <div class="chat-bubble">@message.Remitente.Alias: @message.Contenido</div>
-            </div>
+            if (message.ID == Me.ID)
+            {
+                <div class="@MeClass">
+                    <div class="chat-bubble">@message.Contenido</div>
+                </div>
+            }
+            else
+            {
+                <div class="@OtherClass">
+                    <div class="chat-bubble">@message.Contenido</div>
+                </div>
+            }
+
         }
 
     </div>
