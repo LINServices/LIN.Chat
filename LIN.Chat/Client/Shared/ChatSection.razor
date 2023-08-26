@@ -1,21 +1,32 @@
 ﻿
-
-<div class="layoutMain h-full">
-
-
-    <h1 style="font-size: 35px" class="gilroy-bold">Chat</h1>
+@code{
 
 
+    [Parameter]
+    public int OtherID { get; set; }
 
+
+    private string OtherClass = "chat chat-start";
+    private string MeClass = "chat chat-end";
+
+
+    public List<MessageModel> Messages = new();
+
+}
+
+<div class="h-full w-full">
+
+
+  
     <div class="flex flex-col w-96 bg-gray-100">
 
-        <div class="chat chat-start">
-            <div class="chat-bubble">It's over Anakin</div>
-        </div>
 
-        <div class="chat chat-end">
-            <div class="chat-bubble">You underestimate my power!</div>
-        </div>
+        @foreach(var message in Messages)
+        {
+            <div class="@OtherClass">
+                <div class="chat-bubble">@message.Contenido</div>
+            </div>
+        }
 
     </div>
 

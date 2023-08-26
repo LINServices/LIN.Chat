@@ -3,6 +3,7 @@ global using LIN.Types.Auth.Models;
 global using LIN.Types.Enumerations;
 global using LIN.Types.Responses;
 global using Microsoft.JSInterop;
+global using LIN.Types.Communication.Models;
 using Blazored.LocalStorage;
 using LIN.Console.Client;
 using LIN.Console.Client.Online;
