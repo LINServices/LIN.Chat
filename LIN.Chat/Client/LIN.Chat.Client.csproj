@@ -22,8 +22,4 @@
     <ProjectReference Include="..\..\..\..\Tipos\LIN.Types.Auth\LIN.Types.Auth.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Shared\" />
-  </ItemGroup>
-
 </Project>
