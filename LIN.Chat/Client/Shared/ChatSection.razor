@@ -54,6 +54,8 @@
     private void SendMessage()
     {
         Hub?.SendMessage(Iam.Profile.ID, Iam.Conversation.ID.ToString(), Message);
+        Message = "";
+        StateHasChanged();
     }
 
 
@@ -90,13 +92,22 @@
             if (message.Remitente.ID == Iam.Profile.ID)
             {
                 <div class="@MeClass">
-                    <div class="chat-bubble">@message.Contenido</div>
+                    <div class="chat-bubble">
+                        <div class="flex flex-col">
+                            <label class="text-sm">@message.Contenido</label>
+                        </div>
+                    </div>
                 </div>
             }
             else
             {
                 <div class="@OtherClass">
-                    <div class="chat-bubble">@message.Contenido</div>
+                    <div class="chat-bubble">
+                        <div class="flex flex-col">
+                            <label style="font-size: 8px">@message.Remitente.Alias</label>
+                            <label class="text-sm">@message.Contenido</label>
+                        </div>
+                    </div>
                 </div>
             }
 
