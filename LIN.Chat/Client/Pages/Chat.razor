@@ -49,8 +49,8 @@
 
         ConversaciónModels = o.Models;
 
-        var hub = new LIN.Access.Communication.Hubs.ChatHub();
-        await hub.Suscribe();
+var hub = new LIN.Access.Communication.Hubs.ChatHub();
+            await hub.Suscribe();
         await hub.ConnectMe(LIN.Access.Communication.Session.Instance.Informacion);
 
         foreach (var e in ConversaciónModels)
@@ -58,14 +58,14 @@
 
             e.Profile = LIN.Access.Communication.Session.Instance.Informacion;
             e.Conversation.Mensajes ??= new();
-
+            
             hub.JoinGroup(e.Conversation.ID.ToString(), (MessageModel message) =>
             {
 
                 e.Conversation.Mensajes.Add(message);
                 if (ChatPage.Iam.Conversation.ID == e.Conversation.ID)
                     ChatPage.Render();
-
+                
             });
 
 
@@ -77,7 +77,7 @@
     }
 
 
-
+    
 
 
 
