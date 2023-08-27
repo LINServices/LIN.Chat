@@ -60,6 +60,8 @@
 
     List<MemberChatModel> ConversaciónModels = new();
 
+    Dictionary<int, (LIN.Access.Communication.Hubs.ChatHub, MemberChatModel)> Dict = new();
+
     protected override async Task OnInitializedAsync()
     {
 
@@ -68,13 +70,20 @@
 
         ConversaciónModels = o.Models;
 
-        OpenChats.Clear();
-        foreach (var c in o.Models)
+
+        foreach (var e in ConversaciónModels)
         {
 
-            Shared.ChatSection section = new Shared.ChatSection(c);
+            e.Profile = LIN.Access.Communication.Session.Instance.Informacion;
+            e.Conversation.Mensajes ??= new();
+            var hub = new LIN.Access.Communication.Hubs.ChatHub();
+            await hub.Suscribe();
+            await hub.ConnectMe(e.Profile);
+            hub.JoinGroup(e.Conversation.ID.ToString());
+        
+            
 
-            OpenChats.Add(section);
+            Dict.Add(e.Conversation.ID, (hub ,e));
         }
 
 
@@ -82,26 +91,24 @@
     }
 
 
+    LIN.Access.Communication.Hubs.ChatHub ActualHub { get; set; }
+    MemberChatModel Member { get; set; }
 
-    List<Shared.ChatSection> OpenChats = new();
 
 
-
-    void Select(ConversaciónModel c)
+    void Select(MemberChatModel c)
     {
-        var chat =  OpenChats.Where(a => a.conversación == c).FirstOrDefault();
-        if (chat != null)
-        {
 
-            Seccion2 = chat;
-            base.StateHasChanged();
+        var info = Dict.Where(T => T.Key == c.Conversation.ID).FirstOrDefault();
 
-        }
+        ActualHub = info.Value.Item1;
+        Member = info.Value.Item2;
+
+
+        base.StateHasChanged();
+
+
     }
-
-
-    public Shared.ChatSection Seccion { get; set; }
-    public Shared.ChatSection Seccion2 { get; set; }
 
 
 }
@@ -116,8 +123,7 @@
     @foreach(var aa in ConversaciónModels)
         {
             <div @onclick="()=>Select(aa)" class="flex flex-col bg-gray-200 rounded">
-                <label>@aa.UsuarioA.Alias</label>
-                <label>@aa.UsuarioB.Alias</label>
+                <label>@aa.Conversation.Name</label>
             </div>
         }
 
@@ -128,14 +134,11 @@
     <div class="mt-10">
 
 
-        @if (Seccion2 != null)
+        @if (ActualHub != null && Member != null)
         {
-            <LIN.Chat.Client.Shared.ChatSection Hub="Seccion2.Hub" conversación="Seccion2.conversación" Me="Seccion2.Me" OtherID="Seccion2.OtherID" />
+            <LIN.Chat.Client.Shared.ChatSection Iam="Member" Hub="ActualHub" />
         }
 
-       
-
-       
        
     </div>
  

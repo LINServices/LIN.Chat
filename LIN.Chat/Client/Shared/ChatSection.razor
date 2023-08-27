@@ -12,7 +12,7 @@
     /// Hub de conexión
     /// </summary>
     [Parameter]
-    public LIN.Access.Communication.Hubs.ChatHub? Hub { get; set; }
+    public LIN.Access.Communication.Hubs.ChatHub Hub { get; set; }
 
 
     /// <summary>
@@ -32,21 +32,18 @@
     /// </summary>
     private string Message { get; set; } = "";
 
-
+    bool stat = false;
 
     /// <summary>
     /// Inicia la conexión
     /// </summary>
-    public async void Start()
+    public void Start()
     {
-        if (Hub != null)
+
+        if (stat)
             return;
 
-        Hub = new();
-        await Hub.Suscribe();
-        await Hub.ConnectMe(Iam.Profile);
-        Hub.JoinGroup(Iam.Conversation.ID.ToString());
-
+        stat = true;
         Hub.OnReceivingMessage += ReceiveMessage;
     }
 
@@ -72,6 +69,11 @@
 
     }
 
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        Start();
+    }
 
 }
 
