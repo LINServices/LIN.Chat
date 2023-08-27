@@ -156,11 +156,11 @@
                                             @aa.Conversation.Name
                                         </p>
                                         <p class="text-xs text-grey-darkest">
-                                            12:45 pm
+                                            @aa.Conversation.Mensajes.LastOrDefault()?.Time.ToString("hh:mm")
                                         </p>
                                     </div>
                                     <p class="text-grey-dark mt-1 text-sm">
-                                        Tell Java I have the money
+                                       @aa.Conversation.Mensajes.LastOrDefault()?.Contenido
                                     </p>
                                 </div>
                             </div>
