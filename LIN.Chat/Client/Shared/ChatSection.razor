@@ -1,94 +1,74 @@
-﻿
-@code{
+﻿@code {
 
 
+    /// <summary>
+    /// Iam
+    /// </summary>
     [Parameter]
-    public ConversaciónModel conversación { get; set; }
+    public MemberChatModel Iam { get; set; } = new();
 
 
-
-    public ChatSection()
-    {
-
-    }
-
-
-    public ChatSection(ConversaciónModel conversación)
-    {
-        this.conversación = conversación;
-        int other = 0;
-        if (conversación.UsuarioA.ID == LIN.Access.Communication.Session.Instance.Informacion.ID)
-        {
-            other = conversación.UsuarioB.ID;
-            Me = conversación.UsuarioA;
-        }
-        else
-        {
-            other = conversación.UsuarioA.ID;
-            Me = conversación.UsuarioB;
-        }
-
-        OtherID = other;
-    }
-
+    /// <summary>
+    /// Hub de conexión
+    /// </summary>
     [Parameter]
-    public int OtherID { get; set; }
-
-    [Parameter]
-    public ProfileModel Me { get; set; }
-
-    [Parameter]
-    public LIN.Access.Communication.Hubs.ChatHub Hub { get; set; }
+    public LIN.Access.Communication.Hubs.ChatHub? Hub { get; set; }
 
 
+    /// <summary>
+    /// Clase de chat izquierdo
+    /// </summary>
     private string OtherClass = "chat chat-start";
+
+
+    /// <summary>
+    /// Clases de chat derecho
+    /// </summary>
     private string MeClass = "chat chat-end";
 
 
-    public List<MessageModel> Messages = new();
-
-
+    /// <summary>
+    /// Mensaje a enviar
+    /// </summary>
     private string Message { get; set; } = "";
 
 
-    protected async override void OnParametersSet()
+
+    /// <summary>
+    /// Inicia la conexión
+    /// </summary>
+    public async void Start()
     {
+        if (Hub != null)
+            return;
 
         Hub = new();
         await Hub.Suscribe();
-        await Hub.ConnectMe(Me);
+        await Hub.ConnectMe(Iam.Profile);
+        Hub.JoinGroup(Iam.Conversation.ID.ToString());
 
-        Hub.JoinGroup(Me.ID, OtherID);
-
-        Hub.OnReceivingMessage += ChatHub_OnReceivingMessage;
-
-        base.OnParametersSet();
+        Hub.OnReceivingMessage += ReceiveMessage;
     }
 
 
+    /// <summary>
+    /// Enviar un mensaje
+    /// </summary>
     private void SendMessage()
     {
-        Hub.SendMessage(Me.ID, OtherID, Message);
+        Hub?.SendMessage(Iam.Profile.ID, Iam.Conversation.ID.ToString(), Message);
     }
 
 
-    private void ChatHub_OnReceivingMessage(object? sender, (int, string, string) e)
-    {  
+    private void ReceiveMessage(object? sender, MessageModel message)
+    {
 
-        Messages.Add(new()
-            {
-               ID = e.Item1,
-               Conversacion = new()
-               {
-                   UsuarioA = new()
-                   {
-                       Alias = e.Item2
-                   }
-               },
-               Contenido = e.Item3
-            });
 
-base.StateHasChanged();
+        Iam.Conversation.Mensajes ??= new();
+
+        Iam.Conversation.Mensajes.Add(message);
+
+        base.StateHasChanged();
 
     }
 
@@ -98,14 +78,14 @@ base.StateHasChanged();
 <div class="h-full w-full">
 
 
-  
+
     <div class="flex flex-col w-96 bg-gray-100">
 
-        @("Yo soy " +  Me.Alias)
+        @(Iam.Conversation.Name)
 
-        @foreach(var message in Messages)
+        @foreach (var message in Iam.Conversation.Mensajes)
         {
-            if (message.ID == Me.ID)
+            if (message.Remitente.ID == Iam.Profile.ID)
             {
                 <div class="@MeClass">
                     <div class="chat-bubble">@message.Contenido</div>
