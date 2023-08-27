@@ -13,6 +13,11 @@
 
 
 
+    Dictionary<int, (LIN.Access.Communication.Hubs.ChatHub, MemberChatModel)> Chats = new();
+
+
+    Shared.ChatSection ChatPage { get; set; }
+
 
 
 
@@ -34,7 +39,7 @@
 
     List<MemberChatModel> ConversaciónModels = new();
 
-    Dictionary<int, (LIN.Access.Communication.Hubs.ChatHub, MemberChatModel)> Dict = new();
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -44,25 +49,39 @@
 
         ConversaciónModels = o.Models;
 
+        var hub = new LIN.Access.Communication.Hubs.ChatHub();
+        await hub.Suscribe();
+        await hub.ConnectMe(LIN.Access.Communication.Session.Instance.Informacion);
 
         foreach (var e in ConversaciónModels)
         {
 
             e.Profile = LIN.Access.Communication.Session.Instance.Informacion;
             e.Conversation.Mensajes ??= new();
-            var hub = new LIN.Access.Communication.Hubs.ChatHub();
-            await hub.Suscribe();
-            await hub.ConnectMe(e.Profile);
-            hub.JoinGroup(e.Conversation.ID.ToString());
+
+            hub.JoinGroup(e.Conversation.ID.ToString(), (MessageModel message) =>
+            {
+
+                e.Conversation.Mensajes.Add(message);
+                if (ChatPage.Iam.Conversation.ID == e.Conversation.ID)
+                    ChatPage.Render();
+
+            });
 
 
-
-            Dict.Add(e.Conversation.ID, (hub, e));
+            Chats.Add(e.Conversation.ID, (hub, e));
         }
 
 
         await base.OnInitializedAsync();
     }
+
+
+
+
+
+
+
 
 
     LIN.Access.Communication.Hubs.ChatHub ActualHub { get; set; }
@@ -73,7 +92,7 @@
     void Select(MemberChatModel c)
     {
 
-        var info = Dict.Where(T => T.Key == c.Conversation.ID).FirstOrDefault();
+        var info = Chats.Where(T => T.Key == c.Conversation.ID).FirstOrDefault();
 
         ActualHub = info.Value.Item1;
         Member = info.Value.Item2;
@@ -108,7 +127,7 @@
 
         @if (ActualHub != null && Member != null)
         {
-            <LIN.Chat.Client.Shared.ChatSection Iam="Member" Hub="ActualHub" />
+            <LIN.Chat.Client.Shared.ChatSection @ref="ChatPage" Iam="Member" Hub="ActualHub" />
         }
 
 

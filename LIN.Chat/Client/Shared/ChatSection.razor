@@ -15,7 +15,7 @@
     public LIN.Access.Communication.Hubs.ChatHub Hub { get; set; }
 
 
- 
+
 
 
     /// <summary>
@@ -23,21 +23,6 @@
     /// </summary>
     private string Message { get; set; } = "";
 
-
-    bool stat = false;
-
-    /// <summary>
-    /// Inicia la conexión
-    /// </summary>
-    public void Start()
-    {
-
-        if (stat)
-            return;
-
-        stat = true;
-        Hub.OnReceivingMessage += ReceiveMessage;
-    }
 
 
     /// <summary>
@@ -51,22 +36,15 @@
     }
 
 
-    private void ReceiveMessage(object? sender, MessageModel message)
+    public void Render()
     {
-
-
-        Iam.Conversation.Mensajes ??= new();
-
-        Iam.Conversation.Mensajes.Add(message);
-
         base.StateHasChanged();
-
     }
+
 
 
     protected override void OnAfterRender(bool firstRender)
     {
-        Start();
     }
 
 }
