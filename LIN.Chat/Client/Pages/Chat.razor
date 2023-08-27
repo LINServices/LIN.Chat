@@ -11,9 +11,12 @@
 
 @code {
 
+    class A
+    {
+        public bool IsLoad {get;set;}
+    }
 
-
-    Dictionary<int, (LIN.Access.Communication.Hubs.ChatHub, MemberChatModel)> Chats = new();
+    Dictionary<int, (LIN.Access.Communication.Hubs.ChatHub, MemberChatModel, A)> Chats = new();
 
 
     Shared.ChatSection ChatPage { get; set; }
@@ -52,7 +55,7 @@
         if (o.Response != Responses.Success)
             return; 
 
-    ConversaciónModels = o.Models;
+        ConversaciónModels = o.Models;
 
         var hub = new LIN.Access.Communication.Hubs.ChatHub();
         await hub.Suscribe();
@@ -73,8 +76,7 @@
 
             });
 
-
-            Chats.Add(e.Conversation.ID, (hub, e));
+            Chats.Add(e.Conversation.ID, (hub, e, new() { IsLoad= false }));
         }
 
 
@@ -94,13 +96,22 @@
 
 
 
-    void Select(MemberChatModel c)
+    async void Select(MemberChatModel c)
     {
 
         var info = Chats.Where(T => T.Key == c.Conversation.ID).FirstOrDefault();
 
         ActualHub = info.Value.Item1;
         Member = info.Value.Item2;
+
+        if (!info.Value.Item3.IsLoad)
+        {
+            var oldMessage = await LIN.Access.Communication.Controllers.Profile.ReadMessage(Member.Conversation.ID);
+
+            Member.Conversation.Mensajes.AddRange(oldMessage.Models);
+            info.Value.Item3.IsLoad = true;
+        }
+
 
         base.StateHasChanged();
 
