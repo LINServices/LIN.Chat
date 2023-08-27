@@ -15,22 +15,14 @@
     public LIN.Access.Communication.Hubs.ChatHub Hub { get; set; }
 
 
-    /// <summary>
-    /// Clase de chat izquierdo
-    /// </summary>
-    private string OtherClass = "chat chat-start";
-
-
-    /// <summary>
-    /// Clases de chat derecho
-    /// </summary>
-    private string MeClass = "chat chat-end";
+ 
 
 
     /// <summary>
     /// Mensaje a enviar
     /// </summary>
     private string Message { get; set; } = "";
+
 
     bool stat = false;
 
@@ -91,7 +83,7 @@
         {
             if (message.Remitente.ID == Iam.Profile.ID)
             {
-                <div class="@MeClass">
+                <div class="chat chat-end">
                     <div class="chat-bubble">
                         <div class="flex flex-col">
                             <label class="text-sm">@message.Contenido</label>
@@ -101,7 +93,7 @@
             }
             else
             {
-                <div class="@OtherClass">
+                <div class="chat chat-start">
                     <div class="chat-bubble">
                         <div class="flex flex-col">
                             <label style="font-size: 8px">@message.Remitente.Alias</label>
