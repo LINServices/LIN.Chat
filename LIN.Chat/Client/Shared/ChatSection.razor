@@ -48,7 +48,7 @@
 <div class="py-2 px-3 bg-indigo-950 flex flex-row justify-between items-center">
     <div class="flex items-center">
         <div>
-            <img class="w-10 h-10 rounded-full" src="https://darrenjameseeley.files.wordpress.com/2014/09/expendables3.jpeg" />
+            <img class="w-10 h-10 rounded-full" src="./group.png" />
         </div>
         <div class="ml-4 flex flex-col">
             <label class="text-gray-200 gilroy-bold">
@@ -81,7 +81,7 @@
         <div class="flex justify-center mb-2">
             <div class="rounded py-2 px-4" style="background-color: #DDECF2">
                 <p class="text-sm uppercase">
-                    February 20, 2018
+                    @DateTime.Now.ToString("MMMM dd, yyyy")
                 </p>
             </div>
         </div>
@@ -89,20 +89,20 @@
         <div class="flex justify-center mb-4">
             <div class="rounded py-2 px-4" style="background-color: #FCF4CB">
                 <p class="text-xs">
-                    Messages to this chat and calls are now secured with end-to-end encryption. Tap for more info.
+                   Tus mensajes están protegidos y cifrados, sin embargo LIN IA puede analizarlos para mostrarte recomendaciones.
                 </p>
             </div>
         </div>
         @foreach (var message in Iam.Conversation.Mensajes)
         {
-            if (message.Remitente.ID == Iam.Profile.ID)
+            if (message.Remitente?.ID == Iam?.Profile?.ID)
             {
                 <div class="message me mb-4 flex text-right">
                     <div class="flex-1 px-2">
                         <div class="inline-block bg-blue-600 rounded-full p-2 px-6 text-white">
                             <span>@message.Contenido</span>
                         </div>
-                        <div class="pr-4"><small class="text-gray-500">@message.Remitente.Alias</small></div>
+                        <div class="pr-4"><small class="text-gray-500">@message.Remitente?.Alias</small></div>
                     </div>
                 </div>
             }
@@ -113,7 +113,7 @@
                         <div class="inline-block bg-gray-300 rounded-full p-2 px-6 text-gray-700">
                             <span>@message.Contenido</span>
                         </div>
-                        <div class="pl-4"><small class="text-gray-500">@message.Remitente.Alias</small></div>
+                        <div class="pl-4"><small class="text-gray-500">@message.Remitente?.Alias</small></div>
                     </div>
                 </div>
             }
@@ -132,7 +132,7 @@
         <input @bind="Message" class="w-full rounded px-2 py-2" type="text" />
     </div>
     <div @onclick="SendMessage">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="#263238" fill-opacity=".45" d="M11.999 14.942c2.001 0 3.531-1.53 3.531-3.531V4.35c0-2.001-1.53-3.531-3.531-3.531S8.469 2.35 8.469 4.35v7.061c0 2.001 1.53 3.531 3.53 3.531zm6.238-3.53c0 3.531-2.942 6.002-6.237 6.002s-6.237-2.471-6.237-6.002H3.761c0 4.001 3.178 7.297 7.061 7.885v3.884h2.354v-3.884c3.884-.588 7.061-3.884 7.061-7.885h-2z"></path></svg>
+        <img class="h-5 w-5" src="./paper-plane.png" />
     </div>
 </div>
 
