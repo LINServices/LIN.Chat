@@ -44,10 +44,15 @@
     protected override async Task OnInitializedAsync()
     {
 
+        var s = LIN.Access.Communication.Session.Instance;
         var token = LIN.Access.Communication.Session.Instance.Token;
         var o = await LIN.Access.Communication.Controllers.Profile.ReadConver(token);
 
-        ConversaciónModels = o.Models;
+
+        if (o.Response != Responses.Success)
+            return; 
+
+    ConversaciónModels = o.Models;
 
         var hub = new LIN.Access.Communication.Hubs.ChatHub();
         await hub.Suscribe();
@@ -63,8 +68,8 @@
             {
 
                 e.Conversation.Mensajes.Add(message);
-                if (ChatPage.Iam.Conversation.ID == e.Conversation.ID)
-                    ChatPage.Render();
+                if (ChatPage?.Iam.Conversation.ID == e.Conversation.ID)
+                    ChatPage?.Render();
 
             });
 
@@ -108,15 +113,15 @@
 <div>
     <div class="w-full h-32" style="background-color: #449388"></div>
 
-    <div class="container mx-auto" style="margin-top: -128px;">
-        <div class="py-6 h-screen">
-            <div class="flex border border-grey rounded shadow-lg h-full">
+    <div class="w-full" style="margin-top: -128px;">
+        <div class="h-screen">
+            <div class="flex h-full">
 
                 <!-- Left -->
-                <div class="w-1/3 border flex flex-col">
+                <div class="w-1/3 flex flex-col">
 
                     <!-- Header -->
-                    <div class="py-2 px-3 bg-grey-lighter flex flex-row justify-between items-center">
+                    <div class="py-2 px-3 bg-indigo-950 flex flex-row justify-between items-center">
                         <div>
                             <img class="w-10 h-10 rounded-full" src="http://andressantibanez.com/res/avatar.png" />
                         </div>
@@ -135,22 +140,22 @@
                     </div>
 
                     <!-- Search -->
-                    <div class="py-2 px-2 bg-grey-lightest">
+                    <div class="py-2 px-2 bg-indigo-950">
                         <input type="text" class="w-full px-2 py-2 text-sm" placeholder="Search or start new chat" />
                     </div>
 
                     <!-- Contacts -->
-                    <div class="bg-grey-lighter flex-1 overflow-auto">
+                    <div class="bg-white flex-1 overflow-auto">
 
                         <!--Componente: Chat Selector-->
                         @foreach (var aa in ConversaciónModels)
                         {
-                            <div @onclick="()=>Select(aa)" class="bg-white px-3 flex items-center hover:bg-grey-lighter cursor-pointer">
+                            <div @onclick="()=>Select(aa)" class="bg-white px-3 flex items-center hover:bg-grey-lighter cursor-pointer bottom-2 m-3 ring-1 ring-gray-300 rounded">
                                 <div>
                                     <img class="h-12 w-12 rounded-full"
                                          src="https://www.biography.com/.image/t_share/MTE5NTU2MzE2MjE4MTY0NzQ3/harrison-ford-9298701-1-sized.jpg" />
                                 </div>
-                                <div class="ml-4 flex-1 border-b border-grey-lighter py-4">
+                                <div class="ml-4 flex-1 py-4">
                                     <div class="flex items-bottom justify-between">
                                         <p class="text-grey-darkest">
                                             @aa.Conversation.Name
@@ -160,7 +165,7 @@
                                         </p>
                                     </div>
                                     <p class="text-grey-dark mt-1 text-sm">
-                                       @aa.Conversation.Mensajes.LastOrDefault().Contenido
+                                       @aa.Conversation.Mensajes.LastOrDefault()?.Contenido
                                     </p>
                                 </div>
                             </div>
@@ -172,7 +177,7 @@
 
 
                 <!-- Right -->
-                <div class="w-2/3 border flex flex-col">
+                <div class="w-2/3 flex flex-col">
 
                     @if (ActualHub != null && Member != null)
                     {
