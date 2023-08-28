@@ -44,6 +44,59 @@
 }
 
 
+<style>
+    .chat {
+        display: grid;
+        grid-template-columns: repeat(2,minmax(0,1fr));
+        column-gap: .75rem;
+        padding-top: .25rem;
+        padding-bottom: .25rem;
+    }
+
+    .chat-end {
+        place-items: end;
+        grid-template-columns: 1fr auto;
+    }
+
+    .chat-start {
+        place-items: start;
+        grid-template-columns: auto 1fr;
+    }
+
+        .chat-start .chat-bubble {
+            grid-column-start: 2;
+            background-color: #AEB6BF;
+            color: black;
+            border-bottom-left-radius: 0;
+        }
+
+    .chat-end .chat-bubble {
+        grid-column-start: 1;
+        border-bottom-right-radius: 0;
+        background-color: #273746;
+    }
+
+    .chat-bubble {
+        position: relative;
+        display: block;
+        width: -moz-fit-content;
+        width: fit-content;
+        padding: .5rem 1rem;
+        max-width: 90%;
+        border-radius: var(--rounded-box,1rem);
+        min-height: 2.75rem;
+        min-width: 2.75rem;
+        --tw-bg-opacity: 1;
+        --tw-text-opacity: 1;
+        color: white;
+    }
+</style>
+
+
+
+
+
+
 <!-- Header -->
 <div class="py-2 px-3 bg-indigo-950 flex flex-row justify-between items-center">
     <div class="flex items-center">
@@ -97,24 +150,14 @@
         {
             if (message.Remitente?.ID == Iam?.Profile?.ID)
             {
-                <div class="message me mb-4 flex text-right">
-                    <div class="flex-1 px-2">
-                        <div class="inline-block bg-blue-600 rounded-full p-2 px-6 text-white">
-                            <span>@message.Contenido</span>
-                        </div>
-                        <div class="pr-4"><small class="text-gray-500">@message.Remitente?.Alias</small></div>
-                    </div>
+                <div class="chat chat-end">
+                    <div class="chat-bubble">@message.Contenido</div>
                 </div>
             }
             else
             {
-                <div class="message mb-4 flex">
-                    <div class="flex-1 px-2">
-                        <div class="inline-block bg-gray-300 rounded-full p-2 px-6 text-gray-700">
-                            <span>@message.Contenido</span>
-                        </div>
-                        <div class="pl-4"><small class="text-gray-500">@message.Remitente?.Alias</small></div>
-                    </div>
+                <div class="chat chat-start">
+                    <div class="chat-bubble">@message.Contenido</div>
                 </div>
             }
 
