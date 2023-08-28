@@ -1,0 +1,64 @@
+﻿@code {
+
+
+    [Parameter]
+    public Action<MemberChatModel> OnClick { get; set; }
+
+
+    [Parameter]
+    public MemberChatModel Member { get; set; }
+
+
+    [Parameter]
+    public Func<LIN.Access.Communication.Hubs.ChatHub> Hub { get; set; }
+
+
+    [Parameter]
+    public Func<ConversationModel> ActualChat { get; set; }
+
+
+    public bool IsNew = false;
+
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var hub = Hub();
+            hub?.SuscribeToMe(Member.Conversation.ID.ToString(), (e) =>
+            {
+                IsNew = true;
+                base.StateHasChanged();
+            });
+        }
+
+        return base.OnAfterRenderAsync(firstRender);
+    }
+
+    public void Render()
+    {
+        base.StateHasChanged();
+    }
+}
+
+
+
+
+
+
+
+<div @onclick="()=>{OnClick(Member); IsNew = false; base.StateHasChanged();}" class="flex ring-2 ring-gray-200 bg-white mt-3 p-4 rounded-lg @(Member.Conversation.ID == ActualChat()?.ID ? "ring-blue-500" : "")">
+    <div class="flex items-center">
+        <img class="h-4 w-4" src="./group (2).png" />
+        <label class="text-base gilroy-bold ml-2 text-gray-700">@Member.Conversation.Name</label>
+    </div>
+
+    @if (IsNew)
+    {
+        <span class="ml-3 inline-flex items-center bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
+            <span class="w-2 h-2 mr-1 bg-green-500 rounded-full"></span>
+            Nuevos mensajes
+        </span>
+    }
+
+
+</div>

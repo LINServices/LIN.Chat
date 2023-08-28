@@ -14,6 +14,7 @@
     class A
     {
         public bool IsLoad {get;set;}
+        public bool IsNew { get; set; } = false;
     }
 
     Dictionary<int, (LIN.Access.Communication.Hubs.ChatHub, MemberChatModel, A)> Chats = new();
@@ -76,6 +77,22 @@
 
             });
 
+
+            hub.SuscribeToMe(e.Conversation.ID.ToString(), (q) =>
+            {
+
+                if (ChatPage?.Iam?.Conversation?.ID == e.Conversation.ID)
+                    return;
+
+                var c =  ComponentRefs.Where(T => T.Member.Conversation.ID == e.Conversation.ID).FirstOrDefault();
+
+                if (c != null)
+                {
+                    c.IsNew = true;
+                    c.Render();
+                }
+            });
+
             Chats.Add(e.Conversation.ID, (hub, e, new() { IsLoad= false }));
         }
 
@@ -110,6 +127,7 @@
 
             Member.Conversation.Mensajes.AddRange(oldMessage.Models);
             info.Value.Item3.IsLoad = true;
+
         }
 
 
@@ -125,15 +143,26 @@
         }
     }
 
+
+
+
+
+    List<LIN.Chat.Client.Shared.Control> ComponentRefs = new ();
+
+    LIN.Chat.Client.Shared.Control ComponentRef
+    {
+        set { ComponentRefs.Add(value); }
+    }
+
 }
 
 
 <div>
-    <div class="w-full h-32" style="background-color: #449388"></div>
+    <div class="w-full h-32" style="background-color: #F8F7FB"></div>
 
     <div class="w-screen" style="margin-top: -128px;">
         <div class="h-screen">
-            <div class="flex flex-col lg:flex-row h-full">
+            <div class="flex flex-col lg:flex-row h-full gap-1">
 
                 <!-- Left -->
                 <div class="w-full lg:w-1/3 flex flex-col">
@@ -156,54 +185,25 @@
                         </div>
                     </div>
 
-                    <!-- Search -->
-                    <div class="py-2 px-2 bg-indigo-950">
-
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                                </svg>
-                            </div>
-                            <input type="search" id="search" class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Nueva conversacion con:" required>
-                            <button type="submit" class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Buscar</button>
-                        </div>
-
-                    </div>
-
                     <!-- Contacts -->
-                    <div class="bg-white flex-1 overflow-auto">
+                    <div class="flex-1 overflow-auto shadow" style="background-color: #F8F7FB">
 
-                        <!--Componente: Chat Selector-->
-                        @foreach (var aa in ConversaciónModels)
-                        {
-                            <div @onclick="()=>Select(aa)" class="bg-white px-3 flex items-center hover:bg-grey-lighter cursor-pointer bottom-2 m-3 ring-1 ring-gray-300 hover:ring-blue-600 rounded">
-                                <div>
-                                    <img class="h-10 w-10 rounded-full"
-                                         src="./group (2).png" />
-                                </div>
-                                <div class="ml-4 flex-1 py-4">
-                                    <div class="flex items-bottom justify-between">
-                                        <label class="text-gray-800 gilroy-bold">
-                                            @aa.Conversation.Name
-                                        </label>
-                                        <label class="text-xs text-gray-600">
-                                            @aa.Conversation.Mensajes.LastOrDefault()?.Time.ToString("hh:mm")
-                                        </label>
-                                    </div>
-                                    <p class="text-gray-600 text-xs" style="margin-top: -4px">
-                                       @aa.Conversation.Mensajes.LastOrDefault()?.Contenido
-                                    </p>
-                                </div>
-                            </div>
-                        }
+                        <div class="p-5">
 
+                            <label class="text-xl gilroy-bold text-gray-800">Conversaciones</label>
+
+                            <!--Componente: Chat Selector-->
+                            @foreach (var member in ConversaciónModels)
+                            {
+                               <LIN.Chat.Client.Shared.Control Member="member" ActualChat="()=>ChatPage?.Iam?.Conversation" Hub="()=>ActualHub" @ref="ComponentRef" OnClick="Select" />
+                            }
+                        </div>
                     </div>
 
                 </div>
 
                 <!-- Right -->
-                <div class="w-full lg:w-2/3 flex flex-col" style="background-color: #F6F7F9">
+                <div class="w-full lg:w-2/3 flex flex-col" style="background-color: #F8F7FB">
 
                     @if (ActualHub != null && Member != null)
                     {

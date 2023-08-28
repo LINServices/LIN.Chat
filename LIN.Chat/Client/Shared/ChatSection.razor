@@ -45,51 +45,10 @@
 
 
 <style>
-    .chat {
-        display: grid;
-        grid-template-columns: repeat(2,minmax(0,1fr));
-        column-gap: .75rem;
-        padding-top: .25rem;
-        padding-bottom: .25rem;
+    .mmm{
+        max-width: 90%
     }
 
-    .chat-end {
-        place-items: end;
-        grid-template-columns: 1fr auto;
-    }
-
-    .chat-start {
-        place-items: start;
-        grid-template-columns: auto 1fr;
-    }
-
-        .chat-start .chat-bubble {
-            grid-column-start: 2;
-            background-color: #DFE1E3;
-            color: black;
-            border-bottom-left-radius: 0;
-        }
-
-    .chat-end .chat-bubble {
-        grid-column-start: 1;
-        border-bottom-right-radius: 0;
-        background-color: #273746;
-    }
-
-    .chat-bubble {
-        position: relative;
-        display: block;
-        width: -moz-fit-content;
-        width: fit-content;
-        padding: .5rem 1rem;
-        max-width: 90%;
-        border-radius: var(--rounded-box,1rem);
-        min-height: 2.75rem;
-        min-width: 2.75rem;
-        --tw-bg-opacity: 1;
-        --tw-text-opacity: 1;
-        color: white;
-    }
 </style>
 
 
@@ -98,17 +57,15 @@
 
 
 <!-- Header -->
-<div class="py-2 px-3 flex flex-row justify-between items-center" style="background-color: #17202A">
+<div class="py-2 px-3 flex flex-row justify-between items-center border-b border-gray-300" style="background-color: #F8F7FB">
     <div class="flex items-center"> 
-        <div>
-            <img class="w-10 h-10 rounded-full" src="./group.png" />
-        </div>
-        <div class="ml-4 flex flex-col">
-            <label class="text-gray-200 gilroy-bold">
+       
+        <div class="flex flex-col">
+            <label class="text-gray-700 gilroy-bold">
                 @Iam.Conversation.Name
             </label>
             <label style="margin-top:-2px" class="text-gray-500 text-xs">
-                Integrantes.
+                Grupo personal.
             </label>
         </div>
     </div>
@@ -127,7 +84,7 @@
 </div>
 
 <!-- Messages -->
-<div class="flex-1 overflow-auto" style="background-color: #F6F7F9">
+<div class="flex-1 overflow-auto" style="background-color: #F8F7FB">
 
     <div class="py-2 px-3">
 
@@ -140,7 +97,7 @@
         </div>
 
         <div class="flex justify-center mb-4">
-            <div class="rounded py-2 px-4" style="background-color: #FCF4CB">
+            <div class="rounded-lg py-2 px-4" style="background-color: #FCF4CB">
                 <p class="text-xs">
                    Tus mensajes están protegidos y cifrados, sin embargo LIN IA puede analizarlos para mostrarte recomendaciones.
                 </p>
@@ -150,14 +107,22 @@
         {
             if (message.Remitente?.ID == Iam?.Profile?.ID)
             {
-                <div class="chat chat-end">
-                    <div class="chat-bubble">@message.Contenido</div>
+                <div class="flex justify-end mb-2 ">
+                    <div class="rounded-xl mmm py-2.5 px-4" style="background-color: #2A8BF2">
+                        <p class="text-sm text-gray-100" style="margin-top:-1px">
+                            @message.Contenido
+                        </p>
+                    </div>
                 </div>
             }
             else
             {
-                <div class="chat chat-start">
-                    <div class="chat-bubble">@message.Contenido</div>
+                <div class="flex mb-2 ">
+                    <div class="rounded-xl mmm py-2.5 px-4" style="background-color: #EAE8ED">
+                        <p class="text-sm">
+                            @message.Contenido
+                        </p>
+                    </div>
                 </div>
             }
 
@@ -167,7 +132,7 @@
 </div>
 
 <!-- Input -->
-<div class="rounded-lg m-3 px-4 py-4 flex items-center" style="background-color: #D5D8DC">
+<div class="rounded-lg m-3 px-4 py-4 flex items-center drop-shadow-2xl bg-white" style="background-color: #F8F7FB">
     <div>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path opacity=".45" fill="#263238" d="M9.153 11.603c.795 0 1.439-.879 1.439-1.962s-.644-1.962-1.439-1.962-1.439.879-1.439 1.962.644 1.962 1.439 1.962zm-3.204 1.362c-.026-.307-.131 5.218 6.063 5.551 6.066-.25 6.066-5.551 6.066-5.551-6.078 1.416-12.129 0-12.129 0zm11.363 1.108s-.669 1.959-5.051 1.959c-3.505 0-5.388-1.164-5.607-1.959 0 0 5.912 1.055 10.658 0zM11.804 1.011C5.609 1.011.978 6.033.978 12.228s4.826 10.761 11.021 10.761S23.02 18.423 23.02 12.228c.001-6.195-5.021-11.217-11.216-11.217zM12 21.354c-5.273 0-9.381-3.886-9.381-9.159s3.942-9.548 9.215-9.548 9.548 4.275 9.548 9.548c-.001 5.272-4.109 9.159-9.382 9.159zm3.108-9.751c.795 0 1.439-.879 1.439-1.962s-.644-1.962-1.439-1.962-1.439.879-1.439 1.962.644 1.962 1.439 1.962z"></path></svg>
     </div>
@@ -175,6 +140,6 @@
         <input @bind="Message" class="w-full ring-0 border-0 focus:border-0 focus:ring-0 bg-transparent" placeholder="Escribe tu mensaje..." type="text" />
     </div>
     <div @onclick="SendMessage">
-        <img class="h-5 w-5" src="./paper-plane.png" />
+        <img class="h-5 w-5 mr-3" src="./paper-plane.png" />
     </div>
 </div>
