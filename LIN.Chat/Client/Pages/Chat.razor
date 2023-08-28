@@ -49,7 +49,7 @@
 
         var s = LIN.Access.Communication.Session.Instance;
         var token = LIN.Access.Communication.Session.Instance.Token;
-        var o = await LIN.Access.Communication.Controllers.Profile.ReadConver(token);
+        var o = await LIN.Access.Communication.Controllers.Conversations.ReadAll(token);
 
 
         if (o.Response != Responses.Success)
@@ -106,7 +106,7 @@
 
         if (!info.Value.Item3.IsLoad)
         {
-            var oldMessage = await LIN.Access.Communication.Controllers.Profile.ReadMessage(Member.Conversation.ID);
+            var oldMessage = await LIN.Access.Communication.Controllers.Messages.ReadAll(Member.Conversation.ID);
 
             Member.Conversation.Mensajes.AddRange(oldMessage.Models);
             info.Value.Item3.IsLoad = true;
