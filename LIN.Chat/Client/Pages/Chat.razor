@@ -14,7 +14,6 @@
     class A
     {
         public bool IsLoad {get;set;}
-        public bool IsNew { get; set; } = false;
     }
 
     Dictionary<int, (LIN.Access.Communication.Hubs.ChatHub, MemberChatModel, A)> Chats = new();
@@ -162,33 +161,39 @@
 
     <div class="w-screen" style="margin-top: -128px;">
         <div class="h-screen">
-            <div class="flex flex-col lg:flex-row h-full gap-1">
+            <div class="flex flex-row h-full gap-1">
 
                 <!-- Left -->
-                <div class="w-full lg:w-1/3 flex flex-col">
+                <div class="w-1/3 hidden lg:block lg:block lg:flex flex-col">
 
                     <!-- Header -->
-                    <div class="py-3 px-3 flex flex-row justify-between items-center" style="background-color: #17202A">
-                        <div>
+                    <div class="px-5 pt-3 pb-1 flex flex-row justify-between items-center border-r" style="background-color: #F8F7FB">
+                        <div class="flex items-center">
 
                             <button type="button" class="flex bg-white text-sm rounded-full focus:ring-4 focus:ring-gray-300" id="user-menu-button">
                                 <span class="sr-only">Open</span>
                                 <img class="w-8 h-8 p-1 rounded-full ring-2 ring-gray-300" src="data:image/png;base64,@Img64">
                             </button>
+
+                            <div class="flex flex-col">
+                                <label class="ml-3 text-sm gilroy-bold">@LIN.Access.Communication.Session.Instance.Account.Nombre</label>
+                                <label class="ml-3 text-xs gilroy" style="margin-top:-3px">@LIN.Access.Communication.Session.Instance.Informacion.Alias</label>
+                            </div>
+                            
                         </div>
 
                         <div class="flex justify-center items-center">
                             <div>
-                                   <img class="h-5 w-5" src="./add.png"/>
+                               <img class="h-5 w-5" src="./add.png"/>
                             </div>
                             
                         </div>
                     </div>
 
                     <!-- Contacts -->
-                    <div class="flex-1 overflow-auto shadow" style="background-color: #F8F7FB">
+                    <div class="flex-1 overflow-auto border-r" style="background-color: #F8F7FB">
 
-                        <div class="p-5">
+                        <div class="px-5 mt-4">
 
                             <label class="text-xl gilroy-bold text-gray-800">Conversaciones</label>
 
