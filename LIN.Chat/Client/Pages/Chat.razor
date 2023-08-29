@@ -72,7 +72,11 @@
 
                 e.Conversation.Mensajes.Add(message);
                 if (ChatPage?.Iam.Conversation.ID == e.Conversation.ID)
-                    ChatPage?.Render();
+                {
+                     ChatPage?.Render();
+                    _ = ChatPage?.ScrollToBottom();
+                }
+                   
 
             });
 
@@ -89,6 +93,7 @@
                 {
                     c.IsNew = true;
                     c.Render();
+                    _ = ChatPage?.ScrollToBottom();
                 }
             });
 

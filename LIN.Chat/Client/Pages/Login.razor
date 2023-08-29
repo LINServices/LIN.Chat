@@ -34,10 +34,10 @@
 
 @code {
 
-   
+
     string errorVisible = "h";
 
-    
+
 
 }
 
@@ -91,13 +91,13 @@
 
                                             @if(IsWithKey)
                                             {
-                                                 <h2 class="text-lg font-semibold text-gray-900">Iniciar sesión con Passkey</h2>
+                                                <h2 class="text-lg font-semibold text-gray-900">Iniciar sesión con Passkey</h2>
                                             }
                                             else
                                             {
                                                 <h2 class="text-lg font-semibold text-gray-900">Iniciar sesión en tu cuenta</h2>
                                             }
-                                           
+
                                             <p class="mt-2 text-sm text-gray-700">
                                                 No tienes una cuenta?<!-- --> <a style="text-decoration: none !important;" class="font-medium text-blue-600 hover:text-blue-800" href="/register">Registrate</a> <!-- -->para iniciar a disfrutar
                                             </p>
@@ -114,7 +114,7 @@
                                                 Usuario
                                             </label>
                                             <input @onkeypress="HideError" @bind="User" type="text" autocomplete="off" required=""
-                                                   class="block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-blue-500 sm:text-sm">
+                                            class="block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-blue-500 sm:text-sm">
                                         </div>
 
 
@@ -124,10 +124,10 @@
                                             <div class="">
                                                 <label class="mb-2 block text-sm font-medium text-gray-700">Contraseña</label>
                                                 <input @onkeypress="HideError" @bind="Password" type="password" autocomplete="off"
-                                                       class="block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-blue-500 sm:text-sm">
+                                                class="block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-blue-500 sm:text-sm">
                                             </div>
 
-                                           
+
 
                                         }
 
@@ -158,7 +158,7 @@
                                                         <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm7 11a1 1 0 1 0-2 0 1 1 0 0 0 2 0z" />
                                                     </svg>
                                                 }
-                                              
+
 
                                             </button>
 
@@ -196,6 +196,18 @@
 
 
 @code {
+
+
+
+    protected override void OnInitialized()
+    {
+        if(LIN.Access.Communication.Session.IsOpen)
+        {
+            nav.NavigateTo("/");
+        }
+        base.OnInitialized();
+    }
+
 
 
     /// <summary>
