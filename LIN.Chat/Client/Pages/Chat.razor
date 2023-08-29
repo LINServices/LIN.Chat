@@ -129,7 +129,7 @@
 
         }
 
-
+        Seccion = 1;
         base.StateHasChanged();
 
     }
@@ -143,7 +143,7 @@
     }
 
 
-
+    int Seccion = 0;
 
 
     List<LIN.Chat.Client.Shared.Control> ComponentRefs = new ();
@@ -164,7 +164,7 @@
             <div class="flex flex-row h-full gap-1">
 
                 <!-- Left -->
-                <div class="w-1/3 hidden lg:block lg:block lg:flex flex-col">
+                <div class="w-full lg:w-1/3 flex @(Seccion != 0 ? "hidden":"")   flex-col">
 
                     <!-- Header -->
                     <div class="px-5 pt-3 pb-1 flex flex-row justify-between items-center border-r" style="background-color: #F8F7FB">
@@ -208,11 +208,11 @@
                 </div>
 
                 <!-- Right -->
-                <div class="w-full lg:w-2/3 flex flex-col" style="background-color: #F8F7FB">
+                <div class="w-full @(Seccion != 1 ? "hidden lg:flex":"") lg:w-2/3 flex flex-col" style="background-color: #F8F7FB">
 
                     @if (ActualHub != null && Member != null)
                     {
-                        <LIN.Chat.Client.Shared.ChatSection @ref="ChatPage" Iam="Member" Hub="ActualHub" />
+                        <LIN.Chat.Client.Shared.ChatSection @ref="ChatPage" Iam="Member" Hub="ActualHub" OnBackPress="()=>{Seccion =0; base.StateHasChanged();}" />
                     }
 
 

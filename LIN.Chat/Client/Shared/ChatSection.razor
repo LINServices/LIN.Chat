@@ -15,6 +15,13 @@
     public LIN.Access.Communication.Hubs.ChatHub Hub { get; set; }
 
 
+    /// <summary>
+    /// Hub de conexión
+    /// </summary>
+    [Parameter]
+    public Action OnBackPress { get; set; }
+
+
 
 
 
@@ -59,7 +66,7 @@
 <!-- Header -->
 <div class="py-2 px-3 flex flex-row justify-between items-center border-b border-gray-300" style="background-color: #F8F7FB">
     <div class="flex items-center"> 
-       
+       <img class="visible lg:hidden h-5 w-5 mr-3" src="./back.png" @onclick="OnBackPress" />
         <div class="flex flex-col">
             <label class="text-gray-700 gilroy-bold">
                 @Iam.Conversation.Name
