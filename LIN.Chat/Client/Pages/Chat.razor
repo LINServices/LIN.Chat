@@ -58,45 +58,6 @@
     int Other = 0;
     string Alias = "";
 
-
-
-
-
-
-
-
-
-
-    async void Select(MemberChatModel c)
-    {
-
-        var info = Chats.Where(T => T.Key == c.Conversation.ID).FirstOrDefault();
-
-        ActualHub = info.Value.Item1;
-        Member = info.Value.Item2;
-
-        if (!info.Value.Item3.IsLoad)
-        {
-            var oldMessage = await LIN.Access.Communication.Controllers.Messages.ReadAll(Member.Conversation.ID);
-
-            Member.Conversation.Mensajes.AddRange(oldMessage.Models);
-            info.Value.Item3.IsLoad = true;
-
-        }
-
-        ActualSection = 1;
-        base.StateHasChanged();
-
-    }
-
-
-   static List<LIN.Chat.Client.Shared.Control> ComponentRefs = new();
-
-    LIN.Chat.Client.Shared.Control ComponentRef
-    {
-        set { ComponentRefs.Add(value); }
-    }
-
 }
 
 

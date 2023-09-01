@@ -1,4 +1,6 @@
-﻿namespace LIN.Chat.Client.Pages;
+﻿using System.Runtime.CompilerServices;
+
+namespace LIN.Chat.Client.Pages;
 
 
 public partial class Chat
@@ -37,6 +39,26 @@ public partial class Chat
     /// Pagina actual de Chat
     /// </summary>
     private static Shared.ChatSection? ChatPage { get; set; }
+
+
+
+    /// <summary>
+    /// Lista de componentes de acceso al chat
+    /// </summary>
+    private readonly static List<Shared.Control> ComponentRefs = new();
+
+
+
+    /// <summary>
+    /// Ref de un componente chat
+    /// </summary>
+    private static Shared.Control ComponentRef
+    {
+        set { ComponentRefs.Add(value); }
+    }
+
+
+
 
 
 
@@ -146,6 +168,51 @@ public partial class Chat
 
         // Obtiene los datos
         ForceRetrieveData();
+
+    }
+
+
+
+    /// <summary>
+    /// Seleccionar un chat
+    /// </summary>
+    /// <param name="chat"></param>
+    private async void Select(MemberChatModel chat)
+    {
+
+        // Consulta al cache
+        var cache = (from C in Chats
+                     where C.Key == chat.Conversation.ID
+                     select C.Value).FirstOrDefault();
+
+
+        // Si son null
+        switch (cache)
+        {
+            case (null, _, _) or (_, null, _) or (_, _, null):
+                return;
+
+            default:
+                break;
+        }
+
+        // Member
+        Member = cache.Item2;
+        ActualHub = cache.Item1;
+
+        // Si los chats (mensajes) no se han cargado.
+        if (!cache.Item3.IsLoad)
+        {
+            var oldMessages = await Access.Communication.Controllers.Messages.ReadAll(Member.Conversation.ID);
+
+            // Establece los mensajes
+            Member.Conversation.Mensajes.AddRange(oldMessages.Models);
+            cache.Item3.IsLoad = true;
+        }
+        
+        // Cambia la sección a (1)
+        ActualSection = 1;
+        base.StateHasChanged();
 
     }
 
