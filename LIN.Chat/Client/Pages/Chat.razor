@@ -1,10 +1,22 @@
 ﻿@page "/"
 @inject NavigationManager nav
 
+@code {
 
 
+    /// <summary>
+    /// Sección grafica actual.
+    /// </summary>
+    private int ActualSection { get; set; } = 0;
 
 
+    /// <summary>
+    /// Imagen de perfil en base64
+    /// </summary>
+    private string Img64 => Convert.ToBase64String(LIN.Access.Communication.Session.Instance.Account.Perfil);
+
+
+}
 
 
 
@@ -23,10 +35,10 @@
 
     class A
     {
-        public bool IsLoad {get;set;}
+        public bool IsLoad { get; set; }
     }
 
-   
+
 
 
 
@@ -47,11 +59,11 @@
     string Alias = "";
 
 
-    
 
 
 
- 
+
+
 
 
 
@@ -72,24 +84,13 @@
 
         }
 
-        Seccion = 1;
+        ActualSection = 1;
         base.StateHasChanged();
 
     }
 
-    private string Img64
-    {
-        get
-        {
-            return Convert.ToBase64String(LIN.Access.Communication.Session.Instance.Account.Perfil);
-        }
-    }
 
-
-    int Seccion = 0;
-
-
-    List<LIN.Chat.Client.Shared.Control> ComponentRefs = new ();
+   static List<LIN.Chat.Client.Shared.Control> ComponentRefs = new();
 
     LIN.Chat.Client.Shared.Control ComponentRef
     {
@@ -107,7 +108,7 @@
             <div class="flex flex-row h-full gap-1">
 
                 <!-- Left -->
-                <div class="w-full lg:w-1/3 flex @(Seccion != 0 ? "hidden lg:flex":"")   flex-col">
+                <div class="w-full lg:w-1/3 flex @(ActualSection != 0 ? "hidden lg:flex":"")   flex-col">
 
                     <!-- Header -->
                     <div class="px-5 pt-3 pb-1 flex flex-row justify-between items-center border-r" style="background-color: #F8F7FB">
@@ -122,14 +123,14 @@
                                 <label class="ml-3 text-sm gilroy-bold">@LIN.Access.Communication.Session.Instance.Account.Nombre</label>
                                 <label class="ml-3 text-xs gilroy" style="margin-top:-3px">@LIN.Access.Communication.Session.Instance.Informacion.Alias</label>
                             </div>
-                            
+
                         </div>
 
                         <div class="flex justify-center items-center">
                             <div>
-                               <img class="h-5 w-5" src="./add.png"/>
+                                <img class="h-5 w-5" src="./add.png" />
                             </div>
-                            
+
                         </div>
                     </div>
 
@@ -143,7 +144,7 @@
                             <!--Componente: Chat Selector-->
                             @foreach (var member in ConversaciónModels)
                             {
-                               <LIN.Chat.Client.Shared.Control Member="member" ActualChat="()=>ChatPage?.Iam?.Conversation" Hub="()=>ActualHub" @ref="ComponentRef" OnClick="Select" />
+                                <LIN.Chat.Client.Shared.Control Member="member" ActualChat="()=>ChatPage?.Iam?.Conversation" Hub="()=>ActualHub" @ref="ComponentRef" OnClick="Select" />
                             }
                         </div>
                     </div>
@@ -151,11 +152,11 @@
                 </div>
 
                 <!-- Right -->
-                <div class="w-full @(Seccion != 1 ? "hidden lg:flex":"") lg:w-2/3 flex flex-col" style="background-color: #F8F7FB">
+                <div class="w-full @(ActualSection != 1 ? "hidden lg:flex":"") lg:w-2/3 flex flex-col" style="background-color: #F8F7FB">
 
                     @if (ActualHub != null && Member != null)
                     {
-                        <LIN.Chat.Client.Shared.ChatSection @ref="ChatPage" Iam="Member" Hub="ActualHub" OnBackPress="()=>{Seccion =0; base.StateHasChanged();}" />
+                        <LIN.Chat.Client.Shared.ChatSection @ref="ChatPage" Iam="Member" Hub="ActualHub" OnBackPress="()=>{ActualSection =0; base.StateHasChanged();}" />
                     }
 
 

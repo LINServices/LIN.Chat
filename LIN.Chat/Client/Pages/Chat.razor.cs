@@ -8,35 +8,35 @@ public partial class Chat
     /// <summary>
     /// Lista de conversaciones
     /// </summary>
-    private readonly List<MemberChatModel> ConversaciónModels = new();
+    private static readonly List<MemberChatModel> ConversaciónModels = new();
 
 
 
     /// <summary>
     /// Hub de conexión Realtime
     /// </summary>
-    private LIN.Access.Communication.Hubs.ChatHub? ActualHub { get; set; }
+    private static LIN.Access.Communication.Hubs.ChatHub? ActualHub { get; set; }
 
 
 
     /// <summary>
     /// Mi perfil
     /// </summary>
-    private MemberChatModel? Member { get; set; }
+    private static MemberChatModel? Member { get; set; }
 
 
 
     /// <summary>
     /// Lista de Chats abiertos
     /// </summary>
-    private readonly Dictionary<int, (Access.Communication.Hubs.ChatHub, MemberChatModel, A)> Chats = new();
+    private static readonly Dictionary<int, (Access.Communication.Hubs.ChatHub, MemberChatModel, A)> Chats = new();
 
 
 
     /// <summary>
     /// Pagina actual de Chat
     /// </summary>
-    private Shared.ChatSection? ChatPage { get; set; }
+    private static Shared.ChatSection? ChatPage { get; set; }
 
 
 
@@ -64,7 +64,7 @@ public partial class Chat
     /// <summary>
     /// Obtiene la información del servidor
     /// </summary>
-    private async void RetrieveData()
+    private async void ForceRetrieveData()
     {
 
         // Variables
@@ -129,6 +129,23 @@ public partial class Chat
 
         // Actualiza la vista
         StateHasChanged();
+
+    }
+
+
+
+    /// <summary>
+    /// Obtiene la información del servidor
+    /// </summary>
+    private void RetrieveData()
+    {
+
+        // Si ya hay chats
+        if (Chats.Count > 0)
+            return;
+
+        // Obtiene los datos
+        ForceRetrieveData();
 
     }
 
