@@ -24,11 +24,11 @@
         if (firstRender)
         {
             var hub = Hub();
-            hub?.SuscribeToMe(Member.Conversation.ID.ToString(), (e) =>
-            {
-                IsNew = true;
-                base.StateHasChanged();
-            });
+            // hub?.SuscribeToMe(Member.Conversation.ID.ToString(), (e) =>
+            // {
+            //     IsNew = true;
+            //     base.StateHasChanged();
+            // });
         }
 
         return base.OnAfterRenderAsync(firstRender);

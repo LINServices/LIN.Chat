@@ -53,6 +53,9 @@ public partial class Chat
             return;
         }
 
+        // Obtiene la data
+        RetrieveData();
+
         base.OnInitialized();
     }
 
@@ -124,56 +127,10 @@ public partial class Chat
 
         }
 
-
-
-        foreach (var e in ConversaciónModels)
-        {
-
-            e.Profile = profile;
-            e.Conversation.Mensajes ??= new();
-
-            hub.JoinGroup(e.Conversation.ID.ToString(), (MessageModel message) =>
-            {
-
-                e.Conversation.Mensajes.Add(message);
-                if (ChatPage?.Iam.Conversation.ID == e.Conversation.ID)
-                {
-                    ChatPage?.Render();
-                    ChatPage?.ScrollToBottom();
-                }
-
-
-            });
-
-
-            hub.SuscribeToMe(e.Conversation.ID.ToString(), (q) =>
-            {
-
-                if (ChatPage?.Iam?.Conversation?.ID == e.Conversation.ID)
-                    return;
-
-                var c = ComponentRefs.Where(T => T.Member.Conversation.ID == e.Conversation.ID).FirstOrDefault();
-
-                if (c != null)
-                {
-                    c.IsNew = true;
-                    c.Render();
-                }
-            });
-
-            Chats.Add(e.Conversation.ID, (hub, e, new() { IsLoad = false }));
-        }
+        // Actualiza la vista
+        StateHasChanged();
 
     }
-
-
-
-
-    void OnReceiveMessage(MessageModel message)
-    {
-
-    }
-
 
 
 }
