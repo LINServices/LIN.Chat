@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace LIN.Chat.Client.Pages;
+﻿namespace LIN.Chat.Client.Pages;
 
 
 public partial class Chat
@@ -31,7 +29,7 @@ public partial class Chat
     /// <summary>
     /// Lista de Chats abiertos
     /// </summary>
-    private static readonly Dictionary<int, (Access.Communication.Hubs.ChatHub, MemberChatModel, A)> Chats = new();
+    private static readonly Dictionary<int, (Access.Communication.Hubs.ChatHub, MemberChatModel, Status)> Chats = new();
 
 
 
@@ -214,6 +212,16 @@ public partial class Chat
         ActualSection = 1;
         base.StateHasChanged();
 
+    }
+
+
+
+    /// <summary>
+    /// Clase de status
+    /// </summary>
+    private class Status
+    {
+        public bool IsLoad { get; set; }
     }
 
 

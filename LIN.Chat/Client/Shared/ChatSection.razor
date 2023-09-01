@@ -44,10 +44,12 @@
     }
 
 
-    public void Render()
+    public void Render(Action? post)
     {
         base.StateHasChanged();
+        post?.Invoke();
     }
+
 
 }
 
@@ -135,8 +137,6 @@
                 </div>
             }
 
-            _ = ScrollToBottom();
-
         }
 
     </div>
@@ -144,6 +144,8 @@
     
 
 </div>
+
+
 
 <!-- Input -->
 <div class="rounded-lg m-3 px-4 py-4 flex items-center drop-shadow-2xl bg-white" style="background-color: #F8F7FB">

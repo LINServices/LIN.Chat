@@ -19,48 +19,6 @@
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-@code {
-
-    class A
-    {
-        public bool IsLoad { get; set; }
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    int Me = 0;
-    int Other = 0;
-    string Alias = "";
-
-}
-
-
 <div>
     <div class="w-full h-32" style="background-color: #F8F7FB"></div>
 
@@ -105,7 +63,7 @@
                             <!--Componente: Chat Selector-->
                             @foreach (var member in ConversaciónModels)
                             {
-                                <LIN.Chat.Client.Shared.Control Member="member" ActualChat="()=>ChatPage?.Iam?.Conversation" Hub="()=>ActualHub" @ref="ComponentRef" OnClick="Select" />
+                                <Control Member="member" ActualChat="()=>ChatPage?.Iam?.Conversation" Hub="()=>ActualHub" @ref="ComponentRef" OnClick="Select" />
                             }
                         </div>
                     </div>
@@ -117,7 +75,7 @@
 
                     @if (ActualHub != null && Member != null)
                     {
-                        <LIN.Chat.Client.Shared.ChatSection @ref="ChatPage" Iam="Member" Hub="ActualHub" OnBackPress="()=>{ActualSection =0; base.StateHasChanged();}" />
+                        <ChatSection @ref="ChatPage" Iam="Member" Hub="ActualHub" OnBackPress="()=>{ActualSection =0; base.StateHasChanged();}" />
                     }
 
 
@@ -127,20 +85,3 @@
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
