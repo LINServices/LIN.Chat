@@ -62,13 +62,24 @@
 
                         <div class="px-5 mt-4">
 
-                            <label class="text-xl gilroy-bold text-gray-800">Conversaciones</label>
+                            <label class="text-base gilroy-bold text-gray-800">Conversaciones</label>
 
-                            <!--Componente: Chat Selector-->
-                            @foreach (var member in ConversaciónModels)
+
+                            @if(IsConversationsLoad)
                             {
-                                <Control Member="member" ActualChat="()=>ChatPage?.Iam?.Conversation" Hub="()=>ActualHub" @ref="ComponentRef" OnClick="Select" />
+                                foreach (var member in ConversaciónModels)
+                                {
+                                    <Control Member="member" ActualChat="()=>ChatPage?.Iam?.Conversation" Hub="()=>ActualHub" @ref="ComponentRef" OnClick="Select" />
+                                }
                             }
+                            else
+                            {
+                                <div class="flex w-full justify-center mt-2">
+                                    <CircleLoader />
+                                </div>
+                            }
+
+                           
                         </div>
                     </div>
 
@@ -79,7 +90,11 @@
 
                     @if (ActualHub != null && Member != null)
                     {
-                        <ChatSection @ref="ChatPage" Iam="Member" Hub="ActualHub" OnBackPress="()=>{ActualSection =0; base.StateHasChanged();}" />
+                        <ChatSection @ref="ChatPage" Iam="Member" Hub="ActualHub" OnBackPress="()=>{
+
+                                ActualSection = 0;
+                                base.StateHasChanged();
+                    }" />
                     }
                     else
                     {

@@ -5,6 +5,11 @@ public partial class Chat
 {
 
 
+    private static bool IsConversationsLoad { get; set; } = false;
+
+
+
+
     /// <summary>
     /// Lista de conversaciones
     /// </summary>
@@ -86,7 +91,8 @@ public partial class Chat
     /// </summary>
     private async void ForceRetrieveData()
     {
-
+        IsConversationsLoad = false;
+        base.StateHasChanged();
         // Variables
         var profile = LIN.Access.Communication.Session.Instance.Informacion;
         string token = Access.Communication.Session.Instance.Token ?? string.Empty;
@@ -94,6 +100,8 @@ public partial class Chat
         // Obtiene las conversaciones actuales
         ReadAllResponse<MemberChatModel> chats = await Access.Communication.Controllers.Conversations.ReadAll(token);
 
+        IsConversationsLoad = true;
+        base.StateHasChanged();
         // Si hubo un error
         if (chats.Response != Responses.Success)
             return;
@@ -178,6 +186,9 @@ public partial class Chat
     private async void Select(MemberChatModel chat)
     {
 
+
+
+
         // Consulta al cache
         var cache = (from C in Chats
                      where C.Key == chat.Conversation.ID
@@ -193,6 +204,12 @@ public partial class Chat
             default:
                 break;
         }
+        if (Member == cache.Item2)
+        {
+            Member = null;
+            StateHasChanged();
+            return;
+        }
 
         // Member
         Member = cache.Item2;
@@ -207,7 +224,7 @@ public partial class Chat
             Member.Conversation.Mensajes.AddRange(oldMessages.Models);
             cache.Item3.IsLoad = true;
         }
-        
+
         // Cambia la sección a (1)
         ActualSection = 1;
         base.StateHasChanged();

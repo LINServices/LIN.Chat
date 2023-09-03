@@ -46,7 +46,7 @@
 
 
 
-<div @onclick="()=>{OnClick(Member); IsNew = false; base.StateHasChanged();}" class="flex ring-2 ring-gray-200 bg-white mt-3 p-4 rounded-lg @(Member.Conversation.ID == ActualChat()?.ID ? "ring-indigo-500" : "")">
+<div @onclick="()=>{OnClick(Member); IsNew = false; base.StateHasChanged();}" class="flex ring-2 ring-gray-200 bg-white mt-2 p-4 rounded @(Member.Conversation.ID == ActualChat()?.ID ? "ring-indigo-500" : "")">
     <div class="flex items-center">
         <img class="h-4 w-4" src="./group (2).png" />
         <label class="text-base gilroy-bold ml-2 text-gray-700">@Member.Conversation.Name</label>
