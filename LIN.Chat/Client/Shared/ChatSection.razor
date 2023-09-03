@@ -124,7 +124,7 @@
                 if (message.Remitente?.ID == Iam?.Profile?.ID)
                 {
                 <div class="flex justify-end mb-2 ">
-                    <div class="rounded-xl mmm py-2.5 px-4" style="background-color: #2A8BF2">
+                    <div class="rounded-xl mmm py-2.5 px-4 bg-indigo-500">
                         <p class="text-sm text-gray-100" style="margin-top:-1px">
                             @message.Contenido
                         </p>
@@ -161,7 +161,7 @@
         <input @bind="Message" class="w-full ring-0 border-0 focus:border-0 focus:ring-0 bg-transparent" placeholder="Escribe tu mensaje..." type="text" />
     </div>
     <div @onclick="SendMessage">
-        <img class="h-5 w-5 mr-3" src="./paper-plane.png" />
+        <img class="h-5 w-5 mr-3" src="./paper.png" />
     </div>
 </div>
 
