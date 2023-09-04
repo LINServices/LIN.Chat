@@ -247,4 +247,20 @@ public partial class Chat
     }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
