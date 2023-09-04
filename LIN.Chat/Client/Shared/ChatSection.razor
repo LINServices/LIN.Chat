@@ -45,21 +45,6 @@
     }
 
 
-    private async void SendLocation()
-    {
-
-        await RequestLocationPermission();
-        await GetLocation();
-
-
-
-
-        Hub?.SendMessage(Iam.Profile.ID, Iam.Conversation.ID.ToString(), $"{longitude.ToString().Replace(',', '.')}, {latitude.ToString().Replace(',', '.')}");
-        Message = "";
-        StateHasChanged();
-        _ = ScrollToBottom();
-    }
-
 
     protected override void OnAfterRender(bool firstRender)
     {
@@ -177,9 +162,7 @@
     <div class="flex-1 mx-4">
         <input @bind="Message" class="w-full ring-0 border-0 focus:border-0 focus:ring-0 bg-transparent" placeholder="Escribe tu mensaje..." type="text" />
     </div>
-    <div @onclick="SendLocation">
-        <img class="h-5 w-5 mr-3" src="./send.png" />
-    </div>
+   
     <div @onclick="SendMessage">
         <img class="h-5 w-5 mr-3" src="./send.png" />
     </div>
