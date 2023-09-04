@@ -100,11 +100,15 @@ public partial class Chat
         // Obtiene las conversaciones actuales
         ReadAllResponse<MemberChatModel> chats = await Access.Communication.Controllers.Conversations.ReadAll(token);
 
-        IsConversationsLoad = true;
-        base.StateHasChanged();
+       
         // Si hubo un error
         if (chats.Response != Responses.Success)
+        {
+            IsConversationsLoad = true;
+            base.StateHasChanged();
             return;
+        }
+            
 
         // Lista
         Chats.Clear();
@@ -156,6 +160,7 @@ public partial class Chat
         }
 
         // Actualiza la vista
+        IsConversationsLoad = true;
         StateHasChanged();
 
     }
