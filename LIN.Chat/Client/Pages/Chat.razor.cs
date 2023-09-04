@@ -100,7 +100,7 @@ public partial class Chat
         // Obtiene las conversaciones actuales
         ReadAllResponse<MemberChatModel> chats = await Access.Communication.Controllers.Conversations.ReadAll(token);
 
-       
+
         // Si hubo un error
         if (chats.Response != Responses.Success)
         {
@@ -108,7 +108,7 @@ public partial class Chat
             base.StateHasChanged();
             return;
         }
-            
+
 
         // Lista
         Chats.Clear();
@@ -117,10 +117,10 @@ public partial class Chat
 
 
         // Configuración del hub
-        var hub = new LIN.Access.Communication.Hubs.ChatHub();
+        var hub = new LIN.Access.Communication.Hubs.ChatHub(profile);
         await hub.Suscribe();
-        await hub.ConnectMe(profile);
 
+        hub.OnReceiveMessage += OnReceiveMessage;
 
         // Suscribir los eventos del hub
         foreach (MemberChatModel conversation in ConversaciónModels)
@@ -129,30 +129,8 @@ public partial class Chat
             conversation.Profile = profile;
             conversation.Conversation.Mensajes ??= new();
 
-            // Evento de mensajes
-            hub.JoinGroup(conversation.Conversation.ID.ToString(), (message) =>
-            {
-                // Agrega el mensaje
-                conversation.Conversation.Mensajes.Add(message);
 
-                // Si la pagina actual es la misma a la cual llego el mensaje
-                if (ChatPage?.Iam.Conversation.ID == conversation.Conversation.ID)
-                {
-                    ChatPage?.Render();
-                    ChatPage?.ScrollToBottom();
-                    return;
-                }
-
-                // Obtiene el componente
-                var component = ComponentRefs.Where(T => T.Member.Conversation.ID == conversation.Conversation.ID).FirstOrDefault();
-
-                if (component != null)
-                {
-                    component.IsNew = true;
-                    component.Render();
-                }
-
-            });
+            _ = hub.JoinGroup(conversation.Conversation.ID);
 
             // Agrega al cache
             Chats.Add(conversation.Conversation.ID, (hub, conversation, new() { IsLoad = false }));
@@ -163,6 +141,38 @@ public partial class Chat
         IsConversationsLoad = true;
         StateHasChanged();
 
+    }
+
+    private void OnReceiveMessage(object? sender, MessageModel e)
+    {
+
+        MemberChatModel? conversation = ConversaciónModels.Where(T => T.Conversation.ID == e.Conversacion.ID).FirstOrDefault();
+
+        if (conversation == null)
+            return;
+        
+        // Agrega el mensaje
+        conversation.Conversation.Mensajes.Add(e);
+
+        // Si la pagina actual es la misma a la cual llego el mensaje
+        if (ChatPage?.Iam.Conversation.ID == conversation.Conversation.ID)
+        {
+            ChatPage?.Render();
+            ChatPage?.ScrollToBottom();
+            return;
+        }
+
+        // Obtiene el componente
+        var component = ComponentRefs.Where(T => T.Member.Conversation.ID == conversation.Conversation.ID).FirstOrDefault();
+
+        if (component != null)
+        {
+            component.IsNew = true;
+            component.Render();
+        }
+
+
+        throw new NotImplementedException();
     }
 
 

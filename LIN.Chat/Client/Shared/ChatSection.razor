@@ -38,7 +38,7 @@
     /// </summary>
     private void SendMessage()
     {
-        Hub?.SendMessage(Iam.Profile.ID, Iam.Conversation.ID.ToString(), Message);
+        Hub?.SendMessage(Iam.Conversation.ID, Message);
         Message = "";
         StateHasChanged();
         _= ScrollToBottom();
