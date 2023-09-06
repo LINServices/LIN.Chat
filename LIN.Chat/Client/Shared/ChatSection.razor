@@ -67,7 +67,7 @@
         }
 
     </style>
-
+    @using LIN.Chat.Client.Shared
 
     <PageTitle>Chat: @Iam.Conversation.Name</PageTitle>
 
@@ -125,23 +125,11 @@
             {
                 if (message.Remitente?.ID == Iam?.Profile?.ID)
                 {
-                <div class="flex justify-end mb-2 ">
-                    <div class="rounded-xl mmm py-2.5 px-4 bg-indigo-500">
-                        <p class="text-sm text-gray-100" style="margin-top:-1px">
-                            @message.Contenido
-                        </p>
-                    </div>
-                </div>
+                    <Message Text="@message.Contenido" IsOther="false" />
                 }
                 else
                 {
-                <div class="flex mb-2 ">
-                    <div class="rounded-xl mmm py-2.5 px-4" style="background-color: #EAE8ED">
-                        <p class="text-sm">
-                            @message.Contenido
-                        </p>
-                    </div>
-                </div>
+                    <Message Text="@message.Contenido" IsOther="true" />
                 }
 
             }

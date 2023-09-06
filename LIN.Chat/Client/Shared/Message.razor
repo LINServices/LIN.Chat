@@ -1,0 +1,63 @@
+﻿
+@code {
+
+    [Parameter]
+    public bool IsOther { get; set; } = false;
+
+
+    [Parameter]
+    public string Text { get; set; }
+
+
+    private int Seccion = 0;
+
+
+    protected override void OnParametersSet()
+    {
+        if (EsEnlaceGoogleMeet(Text))
+            Seccion = 1;
+
+        StateHasChanged();
+        base.OnParametersSet();
+    }
+
+
+    static bool EsEnlaceGoogleMeet(string texto)
+    {
+        // Patrón de expresión regular para detectar enlaces de Google Meet
+        string patron = @"https://meet\.google\.com/[a-zA-Z0-9\-]+";
+
+        // Comprueba si el texto coincide con el patrón
+        return System.Text.RegularExpressions. Regex.IsMatch(texto, patron);
+    }
+
+    
+
+}
+
+<div class="flex @(IsOther?"":"justify-end") mb-2 ">
+
+    @if (Seccion == 0)
+    {
+        <div class="rounded-xl mmm py-2.5 px-4 @(!IsOther?"bg-indigo-500 text-white":"bg-[#EAE8ED]")">
+            <p class="text-sm">
+                @Text
+            </p>
+        </div>
+    }
+
+    else if (Seccion == 1)
+    {
+        <div class="rounded-xl mmm py-2.5 px-4 @(!IsOther?"bg-indigo-500 text-white":"bg-[#EAE8ED]")">
+           
+            <div class="flex m-2 bg-red justify-center items-center">
+                <img class="h-5 w-5" src="@(IsOther?"./meet.png":"./meet_white.png")" />
+            </div>
+
+            <a href="@Text" target="_blank"  class="text-sm hover:text-indigo-600">Unirme</a>
+            
+        </div>
+    }
+
+   
+</div>
