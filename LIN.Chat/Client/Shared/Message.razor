@@ -10,6 +10,11 @@
 
 
     [Parameter]
+    public DateTime Date { get; set; }
+
+
+
+    [Parameter]
     public string Text { get; set; }
 
 
@@ -38,7 +43,7 @@
     
 
 }
-<label class="hover:text-indigo-500" style="font-size: 10px">@(Alias ?? "")</label>
+<label class="hover:text-indigo-500 @(IsOther?"":"flex self-center justify-end mr-2")" style="font-size: 10px">@(string.IsNullOrWhiteSpace(Alias) ? "" : Alias + " • ")@(Date.ToString("HH:mm"))</label>
 
 <div class="flex @(IsOther?"":"justify-end") mb-2 ">
 
