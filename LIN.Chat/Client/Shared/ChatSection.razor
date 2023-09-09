@@ -129,7 +129,7 @@
                 }
                 else
                 {
-                    <Message Text="@message.Contenido" IsOther="true" />
+                    <Message Text="@message.Contenido" IsOther="true" Alias="@message?.Remitente?.Alias"/>
                 }
 
             }
