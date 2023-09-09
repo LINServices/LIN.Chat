@@ -43,7 +43,7 @@
     
 
 }
-<label class="hover:text-indigo-500 @(IsOther?"":"flex self-center justify-end mr-2")" style="font-size: 10px">@(string.IsNullOrWhiteSpace(Alias) ? "" : Alias + " • ")@(Date.ToString("HH:mm"))</label>
+<label class="text-gray-500 hover:text-indigo-500 @(IsOther?"":"flex self-center justify-end mr-2")" style="font-size: 10px">@(string.IsNullOrWhiteSpace(Alias) ? "" : Alias + " • ")@(Date.ToString("HH:mm"))</label>
 
 <div class="flex @(IsOther?"":"justify-end") mb-2 ">
 

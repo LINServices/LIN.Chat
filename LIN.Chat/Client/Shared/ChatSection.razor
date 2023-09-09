@@ -1,6 +1,9 @@
 ﻿@code {
 
 
+
+    private DateTime? oldTime = null;
+
     /// <summary>
     /// Iam
     /// </summary>
@@ -126,9 +129,25 @@
 
             @foreach (var message in Iam.Conversation.Mensajes)
             {
+                oldTime ??= message.Time;
+
+            if (new DateTime(oldTime.Value.Year, oldTime.Value.Month, oldTime.Value.Day) < new DateTime(message.Time.Year, message.Time.Month, message.Time.Day))
+                {
+
+                <div class="flex justify-center mb-2">
+                    <div class="rounded py-2 px-4" style="background-color: #DDECF2">
+                        <p class="text-sm uppercase">
+                            @message.Time.ToString("MMMM dd, yyyy")
+                        </p>
+                    </div>
+                </div>
+                oldTime = message.Time;
+                }
+
+
                 if (message.Remitente?.ID == Iam?.Profile?.ID)
                 {
-                <Message Text="@message.Contenido" IsOther="false" Date="@message.Time" />
+                    <Message Text="@message.Contenido" IsOther="false" Date="@message.Time" />
                 }
                 else
                 {
@@ -136,6 +155,8 @@
                 }
 
             }
+
+            @(oldTime = null)
 
     </div>
 
