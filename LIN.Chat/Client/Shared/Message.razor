@@ -1,8 +1,23 @@
 ﻿
 @code {
 
+
+
+    /// <summary>
+    /// Imagen de perfil en base64
+    /// </summary>
+    private string Img64 = "";
+
+
+
+
     [Parameter]
     public bool IsOther { get; set; } = false;
+
+
+    [Parameter]
+    public int OtherID { get; set; } = 0;
+
 
 
     [Parameter]
@@ -19,6 +34,25 @@
 
 
     private int Seccion = 0;
+
+
+
+    bool IsImage = false;
+
+    public void PreRen(List<Types.Auth.Abstracts.SessionModel<ProfileModel>> lista)
+    {
+        var info = lista.Where(T => T.Profile.ID == OtherID).FirstOrDefault();
+        if (info == null)
+            return;
+
+
+        Img64 = Convert.ToBase64String(info.Account.Perfil);
+
+        IsImage = true;
+
+        StateHasChanged();
+
+    }
 
 
     protected override void OnParametersSet()
@@ -45,16 +79,28 @@
 }
 <label class="text-gray-500 hover:text-indigo-500 @(IsOther?"":"flex self-center justify-end mr-2")" style="font-size: 10px">@(string.IsNullOrWhiteSpace(Alias) ? "" : Alias + " • ")@(Date.ToString("HH:mm"))</label>
 
-<div class="flex @(IsOther?"":"justify-end") mb-2 ">
+<div class="flex @(IsOther?"":"justify-end") mb-2 items-center">
 
     
     @if (Seccion == 0)
     {
-        <div class="rounded-xl mmm py-2.5 px-4 @(!IsOther?"bg-indigo-500 text-white":"bg-[#EAE8ED]")">
-            <p class="text-sm">
-                @Text
-            </p>
-        </div>
+
+      
+            @if (IsOther && IsImage)
+            {
+            <div class="p-1 rounded-full ring-2 ring-gray-200 hover:ring-4 hiver:ring-gray-300 mr-2 h-8 w-8">
+                <img src="data:image/png;base64,@Img64" class=" rounded-full object-cover" alt="" />
+            </div>
+                
+            }
+
+            <div class="rounded-xl mmm py-2.5 px-4 @(!IsOther?"bg-indigo-500 text-white":"bg-[#EAE8ED]")">
+                <p class="text-sm">
+                    @Text
+                </p>
+            </div>
+
+      
     }
 
     else if (Seccion == 1)

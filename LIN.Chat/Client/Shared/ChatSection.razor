@@ -2,6 +2,8 @@
 
 
 
+
+
     private DateTime? oldTime = null;
 
     /// <summary>
@@ -35,6 +37,14 @@
     private string Message { get; set; } = "";
 
 
+    List<Message> Messages = new();
+
+
+    Message message1
+    {
+        set => Messages.Add(value);
+    }
+
 
     /// <summary>
     /// Enviar un mensaje
@@ -49,10 +59,38 @@
 
 
 
+    static List<Types.Auth.Abstracts.SessionModel<ProfileModel>> Lista = new();
+    public async Task LoadIntegrants()
+    {
+
+        var integrants = await LIN.Access.Communication.Controllers.Conversations.MembersInfo(Iam.Conversation.ID);
+
+        Lista.AddRange(integrants.Models);
+
+
+
+        PrintPictures();
+
+    }
+
+
+    public void PrintPictures()
+    {
+          foreach (var m in Messages)
+            m.PreRen(Lista);
+    }
+
+
+
     protected override void OnAfterRender(bool firstRender)
     {
         _ = ScrollToBottom();
         base.OnAfterRender(firstRender);
+
+        if (firstRender)
+         _ = LoadIntegrants();
+
+        PrintPictures();
     }
 
 
@@ -147,11 +185,11 @@
 
                 if (message.Remitente?.ID == Iam?.Profile?.ID)
                 {
-                    <Message Text="@message.Contenido" IsOther="false" Date="@message.Time" />
+                    <Message @ref=message1 Text="@message.Contenido" IsOther="false" Date="@message.Time" />
                 }
                 else
                 {
-                    <Message Text="@message.Contenido" IsOther="true" Date="@message.Time" Alias="@message?.Remitente?.Alias"/>
+                <Message @ref=message1 OtherID="@message.Remitente.ID" Text ="@message.Contenido" IsOther="true" Date="@message.Time" Alias="@message?.Remitente?.Alias" />
                 }
 
             }
