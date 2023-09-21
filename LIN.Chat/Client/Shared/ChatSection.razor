@@ -13,6 +13,9 @@
     public MemberChatModel Iam { get; set; } = new();
 
 
+    public static DateTime Today = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+
+
     /// <summary>
     /// Hub de conexión
     /// </summary>
@@ -172,10 +175,26 @@
             if (new DateTime(oldTime.Value.Year, oldTime.Value.Month, oldTime.Value.Day) < new DateTime(message.Time.Year, message.Time.Month, message.Time.Day))
                 {
 
+                    var dateMess = new DateTime(message.Time.Year, message.Time.Month, message.Time.Day);
+                    var isToday = dateMess == Today;
+                    
+
+
                 <div class="flex justify-center mb-2">
                     <div class="rounded-lg py-2 px-4 bg-indigo-100">
                         <p class="text-sm uppercase">
-                            @message.Time.ToString("MMMM dd, yyyy")
+                            @if(isToday)
+                            {
+                               @("Hoy")
+                            }
+                            else if (dateMess == Today.AddDays(-1))
+                            {
+                                @("Ayer")
+                            }
+                            else
+                            {
+                                @message.Time.ToString("MMMM dd, yyyy")
+                            }
                         </p>
                     </div>
                 </div>
