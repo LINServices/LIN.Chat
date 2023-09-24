@@ -3,47 +3,6 @@
 @inject NavigationManager nav
 @inject IJSRuntime js
 
-@code
-{
-
-    public static int LevelBattery { get; set; }
-    public static bool IsChargin { get; set; }
-
-    private bool IsSingIn = true;
-
-}
-
 <main>
-    @if (IsSingIn)
-    {
-        <div class="flex items-center justify-center h-screen">
-            <LinesLoader />
-        </div>
-    }
-    else
-    {
-        @Body
-    }
-
+    @Body
 </main>
-
-
-
-@code {
-
-
-
-
-
-
-    protected async override Task OnInitializedAsync()
-    {
-        IsSingIn = false;
-        return;
-
-        
-    }
-
-
-
-}

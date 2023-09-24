@@ -20,9 +20,6 @@ builder.Services.AddBlazoredLocalStorage(config =>
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
-
-LIN.Chat.Client.App.MyAddress = builder.HostEnvironment.BaseAddress;
-
 Scripts.Build();
 
 StaticHub.Key = LIN.Modules.KeyGen.Generate(20, "dv.");

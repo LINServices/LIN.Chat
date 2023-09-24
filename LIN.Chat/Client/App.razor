@@ -1,7 +1,6 @@
 ﻿@inject IJSRuntime js
 
 
-
 @{
     JS = js;
 }
@@ -11,8 +10,6 @@
     @code
     {
         public static IJSRuntime JS { get; set; }
-        public static string MyAddress { get; set; } = "";
-
     }
 
 
@@ -23,10 +20,7 @@
     </Found>
     <NotFound>
 
-       
         <NotFound></NotFound>
-
-
 
     </NotFound>
 </Router>
