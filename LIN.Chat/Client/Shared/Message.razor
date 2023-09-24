@@ -1,120 +1,31 @@
 ﻿
-@code {
 
-
-
-    /// <summary>
-    /// Imagen de perfil en base64
-    /// </summary>
-    private string Img64 = "";
-
-
-
-
-    [Parameter]
-    public bool IsOther { get; set; } = false;
-
-
-    [Parameter]
-    public int OtherID { get; set; } = 0;
-
-
-
-    [Parameter]
-    public string Alias { get; set; } = string.Empty;
-
-
-    [Parameter]
-    public DateTime Date { get; set; }
-
-
-
-    [Parameter]
-    public string Text { get; set; }
-
-
-    private int Seccion = 0;
-
-
-
-    bool IsImage = false;
-
-    public void PreRen(List<Types.Auth.Abstracts.SessionModel<ProfileModel>> lista)
-    {
-        var info = lista.Where(T => T.Profile.ID == OtherID).FirstOrDefault();
-        if (info == null)
-            return;
-
-
-        Img64 = Convert.ToBase64String(info.Account.Perfil);
-
-        IsImage = true;
-
-        StateHasChanged();
-
-    }
-
-
-    protected override void OnParametersSet()
-    {
-        if (EsEnlaceGoogleMeet(Text))
-            Seccion = 1;
-
-        StateHasChanged();
-        base.OnParametersSet();
-    }
-
-
-    static bool EsEnlaceGoogleMeet(string texto)
-    {
-        // Patrón de expresión regular para detectar enlaces de Google Meet
-        string patron = @"https://meet\.google\.com/[a-zA-Z0-9\-]+";
-
-        // Comprueba si el texto coincide con el patrón
-        return System.Text.RegularExpressions. Regex.IsMatch(texto, patron);
-    }
-
-    
-
-}
-<label class="text-gray-500 hover:text-indigo-500 @(IsOther?"":"flex self-center justify-end mr-2")" style="font-size: 10px">@(string.IsNullOrWhiteSpace(Alias) ? "" : Alias + " • ")@(Date.ToString("HH:mm"))</label>
+<label class="text-gray-500 hover:text-indigo-500 @(IsOther?"":"flex self-center justify-end mr-2")" style="font-size: 10px">@(!IsOther? "" : MessageModel.Remitente.Alias + " • ")@(MessageModel.Time.ToString("HH:mm"))</label>
 
 <div class="flex @(IsOther?"":"justify-end") mb-2 items-center">
 
-    
-    @if (Seccion == 0)
+
+    @if (MessageType == 0)
     {
-
-      
-            @if (IsOther && IsImage)
-            {
-            <div class="p-1 rounded-full ring-2 ring-gray-200 hover:ring-4 hiver:ring-gray-300 mr-2 h-8 w-8">
-                <img src="data:image/png;base64,@Img64" class=" rounded-full object-cover" alt="" />
-            </div>
-                
-            }
-
-            <div class="rounded-xl mmm py-2.5 px-4 @(!IsOther?"bg-indigo-500 text-white":"bg-[#EAE8ED]")">
-                <p class="text-sm">
-                    @Text
-                </p>
-            </div>
-
-      
+        <div class="rounded-xl mmm py-2.5 px-4 @(!IsOther?"bg-indigo-500 text-white":"bg-[#EAE8ED]")">
+            <p class="text-sm">
+                @MessageModel.Contenido
+            </p>
+        </div>
     }
 
-    else if (Seccion == 1)
+    else if (MessageType == 1)
     {
         <div class="rounded-xl p-4 @(!IsOther?"bg-indigo-500 text-white":"bg-[#EAE8ED]")">
-           
+
             <div class="flex bg-red justify-center items-center">
                 <img class="h-5 w-5 mt-1" src="@(IsOther?"./meet.png":"./meet_white.png")" />
             </div>
 
-            <a href="@Text" target="_blank"  class="text-sm hover:text-indigo-600">Unirme</a>
-            
+            <a href="@MessageModel.Contenido" target="_blank" class="text-sm hover:text-indigo-600">Unirme</a>
+
         </div>
     }
 
-   
+
 </div>

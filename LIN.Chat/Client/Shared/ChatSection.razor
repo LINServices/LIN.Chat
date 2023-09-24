@@ -104,8 +104,6 @@
     </style>
     @using LIN.Chat.Client.Shared
 
-    <PageTitle>Chat: @Iam.Conversation.Name</PageTitle>
-
 
 
     <!-- Header -->
@@ -195,11 +193,11 @@
 
                 if (message.Remitente?.ID == Iam?.Profile?.ID)
                 {
-                    <Message @ref=message1 Text="@message.Contenido" IsOther="false" Date="@message.Time" />
+                    <Message @ref=message1 MessageModel="@message" />
                 }
                 else
                 {
-                <Message @ref=message1 OtherID="@message.Remitente.ID" Text ="@message.Contenido" IsOther="true" Date="@message.Time" Alias="@message?.Remitente?.Alias" />
+                <Message @ref=message1 MessageModel="@message" />
                 }
 
             }
