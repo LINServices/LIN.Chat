@@ -1,10 +1,13 @@
-﻿
-@code{
+﻿@code {
 
     [Parameter]
-    public MemberChatModel? e { get; set; } = null;
+    public Types.Auth.Abstracts.SessionModel<MemberChatModel>? e { get; set; } = null;
 
-    public bool isOnline = false;
+
+    public IsOnlineResult? isOnline = null;
+
+
+    private string Img64 => Convert.ToBase64String(e.Account.Perfil);
 
 
 
@@ -17,35 +20,54 @@
 
     public void Con()
     {
-         Confirm(e.Profile.ID);
+        Confirm(e.Profile.Profile.ID);
     }
 
-  
 
-    
 }
 
 
-<div @onclick="()=>Confirm(e.Profile.ID)" class="flex shadow hover:shadow-indigo-200 bg-white rounded-lg w-full mt-3">
-    <div class="flex flex-col p-3 w-full ml-2">
-        <label class="text-sm font-bold">@e.Profile.Alias</label>
+<div @onclick="()=>Confirm(e.Profile.Profile.ID)" class="flex shadow-lg hover:shadow-indigo-100 bg-white rounded-lg w-full mt-3">
 
-         @if (e.Rol == Types.Communication.Enumerations.MemberRoles.Admin)
-        {
-            <label class="text-xs">Administrador</label>
-        }
-        else
-        {
-            <label class="text-xs">Integrante</label>
-        }
+
+    <div class="flex p-3 w-full items-center">
+
+
+        <img class="w-7 h-7 mr-2 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500" src="data:image/png;base64,@Img64" alt="Bordered avatar">
+
+        <div class="flex flex-col">
+
+            <label class="text-sm font-bold">@e.Profile.Profile.Alias</label>
+
+
+            @if (e.Profile.Rol == Types.Communication.Enumerations.MemberRoles.Admin)
+            {
+                <label class="text-xs">Administrador</label>
+            }
+            else
+            {
+                <label class="text-xs">Integrante</label>
+            }
+
+        </div>
 
     </div>
-    @if (isOnline)
+
+    @if (isOnline != null && isOnline.IsOnline)
     {
         <div class="flex justify-end items-center mr-3">
             <span class="flex justify-center items-center bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300 w-28">
                 <span class="w-2 h-2 mr-1 bg-green-500 rounded-full"></span>
                 Conectado
+            </span>
+        </div>
+    }
+    else if (isOnline != null && isOnline.LastTime != default)
+    {
+        <div class="flex justify-end items-center mr-3">
+            <span class="inline-flex justify-center items-center bg-orange-100 text-orange-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full w-28">
+                <span class="w-2 h-2 mr-1 bg-orange-500 rounded-full"></span>
+                @(isOnline!.LastTime.ToString("G"))
             </span>
         </div>
     }
@@ -58,6 +80,8 @@
             </span>
         </div>
     }
+
+
 
 </div>
 

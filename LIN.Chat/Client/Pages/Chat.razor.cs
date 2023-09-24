@@ -233,7 +233,7 @@ public partial class Chat
         // Si los chats (mensajes) no se han cargado.
         if (!cache.Item3.IsLoad)
         {
-            var oldMessages = await Access.Communication.Controllers.Messages.ReadAll(Member.Conversation.ID);
+            var oldMessages = await Access.Communication.Controllers.Messages.ReadAll(Member.Conversation.ID, 0, LIN.Access.Communication.Session.Instance.Token);
 
             // Establece los mensajes
             Member.Conversation.Mensajes.AddRange(oldMessages.Models);

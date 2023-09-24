@@ -1,9 +1,6 @@
 ﻿@code {
 
 
-
-
-
     private DateTime? oldTime = null;
 
     /// <summary>
@@ -62,26 +59,7 @@
 
 
 
-    static List<Types.Auth.Abstracts.SessionModel<ProfileModel>> Lista = new();
-    public async Task LoadIntegrants()
-    {
-
-        var integrants = await LIN.Access.Communication.Controllers.Conversations.MembersInfo(Iam.Conversation.ID);
-
-        Lista.AddRange(integrants.Models);
-
-
-
-        PrintPictures();
-
-    }
-
-
-    public void PrintPictures()
-    {
-          foreach (var m in Messages)
-            m.PreRen(Lista);
-    }
+   
 
 
 
@@ -89,11 +67,6 @@
     {
         _ = ScrollToBottom();
         base.OnAfterRender(firstRender);
-
-        if (firstRender)
-         _ = LoadIntegrants();
-
-        PrintPictures();
     }
 
 

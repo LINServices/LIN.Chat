@@ -9,7 +9,10 @@
     [Parameter]
     public string Name { get; set; }
 
-    private List<MemberChatModel> Members { get; set; }
+
+    private List<Types.Auth.Abstracts.SessionModel< MemberChatModel>> Members { get; set; }
+
+
 
     List<LIN.Chat.Client.Shared.Member> membersControls = new();
 
@@ -48,7 +51,7 @@
 
         if (!IsLoad)
         {
-            var result = await LIN.Access.Communication.Controllers.Conversations.Members(ID);
+            var result = await LIN.Access.Communication.Controllers.Conversations.MembersInfo(ID, LIN.Access.Communication.Session.Instance.AccountToken);
 
             Members = result.Models;
             IsLoad = true;
@@ -67,22 +70,30 @@
 
 <!-- drawer component -->
 <div id="drawer-@ID" class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-80 dark:bg-gray-800" tabindex="-1" aria-labelledby="drawer-right-label">
-    <h5 id="drawer-right-label" class="inline-flex items-center mb-4 text-base font-semibold text-gray-500 dark:text-gray-400">
-        <svg class="h-4 w-4 mr-2 fill-gray-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0">
-            <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
-        </svg>@Name
-    </h5>
+    
+    <div class="flex items-center justify-center w-full">
 
-    <button id="close-drawer-@ID" type="button" data-drawer-hide="drawer-right-example" aria-controls="drawer-right-example" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 right-2.5 inline-flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white">
-        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-        </svg>
-        <span class="sr-only">Close menu</span>
-    </button>
+        <h5 id="drawer-right-label" class="self-center gilroy-bold">
+            @Name
+        </h5>
+
+        <button id="close-drawer-@ID" type="button" data-drawer-hide="drawer-right-example" aria-controls="drawer-right-example" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 right-2.5 inline-flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white">
+            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+            </svg>
+            <span class="sr-only">Close menu</span>
+        </button>
+
+    </div>
+
+    <div class="flex items-center justify-center w-full">
+    <label class="text-xs text-gray-500">Integrantes</label>
+    </div>
+   
 
     
     <div>
-        @foreach (var e in Members ?? new List<MemberChatModel>())
+        @foreach (var e in Members ?? new List<Types.Auth.Abstracts.SessionModel<MemberChatModel>>())
         {
            <Member e="@e" @ref=MemberC/>
         }
