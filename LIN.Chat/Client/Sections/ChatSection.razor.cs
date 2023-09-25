@@ -5,10 +5,9 @@ public partial class ChatSection
 {
 
 
-    /// <summary>
-    /// Hub de conexión
-    /// </summary>
-    public static Access.Communication.Hubs.ChatHub? Hub { get; set; }
+
+    [Inject]
+    private IJSRuntime JSRuntime { get; set; }
 
 
 
@@ -20,8 +19,77 @@ public partial class ChatSection
 
 
 
+    /// <summary>
+    /// Accion a ejecutar cuando se presione sobre el back button
+    /// </summary>
+    [Parameter]
+    public Action? OnBackPress { get; set; }
 
 
+
+    /// <summary>
+    /// Hub de conexión
+    /// </summary>
+    public static Access.Communication.Hubs.ChatHub? Hub { get; set; }
+
+
+
+    /// <summary>
+    /// Mensaje a enviar
+    /// </summary>
+    private string Message { get; set; } = string.Empty;
+
+
+
+
+
+    /// <summary>
+    /// Enviar un mensaje
+    /// </summary>
+    private void SendMessage()
+    {
+        // Envía el mensaje al hub
+        Hub?.SendMessage(Iam.Conversation.ID, Message);
+
+        // Reestablece el texto
+        Message = "";
+
+        // Actualiza la vista
+        StateHasChanged();
+
+        // Scroll al final
+        _ = ScrollToBottom();
+
+    }
+
+
+
+    /// <summary>
+    /// Ciclo de vida: Después de renderizar
+    /// </summary>
+    /// <param name="firstRender">Es el primer render</param>
+    protected override void OnAfterRender(bool firstRender)
+    {
+        _ = ScrollToBottom();
+        base.OnAfterRender(firstRender);
+    }
+
+
+
+    /// <summary>
+    /// El estado ha cambiado
+    /// </summary>
+    public void Render() => StateHasChanged();
+
+
+
+    /// <summary>
+    /// Scroll hasta el final
+    /// </summary>
+    public async Task ScrollToBottom()
+    {
+        await JSRuntime.InvokeVoidAsync("scrollToBottom", $"CM-{Iam.Conversation.ID}");
+    }
 
 
 }

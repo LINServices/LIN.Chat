@@ -92,6 +92,7 @@ public partial class Chat
 
         IsConversationsLoad = false;
         base.StateHasChanged();
+
         // Variables
         var profile = LIN.Access.Communication.Session.Instance.Informacion;
         string token = Access.Communication.Session.Instance.Token ?? string.Empty;
@@ -154,7 +155,7 @@ public partial class Chat
 
         if (conversation == null)
             return;
-        
+
         // Agrega el mensaje
         conversation.Conversation.Mensajes.Add(e);
 
@@ -205,9 +206,6 @@ public partial class Chat
     private async void Select(MemberChatModel chat)
     {
 
-
-
-
         // Consulta al cache
         var cache = (from C in Chats
                      where C.Key == chat.Conversation.ID
@@ -223,15 +221,25 @@ public partial class Chat
             default:
                 break;
         }
-        if (Member == cache.Item2)
+
+
+        var cm = ComponentRefs.Where(T => T.Member.Conversation.ID == chat.Conversation.ID).FirstOrDefault();
+
+        foreach (var c in ComponentRefs)
+            c.Unselect();
+
+        if (Member?.Conversation.ID == cache.Item2.Conversation.ID)
         {
+            cm?.Unselect();
             Member = null;
+            ActualSection = 0;
             StateHasChanged();
             return;
         }
 
         // Member
         Member = cache.Item2;
+        cm?.Select();
 
         // Si los chats (mensajes) no se han cargado.
         if (!cache.Item3.IsLoad)

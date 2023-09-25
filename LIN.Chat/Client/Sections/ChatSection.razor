@@ -1,80 +1,20 @@
-﻿@code {
+﻿
+@code{
+
+    /// <summary>
+    /// Drawer de integrantes
+    /// </summary>
+    public IntegrantsDrawer? Drawer { get; set; }
+
+}
 
 
 
-
-
-
-
-
-
-
-
-
+@code {
 
     private DateTime? oldTime = null;
 
-   
-
-
     public static DateTime Today = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
-
-
-
-    /// <summary>
-    /// Hub de conexión
-    /// </summary>
-    [Parameter]
-    public Action OnBackPress { get; set; }
-
-
-    public IntegrantsDrawer? Drawer { get; set; }
-
-
-
-    /// <summary>
-    /// Mensaje a enviar
-    /// </summary>
-    private string Message { get; set; } = "";
-
-
-    List<Message> Messages = new();
-
-
-    Message message1
-    {
-        set => Messages.Add(value);
-    }
-
-
-    /// <summary>
-    /// Enviar un mensaje
-    /// </summary>
-    private void SendMessage()
-    {
-        Hub?.SendMessage(Iam.Conversation.ID, Message);
-        Message = "";
-        StateHasChanged();
-        _ = ScrollToBottom();
-    }
-
-
-
-
-
-
-
-    protected override void OnAfterRender(bool firstRender)
-    {
-        _ = ScrollToBottom();
-        base.OnAfterRender(firstRender);
-    }
-
-
-    public void Render()
-    {
-        base.StateHasChanged();
-    }
 
 }
 
@@ -85,7 +25,7 @@
     }
 
 </style>
-    @using LIN.Chat.Client.Shared
+ 
 
 
 
@@ -173,15 +113,7 @@
                 oldTime = message.Time;
             }
 
-
-            if (message.Remitente?.ID == Iam?.Profile?.ID)
-            {
-                <Message @ref=message1 MessageModel="@message" />
-            }
-            else
-            {
-                <Message @ref=message1 MessageModel="@message" />
-            }
+            <Message MessageModel="@message" />
 
         }
 
@@ -209,16 +141,6 @@
     </div>
 </div>
 
-@code {
 
-
-    [Inject]
-    IJSRuntime JSRuntime { get; set; }
-
-    public async Task ScrollToBottom()
-    {
-        await JSRuntime.InvokeVoidAsync("scrollToBottom", $"CM-{Iam.Conversation.ID}");
-    }
-}
-
-<IntegrantsDrawer Name="@Iam.Conversation.Name" ID=Iam.Conversation.ID @ref="Drawer" />
+<!-- Drawer de integrantes -->
+<IntegrantsDrawer @ref="Drawer" Name="@Iam.Conversation.Name" ID=Iam.Conversation.ID />

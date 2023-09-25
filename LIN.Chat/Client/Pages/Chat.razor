@@ -67,7 +67,7 @@
                             {
                                 foreach (var member in ConversaciónModels)
                                 {
-                                    <Control Member="member" ActualChat="()=>ChatPage?.Iam?.Conversation" @ref="ComponentRef" OnClick="Select" />
+                                    <Control Member="member" @ref="ComponentRef" OnClick="Select" />
                                 }
                             }
                             else
@@ -90,14 +90,19 @@
                     {
                         <ChatSection @ref="ChatPage" Iam="Member" OnBackPress="()=>{
                                 ActualSection = 0;
-                                base.StateHasChanged();}" />
+                                Member = null;
+                                foreach (var c in ComponentRefs)
+                                     c.Unselect();
+
+                                base.StateHasChanged();
+                                }" />
                     }
                     else
                     {
                         <div class="flex flex-col h-full w-full items-center justify-center">
                             
                             <img class="h-56 w-56" src="./chatdraw.svg" />
-                            <label class="text-3xl gilroy-bold">Bienvenido a LIN Chat</label
+                            <label class="text-3xl gilroy-bold">Bienvenido a LIN Chat</label>
                             <label class="text-gray-600 mt-1">Puedes usar LIN Chat y los servicios asociados en tu dispositivo <span class="text-blue-600">Windows</span> o <span class="text-green-500">Android</span> </label>
                         </div>
                     }
