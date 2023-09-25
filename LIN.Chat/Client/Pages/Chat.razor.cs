@@ -18,14 +18,6 @@ public partial class Chat
     private static readonly List<MemberChatModel> ConversaciónModels = new();
 
 
-
-    /// <summary>
-    /// Hub de conexión Realtime
-    /// </summary>
-    private static LIN.Access.Communication.Hubs.ChatHub? ActualHub { get; set; }
-
-
-
     /// <summary>
     /// Mi perfil
     /// </summary>
@@ -70,7 +62,7 @@ public partial class Chat
     /// <summary>
     /// Cuando la pagina se inicia
     /// </summary>
-    protected override void OnInitialized()
+    protected override async void OnInitialized()
     {
 
         // Valida el login
@@ -79,6 +71,10 @@ public partial class Chat
             nav.NavigateTo("/login");
             return;
         }
+
+        // Crear el hub
+        ChatSection.Hub = new(Access.Communication.Session.Instance.Informacion);
+        await ChatSection.Hub.Suscribe();
 
         // Obtiene la data
         RetrieveData();
@@ -93,11 +89,21 @@ public partial class Chat
     /// </summary>
     private async void ForceRetrieveData()
     {
+
         IsConversationsLoad = false;
         base.StateHasChanged();
         // Variables
         var profile = LIN.Access.Communication.Session.Instance.Informacion;
         string token = Access.Communication.Session.Instance.Token ?? string.Empty;
+
+
+
+
+
+
+
+
+
 
         // Obtiene las conversaciones actuales
         ReadAllResponse<MemberChatModel> chats = await Access.Communication.Controllers.Conversations.ReadAll(token);
@@ -117,12 +123,8 @@ public partial class Chat
         ConversaciónModels.Clear();
         ConversaciónModels.AddRange(chats.Models);
 
+        ChatSection.Hub!.OnReceiveMessage += OnReceiveMessage;
 
-        // Configuración del hub
-        var hub = new LIN.Access.Communication.Hubs.ChatHub(profile);
-        await hub.Suscribe();
-
-        hub.OnReceiveMessage += OnReceiveMessage;
 
         // Suscribir los eventos del hub
         foreach (MemberChatModel conversation in ConversaciónModels)
@@ -132,10 +134,10 @@ public partial class Chat
             conversation.Conversation.Mensajes ??= new();
 
 
-            _ = hub.JoinGroup(conversation.Conversation.ID);
+            _ = ChatSection.Hub!.JoinGroup(conversation.Conversation.ID);
 
             // Agrega al cache
-            Chats.Add(conversation.Conversation.ID, (hub, conversation, new() { IsLoad = false }));
+            Chats.Add(conversation.Conversation.ID, (ChatSection.Hub!, conversation, new() { IsLoad = false }));
 
         }
 
@@ -230,7 +232,6 @@ public partial class Chat
 
         // Member
         Member = cache.Item2;
-        ActualHub = cache.Item1;
 
         // Si los chats (mensajes) no se han cargado.
         if (!cache.Item3.IsLoad)

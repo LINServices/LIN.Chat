@@ -1,22 +1,24 @@
 ﻿@code {
 
+
+
+
+
+
+
+
+
+
+
+
+
     private DateTime? oldTime = null;
 
-    /// <summary>
-    /// Iam
-    /// </summary>
-    [Parameter]
-    public MemberChatModel Iam { get; set; } = new();
+   
 
 
     public static DateTime Today = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
 
-
-    /// <summary>
-    /// Hub de conexión
-    /// </summary>
-    [Parameter]
-    public LIN.Access.Communication.Hubs.ChatHub Hub { get; set; }
 
 
     /// <summary>

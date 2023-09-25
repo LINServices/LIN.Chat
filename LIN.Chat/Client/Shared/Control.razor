@@ -10,10 +10,6 @@
 
 
     [Parameter]
-    public Func<LIN.Access.Communication.Hubs.ChatHub> Hub { get; set; }
-
-
-    [Parameter]
     public Func<ConversationModel> ActualChat { get; set; }
 
 
@@ -23,7 +19,7 @@
     {
         if (firstRender)
         {
-            var hub = Hub();
+            //var hub = Hub();
             // hub?.SuscribeToMe(Member.Conversation.ID.ToString(), (e) =>
             // {
             //     IsNew = true;
