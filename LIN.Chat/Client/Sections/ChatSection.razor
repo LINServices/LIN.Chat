@@ -1,24 +1,5 @@
 ﻿@code {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     private DateTime? oldTime = null;
 
     /// <summary>
@@ -72,12 +53,12 @@
         Hub?.SendMessage(Iam.Conversation.ID, Message);
         Message = "";
         StateHasChanged();
-        _= ScrollToBottom();
+        _ = ScrollToBottom();
     }
 
 
 
-   
+
 
 
 
@@ -96,85 +77,85 @@
 }
 
 
-    <style>
-        .mmm{
+<style>
+    .mmm {
         max-width: 90%
-        }
+    }
 
-    </style>
+</style>
     @using LIN.Chat.Client.Shared
 
 
 
-    <!-- Header -->
-    <div class="py-2 px-3 flex flex-row justify-between items-center border-b border-gray-300" style="background-color: #F8F7FB">
-        <div class="flex items-center"> 
-            <img class="visible lg:hidden h-5 w-5 mr-3" src="./back.png" @onclick="OnBackPress" />
-            <div class="flex flex-col">
-                <label class="text-gray-700 gilroy-bold">
-                    @Iam.Conversation.Name
-                </label>
-                <label style="margin-top:-2px" class="text-gray-500 text-xs">
-                    Grupo personal.
-                </label>
-            </div>
+<!-- Header -->
+<div class="py-2 px-3 flex flex-row justify-between items-center border-b border-gray-300" style="background-color: #F8F7FB">
+    <div class="flex items-center">
+        <img class="visible lg:hidden h-5 w-5 mr-3" src="./back.png" @onclick="OnBackPress" />
+        <div class="flex flex-col">
+            <label class="text-gray-700 gilroy-bold">
+                @Iam.Conversation.Name
+            </label>
+            <label style="margin-top:-2px" class="text-gray-500 text-xs">
+                Grupo personal.
+            </label>
         </div>
+    </div>
 
-        <div class="flex justify-center items-center">
-            <div>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="#263238" d="M15.9 14.3H15l-.3-.3c1-1.1 1.6-2.7 1.6-4.3 0-3.7-3-6.7-6.7-6.7S3 6 3 9.7s3 6.7 6.7 6.7c1.6 0 3.2-.6 4.3-1.6l.3.3v.8l5.1 5.1 1.5-1.5-5-5.2zm-6.2 0c-2.6 0-4.6-2.1-4.6-4.6s2.1-4.6 4.6-4.6 4.6 2.1 4.6 4.6-2 4.6-4.6 4.6z"></path></svg>
-            </div>
-            <div class="ml-6">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="#263238" d="M1.816 15.556v.002c0 1.502.584 2.912 1.646 3.972s2.472 1.647 3.974 1.647a5.58 5.58 0 0 0 3.972-1.645l9.547-9.548c.769-.768 1.147-1.767 1.058-2.817-.079-.968-.548-1.927-1.319-2.698-1.594-1.592-4.068-1.711-5.517-.262l-7.916 7.915c-.881.881-.792 2.25.214 3.261.959.958 2.423 1.053 3.263.215l5.511-5.512c.28-.28.267-.722.053-.936l-.244-.244c-.191-.191-.567-.349-.957.04l-5.506 5.506c-.18.18-.635.127-.976-.214-.098-.097-.576-.613-.213-.973l7.915-7.917c.818-.817 2.267-.699 3.23.262.5.501.802 1.1.849 1.685.051.573-.156 1.111-.589 1.543l-9.547 9.549a3.97 3.97 0 0 1-2.829 1.171 3.975 3.975 0 0 1-2.83-1.173 3.973 3.973 0 0 1-1.172-2.828c0-1.071.415-2.076 1.172-2.83l7.209-7.211c.157-.157.264-.579.028-.814L11.5 4.36a.572.572 0 0 0-.834.018l-7.205 7.207a5.577 5.577 0 0 0-1.645 3.971z"></path></svg>
-            </div>
-            <div @onclick="()=>Drawer?.Show()" class="ml-6">
+    <div class="flex justify-center items-center">
+        <div>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="#263238" d="M15.9 14.3H15l-.3-.3c1-1.1 1.6-2.7 1.6-4.3 0-3.7-3-6.7-6.7-6.7S3 6 3 9.7s3 6.7 6.7 6.7c1.6 0 3.2-.6 4.3-1.6l.3.3v.8l5.1 5.1 1.5-1.5-5-5.2zm-6.2 0c-2.6 0-4.6-2.1-4.6-4.6s2.1-4.6 4.6-4.6 4.6 2.1 4.6 4.6-2 4.6-4.6 4.6z"></path></svg>
+        </div>
+        <div class="ml-6">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="#263238" d="M1.816 15.556v.002c0 1.502.584 2.912 1.646 3.972s2.472 1.647 3.974 1.647a5.58 5.58 0 0 0 3.972-1.645l9.547-9.548c.769-.768 1.147-1.767 1.058-2.817-.079-.968-.548-1.927-1.319-2.698-1.594-1.592-4.068-1.711-5.517-.262l-7.916 7.915c-.881.881-.792 2.25.214 3.261.959.958 2.423 1.053 3.263.215l5.511-5.512c.28-.28.267-.722.053-.936l-.244-.244c-.191-.191-.567-.349-.957.04l-5.506 5.506c-.18.18-.635.127-.976-.214-.098-.097-.576-.613-.213-.973l7.915-7.917c.818-.817 2.267-.699 3.23.262.5.501.802 1.1.849 1.685.051.573-.156 1.111-.589 1.543l-9.547 9.549a3.97 3.97 0 0 1-2.829 1.171 3.975 3.975 0 0 1-2.83-1.173 3.973 3.973 0 0 1-1.172-2.828c0-1.071.415-2.076 1.172-2.83l7.209-7.211c.157-.157.264-.579.028-.814L11.5 4.36a.572.572 0 0 0-.834.018l-7.205 7.207a5.577 5.577 0 0 0-1.645 3.971z"></path></svg>
+        </div>
+        <div @onclick="()=>Drawer?.Show()" class="ml-6">
             <svg class="h-4 w-4 fill-[#263238] hover:fill-indigo-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0">
                 <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
             </svg>
 
         </div>
-        </div>
     </div>
+</div>
 
-    <!-- Messages -->
-    <div id="CM-@Iam.Conversation.ID" class="flex-1 overflow-auto" style="background-color: #F8F7FB">
+<!-- Messages -->
+<div id="CM-@Iam.Conversation.ID" class="flex-1 overflow-auto" style="background-color: #F8F7FB">
 
-        <div id="CM-@Iam.Conversation.ID" class="py-2 px-3">
+    <div id="CM-@Iam.Conversation.ID" class="py-2 px-3">
 
-            <div class="flex justify-center mb-2">
-                <div class="rounded py-2 px-4" style="background-color: #DDECF2">
-                    <p class="text-sm uppercase">
-                        @DateTime.Now.ToString("MMMM dd, yyyy")
-                    </p>
-                </div>
+        <div class="flex justify-center mb-2">
+            <div class="rounded py-2 px-4" style="background-color: #DDECF2">
+                <p class="text-sm uppercase">
+                    @DateTime.Now.ToString("MMMM dd, yyyy")
+                </p>
             </div>
+        </div>
 
-            <div class="flex justify-center mb-4">
-                <div class="rounded-lg py-2 px-4" style="background-color: #FCF4CB">
-                    <p class="text-xs">
-                        Tus mensajes están protegidos y cifrados, sin embargo LIN IA puede analizarlos para mostrarte recomendaciones.
-                    </p>
-                </div>
+        <div class="flex justify-center mb-4">
+            <div class="rounded-lg py-2 px-4" style="background-color: #FCF4CB">
+                <p class="text-xs">
+                    Tus mensajes están protegidos y cifrados, sin embargo LIN IA puede analizarlos para mostrarte recomendaciones.
+                </p>
             </div>
+        </div>
 
-            @foreach (var message in Iam.Conversation.Mensajes)
-            {
-                oldTime ??= message.Time;
+        @foreach (var message in Iam.Conversation.Mensajes)
+        {
+            oldTime ??= message.Time;
 
             if (new DateTime(oldTime.Value.Year, oldTime.Value.Month, oldTime.Value.Day) < new DateTime(message.Time.Year, message.Time.Month, message.Time.Day))
-                {
+            {
 
-                    var dateMess = new DateTime(message.Time.Year, message.Time.Month, message.Time.Day);
-                    var isToday = dateMess == Today;
-                    
+                var dateMess = new DateTime(message.Time.Year, message.Time.Month, message.Time.Day);
+                var isToday = dateMess == Today;
+
 
 
                 <div class="flex justify-center mb-2">
                     <div class="rounded-lg py-2 px-4 bg-indigo-100">
                         <p class="text-sm uppercase">
-                            @if(isToday)
+                            @if (isToday)
                             {
-                               @("Hoy")
+                                @("Hoy")
                             }
                             else if (dateMess == Today.AddDays(-1))
                             {
@@ -188,21 +169,21 @@
                     </div>
                 </div>
                 oldTime = message.Time;
-                }
-
-
-                if (message.Remitente?.ID == Iam?.Profile?.ID)
-                {
-                    <Message @ref=message1 MessageModel="@message" />
-                }
-                else
-                {
-                <Message @ref=message1 MessageModel="@message" />
-                }
-
             }
 
-            @(oldTime = null)
+
+            if (message.Remitente?.ID == Iam?.Profile?.ID)
+            {
+                <Message @ref=message1 MessageModel="@message" />
+            }
+            else
+            {
+                <Message @ref=message1 MessageModel="@message" />
+            }
+
+        }
+
+        @(oldTime = null)
 
     </div>
 
@@ -220,14 +201,17 @@
     <div class="flex-1 mx-4">
         <input @bind="Message" class="w-full ring-0 border-0 focus:border-0 focus:ring-0 bg-transparent" placeholder="Escribe tu mensaje..." type="text" />
     </div>
-   
+
     <div @onclick="SendMessage">
         <img class="h-5 w-5 mr-3" src="./send.png" />
     </div>
 </div>
 
-@code{
-        [Inject] IJSRuntime JSRuntime { get; set; }
+@code {
+
+
+    [Inject]
+    IJSRuntime JSRuntime { get; set; }
 
     public async Task ScrollToBottom()
     {

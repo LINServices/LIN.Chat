@@ -1,4 +1,4 @@
-﻿namespace LIN.Chat.Client.Shared;
+﻿namespace LIN.Chat.Client.Sections;
 
 public partial class ChatSection
 {

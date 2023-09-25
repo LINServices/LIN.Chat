@@ -1,4 +1,6 @@
-﻿namespace LIN.Chat.Client.Pages;
+﻿using LIN.Chat.Client.Sections;
+
+namespace LIN.Chat.Client.Pages;
 
 
 public partial class Chat
@@ -41,7 +43,7 @@ public partial class Chat
     /// <summary>
     /// Pagina actual de Chat
     /// </summary>
-    private static Shared.ChatSection? ChatPage { get; set; }
+    private static ChatSection? ChatPage { get; set; }
 
 
 
