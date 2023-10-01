@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Chat.Server", "LIN.Chat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Chat.Client", "LIN.Chat\Client\LIN.Chat.Client.csproj", "{C61C7BD5-21E1-4F8B-85B5-B7D23DF1D854}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SILF.Script", "..\..\SILFScript\SILF.Script\SILF.Script\SILF.Script.csproj", "{3FB19D49-9D55-4A2E-AE6A-304B889F9EA4}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Modules", "..\..\Tipos\LIN.Modules\LIN.Modules.csproj", "{C8ACF8FA-D129-452D-AE48-B9275873C9C7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Types.Auth", "..\..\Tipos\LIN.Types.Auth\LIN.Types.Auth.csproj", "{45CB67C5-4D05-4545-A351-9F2241A347FB}"
@@ -20,6 +18,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Types.Communication", "..\..\Tipos\LIN.Types.Communication\LIN.Types.Communication.csproj", "{80C40633-011B-4C00-9AC4-396262A8D9AE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Access.Communication", "..\..\AccesoAPI\LIN.Access.Communication\LIN.Access.Communication.csproj", "{3FBD77EA-72DA-4FB2-B82B-84E383C262F3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SILF.Script", "..\..\..\SILF\SILF\SILF.Script\SILF.Script.csproj", "{1196A222-E9ED-46BA-874C-1B30CB15EC64}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +35,6 @@ Global
 		{C61C7BD5-21E1-4F8B-85B5-B7D23DF1D854}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C61C7BD5-21E1-4F8B-85B5-B7D23DF1D854}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C61C7BD5-21E1-4F8B-85B5-B7D23DF1D854}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3FB19D49-9D55-4A2E-AE6A-304B889F9EA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3FB19D49-9D55-4A2E-AE6A-304B889F9EA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3FB19D49-9D55-4A2E-AE6A-304B889F9EA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3FB19D49-9D55-4A2E-AE6A-304B889F9EA4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C8ACF8FA-D129-452D-AE48-B9275873C9C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C8ACF8FA-D129-452D-AE48-B9275873C9C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8ACF8FA-D129-452D-AE48-B9275873C9C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -63,6 +59,10 @@ Global
 		{3FBD77EA-72DA-4FB2-B82B-84E383C262F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3FBD77EA-72DA-4FB2-B82B-84E383C262F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3FBD77EA-72DA-4FB2-B82B-84E383C262F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1196A222-E9ED-46BA-874C-1B30CB15EC64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1196A222-E9ED-46BA-874C-1B30CB15EC64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1196A222-E9ED-46BA-874C-1B30CB15EC64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1196A222-E9ED-46BA-874C-1B30CB15EC64}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

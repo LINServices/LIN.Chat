@@ -1,4 +1,9 @@
 ﻿
+using SILF.Script.Elements.Functions;
+using SILF.Script.Interfaces;
+using SILF.Script;
+using LIN.Access.Auth.Controllers;
+
 namespace LIN.Console.Client.Online;
 
 
@@ -7,12 +12,36 @@ namespace LIN.Console.Client.Online;
 /// </summary>
 internal class Scripts
 {
+    public class SILFFunction : IFunction
+    {
+        public Tipo? Type { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public List<Parameter> Parameters { get; set; } = new();
+
+
+        Action<List<SILF.Script.Elements.ParameterValue>> Action;
+
+        public SILFFunction(Action<List<SILF.Script.Elements.ParameterValue>> action)
+        {
+            this.Action = action;
+        }
+
+
+
+        public FuncContext Run(Instance instance, List<SILF.Script.Elements.ParameterValue> values)
+        {
+            Action.Invoke(values);
+            return new();
+        }
+
+
+    }
+
 
     /// <summary>
-    /// Lista de elementos
+    /// Funciones
     /// </summary>
-    public static Dictionary<string, Action<string>> Actions { get; set; } = new Dictionary<string, Action<string>>();
-
+    public static List<IFunction> Actions { get; set; } = new();
 
 
     /// <summary>
@@ -21,30 +50,15 @@ internal class Scripts
     public static void Build()
     {
 
-        // Actualiza los proyectos
-        Actions.Add("cl.UpdateProjects", async (param) =>
+        // Mensaje
+        Actions.Add(new SILFFunction((values) =>
         {
-           
-
-        });
-
-
-        // Abre modal de contacto
-        Actions.Add("openCt", async (param) =>
+            
+        })
+        // Propiedades
         {
-            var id = int.Parse(param);
-            //var modelo =  await LIN.Access.Auth.Controllers.Contact.Read(id);
-            //ContactModal.Modelo = modelo.Model;
-            //await App.JS.InvokeVoidAsync("ShowModal", $"contact-modal-A12", "contact-close-btn-A12");
-            //ContactModal.Context.Render();
+            Name = "disconnect"
         });
-
-
-        // Cierra la sesión
-        Actions.Add("disconnect", (param) =>
-        {
-        });
-
 
     }
 

@@ -65,10 +65,8 @@ public class StaticHub
     {
         try
         {
-            var builder = new SILF.Script.Builder(e);
-            builder.Replace(Scripts.Actions);
-            builder.Build();
-            var app = builder.CreateApp();
+            var app = new SILF.Script.App(e);
+            app.AddDefaultFunctions(Scripts.Actions);
             app.Run();
         }
         catch
