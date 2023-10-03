@@ -1,0 +1,179 @@
+﻿@inject IJSRuntime js
+
+@code{
+
+    [Parameter]
+    public int ID { get; set; }
+
+
+    [Parameter]
+    public string Name { get; set; }
+
+
+
+    [Parameter]
+    public Action OnSuccess { get; set; }
+
+
+
+
+    private List<Types.Auth.Abstracts.SessionModel<ProfileModel>> Selected { get; set; } = new();
+
+
+    private List<Types.Auth.Abstracts.SessionModel<ProfileModel>> Members { get; set; }
+
+
+
+    List<LIN.Chat.Client.Shared.Profile> membersControls = new();
+
+    public LIN.Chat.Client.Shared.Profile MemberC {
+        set
+        {
+            membersControls.Add(value);
+        } 
+    }
+
+    string Pattern = "";
+
+
+    public async void Show()
+    {
+        var ss = ID;
+        await js.InvokeAsync<object>("ShowDrawer", $"drawerIG-{ID}", $"close-drawerIG-{ID}");
+
+        foreach (var m in membersControls)
+            m.Con();
+
+        base.StateHasChanged();
+    }
+
+
+    bool IsLoad = false;
+    string NameConver = "";
+
+
+
+
+
+    void OnSelect(Types.Auth.Abstracts.SessionModel<ProfileModel> model)
+    {
+        var have = Selected.Where(T => T.Account.ID == model.Account.ID).Any();
+
+        if (have)
+            return;
+
+        Selected.Add(model);
+        base.StateHasChanged();
+    }
+
+    void OnRemove(Types.Auth.Abstracts.SessionModel<ProfileModel> model)
+    {
+
+        Selected = Selected.Where(T => T.Account.ID != model.Account.ID).ToList();
+        StateHasChanged();
+    }
+
+
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+    }
+
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+
+
+
+        base.OnAfterRenderAsync(firstRender);
+    }
+
+
+    async void Search()
+    {
+        var result = await LIN.Access.Communication.Controllers.Conversations.SearchProfiles(Pattern, LIN.Access.Communication.Session.Instance.AccountToken);
+
+        Members = result.Models;
+        base.StateHasChanged();
+    }
+
+    async void Crear()
+    {
+        var modelo = new ConversationModel()
+            {
+                ID = 0,
+                Members = Selected.Select(T => new MemberChatModel()
+                {
+                    Rol = Types.Communication.Enumerations.MemberRoles.None,
+                    Profile = new()
+                    {
+                        ID = T.Profile.ID
+                    }
+                }).ToList(),
+                Name = NameConver,
+                Type = Types.Communication.Enumerations.ConversationsTypes.Personal
+            };
+        var res = await LIN.Access.Communication.Controllers.Conversations.Create(modelo);
+        if (res.Response == Responses.Success)
+            OnSuccess();
+    }
+
+}
+
+
+
+<!-- drawer component -->
+<div id="drawerIG-@ID" class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-80 dark:bg-gray-800" tabindex="-1" aria-labelledby="drawer-right-label">
+    
+    <div class="flex items-center justify-center w-full">
+
+        <h5 id="drawer-right-label" class="self-center gilroy-bold">
+            Nueva conversacion
+        </h5>
+
+        <button id="close-drawerIG-@ID" type="button" data-drawer-hide="drawer-right-example" aria-controls="drawer-right-example" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 right-2.5 inline-flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white">
+            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+            </svg>
+            <span class="sr-only">Close menu</span>
+        </button>
+
+    </div>
+
+
+    <input @bind="NameConver" placeholder="Nombre" />
+
+    <div class="flex items-center justify-center w-full">
+    <label class="text-xs text-gray-500">Integrantes</label>
+    </div>
+   
+    <div>
+        <input @bind="Pattern" placeholder="Buscar" />
+        <button @onclick="Search">Buscar</button>
+    </div>
+
+    
+    <div>
+
+        @foreach (var e in Selected ?? new List<Types.Auth.Abstracts.SessionModel<ProfileModel>>())
+        {
+            <Profile OnSelect="OnRemove" e="@e" State="2" />
+        }
+
+        @foreach (var e in Members ?? new List<Types.Auth.Abstracts.SessionModel<ProfileModel>>())
+        {
+            if (!Selected.Where(T=>T.Profile.ID == e.Profile.ID).Any())
+            {
+                <Profile OnSelect="OnSelect" e="@e" @ref=MemberC/>
+            }
+        }
+    </div>
+
+    <div>
+        <button @onclick="Crear">Crear</button>
+    </div>
+
+
+</div>
+

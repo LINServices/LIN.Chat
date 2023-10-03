@@ -1,0 +1,90 @@
+﻿@code {
+
+    [Parameter]
+    public Types.Auth.Abstracts.SessionModel<ProfileModel>? e { get; set; } = null;
+
+
+    public IsOnlineResult? isOnline = null;
+
+
+    private string Img64 => Convert.ToBase64String(e.Account.Perfil);
+
+    [Parameter]
+    public int State { get; set; } = 1;
+
+    [Parameter]
+    public Action<Types.Auth.Abstracts.SessionModel<ProfileModel>> OnSelect { get; set; }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
+    }
+
+
+    public void Con()
+    {
+        Confirm(e.Profile.ID);
+    }
+
+
+}
+
+
+<div @onclick="()=>Confirm(e.Profile.ID)" class="flex shadow-lg hover:shadow-indigo-100 bg-white rounded-lg w-full mt-3">
+
+
+    <div class="flex p-3 w-full items-center">
+
+
+        <img class="w-7 h-7 mr-2 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500" src="data:image/png;base64,@Img64" alt="Bordered avatar">
+
+        <div class="flex flex-col">
+
+            <label class="text-sm font-bold">@e.Profile.Alias</label>
+
+
+            @e.Account.Usuario
+
+        </div>
+
+    </div>
+
+
+    @if(State == 1)
+    {
+        <div @onclick="()=>OnSelect(e)" class="flex justify-end items-center mr-3">
+            <span class="flex justify-center items-center bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full w-28">
+                <span class="w-2 h-2 mr-1 bg-green-500 rounded-full"></span>
+                Agregar
+            </span>
+        </div>
+    }
+    else if (State == 2)
+    {
+        <div @onclick="()=>OnSelect(e)" class="flex justify-end items-center mr-3">
+            <span class="flex justify-center items-center bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full  w-28">
+                <span class="w-2 h-2 mr-1 bg-red-500 rounded-full"></span>
+                Remover
+            </span>
+        </div>
+    }
+
+
+    
+    
+
+
+
+</div>
+
+
+@code {
+
+
+    async void Confirm(int id)
+    {
+        var x = await LIN.Access.Communication.Controllers.Conversations.IsOnline(id);
+        isOnline = x.Model;
+        StateHasChanged();
+    }
+}

@@ -17,9 +17,16 @@
     /// </summary>
     private string Img64 => Convert.ToBase64String(LIN.Access.Communication.Session.Instance.Account.Perfil);
 
+    NewGroup newGroupModal;
 
+
+    void OpenNew()
+    {
+        newGroupModal.Show();
+    }
 }
 
+<NewGroup OnSuccess="ForceRetrieveData" @ref="newGroupModal"></NewGroup>
 
 <div>
     <div class="w-full h-32" style="background-color: #F8F7FB"></div>
@@ -49,7 +56,7 @@
 
                         <div class="flex justify-center items-center">
                             <div>
-                                <img class="h-5 w-5" src="./add.png" />
+                                <img @onclick="OpenNew" class="h-5 w-5" src="./add.png" />
                             </div>
 
                         </div>
