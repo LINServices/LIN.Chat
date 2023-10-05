@@ -66,10 +66,19 @@
 
 }
 
+<style>
+    .card {
+        backdrop-filter: blur(25px) saturate(200%);
+        -webkit-backdrop-filter: blur(25px) saturate(200%);
+        background-color: rgba(255, 255, 255, 0.59);
+    }
+
+</style>
+
 
 
 <!-- drawer component -->
-<div id="drawer-@ID" class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-80 dark:bg-gray-800" tabindex="-1" aria-labelledby="drawer-right-label">
+<div id="drawer-@ID" class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full card" tabindex="-1" aria-labelledby="drawer-right-label">
     
     <div class="flex items-center justify-center w-full">
 
@@ -88,6 +97,12 @@
 
     <div class="flex items-center justify-center w-full">
     <label class="text-xs text-gray-500">Integrantes</label>
+    </div>
+
+    <div class="flex justify-center items-center mt-2 gap-2">
+        <img class="h-5 w-5" src="./plus.png" />
+        <img class="h-5 w-5" src="./trash-bin.png" />
+        <img class="h-5 w-5" src="./write.png" />
     </div>
    
 
