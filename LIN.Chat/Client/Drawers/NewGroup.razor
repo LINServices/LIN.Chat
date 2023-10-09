@@ -114,6 +114,16 @@
                 Name = NameConver,
                 Type = Types.Communication.Enumerations.ConversationsTypes.Personal
             };
+
+        modelo.Members.Add(new()
+            {
+                Profile = new()
+                {
+                    ID = LIN.Access.Communication.Session.Instance.Informacion.ID
+                },
+                Rol = Types.Communication.Enumerations.MemberRoles.Admin
+            });
+
         var res = await LIN.Access.Communication.Controllers.Conversations.Create(modelo);
         if (res.Response == Responses.Success)
             OnSuccess();
@@ -121,15 +131,24 @@
 
 }
 
+<style>
+    .card {
+        backdrop-filter: blur(25px) saturate(200%);
+        -webkit-backdrop-filter: blur(25px) saturate(200%);
+        background-color: rgba(255, 255, 255, 0.59);
+    }
+
+</style>
+
 
 
 <!-- drawer component -->
-<div id="drawerIG-@ID" class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-80 dark:bg-gray-800" tabindex="-1" aria-labelledby="drawer-right-label">
+<div id="drawerIG-@ID" class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full w-80 card" tabindex="-1" aria-labelledby="drawer-right-label">
     
     <div class="flex items-center justify-center w-full">
 
         <h5 id="drawer-right-label" class="self-center gilroy-bold">
-            Nueva conversacion
+            Nueva conversación
         </h5>
 
         <button id="close-drawerIG-@ID" type="button" data-drawer-hide="drawer-right-example" aria-controls="drawer-right-example" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 right-2.5 inline-flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white">
@@ -142,15 +161,22 @@
     </div>
 
 
-    <input @bind="NameConver" placeholder="Nombre" />
-
-    <div class="flex items-center justify-center w-full">
-    <label class="text-xs text-gray-500">Integrantes</label>
+    <div class="mt-2">
+        <input @bind="NameConver" type="text" id="small-input" placeholder="Nombre" class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-indigo-500 focus:border-indigo-500 ">
     </div>
+
    
-    <div>
-        <input @bind="Pattern" placeholder="Buscar" />
-        <button @onclick="Search">Buscar</button>
+   
+    <div class="flex mt-2 items-center">
+
+
+        <input @bind="Pattern" type="text" id="small-input" placeholder="Buscar" class="p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-indigo-500 focus:border-indigo-500 ">
+
+        <button class="p-2 h-8 w-8 self-end hover:opacity-[2]" @onclick="Search">
+            <img src="./lupa.png" />
+        </button>
+
+
     </div>
 
     
@@ -163,15 +189,15 @@
 
         @foreach (var e in Members ?? new List<Types.Auth.Abstracts.SessionModel<ProfileModel>>())
         {
-            if (!Selected.Where(T=>T.Profile.ID == e.Profile.ID).Any())
+            if (!Selected.Where(T=>T.Profile.ID == e.Profile.ID).Any() && LIN.Access.Communication.Session.Instance.Informacion.AccountID != e.Account.ID)
             {
                 <Profile OnSelect="OnSelect" e="@e" @ref=MemberC/>
             }
         }
     </div>
 
-    <div>
-        <button @onclick="Crear">Crear</button>
+    <div class="mt-3">
+        <button @onclick="Crear" type="button" class="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Crear conversación</button>
     </div>
 
 
