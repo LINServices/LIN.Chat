@@ -1,4 +1,4 @@
-﻿namespace LIN.Console.Client.Online;
+﻿namespace LIN.Chat.Client.Online;
 
 public class StaticHub
 {
@@ -66,7 +66,7 @@ public class StaticHub
         try
         {
             var app = new SILF.Script.App(e);
-            app.AddDefaultFunctions(Scripts.Actions);
+            app.AddDefaultFunctions(LIN.Chat.Client.Online.Scripts.Actions);
             app.Run();
         }
         catch

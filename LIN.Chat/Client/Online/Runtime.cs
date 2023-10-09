@@ -4,7 +4,7 @@ using SILF.Script.Interfaces;
 using SILF.Script;
 using LIN.Access.Auth.Controllers;
 
-namespace LIN.Console.Client.Online;
+namespace LIN.Chat.Client.Online;
 
 
 /// <summary>

@@ -6,8 +6,7 @@ global using Microsoft.JSInterop;
 global using LIN.Types.Communication.Models;
 global using Microsoft.AspNetCore.Components;
 using Blazored.LocalStorage;
-using LIN.Console.Client;
-using LIN.Console.Client.Online;
+using LIN.Chat.Client.Online;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
