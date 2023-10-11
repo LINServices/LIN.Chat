@@ -1,4 +1,4 @@
-﻿namespace LIN.Chat.Client.Sections;
+﻿namespace LIN.Allo.Client.Sections;
 
 
 public partial class ChatSection

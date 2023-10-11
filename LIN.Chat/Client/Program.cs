@@ -6,12 +6,12 @@ global using Microsoft.JSInterop;
 global using LIN.Types.Communication.Models;
 global using Microsoft.AspNetCore.Components;
 using Blazored.LocalStorage;
-using LIN.Chat.Client.Online;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using LIN.Allo.Client.Online;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
-builder.RootComponents.Add<LIN.Chat.Client.App>("#app");
+builder.RootComponents.Add<LIN.Allo.Client.App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddBlazoredLocalStorage(config =>

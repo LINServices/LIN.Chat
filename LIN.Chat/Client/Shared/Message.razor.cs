@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace LIN.Chat.Client.Shared;
+namespace LIN.Allo.Client.Shared;
 
 
 public partial class Message
@@ -17,7 +17,7 @@ public partial class Message
     /// <summary>
     /// Obtiene si el mensaje no fue enviado por me
     /// </summary>
-    public bool IsOther => MessageModel.Remitente.ID != LIN.Access.Communication.Session.Instance.Informacion.ID;
+    public bool IsOther => MessageModel.Remitente.ID != Access.Communication.Session.Instance.Informacion.ID;
 
 
 

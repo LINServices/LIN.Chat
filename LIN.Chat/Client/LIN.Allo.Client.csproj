@@ -23,10 +23,5 @@
     <ProjectReference Include="..\..\..\..\Tipos\LIN.Types.Communication\LIN.Types.Communication.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Content Update="Drawers\NewGroup.razor">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-    </Content>
-  </ItemGroup>
 
 </Project>

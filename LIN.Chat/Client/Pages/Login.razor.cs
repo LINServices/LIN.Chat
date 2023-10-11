@@ -1,4 +1,4 @@
-﻿namespace LIN.Chat.Client.Pages;
+﻿namespace LIN.Allo.Client.Pages;
 
 
 public partial class Login

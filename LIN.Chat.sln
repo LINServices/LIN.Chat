@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33627.172
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Chat.Server", "LIN.Chat\Server\LIN.Chat.Server.csproj", "{EABECE86-7B3F-45B7-9951-52A61BC42ED7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Allo.Server", "LIN.Chat\Server\LIN.Allo.Server.csproj", "{EABECE86-7B3F-45B7-9951-52A61BC42ED7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Chat.Client", "LIN.Chat\Client\LIN.Chat.Client.csproj", "{C61C7BD5-21E1-4F8B-85B5-B7D23DF1D854}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Allo.Client", "LIN.Chat\Client\LIN.Allo.Client.csproj", "{C61C7BD5-21E1-4F8B-85B5-B7D23DF1D854}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Modules", "..\..\Tipos\LIN.Modules\LIN.Modules.csproj", "{C8ACF8FA-D129-452D-AE48-B9275873C9C7}"
 EndProject

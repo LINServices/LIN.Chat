@@ -4,7 +4,7 @@ using SILF.Script.Interfaces;
 using SILF.Script;
 using LIN.Access.Auth.Controllers;
 
-namespace LIN.Chat.Client.Online;
+namespace LIN.Allo.Client.Online;
 
 
 /// <summary>
@@ -23,7 +23,7 @@ internal class Scripts
 
         public SILFFunction(Action<List<SILF.Script.Elements.ParameterValue>> action)
         {
-            this.Action = action;
+            Action = action;
         }
 
 
@@ -53,7 +53,7 @@ internal class Scripts
         // Mensaje
         Actions.Add(new SILFFunction((values) =>
         {
-            
+
         })
         // Propiedades
         {

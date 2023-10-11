@@ -1,4 +1,4 @@
-﻿namespace LIN.Chat.Client.Online;
+﻿namespace LIN.Allo.Client.Online;
 
 public class StaticHub
 {
@@ -13,7 +13,7 @@ public class StaticHub
     /// <summary>
     /// Hub de conexion
     /// </summary>
-    public static LIN.Access.Auth.Hubs.AccountHub? Hub = null;
+    public static Access.Auth.Hubs.AccountHub? Hub = null;
 
 
 
@@ -66,7 +66,7 @@ public class StaticHub
         try
         {
             var app = new SILF.Script.App(e);
-            app.AddDefaultFunctions(LIN.Chat.Client.Online.Scripts.Actions);
+            app.AddDefaultFunctions(Scripts.Actions);
             app.Run();
         }
         catch

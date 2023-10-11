@@ -1,6 +1,6 @@
-﻿using LIN.Chat.Client.Sections;
+﻿using LIN.Allo.Client.Sections;
 
-namespace LIN.Chat.Client.Pages;
+namespace LIN.Allo.Client.Pages;
 
 
 public partial class Chat
@@ -66,7 +66,7 @@ public partial class Chat
     {
 
         // Valida el login
-        if (!LIN.Access.Communication.Session.IsOpen)
+        if (!Access.Communication.Session.IsOpen)
         {
             nav.NavigateTo("/login");
             return;
@@ -91,10 +91,10 @@ public partial class Chat
     {
 
         IsConversationsLoad = false;
-        base.StateHasChanged();
+        StateHasChanged();
 
         // Variables
-        var profile = LIN.Access.Communication.Session.Instance.Informacion;
+        var profile = Access.Communication.Session.Instance.Informacion;
         string token = Access.Communication.Session.Instance.Token ?? string.Empty;
 
 
@@ -114,7 +114,7 @@ public partial class Chat
         if (chats.Response != Responses.Success)
         {
             IsConversationsLoad = true;
-            base.StateHasChanged();
+            StateHasChanged();
             return;
         }
 
@@ -244,7 +244,7 @@ public partial class Chat
         // Si los chats (mensajes) no se han cargado.
         if (!cache.Item3.IsLoad)
         {
-            var oldMessages = await Access.Communication.Controllers.Messages.ReadAll(Member.Conversation.ID, 0, LIN.Access.Communication.Session.Instance.Token);
+            var oldMessages = await Access.Communication.Controllers.Messages.ReadAll(Member.Conversation.ID, 0, Access.Communication.Session.Instance.Token);
 
             // Establece los mensajes
             Member.Conversation.Mensajes.AddRange(oldMessages.Models);
@@ -253,7 +253,7 @@ public partial class Chat
 
         // Cambia la sección a (1)
         ActualSection = 1;
-        base.StateHasChanged();
+        StateHasChanged();
 
     }
 

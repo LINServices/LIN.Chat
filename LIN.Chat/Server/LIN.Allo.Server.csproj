@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Client\LIN.Chat.Client.csproj" />
+    <ProjectReference Include="..\Client\LIN.Allo.Client.csproj" />
   </ItemGroup>
 
 
