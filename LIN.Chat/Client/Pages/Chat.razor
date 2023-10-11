@@ -69,7 +69,7 @@
 
 
 
-           
+
 
 
 
@@ -104,12 +104,22 @@
                             <label class="text-base gilroy-bold text-gray-800">Conversaciones</label>
 
 
-                            @if(IsConversationsLoad)
+                            @if (IsConversationsLoad)
                             {
-                                foreach (var member in ConversaciónModels)
+                                if (ConversaciónModels.Count <= 0)
                                 {
-                                    <Control Member="member" @ref="ComponentRef" OnClick="Select" />
+                                    <div class="flex rounded justify-center items-center border-dashed border-2 border-gray-800 w-full p-3 mt-3">
+                                        <label class="text-gray-700">No tienes ninguna conversación</label>
+                                    </div>
                                 }
+                                else
+                                {
+                                    foreach (var member in ConversaciónModels)
+                                    {
+                                        <Control Member="member" @ref="ComponentRef" OnClick="Select" />
+                                    }
+                                }
+
                             }
                             else
                             {
@@ -118,7 +128,7 @@
                                 </div>
                             }
 
-                           
+
                         </div>
                     </div>
 
@@ -147,7 +157,7 @@
                             <label class="text-3xl gilroy-bold">Bienvenido a LIN Allo</label>
                             <label class="text-gray-600 mt-1">Puedes usar LIN Allo y los servicios asociados en tu dispositivo <span class="text-blue-600">Windows</span> o <span class="text-green-500">Android</span> </label>
                         </div>
-                      
+
                     }
 
 
@@ -261,4 +271,3 @@
 
     </ul>
 </div>
-
