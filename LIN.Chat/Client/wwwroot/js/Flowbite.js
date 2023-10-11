@@ -248,3 +248,38 @@ function I() {
     collapse1.toggle();
 
 }
+
+
+function ShopPop(target, trigger) {
+
+
+    console.log('Target: ' + target);
+    console.log('Trigger: ' + trigger);
+
+    // set the popover content element
+    const $targetEl = document.getElementById(target);
+
+    // set the element that trigger the popover using hover or click
+    const $triggerEl = document.getElementById(trigger);
+
+    // options with default values
+    const options = {
+        placement: 'bottom',
+        triggerType: 'hover',
+        offset: 10,
+        onHide: () => {
+            console.log('popover is shown');
+        },
+        onShow: () => {
+            console.log('popover is hidden');
+        },
+        onToggle: () => {
+            console.log('popover is toggled');
+        }
+    };
+
+
+    const popover = new Popover($targetEl, $triggerEl, options);
+
+
+}

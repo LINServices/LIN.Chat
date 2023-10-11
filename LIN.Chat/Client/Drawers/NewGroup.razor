@@ -2,6 +2,7 @@
 
 @code{
 
+
     [Parameter]
     public int ID { get; set; }
 
@@ -141,51 +142,75 @@
 </style>
 
 
-
 <!-- drawer component -->
 <div id="drawerIG-@ID" class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full w-80 card" tabindex="-1" aria-labelledby="drawer-right-label">
     
-    <div class="flex items-center justify-center w-full">
 
-        <h5 id="drawer-right-label" class="self-center gilroy-bold">
-            Nueva conversación
-        </h5>
 
-        <button id="close-drawerIG-@ID" type="button" data-drawer-hide="drawer-right-example" aria-controls="drawer-right-example" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 right-2.5 inline-flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white">
-            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-            </svg>
-            <span class="sr-only">Close menu</span>
+    <h5 id="drawer-label" class="inline-flex items-center mb-6 text-base font-semibold text-gray-500 uppercase dark:text-gray-400">
+        <svg class="w-3.5 h-3.5 mr-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm14-7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm-5-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm-5-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4Z" />
+        </svg>Nueva conversación
+    </h5>
+    <button id="close-drawerIG-@ID" type="button" data-drawer-hide="drawer-form" aria-controls="drawer-form" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 right-2.5 inline-flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white">
+        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+        </svg>
+        <span class="sr-only">Close menu</span>
+    </button>
+    <div action="#" class="mb-6">
+        <div class="mb-6">
+            <label for="title" class="block mb-2 text-sm font-medium text-gray-900 ">Titulo</label>
+            <input type="text" id="title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500" placeholder="Nombre de la conversación" required>
+        </div>
+      
+       
+        <div class="mb-4">
+            <label for="guests" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Invite guests</label>
+            <div class="relative">
+                <input @bind="Pattern" type="search" id="guests" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500" placeholder="Agregar usuario" required>
+                <button @onclick="Search" type="button" class="absolute inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-indigo-700 rounded-lg right-2 bottom-2 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
+                    <svg class="w-3 h-3 mr-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
+                        <path d="M6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Zm11-3h-2V5a1 1 0 0 0-2 0v2h-2a1 1 0 1 0 0 2h2v2a1 1 0 0 0 2 0V9h2a1 1 0 1 0 0-2Z" />
+                    </svg>Buscar
+                </button>
+            </div>
+        </div>
+        <div class="flex mb-4 -space-x-4">
+
+            @foreach (var e in Selected ?? new List<Types.Auth.Abstracts.SessionModel<ProfileModel>>())
+            {
+
+                <LIN.Allo.Client.Pops.PopUser Modelo="e" />
+
+            }
+
+
+        </div>
+        <button @onclick="Crear" type="submit" class="text-white justify-center flex items-center bg-indigo-700 hover:bg-indigo-800 w-full focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2  focus:outline-none">
+            <svg class="w-3.5 h-3.5 mr-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M18 2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2ZM2 18V7h6.7l.4-.409A4.309 4.309 0 0 1 15.753 7H18v11H2Z" />
+                <path d="M8.139 10.411 5.289 13.3A1 1 0 0 0 5 14v2a1 1 0 0 0 1 1h2a1 1 0 0 0 .7-.288l2.886-2.851-3.447-3.45ZM14 8a2.463 2.463 0 0 0-3.484 0l-.971.983 3.468 3.468.987-.971A2.463 2.463 0 0 0 14 8Z" />
+            </svg> Crear
         </button>
-
     </div>
 
 
-    <div class="mt-2">
-        <input @bind="NameConver" type="text" id="small-input" placeholder="Nombre" class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-indigo-500 focus:border-indigo-500 ">
-    </div>
+    @foreach (var e in Selected ?? new List<Types.Auth.Abstracts.SessionModel<ProfileModel>>())
+    {
+
+       
+
+    }
+
+
 
    
    
-    <div class="flex mt-2 items-center">
-
-
-        <input @bind="Pattern" type="text" id="small-input" placeholder="Buscar" class="p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-indigo-500 focus:border-indigo-500 ">
-
-        <button class="p-2 h-8 w-8 self-end hover:opacity-[2]" @onclick="Search">
-            <img src="./lupa.png" />
-        </button>
-
-
-    </div>
-
     
     <div>
 
-        @foreach (var e in Selected ?? new List<Types.Auth.Abstracts.SessionModel<ProfileModel>>())
-        {
-            <Profile OnSelect="OnRemove" e="@e" State="2" />
-        }
+      
 
         @foreach (var e in Members ?? new List<Types.Auth.Abstracts.SessionModel<ProfileModel>>())
         {
@@ -194,10 +219,6 @@
                 <Profile OnSelect="OnSelect" e="@e" @ref=MemberC/>
             }
         }
-    </div>
-
-    <div class="mt-3">
-        <button @onclick="Crear" type="button" class="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Crear conversación</button>
     </div>
 
 

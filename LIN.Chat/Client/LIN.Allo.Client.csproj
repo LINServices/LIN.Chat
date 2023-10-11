@@ -7,6 +7,7 @@
 	  <ScopedCssEnabled>true</ScopedCssEnabled>
   </PropertyGroup>
 
+
   <ItemGroup>
     <PackageReference Include="Blazored.LocalStorage" Version="4.4.0" />
     <PackageReference Include="iTextSharp.LGPLv2.Core" Version="3.4.3" />

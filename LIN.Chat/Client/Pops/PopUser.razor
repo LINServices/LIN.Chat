@@ -1,0 +1,61 @@
+﻿
+@inject IJSRuntime js
+@code{
+
+
+    [Parameter]
+    public LIN.Types.Auth.Abstracts.SessionModel<ProfileModel> Modelo { get; set; } = new();
+
+    string Img64 => Convert.ToBase64String(Modelo.Account.Perfil);
+
+
+    void A()
+    {
+       
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+         js.InvokeVoidAsync("ShopPop", $"popover-user-profile-{Modelo.Account.ID}", $"img-prof-{Modelo.Account.ID}");
+    }
+}
+
+
+<img @onclick="A" id="img-prof-@Modelo.Account.ID" class="w-8 h-8 border-2 border-white rounded-full dark:border-gray-800" src="data:image/png;base64,@Img64" alt="">
+
+
+<div id="popover-user-profile-@Modelo.Account.ID" role="tooltip" class="absolute z-10 invisible inline-block w-72 text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 dark:text-gray-400 dark:bg-gray-800 dark:border-gray-600">
+    <div class="p-3">
+        <div class="flex items-center justify-between mb-2">
+            <a href="#">
+                <img class="w-10 h-10 rounded-full" src="data:image/png;base64,@Img64">
+            </a>
+            <div>
+                <button type="button" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-xs px-3 py-1.5  focus:outline-none">Eliminar</button>
+            </div>
+        </div>
+        <p class="text-base font-semibold leading-none text-gray-900 dark:text-white">
+            <a href="#">@Modelo.Account.Nombre</a>
+        </p>
+        <p class="mb-3 text-sm font-normal">
+            <a href="#" class="hover:underline">@@@Modelo.Account.Usuario</a>
+        </p>
+
+        @if (Modelo.Account.OrganizationAccess != null && LIN.Access.Communication.Session.Instance.Account.OrganizationAccess != null && Modelo.Account.OrganizationAccess.Organization.ID == LIN.Access.Communication.Session.Instance.Account.OrganizationAccess.Organization.ID)
+       {
+            <div class="flex gap-3">
+                <img class="h-4 w-4" src="./img/b_indigo.png" />
+                <p class="mb-4 text-xs ml-1 block">Pertenece a tu organización <a href="#" class="text-blue-600 dark:text-blue-500 hover:underline">@Modelo.Account.OrganizationAccess.Organization.Name</a>.</p>
+            </div>
+        }
+
+        else if (LIN.Access.Communication.Session.Instance.Account.OrganizationAccess != null && (Modelo.Account.OrganizationAccess?.Organization.ID != LIN.Access.Communication.Session.Instance.Account.OrganizationAccess.Organization.ID || Modelo.Account.OrganizationAccess == null))
+        {
+            <div class="flex gap-3">
+                <img class="h-4 w-4" src="./img/b_red.png" />
+                <p class="mb-4 text-sm">No pertenece a tu organización.</p>
+            </div>
+        }
+        
+    </div>
+</div>
