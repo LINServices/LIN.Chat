@@ -6,6 +6,7 @@ global using Microsoft.JSInterop;
 global using LIN.Types.Communication.Models;
 global using Microsoft.AspNetCore.Components;
 global using LIN.Allo.Client;
+global using LIN.Allo.Client.Sections;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;

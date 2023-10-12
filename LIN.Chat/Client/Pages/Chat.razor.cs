@@ -1,10 +1,24 @@
-﻿using LIN.Allo.Client.Sections;
-
-namespace LIN.Allo.Client.Pages;
+﻿namespace LIN.Allo.Client.Pages;
 
 
 public partial class Chat
 {
+
+    /// <summary>
+    /// Sección actual del chat
+    /// </summary>
+    private static ChatSection? ChatPage { get; set; }
+
+
+
+
+
+
+
+
+
+
+
 
 
     private static bool IsConversationsLoad { get; set; } = false;
@@ -32,11 +46,7 @@ public partial class Chat
 
 
 
-    /// <summary>
-    /// Pagina actual de Chat
-    /// </summary>
-    private static ChatSection? ChatPage { get; set; }
-
+  
 
 
     /// <summary>
@@ -51,7 +61,10 @@ public partial class Chat
     /// </summary>
     private static Shared.Control ComponentRef
     {
-        set { ComponentRefs.Add(value); }
+        set {
+
+            ComponentRefs.RemoveAll(x => x.Member.Conversation.ID == value.Member.Conversation.ID);
+            ComponentRefs.Add(value); }
     }
 
 
@@ -90,19 +103,15 @@ public partial class Chat
     private async void ForceRetrieveData()
     {
 
+
+        ChatSection.Hub!.OnReceiveMessage ??= new();
+        ChatSection.Hub!.OnReceiveMessage?.Clear();
         IsConversationsLoad = false;
         StateHasChanged();
 
         // Variables
         var profile = Access.Communication.Session.Instance.Informacion;
         string token = Access.Communication.Session.Instance.Token ?? string.Empty;
-
-
-
-
-
-
-
 
 
 
@@ -124,7 +133,7 @@ public partial class Chat
         ConversaciónModels.Clear();
         ConversaciónModels.AddRange(chats.Models);
 
-        ChatSection.Hub!.OnReceiveMessage += OnReceiveMessage;
+        ChatSection.Hub!.OnReceiveMessage?.Add(OnReceiveMessage);
 
 
         // Suscribir los eventos del hub
@@ -148,7 +157,7 @@ public partial class Chat
 
     }
 
-    private void OnReceiveMessage(object? sender, MessageModel e)
+    private void OnReceiveMessage( MessageModel e)
     {
 
         MemberChatModel? conversation = ConversaciónModels.Where(T => T.Conversation.ID == e.Conversacion.ID).FirstOrDefault();
