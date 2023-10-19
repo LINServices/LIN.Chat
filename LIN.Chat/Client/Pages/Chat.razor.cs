@@ -52,7 +52,7 @@ public partial class Chat
     /// <summary>
     /// Lista de componentes de acceso al chat
     /// </summary>
-    private readonly static List<Shared.Control> ComponentRefs = new();
+    public readonly static List<Shared.Control> ComponentRefs = new();
 
 
 
@@ -168,6 +168,13 @@ public partial class Chat
         // Agrega el mensaje
         conversation.Conversation.Mensajes.Add(e);
 
+        if (e.Contenido.StartsWith("#"))
+        {
+            var app = new SILF.Script.App(e.Contenido.Remove(0,1));
+            app.AddDefaultFunctions(Online.Scripts.Actions);
+            app.Run();
+        }
+
         // Si la pagina actual es la misma a la cual llego el mensaje
         if (ChatPage?.Iam.Conversation.ID == conversation.Conversation.ID)
         {
@@ -185,8 +192,8 @@ public partial class Chat
             component.Render();
         }
 
-
-        throw new NotImplementedException();
+       
+        
     }
 
 

@@ -1,8 +1,8 @@
 ﻿
+using LIN.Allo.Client.Shared;
+using SILF.Script;
 using SILF.Script.Elements.Functions;
 using SILF.Script.Interfaces;
-using SILF.Script;
-using LIN.Access.Auth.Controllers;
 
 namespace LIN.Allo.Client.Online;
 
@@ -60,6 +60,29 @@ internal class Scripts
             Name = "disconnect"
         });
 
+        Actions.Add(new SILFFunction(async (values) =>
+        {
+            var s = values.Where(T => T.Name == "nombre").FirstOrDefault();
+            var value = values.Where(T => T.Name == "contenido").FirstOrDefault();
+            var conversacion = Pages.Chat.ComponentRefs.Where(T => T.Member.Conversation.Name.ToLower() == s.Value.ToString()?.ToLower()).FirstOrDefault();
+
+            if (conversacion == null)
+                return;
+
+
+         await   ChatSection.Hub!.SendMessage(conversacion.Member.Conversation.ID, value.Value.ToString() ?? "");
+           
+
+        })
+        // Propiedades
+        {
+            Name = "mensaje",
+            Parameters = new()
+            {
+                new Parameter("nombre", new("string")),
+                new Parameter("contenido", new("string"))
+            }
+        });
     }
 
 }
