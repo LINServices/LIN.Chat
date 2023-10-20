@@ -38,6 +38,33 @@
     {
         nav.NavigateTo("/logout");
     }
+
+    void StartEmma()
+    {
+        JSRuntime.InvokeVoidAsync("StartVoice", DotNetObjectReference.Create(this));
+    }
+
+    [JSInvokable("OnEmma")]
+    public async void OnEmma(string value)
+    {
+        var s = await LIN.Access.Communication.Controllers.Messages.ToEmma(value, LIN.Access.Communication.Session.Instance.Token);
+        Console.WriteLine(s.Model.Result);
+
+        // Es un comando
+        if (s.Model.Result.StartsWith("#"))
+        {
+            var app = new SILF.Script.App(s.Model.Result.Remove(0, 1));
+            app.AddDefaultFunctions(Online.Scripts.Actions);
+            app.Run();
+            return;
+        }
+
+        // Hablar
+        await JSRuntime.InvokeVoidAsync("Speach", s.Model.Result);
+
+    }
+
+
 }
 
 
@@ -69,9 +96,17 @@
 
                         </div>
 
-                        <div class="flex justify-center items-center">
+                        <div class="flex justify-center items-center gap-3">
                             <div>
-                                <img @onclick="OpenNew" class="h-5 w-5" src="./add.png" />
+                                <button class="h-5 w-5 hover:animate-pulse rounded-full">
+                                    <img @onclick="StartEmma"  src="./arroba.png" />
+                                </button>
+                                
+                            </div>
+                            <div>
+                                <button class="h-5 w-5 hover:animate-pulse rounded-full">
+                                <img @onclick="OpenNew" src="./add.png" />
+                                </button>
                             </div>
 
                         </div>
