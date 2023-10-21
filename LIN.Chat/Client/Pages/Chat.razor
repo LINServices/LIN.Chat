@@ -39,35 +39,18 @@
         nav.NavigateTo("/logout");
     }
 
+
+    Emma EmmaM { get; set; }
+
+
     void StartEmma()
     {
-        JSRuntime.InvokeVoidAsync("StartVoice", DotNetObjectReference.Create(this));
+        EmmaM.Show();
     }
-
-    [JSInvokable("OnEmma")]
-    public async void OnEmma(string value)
-    {
-        var s = await LIN.Access.Communication.Controllers.Messages.ToEmma(value, LIN.Access.Communication.Session.Instance.Token);
-        Console.WriteLine(s.Model.Result);
-
-        // Es un comando
-        if (s.Model.Result.StartsWith("#"))
-        {
-            var app = new SILF.Script.App(s.Model.Result.Remove(0, 1));
-            app.AddDefaultFunctions(Online.Scripts.Actions);
-            app.Run();
-            return;
-        }
-
-        // Hablar
-        await JSRuntime.InvokeVoidAsync("Speach", s.Model.Result);
-
-    }
-
-
 }
 
 
+<Emma  @ref="EmmaM"></Emma>
 <NewGroup OnSuccess="ForceRetrieveData" @ref="newGroupModal"></NewGroup>
 
 <div>
