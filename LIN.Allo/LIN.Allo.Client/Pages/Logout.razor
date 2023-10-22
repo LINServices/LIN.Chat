@@ -1,0 +1,24 @@
+﻿@page "/logout"
+@attribute [RenderModeInteractiveWebAssembly]
+
+@inject NavigationManager nav
+
+
+<div class="flex items-center justify-center h-screen">
+    <CircleLoader />
+</div>
+
+
+@code{
+
+    protected async override void OnInitialized()
+    {
+        LIN.Access.Communication.Session.CloseSession();
+       // Online.StaticHub.Leave();
+       // await localStorage.ClearAsync();
+        await Task.Delay(1000);
+        nav.NavigateTo("/login");
+        base.OnInitialized();
+    }
+  
+}
