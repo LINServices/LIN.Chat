@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using System.Text.RegularExpressions;
 
 namespace LIN.Allo.Client.Shared;
 
@@ -53,6 +54,40 @@ public partial class Message
 
         // Comprueba si el texto coincide con el patrón
         return System.Text.RegularExpressions.Regex.IsMatch(texto, patron);
+    }
+
+
+
+
+     List<string> SepararCadenas()
+    {
+
+        string input = MessageModel.Contenido;
+        List<string> resultados = new List<string>();
+
+        // Expresión regular para encontrar menciones que comienzan con @
+        string patronMencion = @"@(\w+)";
+        MatchCollection menciones = Regex.Matches(input, patronMencion);
+
+        // Separar el texto en partes
+        int indiceInicio = 0;
+        foreach (Match mencion in menciones)
+        {
+            if (mencion.Index > indiceInicio)
+            {
+                resultados.Add(input.Substring(indiceInicio, mencion.Index - indiceInicio)); // Agregar texto normal
+            }
+            resultados.Add(mencion.Value); // Agregar la mención
+            indiceInicio = mencion.Index + mencion.Length;
+        }
+
+        // Agregar el texto restante, si lo hay
+        if (indiceInicio < input.Length)
+        {
+            resultados.Add(input.Substring(indiceInicio));
+        }
+
+        return resultados;
     }
 
 }
