@@ -1,4 +1,5 @@
 ﻿@page "/"
+@attribute [RenderModeInteractiveWebAssembly]
 @inject NavigationManager nav
 @inject IJSRuntime JSRuntime
 
@@ -8,11 +9,11 @@
     <div class="flex justify-center items-center h-screen w-full">
         <CircleLoader />
     </div>
-    Task.Run(() =>
-                                    {
-                                        nav.NavigateTo("/login");
-                                    });
-   
+    
+    Task.Run(async () =>
+    {
+        nav.NavigateTo("/login");
+    });
     return;
 }
 

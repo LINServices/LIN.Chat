@@ -1,37 +1,36 @@
 ﻿<!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <base href="/" />
-    <link href="./css/site.css" rel="stylesheet" />
+
+    <title>LIN Allo</title>
+
+    <link href="./css/site.css" rel="stylesheet"/>
 
 
-    <link href="./css/Tailwind/Alerts.css" rel="stylesheet" type="text/css" />
+    <link href="./css/Tailwind/Alerts.css" rel="stylesheet" type="text/css"/>
 
-    <link href="./css/Flowbyte.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="app.css" />
-    <link rel="stylesheet" href="LIN.Allo.styles.css" />
+    <link href="./css/Flowbyte.min.css" rel="stylesheet"/>
+
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <base href="/"/>
+    <link rel="stylesheet" href="app.css"/>
+    <link rel="stylesheet" href="LIN.Allo.styles.css"/>
     <script src="https://cdn.tailwindcss.com"></script>
-    <HeadOutlet @rendermode="renderMode" />
+    <HeadOutlet/>
 </head>
 
 <body>
-    <Routes @rendermode="renderMode" />
-    <script src="_framework/blazor.web.js"></script>
+<Routes/>
+<script src="_framework/blazor.web.js"></script>
 
+<script src="./js/Flowbite.js"></script>
+<script src="./js/index.js"></script>
+<script src="./js/Voice.js"></script>
 
-    <script src="./js/Flowbite.js"></script>
-    <script src="./js/index.js"></script>
-    <script src="./js/Voice.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.js"></script>
 
 </body>
 
 </html>
-@code{
-    IComponentRenderMode renderMode = new InteractiveWebAssemblyRenderMode(false);
-
-}
