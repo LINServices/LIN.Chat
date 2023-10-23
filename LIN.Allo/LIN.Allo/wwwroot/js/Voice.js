@@ -4,16 +4,13 @@ var recognition = "";
 if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
     recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
 
-    // Establecer el idioma a español (España)
-    recognition.lang = 'es-ES'; // Puedes cambiar esto según tu preferencia
-
+    // Establecer el idioma a espaï¿½ol (Espaï¿½a)
+    recognition.lang = 'es-ES'; // Puedes cambiar esto segï¿½n tu preferencia
 
 
 } else {
     console.log("La API de reconocimiento de voz no es compatible con este navegador.");
 }
-
-
 
 
 function StartVoice(dotnetHelper) {
@@ -31,13 +28,13 @@ function StartVoice(dotnetHelper) {
 
 function Speach(textToSpeak) {
 
-// Crear un objeto de síntesis de voz
-const synth = window.speechSynthesis;
-const utterance = new SpeechSynthesisUtterance(textToSpeak);
+// Crear un objeto de sï¿½ntesis de voz
+    const synth = window.speechSynthesis;
+    const utterance = new SpeechSynthesisUtterance(textToSpeak);
 
 // Establecer el idioma
-utterance.lang = 'es-ES'; // Puedes cambiar esto según tu preferencia
+    utterance.lang = 'es-ES'; // Puedes cambiar esto segï¿½n tu preferencia
 
 // Reproducir el discurso
-synth.speak(utterance);
+    synth.speak(utterance);
 }

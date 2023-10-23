@@ -1,6 +1,4 @@
-﻿
-
-scrollToBottom = function (elementId) {
+﻿scrollToBottom = function (elementId) {
     let element = document.getElementById(elementId);
     if (element) {
         let h = element.scrollHeight;

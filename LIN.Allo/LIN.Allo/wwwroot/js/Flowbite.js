@@ -4,8 +4,7 @@
 
 
 // Abre un Drawer
-function ShowDrawer(id, ...idCloseBtn)
-{
+function ShowDrawer(id, ...idCloseBtn) {
 
     // Control
     const control = document.getElementById(id);
@@ -13,10 +12,6 @@ function ShowDrawer(id, ...idCloseBtn)
     const options = {
         placement: "right"
     };
-
-
-
-
 
 
     const drawer = new Drawer(control, options);
@@ -34,9 +29,7 @@ function ShowDrawer(id, ...idCloseBtn)
                 drawer.hide();
 
             });
-        }
-        catch
-        {
+        } catch {
 
         }
 
@@ -45,19 +38,14 @@ function ShowDrawer(id, ...idCloseBtn)
 }
 
 // Abre
-function ForceClick(id)
-{
+function ForceClick(id) {
 
     const control = document.getElementById(id);
     control.click();
 }
 
 
-
-
-
-function ShowPop(id, btn )
-{
+function ShowPop(id, btn) {
     // set the popover content element
     const $targetEl = document.getElementById(id);
 
@@ -86,10 +74,6 @@ function ShowPop(id, btn )
 }
 
 
-
-
-
-
 // Abre un
 
 // Abre
@@ -98,7 +82,7 @@ function ShowModal(id, ...idCloseBtn) {
     // Control
     const control = document.getElementById(id);
 
-  
+
     const drawer = new Modal(control);
 
     // show the drawer
@@ -116,25 +100,17 @@ function ShowModal(id, ...idCloseBtn) {
                 drawer.hide();
 
             });
-        }
-        catch
-        {
+        } catch {
 
         }
-       
+
     }
 
-   
 
 }
 
 
-
-
-
-
 function OpenDropDown(id, idOpen, ...idCloseBtn) {
-
 
 
     // set the target element that will be collapsed or expanded (eg. navbar menu)
@@ -162,7 +138,6 @@ function OpenDropDown(id, idOpen, ...idCloseBtn) {
     let collapse = new Dropdown($targetEl, $targetEl2, options);
 
 
-
     for (let i = 0; i < idCloseBtn.length; i++) {
 
         try {
@@ -174,9 +149,7 @@ function OpenDropDown(id, idOpen, ...idCloseBtn) {
                 collapse.hide();
 
             });
-        }
-        catch
-        {
+        } catch {
 
         }
 
@@ -187,18 +160,10 @@ function OpenDropDown(id, idOpen, ...idCloseBtn) {
     collapse.toggle();
 
 
-
 }
 
 
-
-
-
-
-
-
 function E() {
-
 
 
     // set the target element that will be collapsed or expanded (eg. navbar menu)
@@ -229,7 +194,6 @@ function E() {
 
     // show the target element
     collapse.toggle();
-
 
 
 }
