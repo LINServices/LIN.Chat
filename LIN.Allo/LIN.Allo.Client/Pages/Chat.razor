@@ -7,13 +7,12 @@
 @if (!LIN.Access.Communication.Session.IsOpen)
 {
     <div class="flex justify-center items-center h-screen w-full">
-        <CircleLoader></CircleLoader>
+        <CircleLoader />
     </div>
     
     Task.Run(async () =>
     {
-        await Task.Delay(1);
-        nav.NavigateTo("/login", true);
+        nav.NavigateTo("/login");
     });
     return;
 }
