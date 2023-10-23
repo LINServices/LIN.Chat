@@ -19,5 +19,4 @@ Asegúrate de tener instalado lo siguiente:
 - Visual Studio 17.8
 - Servidores de LIN Auth y Communication y tipos asociados.
 
-Esta es una version de LIN Allo que esta siendo desarrollada en .NET 8 
-Revisa la version estable en .NET 7 en la rama 'Master'
+Esta es una version de LIN Allo que esta siendo desarrollada en .NET 8 RC2.
