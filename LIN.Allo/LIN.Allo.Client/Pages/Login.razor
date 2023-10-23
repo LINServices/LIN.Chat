@@ -1,5 +1,4 @@
 ﻿@page "/login"
-@attribute [RenderModeInteractiveWebAssembly]
 <PageTitle>Iniciar Sesión</PageTitle>
 
 @inject NavigationManager nav;
@@ -60,7 +59,6 @@
                             <center>
                                 <CircleLoader />
                                 <h5 class="mt-2 gilroy-bold text-sm text-gray-600">@LogMessage</h5>
-
 
                                 @if (cancelShow)
                                 {
@@ -453,7 +451,7 @@
         hub.Disconet();
         hub = null;
         ShowControls();
-        ShowError("La sesion de passkey ha expirado");
+        ShowError("La sesión de passkey ha expirado");
 
     }
 
