@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using LIN.Allo.Client.Pages;
+using Microsoft.AspNetCore.Components;
 using System.Text.RegularExpressions;
 
 namespace LIN.Allo.Client.Shared;
@@ -41,6 +42,19 @@ public partial class Message
         base.OnParametersSet();
     }
 
+
+    public void UnLocal()
+    {
+        MessageModel.IsLocal = false;
+        StateHasChanged();
+    }
+
+
+    protected override void OnInitialized()
+    {
+        Chat.MessageTasker.Add(this);
+        base.OnInitialized();
+    }
 
 
     /// <summary>

@@ -1,4 +1,6 @@
-﻿namespace LIN.Allo.Client.Sections;
+﻿using LIN.Allo.Client.Pages;
+
+namespace LIN.Allo.Client.Sections;
 
 
 public partial class ChatSection
@@ -48,8 +50,23 @@ public partial class ChatSection
     /// </summary>
     private void SendMessage()
     {
+
+        string guid = Guid.NewGuid().ToString();
+        Chat.OnReceiveMessage(new()
+        {
+            Contenido = Message,
+            Conversacion = new()
+            {
+                ID = Iam.Conversation.ID,
+            },
+            Remitente = LIN.Access.Communication.Session.Instance.Informacion,
+            Time = DateTime.Now,
+            Guid = guid,
+            IsLocal = true
+        });
+
         // Envía el mensaje al hub
-        Hub?.SendMessage(Iam.Conversation.ID, Message);
+        Hub?.SendMessage(Iam.Conversation.ID, Message, guid);
 
         // Reestablece el texto
         Message = "";

@@ -7,13 +7,12 @@
 
     @if (MessageType == 0)
     {
-        <div class="rounded-xl mmm py-2.5 px-4 @(!IsOther?"bg-indigo-500 text-white":"bg-[#EAE8ED]")">
+        <div class="rounded-xl mmm py-2.5 px-4 @(!IsOther?"bg-indigo-500 text-white":"bg-[#EAE8ED]") @( MessageModel.IsLocal ?"bg-gray-500 text-white":"")" >
             <p class="text-sm">
                 @foreach(var pair in SepararCadenas())
                 {
                     <span class="@(pair.StartsWith("@") ? "font-bold":"") @(pair.StartsWith("@") && IsOther ? "text-indigo-600":"")">@pair</span>
                 }
-                
             </p>
         </div>
     }

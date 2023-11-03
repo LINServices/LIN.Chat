@@ -46,7 +46,7 @@ public partial class Chat
 
 
 
-  
+
 
 
     /// <summary>
@@ -61,10 +61,12 @@ public partial class Chat
     /// </summary>
     private static Shared.Control ComponentRef
     {
-        set {
+        set
+        {
 
             ComponentRefs.RemoveAll(x => x.Member.Conversation.ID == value.Member.Conversation.ID);
-            ComponentRefs.Add(value); }
+            ComponentRefs.Add(value);
+        }
     }
 
 
@@ -157,7 +159,10 @@ public partial class Chat
 
     }
 
-    private void OnReceiveMessage( MessageModel e)
+    public static List<Shared.Message> MessageTasker = new();
+
+
+    public static void OnReceiveMessage(MessageModel e)
     {
 
         MemberChatModel? conversation = ConversaciónModels.Where(T => T.Conversation.ID == e.Conversacion.ID).FirstOrDefault();
@@ -166,12 +171,24 @@ public partial class Chat
             return;
 
         // Agrega el mensaje
-        conversation.Conversation.Mensajes.Add(e);
+        var exist = conversation.Conversation.Mensajes.FirstOrDefault(T => T.Guid == e.Guid);
+
+        if (exist == null)
+        {
+            conversation.Conversation.Mensajes.Add(e);
+        }
+        else
+        {
+            var inTask = MessageTasker.FirstOrDefault(T=>T.MessageModel.Guid == e.Guid);
+            inTask?.UnLocal();
+        }
+
+
 
         if (e.Contenido.StartsWith("#"))
         {
-            var app = new SILF.Script.App(e.Contenido.Remove(0,1));
-          //  app.AddDefaultFunctions(Online.Scripts.Actions);
+            var app = new SILF.Script.App(e.Contenido.Remove(0, 1));
+            //  app.AddDefaultFunctions(Online.Scripts.Actions);
             app.Run();
         }
 
@@ -192,8 +209,8 @@ public partial class Chat
             component.Render();
         }
 
-       
-        
+
+
     }
 
 
