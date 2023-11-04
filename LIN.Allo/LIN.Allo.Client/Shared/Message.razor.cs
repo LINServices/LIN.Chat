@@ -1,5 +1,4 @@
 ﻿using LIN.Allo.Client.Pages;
-using Microsoft.AspNetCore.Components;
 using System.Text.RegularExpressions;
 
 namespace LIN.Allo.Client.Shared;

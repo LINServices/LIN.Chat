@@ -61,7 +61,7 @@
 
 
 <!-- Componente -->
-<div id="drawer-@UniqueId" class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full blur-card">
+<div id="drawer-@UniqueId" class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full card-blur">
 
     <!--Información básica-->
     <div class="flex items-center justify-center w-full">
@@ -96,7 +96,7 @@
     <div>
         @foreach (var e in MemberModels ?? new List<Types.Auth.Abstracts.SessionModel<MemberChatModel>>())
         {
-            <Member e="@e" @ref=                        MemberControl/>
+            <Member e="@e" @ref=MemberControl/>
         }
     </div>
 

@@ -1,6 +1,5 @@
 ﻿@page "/logout"
 @attribute [RenderModeInteractiveWebAssembly]
-
 @inject NavigationManager nav
 
 
@@ -14,8 +13,8 @@
     protected override async void OnInitialized()
     {
         Access.Communication.Session.CloseSession();
-    // Online.StaticHub.Leave();
-    // await localStorage.ClearAsync();
+        // Online.StaticHub.Leave();
+        // await localStorage.ClearAsync();
         await Task.Delay(1000);
         nav.NavigateTo("/login");
         base.OnInitialized();

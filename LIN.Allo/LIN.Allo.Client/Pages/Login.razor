@@ -1,8 +1,8 @@
 ﻿@page "/login"
 @attribute [RenderModeInteractiveWebAssembly]
-<PageTitle>Iniciar Sesión</PageTitle>
+@inject NavigationManager navigationManager
 
-@inject NavigationManager nav;
+<PageTitle>Iniciar Sesión</PageTitle>
 
 
 <!--CSS-->
@@ -192,7 +192,7 @@
     {
         if (Access.Communication.Session.IsOpen)
         {
-            nav.NavigateTo("/");
+            navigationManager.NavigateTo("/");
         }
         base.OnInitialized();
     }
@@ -235,7 +235,7 @@
     /// </summary>
     void GoToForget()
     {
-        nav.NavigateTo("/login/forgetpassword");
+        navigationManager.NavigateTo("/login/forgetpassword");
     }
 
 
@@ -291,7 +291,7 @@
         if (login.Response == Responses.Success)
         {
     //Online.StaticHub.LoadHub();
-            nav.NavigateTo("/");
+            navigationManager.NavigateTo("/");
             return;
 
         }
@@ -396,7 +396,7 @@
                 if (login.Response == Responses.Success)
                 {
     //Online.StaticHub.LoadHub();
-                    nav.NavigateTo("/");
+                    navigationManager.NavigateTo("/");
                     return;
 
                 }
