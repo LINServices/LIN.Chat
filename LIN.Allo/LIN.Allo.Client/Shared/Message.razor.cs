@@ -37,6 +37,9 @@ public partial class Message
         if (EsEnlaceGoogleMeet(MessageModel.Contenido))
             MessageType = 1;
 
+        if (MessageModel.Contenido == "❤️")
+         MessageType = 2;
+
         StateHasChanged();
         base.OnParametersSet();
     }

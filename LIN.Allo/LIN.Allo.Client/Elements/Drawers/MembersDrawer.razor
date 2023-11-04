@@ -66,7 +66,7 @@
     <!--Información básica-->
     <div class="flex items-center justify-center w-full">
 
-        <h5 id="drawer-right-label" class="self-center font-bold">
+        <h5 class="self-center text-xl font-bold">
             @Name
         </h5>
 
@@ -93,7 +93,7 @@
     </div>
 
     <!--Renderizado de controles-->
-    <div>
+    <div class="mt-5">
         @foreach (var e in MemberModels ?? new List<Types.Auth.Abstracts.SessionModel<MemberChatModel>>())
         {
             <Member e="@e" @ref=MemberControl/>
@@ -131,7 +131,7 @@
             var result = await Access.Communication.Controllers.Conversations.MembersInfo(ConversationId, Access.Communication.Session.Instance.AccountToken);
 
     // Modelos a la UI.
-            MemberModels = result.Models;
+            MemberModels = result.Models.OrderByDescending(t=>t.Profile.Rol).ToList();
             IsLoad = true;
             StateHasChanged();
         }

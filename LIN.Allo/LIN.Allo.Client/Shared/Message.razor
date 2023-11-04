@@ -1,11 +1,11 @@
 ﻿<label class="text-gray-500 hover:text-indigo-500 @(IsOther ? "" : "flex self-center justify-end mr-2")" style="font-size: 10px">@(!IsOther ? "" : MessageModel.Remitente.Alias + " • ")@(MessageModel.Time.ToString("HH:mm"))</label>
 
-<div class="flex @(IsOther ? "" : "justify-end") mb-2 items-center">
+<div class="flex @(IsOther ? "" : "justify-end") mb-2 items-center select">
 
 
     @if (MessageType == 0)
     {
-        <div class="rounded-xl mmm py-2.5 px-4 @(!IsOther ? "bg-indigo-500 text-white" : "bg-[#EAE8ED]") @(MessageModel.IsLocal ? "bg-gray-500 text-white" : "")">
+        <div class="rounded-xl mmm py-2.5 px-4 @(!IsOther ? "bg-indigo-500 text-white" : "bg-[#EAE8ED]") @(MessageModel.IsLocal ? "bg-gray-300 text-black" : "")">
             <p class="text-sm">
                 @foreach (var pair in SepararCadenas())
                 {
@@ -25,6 +25,15 @@
 
             <a href="@MessageModel.Contenido" target="_blank" class="text-sm hover:text-indigo-600">Unirme</a>
 
+        </div>
+    }
+
+    else if (MessageType == 2)
+    {
+        <div class="rounded-xl mmm p-7 @(!IsOther ? "bg-indigo-500 text-white" : "bg-[#EAE8ED]") @(MessageModel.IsLocal ? "bg-gray-300" : "")">
+            <p class="text-4xl animate-ping">
+                @MessageModel.Contenido
+            </p>
         </div>
     }
 
