@@ -36,7 +36,7 @@ public partial class Login
 
 
 
-    bool cancelShow = false;
+    private bool cancelShow = false;
 
     private bool isLogin = false;
 

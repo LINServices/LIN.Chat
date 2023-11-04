@@ -51,15 +51,15 @@ public partial class ChatSection
     private void SendMessage()
     {
 
-        string guid = Guid.NewGuid().ToString();
+        var guid = Guid.NewGuid().ToString();
         Chat.OnReceiveMessage(new()
         {
             Contenido = Message,
             Conversacion = new()
             {
-                ID = Iam.Conversation.ID,
+                ID = Iam.Conversation.ID
             },
-            Remitente = LIN.Access.Communication.Session.Instance.Informacion,
+            Remitente = Access.Communication.Session.Instance.Informacion,
             Time = DateTime.Now,
             Guid = guid,
             IsLocal = true
@@ -96,7 +96,10 @@ public partial class ChatSection
     /// <summary>
     /// El estado ha cambiado
     /// </summary>
-    public void Render() => StateHasChanged();
+    public void Render()
+    {
+        StateHasChanged();
+    }
 
 
 

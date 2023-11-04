@@ -20,12 +20,12 @@
     {
         if (firstRender)
         {
-            //var hub = Hub();
-            // hub?.SuscribeToMe(Member.Conversation.ID.ToString(), (e) =>
-            // {
-            //     IsNew = true;
-            //     base.StateHasChanged();
-            // });
+    //var hub = Hub();
+    // hub?.SuscribeToMe(Member.Conversation.ID.ToString(), (e) =>
+    // {
+    //     IsNew = true;
+    //     base.StateHasChanged();
+    // });
         }
 
         return base.OnAfterRenderAsync(firstRender);
@@ -33,7 +33,7 @@
 
     public void Render()
     {
-        base.StateHasChanged();
+        StateHasChanged();
     }
 
     public void Select()
@@ -51,14 +51,9 @@
 }
 
 
-
-
-
-
-
-<div @onclick="()=>{OnClick(Member); IsNew = false; base.StateHasChanged();}" class="flex ring-2 ring-gray-200 bg-white mt-2 p-4 rounded @(IsSelect ? "ring-indigo-500" : "")">
+<div @onclick="() =>{OnClick(Member); IsNew = false; StateHasChanged();}" class="flex ring-2 ring-gray-200 bg-white mt-2 p-4 rounded @(IsSelect ? "ring-indigo-500" : "")">
     <div class="flex items-center">
-        <img class="h-4 w-4" src="./group (2).png" />
+        <img class="h-4 w-4" src="./group (2).png"/>
         <label class="text-base gilroy-bold ml-2 text-gray-700">@Member.Conversation.Name</label>
     </div>
 

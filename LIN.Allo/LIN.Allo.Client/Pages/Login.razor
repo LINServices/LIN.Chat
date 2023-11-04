@@ -5,11 +5,8 @@
 @inject NavigationManager nav;
 
 
-
 <!--CSS-->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-
-
 
 
 <style>
@@ -26,10 +23,6 @@
     }
 
 </style>
-
-
-
-
 
 
 @code {
@@ -58,7 +51,7 @@
                         @if (isLogin)
                         {
                             <center>
-                                <CircleLoader />
+                                <CircleLoader/>
                                 <h5 class="mt-2 gilroy-bold text-sm text-gray-600">@LogMessage</h5>
 
 
@@ -78,7 +71,7 @@
 
                                         <!--Nombre-->
                                         <div class="flex flex-row items-center">
-                                            <img class="self-center" src="./chat.png" style="height:30px; width: 30px" />
+                                            <img class="self-center" src="./chat.png" style="height:30px; width: 30px"/>
                                             <label class="text-xl self-center ml-3 gilroy-bold">
                                                 LIN
                                                 <span class="text-transparent bg-clip-text bg-gradient-to-r to-indigo-500 from-blue-500"> Allo</span>
@@ -89,7 +82,7 @@
                                         <!--Mensjae de cuenta-->
                                         <div class="mt-10">
 
-                                            @if(IsWithKey)
+                                            @if (IsWithKey)
                                             {
                                                 <h2 class="text-lg font-semibold text-gray-900">Iniciar sesión con Passkey</h2>
                                             }
@@ -113,7 +106,7 @@
                                             <label for="email" class="mb-2 block text-sm font-medium text-gray-700">
                                                 Usuario
                                             </label>
-                                            <input @onkeypress="HideError" @bind="User" type="text" autocomplete="off" required=""
+                                            <input @onkeypress="HideError" @bind="                                User" type="text" autocomplete="off" required=""
                                                    class="block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-gray-900 placeholder-gray-400 focus:border-indigo-500 focus:bg-white focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                         </div>
 
@@ -123,7 +116,7 @@
                                             <!--Contraseña-->
                                             <div class="">
                                                 <label class="mb-2 block text-sm font-medium text-gray-700">Contraseña</label>
-                                                <input @onkeypress="HideError" @bind="Password" type="password" autocomplete="off"
+                                                <input @onkeypress="HideError" @bind="                                                Password" type="password" autocomplete="off"
                                                        class="block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-gray-900 placeholder-gray-400 focus:border-indigo-500 focus:bg-white focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                             </div>
 
@@ -133,7 +126,7 @@
 
 
                                         <center class="@errorVisible" style="margin-bottom: -10px;">
-                                            <label  class="text-red-500 gilroy-bold text-sm">@ErrorMessage</label>
+                                            <label class="text-red-500 gilroy-bold text-sm">@ErrorMessage</label>
                                         </center>
 
                                         <!--Boton-->
@@ -149,13 +142,13 @@
                                                 @if (IsWithKey)
                                                 {
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-                                                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
+                                                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
                                                     </svg>
                                                 }
                                                 else
                                                 {
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="" viewBox="0 0 16 16">
-                                                        <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm7 11a1 1 0 1 0-2 0 1 1 0 0 0 2 0z" />
+                                                        <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm7 11a1 1 0 1 0-2 0 1 1 0 0 0 2 0z"/>
                                                     </svg>
                                                 }
 
@@ -184,15 +177,11 @@
 
 
         <!-- Imagen -->
-        <div class="col-md-6 d-none d-md-flex bg-image hidden sm:contents lg:relative lg:block lg:flex-1" />
-
+        <div class="col-md-6 d-none d-md-flex bg-image hidden sm:contents lg:relative lg:block lg:flex-1"/>
 
 
     </div>
 </div>
-
-
-
 
 
 @code {
@@ -201,7 +190,7 @@
 
     protected override void OnInitialized()
     {
-        if(LIN.Access.Communication.Session.IsOpen)
+        if (Access.Communication.Session.IsOpen)
         {
             nav.NavigateTo("/");
         }
@@ -268,7 +257,7 @@
     void GotoLoginKey()
     {
         IsWithKey = !IsWithKey;
-        base.StateHasChanged();
+        StateHasChanged();
     }
 
 
@@ -288,7 +277,7 @@
         HideControls();
         HideError();
 
-        // Sin informacion
+    // Sin informacion
         if (User.Length <= 0 || Password.Length <= 0)
         {
             ShowControls();
@@ -296,12 +285,12 @@
             return;
         }
 
-        // Inicio de sesion
-        var login = await LIN.Access.Communication.Session.LoginWith(User, Password);
+    // Inicio de sesion
+        var login = await Access.Communication.Session.LoginWith(User, Password);
 
         if (login.Response == Responses.Success)
         {
-            //Online.StaticHub.LoadHub();
+    //Online.StaticHub.LoadHub();
             nav.NavigateTo("/");
             return;
 
@@ -337,7 +326,7 @@
 
 
 
-    LIN.Access.Auth.Hubs.PassKeyHub? hub;
+    Access.Auth.Hubs.PassKeyHub? hub;
 
     /// <summary>
     /// Inicia sesion
@@ -349,7 +338,7 @@
         HideControls();
         HideError();
 
-        // Sin informacion
+    // Sin informacion
         if (User.Length <= 0)
         {
             ShowControls();
@@ -358,92 +347,92 @@
         }
 
 
-        // Suscribir al Hub
-        hub = new LIN.Access.Auth.Hubs.PassKeyHub(User, "Q333Q");
+    // Suscribir al Hub
+        hub = new(User, "Q333Q");
 
         await hub.Suscribe();
-        bool reive = false;
+        var reive = false;
 
         hub.OnRecieveResponse += async (o, e) =>
         {
-            await base.InvokeAsync(async () =>
-         {
-             reive = true;
+            await InvokeAsync(async () =>
+            {
+                reive = true;
 
-             switch (e.Status)
-             {
-                 case PassKeyStatus.Success:
-                     break;
+                switch (e.Status)
+                {
+                    case PassKeyStatus.Success:
+                        break;
 
-                 case PassKeyStatus.Rejected:
-                     ShowControls();
-                     ShowError("Passkey rechazada");
-                     return;
+                    case PassKeyStatus.Rejected:
+                        ShowControls();
+                        ShowError("Passkey rechazada");
+                        return;
 
-                 case PassKeyStatus.Expired:
-                     ShowControls();
-                     ShowError("La sesión expiro");
-                     return;
+                    case PassKeyStatus.Expired:
+                        ShowControls();
+                        ShowError("La sesión expiro");
+                        return;
 
-                 case PassKeyStatus.BlockedByOrg:
-                     ShowControls();
-                     ShowError("Tu organización no permite que inicies en esta aplicación.");
-                     return;
+                    case PassKeyStatus.BlockedByOrg:
+                        ShowControls();
+                        ShowError("Tu organización no permite que inicies en esta aplicación.");
+                        return;
 
-                 default:
-                     ShowControls();
-                     ShowError("Hubo un error en Passkey");
-                     return;
-             }
+                    default:
+                        ShowControls();
+                        ShowError("Hubo un error en Passkey");
+                        return;
+                }
 
 
-             cancelShow = false;
-             LogMessage = "Iniciando Sesión";
-             base.StateHasChanged();
+                cancelShow = false;
+                LogMessage = "Iniciando Sesión";
+                StateHasChanged();
 
-             // Inicio de sesion
-             var login = await LIN.Access.Communication.Session.LoginWith(e.Token);
+    // Inicio de sesion
+                var login = await Access.Communication.Session.LoginWith(e.Token);
 
-             if (login.Response == Responses.Success)
-             {
-                 //Online.StaticHub.LoadHub();
-                 nav.NavigateTo("/");
-                 return;
+                if (login.Response == Responses.Success)
+                {
+    //Online.StaticHub.LoadHub();
+                    nav.NavigateTo("/");
+                    return;
 
-             }
-             else if (login.Response == Responses.InvalidPassword)
-             {
-                 ShowControls();
-                 ShowError("La sesion de passkey ha expirado");
-             }
-             else if (login.Response == Responses.NotExistAccount)
-             {
-                 ShowControls();
-                 ShowError($"No existe el usuario {User}");
-             }
-             else
-             {
-                 ShowControls();
-                 ShowError("Intentalo de nuevo mas tarde");
-             }
-         });
+                }
+                else if (login.Response == Responses.InvalidPassword)
+                {
+                    ShowControls();
+                    ShowError("La sesion de passkey ha expirado");
+                }
+                else if (login.Response == Responses.NotExistAccount)
+                {
+                    ShowControls();
+                    ShowError($"No existe el usuario {User}");
+                }
+                else
+                {
+                    ShowControls();
+                    ShowError("Intentalo de nuevo mas tarde");
+                }
+            });
 
-            // Hace el inicio
+    // Hace el inicio
 
 
 
         };
 
         var intent = new PassKeyModel()
-            {
-                User = User
-            };
+        {
+            User = User
+        };
 
         hub.SendIntent(intent);
 
         await Task.Delay(3000);
         cancelShow = true;
-        base.StateHasChanged();
+        StateHasChanged();
 
         await Task.Delay(60000);
 

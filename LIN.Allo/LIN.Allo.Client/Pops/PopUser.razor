@@ -1,20 +1,14 @@
-﻿
+﻿@inject IJSRuntime js
 
-
-
-
-
-
-@inject IJSRuntime js
 @code{
 
 
     [Parameter]
-    public LIN.Types.Auth.Abstracts.SessionModel<ProfileModel> Modelo { get; set; } = new();
+    public Types.Auth.Abstracts.SessionModel<ProfileModel> Modelo { get; set; } = new();
 
 
     [Parameter]
-    public Action<LIN.Types.Auth.Abstracts.SessionModel<ProfileModel>> OnDelete { get; set; }
+    public Action<Types.Auth.Abstracts.SessionModel<ProfileModel>> OnDelete { get; set; }
 
     string Img64 => Convert.ToBase64String(Modelo.Account.Perfil);
 
@@ -33,6 +27,7 @@
     {
         OnDelete(Modelo);
     }
+
 }
 
 
@@ -56,21 +51,21 @@
             <a class="hover:underline">@@@Modelo.Account.Usuario</a>
         </p>
 
-        @if (Modelo.Account.OrganizationAccess != null && LIN.Access.Communication.Session.Instance.Account.OrganizationAccess != null && Modelo.Account.OrganizationAccess.Organization.ID == LIN.Access.Communication.Session.Instance.Account.OrganizationAccess.Organization.ID)
-       {
+        @if (Modelo.Account.OrganizationAccess != null && Access.Communication.Session.Instance.Account.OrganizationAccess != null && Modelo.Account.OrganizationAccess.Organization.ID == Access.Communication.Session.Instance.Account.OrganizationAccess.Organization.ID)
+        {
             <div class="flex gap-1 mb-4 items-center">
-                <img class="h-4 w-4" src="./img/b_indigo.png" />
+                <img class="h-4 w-4" src="./img/b_indigo.png"/>
                 <p class=" text-xs ml-1 block">Pertenece a tu organización <a class="text-blue-600 dark:text-blue-500 hover:underline">@Modelo.Account.OrganizationAccess.Organization.Name</a>.</p>
             </div>
         }
 
-        else if (LIN.Access.Communication.Session.Instance.Account.OrganizationAccess != null && (Modelo.Account.OrganizationAccess?.Organization.ID != LIN.Access.Communication.Session.Instance.Account.OrganizationAccess.Organization.ID || Modelo.Account.OrganizationAccess == null))
+        else if (Access.Communication.Session.Instance.Account.OrganizationAccess != null && (Modelo.Account.OrganizationAccess?.Organization.ID != Access.Communication.Session.Instance.Account.OrganizationAccess.Organization.ID || Modelo.Account.OrganizationAccess == null))
         {
             <div class="flex gap-1 mb-4 items-center">
-                <img class="h-4 w-4" src="./img/b_red.png" />
+                <img class="h-4 w-4" src="./img/b_red.png"/>
                 <p class="text-xs">No pertenece a tu organización.</p>
             </div>
         }
-        
+
     </div>
 </div>

@@ -70,14 +70,17 @@
     /// <summary>
     /// Lista de controles de integrantes.
     /// </summary>
-    private List<LIN.Allo.Client.Shared.Profile> MemberControls { get; set; } = new();
+    private List<Profile> MemberControls { get; set; } = new();
 
 
 
     /// <summary>
     /// Control de integrante actual.
     /// </summary>
-    private LIN.Allo.Client.Shared.Profile MemberControl {set => MemberControls.Add(value);}
+    private Profile MemberControl
+    {
+        set => MemberControls.Add(value);
+    }
 
 
 
@@ -121,16 +124,15 @@
 }
 
 
-
 <!-- drawer component -->
 <div id="drawerIG-@UniqueId" class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full w-80 blur-card" tabindex="-1" aria-labelledby="drawer-right-label">
 
 
     <!--Estado Creando-->
-    @if (ActualState == State.Creating )
+    @if (ActualState == State.Creating)
     {
         <div class="flex flex-col justify-center items-center h-full">
-            <BubbleLoader />
+            <BubbleLoader/>
             <label class="text-gray-600">Creando</label>
         </div>
     }
@@ -138,125 +140,124 @@
     <!--Estado Correcto-->
     else if (ActualState == State.Success)
     {
-        <div class="flex flex-col justify-center items-center h-full">
-          <img class="h-10 w-10" src="./success.png" />
-            <label class="text-gray-600 font-bold text-lg">Creado con éxito</label>
-            <label @onclick="Click" class="text-gray-600 text-sm -mt-1">Crear nueva <span class="text-green-500 hover:font-bold">Conversación</span></label>
-        </div>
+    <div class="flex flex-col justify-center items-center h-full">
+        <img class="h-10 w-10" src="./success.png"/>
+        <label class="text-gray-600 font-bold text-lg">Creado con éxito</label>
+        <label @onclick="Click" class="text-gray-600 text-sm -mt-1">Crear nueva <span class="text-green-500 hover:font-bold">Conversación</span></label>
+    </div>
     }
 
     <!--Estado Fallido-->
     else if (ActualState == State.Failure)
     {
-        <div class="flex flex-col justify-center items-center h-full">
-            <img class="h-10 w-10" src="./error.png" />
-            <label class="text-gray-600 font-bold text-lg">Error al crear</label>
-            <label @onclick="Click" class="text-gray-600 text-sm -mt-1">Intentar de nuevo crear una <span class="text-red-500 hover:font-bold">Conversación</span></label>
-        </div>
+    <div class="flex flex-col justify-center items-center h-full">
+        <img class="h-10 w-10" src="./error.png"/>
+        <label class="text-gray-600 font-bold text-lg">Error al crear</label>
+        <label @onclick="Click" class="text-gray-600 text-sm -mt-1">Intentar de nuevo crear una <span class="text-red-500 hover:font-bold">Conversación</span></label>
+    </div>
     }
 
     <!--Estado Modelando-->
     else
     {
 
-        <h5 id="drawer-label" class="inline-flex items-center mb-6 text-base font-semibold text-gray-500 uppercase dark:text-gray-400">
-            <svg class="w-3.5 h-3.5 mr-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm14-7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm-5-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm-5-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4Z" />
-            </svg>Nueva conversación
-        </h5>
-        <button id="close-drawerIG-@UniqueId" type="button" data-drawer-hide="drawer-form" aria-controls="drawer-form" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 right-2.5 inline-flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white">
-            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-            </svg>
-            <span class="sr-only">Close menu</span>
-        </button>
+    <h5 id="drawer-label" class="inline-flex items-center mb-6 text-base font-semibold text-gray-500 uppercase dark:text-gray-400">
+        <svg class="w-3.5 h-3.5 mr-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm14-7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm-5-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm-5-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4Z"/>
+        </svg>Nueva conversación
+    </h5>
+    <button id="close-drawerIG-@UniqueId" type="button" data-drawer-hide="drawer-form" aria-controls="drawer-form" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 right-2.5 inline-flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white">
+        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+        </svg>
+        <span class="sr-only">Close menu</span>
+    </button>
 
+    <div class="mb-6">
+
+        <!-- Nombre -->
         <div class="mb-6">
-
-            <!-- Nombre -->
-            <div class="mb-6">
-                <label for="title" class="block mb-2 text-sm font-medium text-gray-900 ">Titulo</label>
-                <input @bind="Name" type="text" id="title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500" placeholder="Nombre de la conversación" required>
-            </div>
-
-            <!-- Invitados -->
-            <div class="mb-4">
-                <label for="guests" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Invitados</label>
-                <div class="relative">
-                    <input @bind="Pattern" type="search" id="guests" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500" placeholder="Agregar usuario" required>
-                    <button @onclick="Search" type="button" class="absolute inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-indigo-700 rounded-lg right-2 bottom-2 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
-                        <svg class="w-3 h-3 mr-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
-                            <path d="M6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Zm11-3h-2V5a1 1 0 0 0-2 0v2h-2a1 1 0 1 0 0 2h2v2a1 1 0 0 0 2 0V9h2a1 1 0 1 0 0-2Z" />
-                        </svg>Buscar
-                    </button>
-                </div>
-            </div>
-
-            <!-- Imágenes -->
-            <div class="flex mb-4 -space-x-4">
-
-                @if (SelectedItems.Count <= 0)
-                {
-                    <div class="flex rounded justify-center items-center border-dashed border-2 border-gray-800 w-full p-4">
-                        <label class="text-gray-700">Sin integrantes</label>
-                    </div>
-                }
-                else
-                {
-                    foreach (var e in SelectedItems ?? new List<Types.Auth.Abstracts.SessionModel<ProfileModel>>())
-                    {
-                        <LIN.Allo.Client.Pops.PopUser Modelo="e" OnDelete="OnRemove" />
-                    }
-                }
-
-
-            </div>
-
-            <!-- Botón crear -->
-            <button @onclick="Crear" type="submit" class="text-white justify-center flex items-center bg-indigo-700 hover:bg-indigo-800 w-full focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2  focus:outline-none">
-                <svg class="w-3.5 h-3.5 mr-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M18 2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2ZM2 18V7h6.7l.4-.409A4.309 4.309 0 0 1 15.753 7H18v11H2Z" />
-                    <path d="M8.139 10.411 5.289 13.3A1 1 0 0 0 5 14v2a1 1 0 0 0 1 1h2a1 1 0 0 0 .7-.288l2.886-2.851-3.447-3.45ZM14 8a2.463 2.463 0 0 0-3.484 0l-.971.983 3.468 3.468.987-.971A2.463 2.463 0 0 0 14 8Z" />
-                </svg> Crear
-            </button>
+            <label for="title" class="block mb-2 text-sm font-medium text-gray-900 ">Titulo</label>
+            <input @bind="        Name" type="text" id="title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500" placeholder="Nombre de la conversación" required>
         </div>
 
-        <div class="@(AreSearch ? "":"opacity-0")">
+        <!-- Invitados -->
+        <div class="mb-4">
+            <label for="guests" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Invitados</label>
+            <div class="relative">
+                <input @bind="        Pattern" type="search" id="guests" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500" placeholder="Agregar usuario" required>
+                <button @onclick="Search" type="button" class="absolute inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-indigo-700 rounded-lg right-2 bottom-2 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
+                    <svg class="w-3 h-3 mr-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
+                        <path d="M6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Zm11-3h-2V5a1 1 0 0 0-2 0v2h-2a1 1 0 1 0 0 2h2v2a1 1 0 0 0 2 0V9h2a1 1 0 1 0 0-2Z"/>
+                    </svg>Buscar
+                </button>
+            </div>
+        </div>
 
-            @if (IsSearching)
+        <!-- Imágenes -->
+        <div class="flex mb-4 -space-x-4">
+
+            @if (SelectedItems.Count <= 0)
             {
-                <div class="flex justify-center items-center">
-                    <BubbleLoader />
+                <div class="flex rounded justify-center items-center border-dashed border-2 border-gray-800 w-full p-4">
+                    <label class="text-gray-700">Sin integrantes</label>
                 </div>
             }
             else
             {
-                if ((MemberModels ?? new List<Types.Auth.Abstracts.SessionModel<ProfileModel>>()).Count <= 0)
+                foreach (var e in SelectedItems ?? new List<Types.Auth.Abstracts.SessionModel<ProfileModel>>())
                 {
-                    <div class="flex rounded justify-center items-center border-dashed border-2 border-gray-800 w-full p-3">
-                        <label class="text-gray-700">No se encontraron usuarios</label>
-                    </div>
+                    <LIN.Allo.Client.Pops.PopUser Modelo="e" OnDelete="OnRemove"/>
                 }
-                else
-                {
-                    <div class="flex flex-col gap-2">
-
-                        @foreach (var e in MemberModels ?? new List<Types.Auth.Abstracts.SessionModel<ProfileModel>>())
-                        {
-                            if (!SelectedItems.Where(T => T.Profile.ID == e.Profile.ID).Any() && LIN.Access.Communication.Session.Instance.Informacion.AccountID != e.Account.ID)
-                            {
-                                <Profile OnSelect="OnSelect" e="@e" @ref=MemberControl />
-                            }
-                        }
-                    </div>
-                }
-
             }
+
+
         </div>
+
+        <!-- Botón crear -->
+        <button @onclick="Crear" type="submit" class="text-white justify-center flex items-center bg-indigo-700 hover:bg-indigo-800 w-full focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2  focus:outline-none">
+            <svg class="w-3.5 h-3.5 mr-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M18 2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2ZM2 18V7h6.7l.4-.409A4.309 4.309 0 0 1 15.753 7H18v11H2Z"/>
+                <path d="M8.139 10.411 5.289 13.3A1 1 0 0 0 5 14v2a1 1 0 0 0 1 1h2a1 1 0 0 0 .7-.288l2.886-2.851-3.447-3.45ZM14 8a2.463 2.463 0 0 0-3.484 0l-.971.983 3.468 3.468.987-.971A2.463 2.463 0 0 0 14 8Z"/>
+            </svg> Crear
+        </button>
+    </div>
+
+    <div class="@(AreSearch ? "" : "opacity-0")">
+
+        @if (IsSearching)
+        {
+            <div class="flex justify-center items-center">
+                <BubbleLoader/>
+            </div>
+        }
+        else
+        {
+            if ((MemberModels ?? new List<Types.Auth.Abstracts.SessionModel<ProfileModel>>()).Count <= 0)
+            {
+                <div class="flex rounded justify-center items-center border-dashed border-2 border-gray-800 w-full p-3">
+                    <label class="text-gray-700">No se encontraron usuarios</label>
+                </div>
+            }
+            else
+            {
+                <div class="flex flex-col gap-2">
+
+                    @foreach (var e in MemberModels ?? new List<Types.Auth.Abstracts.SessionModel<ProfileModel>>())
+                    {
+                        if (!SelectedItems.Where(T => T.Profile.ID == e.Profile.ID).Any() && Access.Communication.Session.Instance.Informacion.AccountID != e.Account.ID)
+                        {
+                            <Profile OnSelect="OnSelect" e="@e" @ref=                                        MemberControl/>
+                        }
+                    }
+                </div>
+            }
+
+        }
+    </div>
     }
 
 </div>
-
 
 
 @functions
@@ -269,7 +270,7 @@
     public async void Show()
     {
         await js.InvokeAsync<object>("ShowDrawer", $"drawerIG-{UniqueId}", $"close-drawerIG-{UniqueId}");
-        base.StateHasChanged();
+        StateHasChanged();
     }
 
 
@@ -280,14 +281,14 @@
     /// <param name="model">Modelo seleccionado.</param>
     private void OnSelect(Types.Auth.Abstracts.SessionModel<ProfileModel> model)
     {
-        // Si existe.
+    // Si existe.
         var have = SelectedItems.Where(T => T.Account.ID == model.Account.ID).Any();
 
         if (have)
             return;
 
         SelectedItems.Add(model);
-        base.StateHasChanged();
+        StateHasChanged();
     }
 
 
@@ -338,11 +339,11 @@
         AreSearch = true;
         IsSearching = true;
         StateHasChanged();
-        var result = await LIN.Access.Communication.Controllers.Conversations.SearchProfiles(Pattern, LIN.Access.Communication.Session.Instance.AccountToken);
+        var result = await Access.Communication.Controllers.Conversations.SearchProfiles(Pattern, Access.Communication.Session.Instance.AccountToken);
 
         IsSearching = false;
         MemberModels = result.Models;
-        base.StateHasChanged();
+        StateHasChanged();
     }
 
 
@@ -356,30 +357,30 @@
         StateHasChanged();
 
         var modelo = new ConversationModel()
+        {
+            ID = 0,
+            Members = SelectedItems.Select(T => new MemberChatModel()
             {
-                ID = 0,
-                Members = SelectedItems.Select(T => new MemberChatModel()
-                {
-                    Rol = Types.Communication.Enumerations.MemberRoles.None,
-                    Profile = new()
-                    {
-                        ID = T.Profile.ID
-                    }
-                }).ToList(),
-                Name = Name,
-                Type = Types.Communication.Enumerations.ConversationsTypes.Personal
-            };
-
-        modelo.Members.Add(new()
-            {
+                Rol = Types.Communication.Enumerations.MemberRoles.None,
                 Profile = new()
                 {
-                    ID = LIN.Access.Communication.Session.Instance.Informacion.ID
-                },
-                Rol = Types.Communication.Enumerations.MemberRoles.Admin
-            });
+                    ID = T.Profile.ID
+                }
+            }).ToList(),
+            Name = Name,
+            Type = Types.Communication.Enumerations.ConversationsTypes.Personal
+        };
 
-        var res = await LIN.Access.Communication.Controllers.Conversations.Create(modelo);
+        modelo.Members.Add(new()
+        {
+            Profile = new()
+            {
+                ID = Access.Communication.Session.Instance.Informacion.ID
+            },
+            Rol = Types.Communication.Enumerations.MemberRoles.Admin
+        });
+
+        var res = await Access.Communication.Controllers.Conversations.Create(modelo);
         if (res.Response == Responses.Success)
         {
             ActualState = State.Success;

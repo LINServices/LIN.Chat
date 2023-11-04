@@ -61,30 +61,30 @@ public partial class Message
     /// Valida si es un enlace de google meet
     /// </summary>
     /// <param name="texto">Texto a validar</param>
-    static bool EsEnlaceGoogleMeet(string texto)
+    private static bool EsEnlaceGoogleMeet(string texto)
     {
         // Patrón de expresión regular para detectar enlaces de Google Meet
-        string patron = @"https://meet\.google\.com/[a-zA-Z0-9\-]+";
+        var patron = @"https://meet\.google\.com/[a-zA-Z0-9\-]+";
 
         // Comprueba si el texto coincide con el patrón
-        return System.Text.RegularExpressions.Regex.IsMatch(texto, patron);
+        return Regex.IsMatch(texto, patron);
     }
 
 
 
 
-     List<string> SepararCadenas()
+    private List<string> SepararCadenas()
     {
 
-        string input = MessageModel.Contenido;
-        List<string> resultados = new List<string>();
+        var input = MessageModel.Contenido;
+        List<string> resultados = new();
 
         // Expresión regular para encontrar menciones que comienzan con @
-        string patronMencion = @"@(\w+)";
-        MatchCollection menciones = Regex.Matches(input, patronMencion);
+        var patronMencion = @"@(\w+)";
+        var menciones = Regex.Matches(input, patronMencion);
 
         // Separar el texto en partes
-        int indiceInicio = 0;
+        var indiceInicio = 0;
         foreach (Match mencion in menciones)
         {
             if (mencion.Index > indiceInicio)

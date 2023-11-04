@@ -5,20 +5,20 @@
 
 
 <div class="flex items-center justify-center h-screen">
-    <CircleLoader />
+    <CircleLoader/>
 </div>
 
 
 @code{
 
-    protected async override void OnInitialized()
+    protected override async void OnInitialized()
     {
-        LIN.Access.Communication.Session.CloseSession();
-       // Online.StaticHub.Leave();
-       // await localStorage.ClearAsync();
+        Access.Communication.Session.CloseSession();
+    // Online.StaticHub.Leave();
+    // await localStorage.ClearAsync();
         await Task.Delay(1000);
         nav.NavigateTo("/login");
         base.OnInitialized();
     }
-  
+
 }

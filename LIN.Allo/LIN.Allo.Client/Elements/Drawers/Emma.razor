@@ -25,7 +25,7 @@
     private enum State
     {
         Witting,
-        Responding,
+        Responding
     }
 
 
@@ -80,7 +80,7 @@
 
             <div class="">
                 <div class="relative">
-                    <input @bind="Prompt" type="search" id="search" class="block w-full p-4 pl-5 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500" placeholder="Preguntar a Emma" required>
+                    <input @bind="        Prompt" type="search" id="search" class="block w-full p-4 pl-5 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500" placeholder="Preguntar a Emma" required>
 
                     @if (ActualState == State.Witting)
                     {
@@ -107,7 +107,7 @@
     public async void Show()
     {
         await js.InvokeAsync<object>("ShowDrawer", $"drawerEmma-{UniqueId}", $"close-drawerEmma-{UniqueId}");
-        base.StateHasChanged();
+        StateHasChanged();
     }
 
 
@@ -118,32 +118,32 @@
     private async void ToEmma()
     {
 
-        // Cambia el estado.
+    // Cambia el estado.
         ActualState = State.Responding;
         StateHasChanged();
 
-        // Respuesta.
-        var response = await LIN.Access.Communication.Controllers.Messages.ToEmma(Prompt, LIN.Access.Communication.Session.Instance.Token);
+    // Respuesta.
+        var response = await Access.Communication.Controllers.Messages.ToEmma(Prompt, Access.Communication.Session.Instance.Token);
 
-        // Cambia el estado.
+    // Cambia el estado.
         ActualState = State.Witting;
 
-        // Es un comando.
+    // Es un comando.
         if (response.Model.Content.StartsWith("#"))
         {
             var app = new SILF.Script.App(response.Model.Content.Remove(0, 1));
-            //app.AddDefaultFunctions(Online.Scripts.Actions);
+    //app.AddDefaultFunctions(Online.Scripts.Actions);
             app.Run();
             EmmaResponse = "Perfecto";
             StateHasChanged();
             return;
         }
 
-        // Establece la respuesta de Emma.
+    // Establece la respuesta de Emma.
         EmmaResponse = response.Model.Content;
         StateHasChanged();
 
-        // Hablar
+    // Hablar
         await js.InvokeVoidAsync("Speech", response.Model.Content);
     }
 

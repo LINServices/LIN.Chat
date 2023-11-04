@@ -7,7 +7,7 @@
     /// <summary>
     /// Imagen de perfil en base64
     /// </summary>
-    private string Img64 => Convert.ToBase64String(LIN.Access.Communication.Session.Instance.Account.Perfil);
+    private string Img64 => Convert.ToBase64String(Access.Communication.Session.Instance.Account.Perfil);
 
 
 
@@ -31,34 +31,34 @@
 
 
         <div class="flex flex-row items-center mt-1">
-            <span class="block text-sm text-gray-900">Hola, @LIN.Access.Communication.Session.Instance.Account.Nombre</span>
+            <span class="block text-sm text-gray-900">Hola, @Access.Communication.Session.Instance.Account.Nombre</span>
         </div>
 
         <div class="flex flex-row items-center">
 
-            <span class="block text-sm text-gray-500 truncate">@@@LIN.Access.Communication.Session.Instance.Account.Usuario</span>
+            <span class="block text-sm text-gray-500 truncate">@@@(Access.Communication.Session.Instance.Account.Usuario)</span>
 
-            @if (LIN.Access.Communication.Session.Instance.Account.Insignia == AccountBadges.Verified)
+            @if (Access.Communication.Session.Instance.Account.Insignia == AccountBadges.Verified)
             {
-                <img class="ml-1 self-center" src="./img/verificado.png" style="width: 10px !important; height: 10px !important" />
+                <img class="ml-1 self-center" src="./img/verificado.png" style="width: 10px !important; height: 10px !important"/>
             }
-            else if (LIN.Access.Communication.Session.Instance.Account.Insignia == AccountBadges.VerifiedGold)
+            else if (Access.Communication.Session.Instance.Account.Insignia == AccountBadges.VerifiedGold)
             {
-                <img class="ml-1 self-center" src="./img/verificadogold.png" style="width: 10px !important; height: 10px !important" />
+                <img class="ml-1 self-center" src="./img/verificadogold.png" style="width: 10px !important; height: 10px !important"/>
             }
 
         </div>
 
 
-        @if (LIN.Access.Communication.Session.Instance.Account.Rol != AccountRoles.Undefined)
+        @if (Access.Communication.Session.Instance.Account.Rol != AccountRoles.Undefined)
         {
             <div class="h-6 bg-blue-600 rounded-xl flex items-center justify-center hover:bg-blue-300 mt-2">
 
-                @if (LIN.Access.Communication.Session.Instance.Account.Rol == AccountRoles.User)
+                @if (Access.Communication.Session.Instance.Account.Rol == AccountRoles.User)
                 {
                     <label class="text-xs text-white pl-3 pr-3">Usuario</label>
                 }
-                else if (LIN.Access.Communication.Session.Instance.Account.Rol == AccountRoles.Admin)
+                else if (Access.Communication.Session.Instance.Account.Rol == AccountRoles.Admin)
                 {
                     <label class="text-xs text-white pl-3 pr-3">Administrador</label>
                 }
@@ -73,34 +73,34 @@
     <div class="px-4 py-3 flex flex-row justify-center items-center">
 
         <button class="bg-transparent h-7 w-7 rounded-lg hover:bg-gray-100 p-1 hover:p-2">
-            <img src="img/Products/chat.png" />
+            <img src="img/Products/chat.png"/>
         </button>
 
-        @if (LIN.Access.Communication.Session.Instance.Account.OrganizationAccess != null)
+        @if (Access.Communication.Session.Instance.Account.OrganizationAccess != null)
         {
             <button class="bg-transparent h-7 w-7 rounded-lg hover:bg-gray-100 p-1 hover:p-2">
-                <img src="img/Products/empresa.png" />
+                <img src="img/Products/empresa.png"/>
             </button>
         }
 
         <button class="bg-transparent h-7 w-7 rounded-lg hover:bg-gray-100 p-1 hover:p-2">
-            <img src="img/map.png" />
+            <img src="img/map.png"/>
         </button>
 
         <button class="bg-transparent h-7 w-7 rounded-lg hover:bg-gray-100 p-1 hover:p-2">
-            <img src="img/cloud.png" />
+            <img src="img/cloud.png"/>
         </button>
 
         <button class="bg-transparent h-7 w-7 rounded-lg hover:bg-gray-100 p-1 hover:p-2">
-            <img src="img/box.png" />
+            <img src="img/box.png"/>
         </button>
 
         <button class="bg-transparent h-7 w-7 rounded-lg hover:bg-gray-100 p-1 hover:p-2">
-            <img src="img/products/calendar.png" />
+            <img src="img/products/calendar.png"/>
         </button>
 
         <button class="bg-transparent h-7 w-7 rounded-lg hover:bg-gray-100 p-1 hover:p-2">
-            <img src="img/contactos.png" />
+            <img src="img/contactos.png"/>
         </button>
 
     </div>

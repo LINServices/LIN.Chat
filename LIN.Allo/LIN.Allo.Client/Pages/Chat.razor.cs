@@ -29,7 +29,7 @@ public partial class Chat
     /// <summary>
     /// Lista de conversaciones
     /// </summary>
-    private static readonly List<MemberChatModel> ConversaciónModels = new();
+    private readonly static List<MemberChatModel> ConversaciónModels = new();
 
 
     /// <summary>
@@ -42,7 +42,7 @@ public partial class Chat
     /// <summary>
     /// Lista de Chats abiertos
     /// </summary>
-    private static readonly Dictionary<int, (Access.Communication.Hubs.ChatHub, MemberChatModel, Status)> Chats = new();
+    private readonly static Dictionary<int, (Access.Communication.Hubs.ChatHub, MemberChatModel, Status)> Chats = new();
 
 
 
@@ -113,12 +113,12 @@ public partial class Chat
 
         // Variables
         var profile = Access.Communication.Session.Instance.Informacion;
-        string token = Access.Communication.Session.Instance.Token ?? string.Empty;
+        var token = Access.Communication.Session.Instance.Token ?? string.Empty;
 
 
 
         // Obtiene las conversaciones actuales
-        ReadAllResponse<MemberChatModel> chats = await Access.Communication.Controllers.Conversations.ReadAll(token);
+        var chats = await Access.Communication.Controllers.Conversations.ReadAll(token);
 
 
         // Si hubo un error
@@ -139,7 +139,7 @@ public partial class Chat
 
 
         // Suscribir los eventos del hub
-        foreach (MemberChatModel conversation in ConversaciónModels)
+        foreach (var conversation in ConversaciónModels)
         {
             // Configuración del modelo
             conversation.Profile = profile;
@@ -149,7 +149,10 @@ public partial class Chat
             _ = ChatSection.Hub!.JoinGroup(conversation.Conversation.ID);
 
             // Agrega al cache
-            Chats.Add(conversation.Conversation.ID, (ChatSection.Hub!, conversation, new() { IsLoad = false }));
+            Chats.Add(conversation.Conversation.ID, (ChatSection.Hub!, conversation, new()
+            {
+                IsLoad = false
+            }));
 
         }
 
@@ -165,7 +168,7 @@ public partial class Chat
     public static void OnReceiveMessage(MessageModel e)
     {
 
-        MemberChatModel? conversation = ConversaciónModels.Where(T => T.Conversation.ID == e.Conversacion.ID).FirstOrDefault();
+        var conversation = ConversaciónModels.Where(T => T.Conversation.ID == e.Conversacion.ID).FirstOrDefault();
 
         if (conversation == null)
             return;
@@ -179,7 +182,7 @@ public partial class Chat
         }
         else
         {
-            var inTask = MessageTasker.FirstOrDefault(T=>T.MessageModel.Guid == e.Guid);
+            var inTask = MessageTasker.FirstOrDefault(T => T.MessageModel.Guid == e.Guid);
             inTask?.UnLocal();
         }
 
