@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34212.112
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LIN.Allo", "LIN.Allo\LIN.Allo\LIN.Allo.csproj", "{46C702F3-B634-460E-BDE7-6D7CE3B7A5BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Allo", "LIN.Allo\LIN.Allo\LIN.Allo.csproj", "{46C702F3-B634-460E-BDE7-6D7CE3B7A5BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LIN.Allo.Client", "LIN.Allo\LIN.Allo.Client\LIN.Allo.Client.csproj", "{A4C02C9A-A8F5-4528-A3E1-CF5F678FB6EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Allo.Client", "LIN.Allo\LIN.Allo.Client\LIN.Allo.Client.csproj", "{A4C02C9A-A8F5-4528-A3E1-CF5F678FB6EF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SILF.Script", "D:\SILF\SILF\SILF.Script\SILF.Script.csproj", "{F00F449C-5EDA-4EC3-A746-FEE0DB94C51B}"
 EndProject
