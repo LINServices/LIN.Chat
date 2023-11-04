@@ -26,7 +26,7 @@ function StartVoice(dotnetHelper) {
 }
 
 
-function Speach(textToSpeak) {
+function Speech(textToSpeak) {
 
 // Crear un objeto de s�ntesis de voz
     const synth = window.speechSynthesis;

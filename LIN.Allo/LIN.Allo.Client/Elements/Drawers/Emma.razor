@@ -1,120 +1,57 @@
 ﻿@inject IJSRuntime js
 @attribute [RenderModeInteractiveWebAssembly]
 
+
 @code {
 
 
-    State ActualState = State.Witting;
+    /// <summary>
+    /// Id único del elemento.
+    /// </summary>
+    private string UniqueId { get; init; } = Guid.NewGuid().ToString();
 
 
-    enum State
+
+    /// <summary>
+    /// Actual estado.
+    /// </summary>
+    private State ActualState { get; set; } = State.Witting;
+
+
+
+    /// <summary>
+    /// Lista de estados.
+    /// </summary>
+    private enum State
     {
         Witting,
         Responding,
     }
 
 
-    [Parameter]
-    public int ID { get; set; }
 
-
-    [Parameter]
-    public string Name { get; set; }
-
-
-
-    [Parameter]
-    public Action OnSuccess { get; set; }
+    /// <summary>
+    /// Entrada del usuario.
+    /// </summary>
+    private string Prompt { get; set; } = string.Empty;
 
 
 
-    public async void Show()
-    {
-        var ss = ID;
-        await js.InvokeAsync<object>("ShowDrawer", $"drawerEmma-{ID}", $"close-drawerEmma-{ID}");
-
-
-        base.StateHasChanged();
-    }
-
-
-    string Prompt = "";
-
-
-
-    string EmmaResponde = "";
-
-    protected override void OnInitialized()
-    {
-        base.OnInitialized();
-    }
-
-    async void ToEmma()
-    {
-
-        ActualState = State.Responding;
-        StateHasChanged();
-
-        var s = await LIN.Access.Communication.Controllers.Messages.ToEmma(Prompt, LIN.Access.Communication.Session.Instance.Token);
-        Console.WriteLine(s.Model.Content);
-
-
-        ActualState = State.Witting;
-
-        // Es un comando
-        if (s.Model.Content.StartsWith("#"))
-        {
-            var app = new SILF.Script.App(s.Model.Content.Remove(0, 1));
-           // app.AddDefaultFunctions(Online.Scripts.Actions);
-            app.Run();
-            EmmaResponde = "Perfecto";
-            StateHasChanged();
-            return;
-        }
-
-        EmmaResponde = s.Model.Content;
-        // Hablar
-        StateHasChanged();
-
-        await js.InvokeVoidAsync("Speach", s.Model.Content);
-    }
-
-
-
-    void StartEmma()
-    {
-        js.InvokeVoidAsync("StartVoice", DotNetObjectReference.Create(this));
-    }
-
-    [JSInvokable("OnEmma")]
-    public async void OnEmma(string value)
-    {
-        Prompt = value;
-        StateHasChanged();
-        ToEmma();
-    }
-
+    /// <summary>
+    /// Respuesta de Emma.
+    /// </summary>
+    private string EmmaResponse { get; set; } = string.Empty;
 
 
 }
 
-<style>
-    .card {
-        backdrop-filter: blur(25px) saturate(200%);
-        -webkit-backdrop-filter: blur(25px) saturate(200%);
-        background-color: rgba(255, 255, 255, 0.59);
-    }
-
-</style>
-
 
 <!-- drawer component -->
-<div id="drawerEmma-@ID" class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full w-80 card" tabindex="-1" aria-labelledby="drawer-right-label">
-
+<div id="drawerEmma-@UniqueId" class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full w-80 blur-card" tabindex="-1" aria-labelledby="drawer-right-label">
 
     <div class="h-full flex flex-col justify-between">
 
-
+        <!--Descripción-->
         <div class="flex flex-col justify-center items-center w-full mt-10">
 
             <img src="./arroba.png" class="h-14 w-14">
@@ -124,10 +61,11 @@
 
         </div>
 
+        <!--Información-->
         <div class="border border-gray-500 border-2 rounded-lg p-5  w-full">
             @if (ActualState == State.Witting)
             {
-                <p class="text-justify">@EmmaResponde</p>
+                <p class="text-justify">@EmmaResponse</p>
             }
             else
             {
@@ -137,17 +75,18 @@
             }
         </div>
 
+        <!--Entrada-->
         <div class=" w-full h-10 justify-end items-end mb-3">
 
             <div class="">
                 <div class="relative">
                     <input @bind="Prompt" type="search" id="search" class="block w-full p-4 pl-5 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500" placeholder="Preguntar a Emma" required>
-                  
-                    @if(ActualState == State.Witting)
+
+                    @if (ActualState == State.Witting)
                     {
                         <button @onclick="ToEmma" type="submit" class="text-white absolute right-2.5 bottom-2.5 bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">Enviar</button>
                     }
-                    
+
                 </div>
             </div>
 
@@ -161,3 +100,69 @@
 
 </div>
 
+
+@functions
+{
+
+
+    /// <summary>
+    /// Abrir el cajon.
+    /// </summary>
+    public async void Show()
+    {
+        await js.InvokeAsync<object>("ShowDrawer", $"drawerEmma-{UniqueId}", $"close-drawerEmma-{UniqueId}");
+        base.StateHasChanged();
+    }
+
+
+
+    /// <summary>
+    /// Enviar a Emma.
+    /// </summary>
+    private async void ToEmma()
+    {
+
+        // Cambia el estado.
+        ActualState = State.Responding;
+        StateHasChanged();
+
+        // Respuesta.
+        var response = await LIN.Access.Communication.Controllers.Messages.ToEmma(Prompt, LIN.Access.Communication.Session.Instance.Token);
+
+        // Cambia el estado.
+        ActualState = State.Witting;
+
+        // Es un comando.
+        if (response.Model.Content.StartsWith("#"))
+        {
+            var app = new SILF.Script.App(response.Model.Content.Remove(0, 1));
+            //app.AddDefaultFunctions(Online.Scripts.Actions);
+            app.Run();
+            EmmaResponse = "Perfecto";
+            StateHasChanged();
+            return;
+        }
+
+        // Establece la respuesta de Emma.
+        EmmaResponse = response.Model.Content;
+        StateHasChanged();
+
+        // Hablar
+        await js.InvokeVoidAsync("Speech", response.Model.Content);
+    }
+
+
+
+    /// <summary>
+    /// Invocable.
+    /// </summary>
+    [JSInvokable("OnEmma")]
+    public void OnEmma(string value)
+    {
+        Prompt = value;
+        StateHasChanged();
+        ToEmma();
+    }
+
+
+}
