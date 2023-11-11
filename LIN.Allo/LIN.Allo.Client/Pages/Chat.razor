@@ -7,7 +7,7 @@
 @if (!Access.Communication.Session.IsOpen)
 {
     <div class="flex justify-center items-center h-screen w-full">
-        <CircleLoader/>
+        <CircleLoader />
     </div>
 
     Task.Run(async () =>
@@ -16,168 +16,167 @@
     });
     return;
 }
-    
 
 
 
-    @code {
+
+@code {
 
 
-        /// <summary>
-        /// Sección grafica actual.
-        /// </summary>
-        private int ActualSection { get; set; } = 0;
+    /// <summary>
+    /// Sección grafica actual.
+    /// </summary>
+    private int ActualSection { get; set; } = 0;
 
 
-        /// <summary>
-        /// Imagen de perfil en base64
-        /// </summary>
-        private string Img64 => Convert.ToBase64String(Access.Communication.Session.Instance.Account.Perfil);
+    /// <summary>
+    /// Imagen de perfil en base64
+    /// </summary>
+    private string Img64 => Convert.ToBase64String(Access.Communication.Session.Instance.Account.Perfil);
 
-        NewGroup newGroupModal;
-
-
-        void OpenNew()
-        {
-            newGroupModal.Show();
-        }
-
-        private async Task E()
-        {
-
-            await JSRuntime.InvokeAsync<object>("E");
-
-            StateHasChanged();
-
-        }
+    NewGroup newGroupModal;
 
 
+    void OpenNew()
+    {
+        newGroupModal.Show();
+    }
 
-        Emma EmmaM { get; set; }
+    private async Task E()
+    {
 
+        await JSRuntime.InvokeAsync<object>("E");
 
-        void StartEmma()
-        {
-            EmmaM.Show();
-        }
+        StateHasChanged();
 
     }
 
 
-    <Emma @ref="                EmmaM"></Emma>
-    <NewGroup OnSuccess="ForceRetrieveData" @ref="                newGroupModal"></NewGroup>
+
+    Emma EmmaM { get; set; }
 
 
-    <div>
+    void StartEmma()
+    {
+        EmmaM.Show();
+    }
+
+    }
+
+
+<Emma @ref="                EmmaM"></Emma>
+<NewGroup OnSuccess="ForceRetrieveData" @ref="                newGroupModal"></NewGroup>
+
+
+<div>
 
     <div class="w-full h-32 bg-[#F8F7FB] dark:bg-[#242424]">
-
     </div>
 
     <div class="w-screen" style="margin-top: -128px;">
-    <div class="h-screen">
-    <div class="flex flex-row h-full gap-1">
+        <div class="h-screen">
+            <div class="flex flex-row h-full">
 
-    <!-- Left -->
-    <div class="w-full lg:w-1/3 flex @(ActualSection != 0 ? "hidden lg:flex" : "") flex-col">
+                <!-- Left -->
+                <div class="w-full lg:w-1/3 flex @(ActualSection != 0 ? "hidden lg:flex" : "") flex-col">
 
-        <!-- Header -->
-                    <div class="px-5 pt-3 pb-1 flex flex-row justify-between items-center border-r bg-[#F8F7FB] dark:bg-[#242424]">
-            <div class="flex items-center">
+                    <!-- Header -->
+                    <div class="px-5 pt-3 pb-1 flex flex-row justify-between items-center border-r bg-[#F8F7FB] dark:bg-[#141414]">
+                        <div class="flex items-center">
 
                             <button @onclick="E" type="button" class="flex bg-white dark:bg-zinc-700 text-sm rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button">
-                    <span class="sr-only">Open</span>
-                    <img class="w-8 h-8 p-1 rounded-full ring-2 ring-gray-300" src="data:image/png;base64,@Img64">
-                </button>
+                                <span class="sr-only">Open</span>
+                                <img class="w-8 h-8 p-1 rounded-full ring-2 ring-gray-300" src="data:image/png;base64,@Img64">
+                            </button>
 
-                <div class="flex flex-col">
-                    <label class="ml-3 text-sm font-bold dark:text-gray-300">@Access.Communication.Session.Instance.Informacion.Alias</label>
+                            <div class="flex flex-col">
+                                <label class="ml-3 text-sm font-bold dark:text-gray-300">@Access.Communication.Session.Instance.Informacion.Alias</label>
                                 <label class="ml-3 text-xs dark:text-gray-400" style="margin-top:-3px">@@@(Access.Communication.Session.Instance.Account.Usuario)</label>
-                </div>
+                            </div>
 
-            </div>
-
-            <div class="flex justify-center items-center gap-3">
-                <div>
-                    <button class="h-5 w-5 hover:animate-pulse rounded-full">
-                        <img @onclick="StartEmma" src="./arroba.png"/>
-                    </button>
-
-                </div>
-                <div>
-                    <button class="h-5 w-5 hover:animate-pulse rounded-full">
-                        <img @onclick="OpenNew" src="./add.png"/>
-                    </button>
-                </div>
-
-            </div>
-        </div>
-
-        <!-- Contacts -->
-                    <div class="flex-1 overflow-auto border-r bg-[#F8F7FB] dark:bg-[#242424]">
-
-            <div class="px-5 mt-4">
-
-                <label class="text-base gilroy-bold text-gray-800 dark:text-gray-200">Conversaciones</label>
-
-
-                @if (IsConversationsLoad)
-                {
-                    if (ConversaciónModels.Count <= 0)
-                    {
-                        <div class="flex rounded justify-center items-center border-dashed border-2 border-gray-800 w-full p-3 mt-3">
-                            <label class="text-gray-700">No tienes ninguna conversación</label>
                         </div>
+
+                        <div class="flex justify-center items-center gap-3">
+                            <div>
+                                <button class="h-5 w-5 hover:animate-pulse rounded-full">
+                                    <img @onclick="StartEmma" src="./arroba.png" />
+                                </button>
+
+                            </div>
+                            <div>
+                                <button class="h-5 w-5 hover:animate-pulse rounded-full">
+                                    <img @onclick="OpenNew" src="./add.png" />
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Contacts -->
+                    <div class="flex-1 overflow-auto border-r bg-[#F8F7FB] dark:bg-[#141414]">
+
+                        <div class="px-5 mt-4">
+
+                            <label class="text-base gilroy-bold text-gray-800 dark:text-gray-200">Conversaciones</label>
+
+
+                            @if (IsConversationsLoad)
+                            {
+                                if (ConversaciónModels.Count <= 0)
+                                {
+                                    <div class="flex rounded justify-center items-center border-dashed border-2 border-gray-800 w-full p-3 mt-3">
+                                        <label class="text-gray-700">No tienes ninguna conversación</label>
+                                    </div>
+                                }
+                                else
+                                {
+                                    foreach (var member in ConversaciónModels)
+                                    {
+                                        <Control Member="member" @ref="                                        ComponentRef" OnClick="Select" />
+                                    }
+                                }
+
+                            }
+                            else
+                            {
+                                <ControlSkeleton />
+                                <ControlSkeleton />
+                                <ControlSkeleton />
+                            }
+
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Right -->
+                <div class="w-full @(ActualSection != 1 ? "hidden lg:flex" : "") lg:w-2/3 flex flex-col bg-[#F8F7FB] dark:bg-[#242424]">
+
+                    @if (ChatSection.Hub != null && Member != null)
+                    {
+
+                        <ChatSection @ref="ChatPage" Iam="Member" OnBackPress="() =>{ ActualSection = 0; Member = null; foreach (var c in ComponentRefs) c.Unselect(); StateHasChanged(); }" />
                     }
                     else
                     {
-                        foreach (var member in ConversaciónModels)
-                        {
-                            <Control Member="member" @ref="                                        ComponentRef" OnClick="Select"/>
-                        }
+
+                        <div class="flex flex-col h-full w-full items-center justify-center bg-[#F8F7FB] dark:bg-[#242424]">
+                            <img class="h-56 w-56" src="./chatdraw.svg" />
+                            <label class="text-3xl font-bold dark:text-white">Bienvenido a LIN Allo</label>
+                            <label class="text-gray-600 mt-1 dark:text-gray-400">Puedes usar LIN Allo y los servicios asociados en tu dispositivo <span class="text-blue-600">Windows</span> o <span class="text-green-500">Android</span> </label>
+                        </div>
+
                     }
 
-                }
-                else
-                {
-                    <ControlSkeleton/>
-                    <ControlSkeleton/>
-                    <ControlSkeleton/>
-                }
 
+                </div>
 
             </div>
         </div>
-
     </div>
-
-    <!-- Right -->
-                <div class="w-full @(ActualSection != 1 ? "hidden lg:flex" : "") lg:w-2/3 flex flex-col bg-[#F8F7FB] dark:bg-[#242424]">
-
-        @if (ChatSection.Hub != null && Member != null)
-        {
-            
-        <ChatSection @ref="                        ChatPage" Iam="Member" OnBackPress="() =>{ ActualSection = 0; Member = null; foreach (var c in ComponentRefs) c.Unselect(); StateHasChanged(); }"/>
-        }
-        else
-        {
-
-                        <div class="flex flex-col h-full w-full items-center justify-center bg-[#F8F7FB] dark:bg-[#242424]">
-            <img class="h-56 w-56" src="./chatdraw.svg"/>
-            <label class="text-3xl font-bold dark:text-white">Bienvenido a LIN Allo</label>
-            <label class="text-gray-600 mt-1 dark:text-gray-400">Puedes usar LIN Allo y los servicios asociados en tu dispositivo <span class="text-blue-600">Windows</span> o <span class="text-green-500">Android</span> </label>
-        </div>
-
-        }
+</div>
 
 
-    </div>
-
-    </div>
-            </div >
-            </div >
-            </div >
-
-
-            <!--Dropdownmenu-->
-            <DropdownMenu />
+<!--Dropdownmenu-->
+<DropdownMenu />
