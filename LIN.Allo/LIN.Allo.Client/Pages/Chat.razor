@@ -67,8 +67,12 @@
     <Emma @ref="                EmmaM"></Emma>
     <NewGroup OnSuccess="ForceRetrieveData" @ref="                newGroupModal"></NewGroup>
 
+
     <div>
-    <div class="w-full h-32" style="background-color: #F8F7FB"></div>
+
+    <div class="w-full h-32 bg-[#F8F7FB] dark:bg-[#242424]">
+
+    </div>
 
     <div class="w-screen" style="margin-top: -128px;">
     <div class="h-screen">
@@ -78,17 +82,17 @@
     <div class="w-full lg:w-1/3 flex @(ActualSection != 0 ? "hidden lg:flex" : "") flex-col">
 
         <!-- Header -->
-        <div class="px-5 pt-3 pb-1 flex flex-row justify-between items-center border-r" style="background-color: #F8F7FB">
+                    <div class="px-5 pt-3 pb-1 flex flex-row justify-between items-center border-r bg-[#F8F7FB] dark:bg-[#242424]">
             <div class="flex items-center">
 
-                <button @onclick="E" type="button" class="flex bg-white text-sm rounded-full focus:ring-4 focus:ring-gray-300" id="user-menu-button">
+                            <button @onclick="E" type="button" class="flex bg-white dark:bg-zinc-700 text-sm rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button">
                     <span class="sr-only">Open</span>
                     <img class="w-8 h-8 p-1 rounded-full ring-2 ring-gray-300" src="data:image/png;base64,@Img64">
                 </button>
 
                 <div class="flex flex-col">
-                    <label class="ml-3 text-sm gilroy-bold">@Access.Communication.Session.Instance.Informacion.Alias</label>
-                    <label class="ml-3 text-xs gilroy" style="margin-top:-3px">@@@(Access.Communication.Session.Instance.Account.Usuario)</label>
+                    <label class="ml-3 text-sm font-bold dark:text-gray-300">@Access.Communication.Session.Instance.Informacion.Alias</label>
+                                <label class="ml-3 text-xs dark:text-gray-400" style="margin-top:-3px">@@@(Access.Communication.Session.Instance.Account.Usuario)</label>
                 </div>
 
             </div>
@@ -110,11 +114,11 @@
         </div>
 
         <!-- Contacts -->
-        <div class="flex-1 overflow-auto border-r" style="background-color: #F8F7FB">
+                    <div class="flex-1 overflow-auto border-r bg-[#F8F7FB] dark:bg-[#242424]">
 
             <div class="px-5 mt-4">
 
-                <label class="text-base gilroy-bold text-gray-800">Conversaciones</label>
+                <label class="text-base gilroy-bold text-gray-800 dark:text-gray-200">Conversaciones</label>
 
 
                 @if (IsConversationsLoad)
@@ -148,7 +152,7 @@
     </div>
 
     <!-- Right -->
-    <div class="w-full @(ActualSection != 1 ? "hidden lg:flex" : "") lg:w-2/3 flex flex-col" style="background-color: #F8F7FB">
+                <div class="w-full @(ActualSection != 1 ? "hidden lg:flex" : "") lg:w-2/3 flex flex-col bg-[#F8F7FB] dark:bg-[#242424]">
 
         @if (ChatSection.Hub != null && Member != null)
         {
@@ -158,10 +162,10 @@
         else
         {
 
-        <div class="flex flex-col h-full w-full items-center justify-center">
+                        <div class="flex flex-col h-full w-full items-center justify-center bg-[#F8F7FB] dark:bg-[#242424]">
             <img class="h-56 w-56" src="./chatdraw.svg"/>
-            <label class="text-3xl gilroy-bold">Bienvenido a LIN Allo</label>
-            <label class="text-gray-600 mt-1">Puedes usar LIN Allo y los servicios asociados en tu dispositivo <span class="text-blue-600">Windows</span> o <span class="text-green-500">Android</span> </label>
+            <label class="text-3xl font-bold dark:text-white">Bienvenido a LIN Allo</label>
+            <label class="text-gray-600 mt-1 dark:text-gray-400">Puedes usar LIN Allo y los servicios asociados en tu dispositivo <span class="text-blue-600">Windows</span> o <span class="text-green-500">Android</span> </label>
         </div>
 
         }

@@ -5,7 +5,7 @@
 
     @if (MessageType == 0)
     {
-        <div class="rounded-xl mmm py-2.5 px-4 @(!IsOther ? "bg-indigo-500 text-white" : "bg-[#EAE8ED]") @(MessageModel.IsLocal ? "bg-gray-300 text-black" : "")">
+        <div class="rounded-xl mmm py-2.5 px-4 @(!IsOther ? "bg-indigo-500 text-white" : "bg-[#EAE8ED] dark:bg-[#292929] dark:text-gray-300") @(MessageModel.IsLocal ? "bg-gray-300 text-black" : "")">
             <p class="text-sm">
                 @foreach (var pair in SepararCadenas())
                 {
@@ -17,7 +17,7 @@
 
     else if (MessageType == 1)
     {
-        <div class="rounded-xl p-4 @(!IsOther ? "bg-indigo-500 text-white" : "bg-[#EAE8ED]")">
+        <div class="rounded-xl p-4 @(!IsOther ? "bg-indigo-500 text-white" : "bg-[#EAE8ED] dark:bg-[#292929] dark:text-gray-300")">
 
             <div class="flex bg-red justify-center items-center">
                 <img class="h-5 w-5 mt-1" src="@(IsOther ? "./meet.png" : "./meet_white.png")"/>
@@ -30,7 +30,7 @@
 
     else if (MessageType == 2)
     {
-        <div class="rounded-xl mmm p-7 @(!IsOther ? "bg-indigo-500 text-white" : "bg-[#EAE8ED]") @(MessageModel.IsLocal ? "bg-gray-300" : "")">
+        <div class="rounded-xl mmm p-7 @(!IsOther ? "bg-indigo-500 text-white" : "bg-[#EAE8ED] dark:bg-[#292929] dark:text-gray-300") @(MessageModel.IsLocal ? "bg-gray-300" : "")">
             <p class="text-4xl animate-ping">
                 @MessageModel.Contenido
             </p>

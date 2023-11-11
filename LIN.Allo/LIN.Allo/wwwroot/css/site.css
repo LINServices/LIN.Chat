@@ -39,8 +39,15 @@ a[href*="http://somee.com"] {
 
 
 body {
-    background-color: #F7F8FD !important;
     font-family: 'Gilroy', sans-serif !important;
+}
+
+.body-light {
+    background-color: #F7F8FD !important;
+}
+
+.body-dark {
+    background-color: #18181b !important;
 }
 
 

@@ -51,10 +51,10 @@
 }
 
 
-<div @onclick="() =>{OnClick(Member); IsNew = false; StateHasChanged();}" class="flex ring-2 ring-gray-200 bg-white mt-2 p-4 rounded @(IsSelect ? "ring-indigo-500" : "")">
+<div @onclick="() =>{OnClick(Member); IsNew = false; StateHasChanged();}" class="flex ring-2 ring-gray-200  bg-white mt-2 p-4 rounded dark:bg-zinc-800 dark:ring-zinc-600 @(IsSelect ? "ring-indigo-500 dark:ring-indigo-500" : "") ">
     <div class="flex items-center">
         <img class="h-4 w-4" src="./group (2).png"/>
-        <label class="text-base gilroy-bold ml-2 text-gray-700">@Member.Conversation.Name</label>
+        <label class="text-base gilroy-bold ml-2 text-gray-700 dark:text-gray-300">@Member.Conversation.Name</label>
     </div>
 
     @if (IsNew)
