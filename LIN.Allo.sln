@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Access.Auth", "D:\LIN S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Access.Communication", "D:\LIN Services\AccesoAPI\LIN.Access.Communication\LIN.Access.Communication.csproj", "{1AB5A085-CC55-41FE-8B8D-E6AB83070ACD}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Modules", "..\..\Tipos\LIN.Modules\LIN.Modules.csproj", "{B2C69174-018A-4C3E-B01B-4C79AEBA57A0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{1AB5A085-CC55-41FE-8B8D-E6AB83070ACD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1AB5A085-CC55-41FE-8B8D-E6AB83070ACD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1AB5A085-CC55-41FE-8B8D-E6AB83070ACD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2C69174-018A-4C3E-B01B-4C79AEBA57A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2C69174-018A-4C3E-B01B-4C79AEBA57A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2C69174-018A-4C3E-B01B-4C79AEBA57A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2C69174-018A-4C3E-B01B-4C79AEBA57A0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

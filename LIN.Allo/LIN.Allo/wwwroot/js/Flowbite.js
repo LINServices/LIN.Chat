@@ -10,7 +10,8 @@ function ShowDrawer(id, ...idCloseBtn) {
     const control = document.getElementById(id);
 
     const options = {
-        placement: "right"
+        placement: "right",
+        backdropClasses : 'bg-zinc-900 bg-opacity-50 fixed inset-0 z-30'
     };
 
 
