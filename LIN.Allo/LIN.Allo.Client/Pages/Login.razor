@@ -353,7 +353,7 @@
         await hub.Suscribe();
         var reive = false;
 
-        hub.OnRecieveResponse += async (o, e) =>
+        hub.OnReceiveResponse += async (o, e) =>
         {
             await InvokeAsync(async () =>
             {
@@ -439,7 +439,7 @@
         if (reive)
             return;
 
-        hub.Disconet();
+        hub.Disconnect();
         hub = null;
         ShowControls();
         ShowError("La sesion de passkey ha expirado");
@@ -451,7 +451,7 @@
 
     void CancelHi()
     {
-        hub?.Disconet();
+        hub?.Disconnect();
         hub = null;
 
         ShowControls();

@@ -88,7 +88,7 @@ public partial class Chat
         }
 
         // Crear el hub
-        ChatSection.Hub = new(Access.Communication.Session.Instance.Informacion);
+        ChatSection.Hub = new(Access.Communication.Session.Instance.Profile);
         await ChatSection.Hub.Suscribe();
 
         // Obtiene la data
@@ -112,7 +112,7 @@ public partial class Chat
         StateHasChanged();
 
         // Variables
-        var profile = Access.Communication.Session.Instance.Informacion;
+        var profile = Access.Communication.Session.Instance.Profile;
         var token = Access.Communication.Session.Instance.Token ?? string.Empty;
 
 

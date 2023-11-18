@@ -242,7 +242,7 @@
 
                         @foreach (var e in MemberModels ?? new List<Types.Auth.Abstracts.SessionModel<ProfileModel>>())
                         {
-                            if (!SelectedItems.Where(T => T.Profile.ID == e.Profile.ID).Any() && Access.Communication.Session.Instance.Informacion.AccountID != e.Account.ID)
+                            if (!SelectedItems.Where(T => T.Profile.ID == e.Profile.ID).Any() && Access.Communication.Session.Instance.Profile.AccountID != e.Account.ID)
                             {
                                 <Profile OnSelect="OnSelect" e="@e" @ref=MemberControl />
                             }
@@ -372,12 +372,12 @@
             {
                 Profile = new()
                 {
-                    ID = Access.Communication.Session.Instance.Informacion.ID
+                    ID = Access.Communication.Session.Instance.Profile.ID
                 },
                 Rol = Types.Communication.Enumerations.MemberRoles.Admin
             });
 
-        var res = await Access.Communication.Controllers.Conversations.Create(modelo);
+        var res = await Access.Communication.Controllers.Conversations.Create(modelo, LIN.Access.Communication.Session.Instance.Token);
         if (res.Response == Responses.Success)
         {
             ActualState = State.Success;

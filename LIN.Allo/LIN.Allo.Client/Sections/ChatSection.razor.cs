@@ -59,7 +59,7 @@ public partial class ChatSection
             {
                 ID = Iam.Conversation.ID
             },
-            Remitente = Access.Communication.Session.Instance.Informacion,
+            Remitente = Access.Communication.Session.Instance.Profile,
             Time = DateTime.Now,
             Guid = guid,
             IsLocal = true
