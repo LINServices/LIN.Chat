@@ -31,15 +31,13 @@
 
 
                 <div class="flex flex-wrap justify-between">
-
-                        @foreach (var emoji in emojis)
-                        {
-                            <div @onclick="()=>Press(emoji)" class="flex group justify-center items-center hover:bg-gray-100 h-10 w-10 rounded-full">
-                                <label class="text-xl group-hover:animate-pulse">@emoji</label>
-                            </div>
-                        }
-
-                    </div>
+                    @foreach (var emoji in emojis)
+                    {
+                        <div @onclick="()=>Press(emoji)" class="flex group justify-center items-center hover:bg-gray-100 h-10 w-10 rounded-full">
+                            <label class="text-xl group-hover:animate-pulse">@emoji</label>
+                        </div>
+                    }
+                </div>
             
             </div>
         </div>
