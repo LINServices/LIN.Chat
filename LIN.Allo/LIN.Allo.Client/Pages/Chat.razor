@@ -97,14 +97,16 @@
                         </div>
 
                         <div class="flex justify-center items-center gap-3">
+
                             <div>
                                 <button class="h-5 w-5 hover:animate-pulse rounded-full">
                                     <img @onclick="StartEmma" src="./arroba.png" />
                                 </button>
-
                             </div>
-                            <div>
 
+                           
+
+                            <div>
                                 <button @onclick="OpenNew" title="Nueva conversación"
                                         class="group cursor-pointer outline-none hover:rotate-90 duration-300">
                                     <svg xmlns="http://www.w3.org/2000/svg"
@@ -112,12 +114,19 @@
                                          class="stroke-zinc-600 dark:stroke-zinc-400 fill-none dark:group-hover:fill-zinc-800 group-hover:fill-zinc-200 group-active:stroke-zinc-200 group-active:fill-zinc-600 group-active:duration-0 duration-300 w-6 h-6">
                                         <path d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"
                                               stroke-width="1.5"></path>
+
                                         <path d="M8 12H16" stroke-width="1.5"></path>
                                         <path d="M12 16V8" stroke-width="1.5"></path>
                                     </svg>
                                 </button>
-
                             </div>
+
+
+
+                            
+
+                         
+                            
 
                         </div>
                     </div>
@@ -127,9 +136,13 @@
 
                         <div class="px-5 mt-4">
 
-                            <label class="text-base gilroy-bold text-gray-800 dark:text-gray-200">Conversaciones</label>
+                            <label class="text-base font-bold text-gray-800 dark:text-gray-200">Conversaciones</label>
 
+                            <div class="mt-2 mb-5">
+                                <input type="text" autocomplete="off" required="" class="block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-gray-900 placeholder-gray-400 focus:border-indigo-500 focus:bg-white focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="Buscar">
 
+                            </div>
+                           
                             @if (IsConversationsLoad)
                             {
                                 if (ConversaciónModels.Count <= 0)
