@@ -45,10 +45,7 @@ public partial class Members
     /// <summary>
     /// Control de un integrante.
     /// </summary>
-    private Member MemberControl
-    {
-        set => MemberControls.Add(value);
-    }
+    private Member MemberControl { set => MemberControls.Add(value); }
 
 
 
