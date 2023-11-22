@@ -2,56 +2,12 @@
 @rendermode RenderMode.InteractiveWebAssembly
 
 
-@code {
-
-
-    /// <summary>
-    /// Id único del elemento.
-    /// </summary>
-    private string UniqueId { get; init; } = Guid.NewGuid().ToString();
-
-
-
-    /// <summary>
-    /// Actual estado.
-    /// </summary>
-    private State ActualState { get; set; } = State.Witting;
-
-
-
-    /// <summary>
-    /// Lista de estados.
-    /// </summary>
-    private enum State
-    {
-        Witting,
-        Responding
-    }
-
-
-
-    /// <summary>
-    /// Entrada del usuario.
-    /// </summary>
-    private string Prompt { get; set; } = string.Empty;
-
-
-
-    /// <summary>
-    /// Respuesta de Emma.
-    /// </summary>
-    private string EmmaResponse { get; set; } = string.Empty;
-
-
-}
-
-
-<!-- drawer component -->
+<!-- Componente -->
 <div id="drawerEmma-@UniqueId" class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full w-80 card-blur dark:card-blur-osc" tabindex="-1" aria-labelledby="drawer-right-label">
 
     <div class="h-full flex flex-col justify-between">
 
-        <!--Descripción-->
+        <!-- Descripción de la sección -->
         <div class="flex flex-col justify-center items-center w-full mt-10">
 
             <img src="./arroba.png" class="h-14 w-14">
@@ -61,8 +17,8 @@
 
         </div>
 
-        <!--Información-->
-        <div class="border border-gray-500 border-2 rounded-lg p-5  w-full">
+        <!-- Información -->
+        <div class="border border-gray-500 border-2 rounded-lg p-5 w-full">
             @if (ActualState == State.Witting)
             {
                 <p class="text-justify">@EmmaResponse</p>
@@ -78,10 +34,13 @@
         <!--Entrada-->
         <div class=" w-full h-10 justify-end items-end mb-3">
 
-            <div class="">
+            <div>
                 <div class="relative">
-                    <input @bind="        Prompt" type="search" id="search" class="block w-full p-4 pl-5 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500" placeholder="Preguntar a Emma" required>
 
+                    <!-- Input del usuario -->
+                    <input @bind="Prompt" type="search" id="search" class="block w-full p-4 pl-5 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500" placeholder="Preguntar a Emma" required>
+
+                    <!-- Botón de enviar -->
                     @if (ActualState == State.Witting)
                     {
                         <button @onclick="ToEmma" type="submit" class="text-white absolute right-2.5 bottom-2.5 bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">Enviar</button>
@@ -95,70 +54,3 @@
     </div>
 
 </div>
-
-
-@functions
-{
-
-
-    /// <summary>
-    /// Abrir el cajon.
-    /// </summary>
-    public async void Show()
-    {
-        await js.InvokeAsync<object>("ShowDrawer", $"drawerEmma-{UniqueId}", $"close-drawerEmma-{UniqueId}");
-        StateHasChanged();
-    }
-
-
-
-    /// <summary>
-    /// Enviar a Emma.
-    /// </summary>
-    private async void ToEmma()
-    {
-
-    // Cambia el estado.
-        ActualState = State.Responding;
-        StateHasChanged();
-
-    // Respuesta.
-        var response = await Access.Communication.Controllers.Messages.ToEmma(Prompt, Access.Communication.Session.Instance.Token);
-
-    // Cambia el estado.
-        ActualState = State.Witting;
-
-    // Es un comando.
-        if (response.Model.Content.StartsWith("#"))
-        {
-            var app = new SILF.Script.App(response.Model.Content.Remove(0, 1));
-    //app.AddDefaultFunctions(Online.Scripts.Actions);
-            app.Run();
-            EmmaResponse = "Perfecto";
-            StateHasChanged();
-            return;
-        }
-
-    // Establece la respuesta de Emma.
-        EmmaResponse = response.Model.Content;
-        StateHasChanged();
-
-    // Hablar
-        await js.InvokeVoidAsync("Speech", response.Model.Content);
-    }
-
-
-
-    /// <summary>
-    /// Invocable.
-    /// </summary>
-    [JSInvokable("OnEmma")]
-    public void OnEmma(string value)
-    {
-        Prompt = value;
-        StateHasChanged();
-        ToEmma();
-    }
-
-
-}
