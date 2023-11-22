@@ -1,9 +1,4 @@
-﻿// @ts-check
-
-// Extensiones para flowbite
-
-
-// Abre un Drawer
+﻿// Abre un Drawer
 function ShowDrawer(id, ...idCloseBtn) {
 
     // Control
