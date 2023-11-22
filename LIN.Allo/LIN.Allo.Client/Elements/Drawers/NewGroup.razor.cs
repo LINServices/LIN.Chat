@@ -114,17 +114,6 @@ public partial class NewGroup
 
 
     /// <summary>
-    /// Esta cargado.
-    /// </summary>
-    private bool IsLoad = false;
-
-
-
-
-
-
-
-    /// <summary>
     /// Abrir el cajon.
     /// </summary>
     public async void Show()
