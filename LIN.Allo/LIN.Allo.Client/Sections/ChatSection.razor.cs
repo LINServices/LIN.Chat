@@ -112,18 +112,20 @@ public partial class ChatSection
     }
 
 
+
+    /// <summary>
+    /// Abre el cajon de integrantes.
+    /// </summary>
     private async void OpenDrawer()
     {
 
-        if (!MemberLoad)
-        {
+        // Si el drawer no esta iniciado.
+        if (Drawer == null)
+            return;
 
-            
-        }
-
-       
+        // Establecer las propiedades.
         Drawer.Name = Iam.Conversation.Name;
-        await Drawer.Pre(Iam.Conversation.ID);
+        await Drawer.LoadData(Iam.Conversation.ID);
         Drawer?.Show();
     }
 

@@ -22,14 +22,21 @@ public partial class Members
     /// <summary>
     /// Lista de modelos de miembros.
     /// </summary>
-    private List<Types.Auth.Abstracts.SessionModel<MemberChatModel>> MemberModels { get; set; } = new();
+    private List<Types.Auth.Abstracts.SessionModel<MemberChatModel>> MemberModels { get; set; } = [];
+
+
+
+    /// <summary>
+    /// Cache de miembros.
+    /// </summary>
+    private List<(int, List<Types.Auth.Abstracts.SessionModel<MemberChatModel>>)> Cache { get; set; } = [];
 
 
 
     /// <summary>
     /// Lista de controles de miembros.
     /// </summary>
-    private List<Member> MemberControls { get; set; } = new();
+    private List<Member> MemberControls { get; set; } = [];
 
 
 
@@ -38,12 +45,6 @@ public partial class Members
     /// </summary>
     private Member MemberControl { set => MemberControls.Add(value); }
 
-
-
-    /// <summary>
-    /// Cache de miembros.
-    /// </summary>
-    private List<(int, List<Types.Auth.Abstracts.SessionModel<MemberChatModel>>)> Cache { get; set; } = new();
 
 
 
@@ -57,15 +58,20 @@ public partial class Members
     }
 
 
-    public async Task Pre(int id)
+
+    /// <summary>
+    /// Cargar los miembros.
+    /// </summary>
+    /// <param name="id">Id de la conversación.</param>
+    public async Task LoadData(int id)
     {
 
+        // Busca en el cache.
         var cache = Cache.Where(t => t.Item1 == id).FirstOrDefault();
 
+        // Si no existe en el cache.
         if (cache.Item2 == null)
         {
-            Console.WriteLine("TO INTERNET");
-
             // Respuesta de la API.
             var result = await Access.Communication.Controllers.Conversations.MembersInfo(id, Access.Communication.Session.Instance.AccountToken);
 
@@ -79,5 +85,6 @@ public partial class Members
         }
 
     }
+
 
 }
