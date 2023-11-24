@@ -112,4 +112,20 @@ public partial class ChatSection
     }
 
 
+    private async void OpenDrawer()
+    {
+
+        if (!MemberLoad)
+        {
+
+            
+        }
+
+       
+        Drawer.Name = Iam.Conversation.Name;
+        await Drawer.Pre(Iam.Conversation.ID);
+        Drawer?.Show();
+    }
+
+
 }

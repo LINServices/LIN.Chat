@@ -19,6 +19,12 @@ public partial class Chat
 
 
     /// <summary>
+    /// Drawer de Miembros.
+    /// </summary>
+    private Members? MemberDrawer { get; set; }
+
+
+    /// <summary>
     /// Sección actual del chat
     /// </summary>
     private static ChatSection? ChatPage { get; set; }
@@ -55,6 +61,26 @@ public partial class Chat
     /// Conversación seleccionada.
     /// </summary>
     private MemberChatModel? SelectedConversation { get; set; }
+
+
+    /// <summary>
+    /// Ref de un componente chat
+    /// </summary>
+    private static Control ComponentRef
+    {
+        set
+        {
+            // Obtiene el elemento.
+            var element = Conversations.Where(t => t.Id == value.Member.Conversation.ID).FirstOrDefault();
+
+            // Si no existe.
+            if (element == null)
+                return;
+
+            // Establece el control.
+            element.Control = value;
+        }
+    }
 
 
 
@@ -98,9 +124,7 @@ public partial class Chat
 
         // El mensaje no existía.
         if (message == null)
-        {
             element.Chat.Conversation.Mensajes.Add(e);
-        }
 
         // El mensaje ya se había enviado.
         else
@@ -183,22 +207,6 @@ public partial class Chat
 
 
 
-    /// <summary>
-    /// Ref de un componente chat
-    /// </summary>
-    private static Shared.Control ComponentRef
-    {
-        set
-        {
-            var @object = Conversations.Where(t => t.Id == value.Member.Conversation.ID).FirstOrDefault();
-
-            if (@object == null)
-                return;
-
-            @object.Control = value;
-        }
-    }
-
 
 
 
@@ -261,7 +269,6 @@ public partial class Chat
 
         // Lista
         Conversations.Clear();
-        Conversations.Clear();
 
         ChatSection.Hub!.OnReceiveMessage?.Add(OnReceiveMessage);
 
@@ -296,7 +303,7 @@ public partial class Chat
 
 
 
-    
+
 
 
 

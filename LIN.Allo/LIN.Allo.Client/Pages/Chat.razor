@@ -29,6 +29,9 @@
 <!--Dropdown menu-->
 <DropdownMenu />
 
+<!-- Drawer de integrantes -->
+<Members @ref="MemberDrawer" />
+
 
 <div>
 
@@ -147,7 +150,7 @@
                     <!-- Mostrar el chat -->
                     @if (ChatSection.Hub != null && SelectedConversation != null)
                     {
-                        <ChatSection @ref="ChatPage" Iam="SelectedConversation" OnBackPress="() =>{ ActualSection = 0; SelectedConversation = null; foreach (var c in Conversations) c.Control?.Unselect(); StateHasChanged(); }" />
+                        <ChatSection @ref="ChatPage" Drawer="MemberDrawer" Iam="SelectedConversation" OnBackPress="() =>{ ActualSection = 0; SelectedConversation = null; foreach (var c in Conversations) c.Control?.Unselect(); StateHasChanged(); }" />
                     }
 
                     // No esta seleccionado.

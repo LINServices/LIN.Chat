@@ -8,16 +8,7 @@ public partial class Members
     /// <summary>
     /// Nombre del grupo.
     /// </summary>
-    [Parameter]
     public string Name { get; set; } = string.Empty;
-
-
-
-    /// <summary>
-    /// Id del grupo.
-    /// </summary>
-    [Parameter]
-    public int ConversationId { get; set; }
 
 
 
@@ -50,9 +41,10 @@ public partial class Members
 
 
     /// <summary>
-    /// Esta cargado.
+    /// Cache de miembros.
     /// </summary>
-    private bool IsLoad { get; set; }
+    private List<(int, List<Types.Auth.Abstracts.SessionModel<MemberChatModel>>)> Cache { get; set; } = new();
+
 
 
     /// <summary>
@@ -65,31 +57,27 @@ public partial class Members
     }
 
 
-
-    /// <summary>
-    /// Evento después de renderizar.
-    /// </summary>
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    public async Task Pre(int id)
     {
 
-        // Si no esta cargado.
-        if (!IsLoad)
+        var cache = Cache.Where(t => t.Item1 == id).FirstOrDefault();
+
+        if (cache.Item2 == null)
         {
+            Console.WriteLine("TO INTERNET");
+
             // Respuesta de la API.
-            var result = await Access.Communication.Controllers.Conversations.MembersInfo(ConversationId, Access.Communication.Session.Instance.AccountToken);
+            var result = await Access.Communication.Controllers.Conversations.MembersInfo(id, Access.Communication.Session.Instance.AccountToken);
 
             // Modelos a la UI.
             MemberModels = result.Models.OrderByDescending(t => t.Profile.Rol).ToList();
-            IsLoad = true;
-            StateHasChanged();
+            Cache.Add(new(id, MemberModels));
+        }
+        else
+        {
+            MemberModels = cache.Item2;
         }
 
-        // Evento base.
-        await base.OnAfterRenderAsync(firstRender);
     }
 
-
 }
-
-
-
