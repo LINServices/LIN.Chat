@@ -1,4 +1,16 @@
-﻿@code {
+﻿@rendermode RenderMode.InteractiveWebAssembly
+
+@code {
+
+
+    // Cache
+    private static List<(int, IsOnlineResult, DateTime)> Cache { get; set; } = [];
+
+
+    private int Id => (e?.Profile.Profile.ID) ?? 0;
+
+
+
 
     [Parameter]
     public Types.Auth.Abstracts.SessionModel<MemberChatModel>? e { get; set; } = null;
@@ -20,13 +32,13 @@
 
     public void Con()
     {
-        Confirm(e.Profile.Profile.ID);
+        Confirm();
     }
 
 
 }
 
-<div @onclick="() => Confirm(e.Profile.Profile.ID)" class="flex hover:bg-gray-100/25 rounded-lg w-full mt-2">
+<div @onclick="() => Confirm()" class="flex hover:bg-gray-100/25 rounded-lg w-full mt-2">
 
 
     <div class="flex p-3 w-full items-center">
@@ -84,11 +96,39 @@
 @code {
 
 
-    async void Confirm(int id)
+    public async void Confirm()
     {
-        var x = await Access.Communication.Controllers.Conversations.IsOnline(id);
-        isOnline = x.Model;
+
+        Console.WriteLine("Confirm "+Id);
+        var inCache = Cache.Where(t => t.Item1 == Id).FirstOrDefault();
+
+
+        if (inCache.Item2 == null || inCache.Item3 < DateTime.Now.AddMinutes(-1))
+        {
+
+            Cache.RemoveAll(t => t.Item1 == Id);
+
+            Console.WriteLine("Usando INTERNET");
+            var x = await Access.Communication.Controllers.Conversations.IsOnline(Id);
+
+            Cache.Add(new(Id, x.Model, DateTime.Now));
+            isOnline = x.Model;
+        }
+        else
+        {
+            isOnline = inCache.Item2;
+        }
+
         StateHasChanged();
     }
+
+
+
+    protected override void OnParametersSet()
+    {
+        Confirm();
+        base.OnParametersSet();
+    }
+
 
 }
