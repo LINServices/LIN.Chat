@@ -3,9 +3,13 @@
 <div class="flex @(IsOther ? "" : "justify-end") mb-2 items-center select">
 
 
+    @{
+        string classes = (MessageModel.IsLocal ? "bg-gray-300 text-black" : (!IsOther ? "bg-indigo-500 text-white" : "bg-[#EAE8ED] dark:bg-[#292929] dark:text-gray-300"));
+    }
+
     @if (MessageType == 0)
     {
-        <div class="rounded-xl mmm py-2.5 px-4 @(!IsOther ? "bg-indigo-500 text-white" : "bg-[#EAE8ED] dark:bg-[#292929] dark:text-gray-300") @(MessageModel.IsLocal ? "bg-gray-300 text-black" : "")">
+        <div class="rounded-xl py-2.5 px-4 @(classes)">
             <p class="text-sm">
                 @foreach (var pair in SepararCadenas())
                 {
@@ -17,7 +21,7 @@
 
     else if (MessageType == 1)
     {
-        <div class="rounded-xl p-4 @(!IsOther ? "bg-indigo-500 text-white" : "bg-[#EAE8ED] dark:bg-[#292929] dark:text-gray-300 ") select-none">
+        <div class="rounded-xl p-4 @(classes) select-none">
 
             <div class="flex bg-red justify-center items-center">
                 <img class="h-5 w-5 mt-1" src="@(IsOther ? "./meet.png" : "./meet_white.png")"/>
@@ -30,7 +34,7 @@
 
     else if (MessageType == 2)
     {
-        <div class="rounded-xl mmm p-7 @(!IsOther ? "bg-indigo-500 text-white" : "bg-[#EAE8ED] dark:bg-[#292929] dark:text-gray-300") @(MessageModel.IsLocal ? "bg-gray-300" : "") select-none">
+        <div class="rounded-xl mmm p-7 @(classes) select-none">
             <p class="text-4xl animate-ping">
                 @MessageModel.Contenido
             </p>
