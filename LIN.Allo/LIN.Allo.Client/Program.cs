@@ -7,6 +7,7 @@ global using Microsoft.AspNetCore.Components;
 global using Microsoft.JSInterop;
 global using LIN.Allo.Client.Elements.Drawers;
 global using LIN.Allo.Client.Shared;
+global using LIN.Allo.Client.Pages;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
 

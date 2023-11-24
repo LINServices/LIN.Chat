@@ -1,20 +1,27 @@
-﻿using LIN.Allo.Client.Pages;
-
-namespace LIN.Allo.Client.Sections;
+﻿namespace LIN.Allo.Client.Sections;
 
 
 public partial class ChatSection
 {
 
+    /// <summary>
+    /// Solo la fecha de hoy.
+    /// </summary>
 
-
-    [Inject]
-    private IJSRuntime JSRuntime { get; set; }
+    public static DateTime Today = new(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
 
 
 
     /// <summary>
-    /// Integrante del chat
+    /// Drawer de integrantes
+    /// </summary>
+    [Parameter]
+    public Members? Drawer { get; set; }
+
+
+
+    /// <summary>
+    /// Integrante del chat.
     /// </summary>
     [Parameter]
     public MemberChatModel Iam { get; set; } = new();
@@ -22,7 +29,7 @@ public partial class ChatSection
 
 
     /// <summary>
-    /// Accion a ejecutar cuando se presione sobre el back button
+    /// Acciona a ejecutar cuando se presione sobre el back button.
     /// </summary>
     [Parameter]
     public Action? OnBackPress { get; set; }
@@ -30,28 +37,45 @@ public partial class ChatSection
 
 
     /// <summary>
-    /// Hub de conexión
+    /// Hub de conexión.
     /// </summary>
     public static Access.Communication.Hubs.ChatHub? Hub { get; set; }
 
 
 
     /// <summary>
-    /// Mensaje a enviar
+    /// Mensaje a enviar.
     /// </summary>
     private string Message { get; set; } = string.Empty;
+
+
+
+    /// <summary>
+    /// Fecha.
+    /// </summary>
+    private DateTime? oldTime = null;
+
+
+
+    /// <summary>
+    /// Panel de emojis.
+    /// </summary>
+    private Pops.EmojiPanel? EmojiPanel { get; set; }
 
 
 
 
 
     /// <summary>
-    /// Enviar un mensaje
+    /// Enviar un mensaje.
     /// </summary>
     private void SendMessage()
     {
 
+        // Id único.
         var guid = Guid.NewGuid().ToString();
+
+        // Generar evento.
         Chat.OnReceiveMessage(new()
         {
             Contenido = Message,

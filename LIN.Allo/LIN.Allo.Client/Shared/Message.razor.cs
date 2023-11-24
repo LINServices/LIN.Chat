@@ -1,5 +1,4 @@
-﻿using LIN.Allo.Client.Pages;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace LIN.Allo.Client.Shared;
 
@@ -34,11 +33,14 @@ public partial class Message
     /// </summary>
     protected override void OnParametersSet()
     {
+
+        MessageType = 0;
+
         if (EsEnlaceGoogleMeet(MessageModel.Contenido))
             MessageType = 1;
 
         if (MessageModel.Contenido == "❤️")
-         MessageType = 2;
+            MessageType = 2;
 
         StateHasChanged();
         base.OnParametersSet();

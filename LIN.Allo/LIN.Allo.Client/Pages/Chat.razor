@@ -49,11 +49,13 @@
                     <div class="px-5 pt-3 pb-1 flex flex-row justify-between items-center border-r bg-[#F8F7FB] dark:bg-[#141414] dark:border-zinc-600">
                         <div class="flex items-center">
 
+                            <!-- Dropdown Open -->
                             <button @onclick="E" type="button" class="flex bg-white dark:bg-zinc-700 text-sm rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button">
                                 <span class="sr-only">Open</span>
                                 <img class="w-8 h-8 p-1 rounded-full ring-2 ring-gray-300" src="data:image/png;base64,@Img64">
                             </button>
 
+                            <!-- Datos personales -->
                             <div class="flex flex-col">
                                 <label class="ml-3 text-sm font-bold dark:text-gray-300">@Access.Communication.Session.Instance.Profile.Alias</label>
                                 <label class="ml-3 text-xs dark:text-gray-400" style="margin-top:-3px">@@@(Access.Communication.Session.Instance.Account.Usuario)</label>
@@ -61,16 +63,17 @@
 
                         </div>
 
+                        <!-- Botones de acción -->
                         <div class="flex justify-center items-center gap-3">
 
+                            <!-- Emma -->
                             <div>
                                 <button class="h-5 w-5 hover:animate-pulse rounded-full">
                                     <img @onclick="OpenEmma" src="./arroba.png" />
                                 </button>
                             </div>
 
-                           
-
+                            <!-- Nuevo grupo -->
                             <div>
                                 <button @onclick="OpenNewGroup" title="Nueva conversación"
                                         class="group cursor-pointer outline-none hover:rotate-90 duration-300">
@@ -86,15 +89,10 @@
                                 </button>
                             </div>
 
-
-
-                            
-
-                         
-                            
-
                         </div>
+
                     </div>
+
 
                     <!-- Lista de conversaciones -->
                     <div class="flex-1 overflow-auto border-r bg-[#F8F7FB] dark:bg-[#141414] dark:border-zinc-600">
