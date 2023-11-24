@@ -26,6 +26,6 @@ app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
    .AddInteractiveWebAssemblyRenderMode()
-   .AddAdditionalAssemblies(typeof(LIN.Allo.Client._Imports).Assembly);
+   .AddAdditionalAssemblies(typeof(LIN.Allo.Client.Pages.Login).Assembly);
 
 app.Run();

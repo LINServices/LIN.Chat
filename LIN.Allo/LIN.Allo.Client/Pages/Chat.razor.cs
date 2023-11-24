@@ -1,8 +1,49 @@
-﻿namespace LIN.Allo.Client.Pages;
+﻿using LIN.Allo.Client.Elements.Drawers;
+
+namespace LIN.Allo.Client.Pages;
 
 
 public partial class Chat
 {
+
+
+    /// <summary>
+    /// Sección grafica actual.
+    /// </summary>
+    private int ActualSection { get; set; } = 0;
+
+
+    /// <summary>
+    /// Imagen de perfil en base64
+    /// </summary>
+    private string Img64 => Convert.ToBase64String(Access.Communication.Session.Instance.Account.Perfil);
+
+    NewGroup newGroupModal;
+
+
+    void OpenNew()
+    {
+        newGroupModal.Show();
+    }
+
+    private async Task E()
+    {
+
+        await JSRuntime.InvokeAsync<object>("E");
+
+        StateHasChanged();
+
+    }
+
+
+
+    Emma EmmaM { get; set; }
+
+
+    void StartEmma()
+    {
+        EmmaM.Show();
+    }
 
     /// <summary>
     /// Sección actual del chat
