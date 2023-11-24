@@ -33,6 +33,13 @@ public partial class Chat
 
     //======== Propiedades =========//
 
+
+    /// <summary>
+    /// Patron de búsqueda.
+    /// </summary>
+    private string Pattern { get; set; } = string.Empty;
+
+
     /// <summary>
     /// Sección grafica actual.
     /// </summary>
@@ -142,13 +149,12 @@ public partial class Chat
         if (!c)
             return;
 
-        string pattern = string.Empty;
         if (e is ChangeEventArgs a)
         {
-            pattern = a.Value?.ToString() ?? "";
+            Pattern = a.Value?.ToString() ?? "";
         }
 
-        if (pattern.Trim() == "")
+        if (Pattern.Trim() == "")
         {
             SearchResult = null;
             IsSearching = false;
@@ -159,9 +165,9 @@ public partial class Chat
         SearchResult = null;
         IsSearching = true;
         StateHasChanged();
-        var result = await Access.Communication.Controllers.Conversations.SearchProfiles(pattern, Access.Communication.Session.Instance.AccountToken);
+        var result = await Access.Communication.Controllers.Conversations.SearchProfiles(Pattern, Access.Communication.Session.Instance.AccountToken);
 
-        SearchResult = result.Models;
+        SearchResult = result.Models.Where(t=>t.Profile.ID != LIN.Access.Communication.Session.Instance.Profile.ID).ToList();
         counter = 0;
         StateHasChanged();
 
