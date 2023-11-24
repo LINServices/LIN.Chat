@@ -104,7 +104,7 @@
 
                             <!-- Entrada de búsqueda -->
                             <div class="mt-2 mb-5">
-                                <input type="text" autocomplete="off" required="" class="block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-gray-900 placeholder-gray-400 focus:border-indigo-500 focus:bg-white focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="Buscar">
+                                <input @oninput="Search" type="text" autocomplete="off" required="" class="block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-gray-900 placeholder-gray-400 focus:border-indigo-500 focus:bg-white focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="Buscar">
                             </div>
                            
                             @if (IsConversationsLoad)
@@ -116,7 +116,32 @@
                                         <label class="text-gray-700 dark:text-gray-200">No tienes ninguna conversación</label>
                                     </div>
                                 }
-                                
+
+                                // Esta buscando.
+                                else if(IsSearching)
+                                {
+
+                                    if (SearchResult == null)
+                                    {
+                                        <div class="flex items-center justify-center">
+                                            <CircleLoader />
+                                        </div>
+                                    }
+                                    else if (SearchResult.Count == 0)
+                                    {
+                                        <label>Sin resultados</label>
+                                    }
+                                    else
+                                    {
+                                         <div class="flex flex-col gap-2">
+                                        @foreach (var e in SearchResult)
+                                        {
+                                            <NewFriend e="@e" />
+                                        }
+                                    </div>
+                                    }
+                                }
+
                                 // Renderizar las conversaciones.
                                 else
                                 {

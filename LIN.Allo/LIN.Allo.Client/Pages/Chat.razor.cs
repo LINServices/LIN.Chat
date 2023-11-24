@@ -64,6 +64,12 @@ public partial class Chat
 
 
     /// <summary>
+    /// Esta buscando.
+    /// </summary>
+    private bool IsSearching { get; set; }
+
+
+    /// <summary>
     /// Ref de un componente chat
     /// </summary>
     private static Control ComponentRef
@@ -103,6 +109,63 @@ public partial class Chat
         EmmaDrawer?.Show();
     }
 
+
+
+    /// <summary>
+    /// Lista de resultados de búsqueda.
+    /// </summary>
+    private List<Types.Auth.Abstracts.SessionModel<ProfileModel>>? SearchResult { get; set; }
+
+
+
+    /// <summary>
+    /// Contador.
+    /// </summary>
+    int counter = 0;
+
+
+    /// <summary>
+    /// Buscar.
+    /// </summary>
+    private async void Search(dynamic e)
+    {
+
+        counter++;
+
+        var c = await Task.Run(async () =>
+        {
+            int save = counter;
+            await Task.Delay(300);
+            return (save == counter);
+        });
+
+        if (!c)
+            return;
+
+        string pattern = string.Empty;
+        if (e is ChangeEventArgs a)
+        {
+            pattern = a.Value?.ToString() ?? "";
+        }
+
+        if (pattern.Trim() == "")
+        {
+            SearchResult = null;
+            IsSearching = false;
+            StateHasChanged();
+            return;
+        }
+
+        SearchResult = null;
+        IsSearching = true;
+        StateHasChanged();
+        var result = await Access.Communication.Controllers.Conversations.SearchProfiles(pattern, Access.Communication.Session.Instance.AccountToken);
+
+        SearchResult = result.Models;
+        counter = 0;
+        StateHasChanged();
+
+    }
 
 
     /// <summary>

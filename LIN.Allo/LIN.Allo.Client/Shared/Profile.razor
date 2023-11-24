@@ -13,7 +13,10 @@
     public int State { get; set; } = 1;
 
     [Parameter]
-    public Action<Types.Auth.Abstracts.SessionModel<ProfileModel>> OnSelect { get; set; }
+    public Action<Types.Auth.Abstracts.SessionModel<ProfileModel>> OnSelect { get; set; } = (e) =>
+    {
+        Console.WriteLine("None");
+    };
 
     protected override void OnAfterRender(bool firstRender)
     {
