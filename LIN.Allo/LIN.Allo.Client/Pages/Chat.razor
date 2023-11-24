@@ -21,10 +21,10 @@
 
 
 <!-- Drawer Emma -->
-<Emma @ref="EmmaM" />
+<Emma @ref="EmmaDrawer" />
 
 <!-- Drawer Nueva conversación -->
-<NewGroup OnSuccess="ForceRetrieveData" @ref="newGroupModal" />
+<NewGroup OnSuccess="ForceRetrieveData" @ref="NewGroupModal" />
 
 <!--Dropdown menu-->
 <DropdownMenu />
@@ -62,14 +62,14 @@
 
                             <div>
                                 <button class="h-5 w-5 hover:animate-pulse rounded-full">
-                                    <img @onclick="StartEmma" src="./arroba.png" />
+                                    <img @onclick="OpenEmma" src="./arroba.png" />
                                 </button>
                             </div>
 
                            
 
                             <div>
-                                <button @onclick="OpenNew" title="Nueva conversación"
+                                <button @onclick="OpenNewGroup" title="Nueva conversación"
                                         class="group cursor-pointer outline-none hover:rotate-90 duration-300">
                                     <svg xmlns="http://www.w3.org/2000/svg"
                                          viewBox="0 0 24 24"
@@ -109,7 +109,7 @@
                             @if (IsConversationsLoad)
                             {
                                 // Si no hay conversaciones.
-                                if (ConversaciónModels.Count <= 0)
+                                if (Conversations.Count <= 0)
                                 {
                                     <div class="flex rounded justify-center items-center border-dashed border-2 border-gray-800 w-full p-3 mt-3 dark:border-gray-400">
                                         <label class="text-gray-700 dark:text-gray-200">No tienes ninguna conversación</label>
@@ -119,9 +119,9 @@
                                 // Renderizar las conversaciones.
                                 else
                                 {
-                                    foreach (var member in ConversaciónModels)
+                                    foreach (var conversation in Conversations)
                                     {
-                                        <Control Member="member" @ref="ComponentRef" OnClick="Select" />
+                                        <Control Member="@(conversation.Chat)" @ref="ComponentRef" OnClick="Select" />
                                     }
                                 }
 
@@ -145,12 +145,12 @@
                 <div class="w-full @(ActualSection != 1 ? "hidden lg:flex" : "") lg:w-2/3 flex flex-col bg-[#F8F7FB] dark:bg-[#242424]">
 
                     <!-- Mostrar el chat -->
-                    @if (ChatSection.Hub != null && Member != null)
+                    @if (ChatSection.Hub != null && SelectedConversation != null)
                     {
-                        <ChatSection @ref="ChatPage" Iam="Member" OnBackPress="() =>{ ActualSection = 0; Member = null; foreach (var c in ComponentRefs) c.Unselect(); StateHasChanged(); }" />
+                        <ChatSection @ref="ChatPage" Iam="SelectedConversation" OnBackPress="() =>{ ActualSection = 0; SelectedConversation = null; foreach (var c in Conversations) c.Control?.Unselect(); StateHasChanged(); }" />
                     }
 
-                    <!-- No esta seleccionado -->
+                    // No esta seleccionado.
                     else
                     {
                         <div class="flex flex-col h-full w-full items-center justify-center bg-[#F8F7FB] dark:bg-[#242424]">
