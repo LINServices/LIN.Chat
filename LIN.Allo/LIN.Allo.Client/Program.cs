@@ -8,6 +8,7 @@ global using Microsoft.JSInterop;
 global using LIN.Allo.Client.Elements.Drawers;
 global using LIN.Allo.Client.Shared;
 global using LIN.Allo.Client.Pages;
+global using LIN.Types.Auth.Abstracts;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
 

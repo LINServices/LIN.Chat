@@ -1,114 +1,50 @@
-﻿@code {
+﻿
+<div class="flex hover:shadow-gray-400 bg-white rounded-lg w-full hover:ring-indigo-500 hover:ring-1 items-center dark:bg-zinc-800">
 
-    [Parameter]
-    public Types.Auth.Abstracts.SessionModel<ProfileModel>? e { get; set; } = null;
-
-
-
-    private string Img64 => Convert.ToBase64String(e.Account.Perfil);
-
-    [Parameter]
-    public Action<Types.Auth.Abstracts.SessionModel<ProfileModel>> OnSelect { get; set; } = (e) =>
-    {
-        Console.WriteLine("None");
-    };
-
-    protected override void OnAfterRender(bool firstRender)
-    {
-        base.OnAfterRender(firstRender);
-    }
-
-
-}
-
-
-<div  class="flex hover:shadow-gray-400 bg-white rounded-lg w-full hover:ring-indigo-500 hover:ring-1 items-center dark:bg-zinc-800">
-
-
+    @* Información *@
     <div class="flex p-3 w-full items-center">
 
+        @* Imagen de perfil *@
         <img class="w-9 h-9 mr-2 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-400" src="data:image/png;base64,@Img64" alt="Bordered avatar">
 
+        @* Usuario y nombre *@
         <div class="flex flex-col">
-            <label class="text-sm font-bold dark:text-white">@e.Profile.Alias</label>
-            <label class="text-xs -mt-1 dark:text-gray-300">@@@e.Account.Usuario</label>
+            <label class="text-sm font-bold dark:text-white">@UserInformation.Profile.Alias</label>
+            <label class="text-xs -mt-1 dark:text-gray-300">@@@UserInformation.Account.Usuario</label>
         </div>
 
     </div>
 
 
-    @if(IsLoading)
-    {
-        <div class="mr-4">
-            
-            <BubbleLoader></BubbleLoader>
+    @* Sección derecha *@
+    <div class="mr-4">
 
-        </div>
-    }
-    else
-    {
-        <button @onclick="Find" type="button" class="flex justify-center items-center mr-4 text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 h-8 w-8 dark:focus:ring-indigo-500">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-4 h-4" viewBox="0 0 16 16">
-                <path d="M2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
-            </svg>
-        </button>
-    }
+        @* Cargando *@
+        @if (Section == Sections.Loading)
+        {
+            <div>
+                <BubbleLoader />
+            </div>
+        }
 
-   
-       
+        @* Hubo un error *@
+        else if (Section == Sections.Error)
+        {
+            <div>
+                <label>Error</label>
+            </div>
+        }
 
+        @* Botón de agregar *@
+        else
+        {
+            <button @onclick="Find" type="button" class="flex justify-center items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 h-8 w-8 dark:focus:ring-indigo-500">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-4 h-4" viewBox="0 0 16 16">
+                    <path d="M2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                </svg>
+            </button>
+        }
 
+    </div>
 
 </div>
-
-@code{
-
-
-    bool IsLoading = false;
-
-    async void Find()
-    {
-
-        IsLoading = true;
-        StateHasChanged();
-        var c = await LIN.Access.Communication.Controllers.Conversations.Find(e.Profile.ID, LIN.Access.Communication.Session.Instance.Token);
-
-
-        IsLoading = false;
-        StateHasChanged();
-
-
-        var find = LIN.Allo.Client.Pages.Chat.Conversations.Where(t => t.Id == c.LastID).FirstOrDefault();
-
-        if (find != null)
-        {
-
-            LIN.Allo.Client.Pages.Chat.Instance.IsSearching = false;
-            LIN.Allo.Client.Pages.Chat.Instance?.Select(find.Id);
-            return;
-        }
-
-
-        var con = await LIN.Access.Communication.Controllers.Conversations.Read(c.LastID, LIN.Access.Communication.Session.Instance.Token, LIN.Access.Communication.Session.Instance.AccountToken);
-
-
-        if (con.AlternativeObject is List<AccountModel> accounts)
-        {
-            LIN.Allo.Client.Pages.Chat.accounts.AddRange(accounts);
-        }
-
-        LIN.Allo.Client.Pages.Chat.Conversations.Add(new()
-            {
-                Control = null,
-                IsLoad = false,
-                Id = c.LastID,
-                Chat = con.Model
-            });
-
-        _ = ChatSection.Hub!.JoinGroup(c.LastID);
-        LIN.Allo.Client.Pages.Chat.Instance.IsSearching = false;
-        LIN.Allo.Client.Pages.Chat.Instance?.StateChange();
-        LIN.Allo.Client.Pages.Chat.Instance?.Select(c.LastID);
-    }
-
-    }
