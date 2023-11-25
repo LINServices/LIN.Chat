@@ -217,7 +217,7 @@ public partial class NewGroup
                 }
             }).ToList(),
             Name = Name,
-            Type = Types.Communication.Enumerations.ConversationsTypes.Personal
+            Type = Types.Communication.Enumerations.ConversationsTypes.Group
         };
 
         modelo.Members.Add(new()

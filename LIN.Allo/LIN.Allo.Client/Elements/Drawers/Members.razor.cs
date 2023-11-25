@@ -73,7 +73,7 @@ public partial class Members
         if (cache.Item2 == null)
         {
             // Respuesta de la API.
-            var result = await Access.Communication.Controllers.Conversations.MembersInfo(id, Access.Communication.Session.Instance.AccountToken);
+            var result = await Access.Communication.Controllers.Conversations.MembersInfo(id, Access.Communication.Session.Instance.Token, Access.Communication.Session.Instance.AccountToken);
 
             // Modelos a la UI.
             MemberModels = result.Models.OrderByDescending(t => t.Profile.Rol).ToList();

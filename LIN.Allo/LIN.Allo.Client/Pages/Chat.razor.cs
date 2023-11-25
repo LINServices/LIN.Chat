@@ -4,6 +4,13 @@
 public partial class Chat
 {
 
+
+    public static Chat? Instance { get; set; }
+
+
+
+    public static List<AccountModel> accounts = new List<AccountModel>();
+
     //======== Modales =========//
 
     /// <summary>
@@ -61,7 +68,7 @@ public partial class Chat
     /// <summary>
     /// Lista de conversaciones.
     /// </summary>
-    private static List<InteractiveConversation> Conversations { get; set; } = new();
+    public static List<InteractiveConversation> Conversations { get; set; } = new();
 
 
     /// <summary>
@@ -73,7 +80,7 @@ public partial class Chat
     /// <summary>
     /// Esta buscando.
     /// </summary>
-    private bool IsSearching { get; set; }
+    public bool IsSearching { get; set; }
 
 
     /// <summary>
@@ -83,15 +90,21 @@ public partial class Chat
     {
         set
         {
-            // Obtiene el elemento.
-            var element = Conversations.Where(t => t.Id == value.Member.Conversation.ID).FirstOrDefault();
+            try
+            {
+                // Obtiene el elemento.
+                var element = Conversations.Where(t => t.Id == value.Member.Conversation.ID).FirstOrDefault();
 
-            // Si no existe.
-            if (element == null)
-                return;
+                // Si no existe.
+                if (element == null)
+                    return;
 
-            // Establece el control.
-            element.Control = value;
+                // Establece el control.
+                element.Control = value;
+            }
+            catch (Exception)
+            {
+            }
         }
     }
 
@@ -167,7 +180,7 @@ public partial class Chat
         StateHasChanged();
         var result = await Access.Communication.Controllers.Conversations.SearchProfiles(Pattern, Access.Communication.Session.Instance.AccountToken);
 
-        SearchResult = result.Models.Where(t=>t.Profile.ID != LIN.Access.Communication.Session.Instance.Profile.ID).ToList();
+        SearchResult = result.Models.Where(t => t.Profile.ID != LIN.Access.Communication.Session.Instance.Profile.ID).ToList();
         counter = 0;
         StateHasChanged();
 
@@ -322,9 +335,14 @@ public partial class Chat
         var token = Access.Communication.Session.Instance.Token ?? string.Empty;
 
 
-
         // Obtiene las conversaciones actuales
-        var chats = await Access.Communication.Controllers.Conversations.ReadAll(token);
+        var chats = await Access.Communication.Controllers.Conversations.ReadAll(token, Access.Communication.Session.Instance.AccountToken);
+
+        // 
+        if (chats.AlternativeObject is List<AccountModel> lista)
+        {
+            accounts.AddRange(lista);
+        }
 
 
         // Si hubo un error
@@ -446,9 +464,28 @@ public partial class Chat
 
 
 
+    /// <summary>
+    /// Seleccionar un chat
+    /// </summary>
+    /// <param name="chat"></param>
+    public async void Select(int chat)
+    {
+
+        Select(new MemberChatModel()
+        {
+            Conversation = new()
+            {
+                ID = chat,
+            }
+        });
+
+    }
 
 
-    class InteractiveConversation
+
+
+
+    public class InteractiveConversation
     {
         public int Id { get; set; }
         public MemberChatModel Chat { get; set; }
@@ -458,7 +495,10 @@ public partial class Chat
 
 
 
-
+    public void StateChange()
+    {
+        StateHasChanged();
+    }
 
 
 

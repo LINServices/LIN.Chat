@@ -37,10 +37,54 @@
     </div>
 
 
-    <button type="button" class="flex justify-center items-center mr-4 text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 h-8 w-8 dark:focus:ring-indigo-500">
+    <button @onclick="Find" type="button" class="flex justify-center items-center mr-4 text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 h-8 w-8 dark:focus:ring-indigo-500">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-4 h-4" viewBox="0 0 16 16">
             <path d="M2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
         </svg>
     </button>
        
 </div>
+
+@code{
+
+
+    async void Find()
+    {
+
+        var c = await LIN.Access.Communication.Controllers.Conversations.Find(e.Profile.ID, LIN.Access.Communication.Session.Instance.Token);
+
+
+        var find = LIN.Allo.Client.Pages.Chat.Conversations.Where(t => t.Id == c.LastID).FirstOrDefault();
+
+        if (find != null)
+        {
+
+            LIN.Allo.Client.Pages.Chat.Instance.IsSearching = false;
+            LIN.Allo.Client.Pages.Chat.Instance?.Select(find.Id);
+            return;
+        }
+
+
+        var con = await LIN.Access.Communication.Controllers.Conversations.Read(c.LastID, LIN.Access.Communication.Session.Instance.Token, LIN.Access.Communication.Session.Instance.AccountToken);
+
+
+        if (con.AlternativeObject is List<AccountModel> accounts)
+        {
+            LIN.Allo.Client.Pages.Chat.accounts.AddRange(accounts);
+        }
+
+        LIN.Allo.Client.Pages.Chat.Conversations.Add(new()
+            {
+                Control = null,
+                IsLoad = false,
+                Id = c.LastID,
+                Chat = con.Model
+            });
+
+        _ = ChatSection.Hub!.JoinGroup(c.LastID);
+        LIN.Allo.Client.Pages.Chat.Instance.IsSearching = false;
+        LIN.Allo.Client.Pages.Chat.Instance?.StateChange();
+        LIN.Allo.Client.Pages.Chat.Instance?.Select(c.LastID);
+    }
+
+    }
