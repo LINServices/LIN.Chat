@@ -51,7 +51,7 @@
 }
 
 
-<div @onclick="() =>{OnClick(Member); IsNew = false; StateHasChanged();}" class="flex ring-2 ring-gray-200  bg-white mt-2 p-4 rounded dark:bg-zinc-800 dark:ring-zinc-600 @(IsSelect ? "ring-indigo-500 dark:ring-indigo-500" : "") ">
+<div @onclick="() =>{OnClick(Member); IsNew = false; StateHasChanged();}" class="flex ring-2 ring-gray-200  bg-white mt-2 p-4 rounded dark:bg-zinc-800 dark:ring-zinc-600 @(IsSelect ? "ring-indigo-500 dark:ring-indigo-500" : "") select-none">
     <div class="flex items-center">
 
         @if (Member.Conversation.Members != null && Member.Conversation.Type == Types.Communication.Enumerations.ConversationsTypes.Personal && Member.Conversation.Members.Count >= 1)

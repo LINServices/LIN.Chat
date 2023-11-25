@@ -367,6 +367,23 @@ public partial class Chat
             conversation.Profile = profile;
             conversation.Conversation.Mensajes ??= new();
 
+            // Cambiar propiedades.
+            if (conversation.Conversation.Type == Types.Communication.Enumerations.ConversationsTypes.Personal && conversation.Conversation.Members.Count == 2)
+            {
+                var other = conversation.Conversation.Members.FirstOrDefault(t => t.Profile.ID != Access.Communication.Session.Instance.Profile.ID);
+
+                if (other != null)
+                {
+                    var data = accounts.FirstOrDefault(t=>t.ID == other.Profile.AccountID);
+
+                    if (data != null)
+                        conversation.Conversation.Name = data.Nombre;
+                }
+
+            }
+
+
+            // Suscribir evento.
             _ = ChatSection.Hub!.JoinGroup(conversation.Conversation.ID);
 
             // Agregar los estados.

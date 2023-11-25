@@ -2,12 +2,12 @@
 @rendermode RenderMode.InteractiveWebAssembly
 
 
-<!-- Componente -->
+@* Componente *@
 <div id="drawerEmma-@UniqueId" class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full w-80 card-blur dark:card-blur-osc" tabindex="-1" aria-labelledby="drawer-right-label">
 
     <div class="h-full flex flex-col justify-between">
 
-        <!-- Descripción de la sección -->
+        @* Descripción de la sección *@
         <div class="flex flex-col justify-center items-center w-full mt-10">
 
             <img src="./arroba.png" class="h-14 w-14">
@@ -17,7 +17,7 @@
 
         </div>
 
-        <!-- Información -->
+        @* Información *@
         <div class="border border-gray-500 border-2 rounded-lg p-5 w-full">
             @if (ActualState == State.Witting)
             {
@@ -31,16 +31,16 @@
             }
         </div>
 
-        <!--Entrada-->
+        @*Entrada*@
         <div class=" w-full h-10 justify-end items-end mb-3">
 
             <div>
                 <div class="relative">
 
-                    <!-- Input del usuario -->
+                    @* Input del usuario *@
                     <input @bind="Prompt" type="search" id="search" class="block w-full p-4 pl-5 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500" placeholder="Preguntar a Emma" required>
 
-                    <!-- Botón de enviar -->
+                    @* Botón de enviar *@
                     @if (ActualState == State.Witting)
                     {
                         <button @onclick="ToEmma" type="submit" class="text-white absolute right-2.5 bottom-2.5 bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">Enviar</button>

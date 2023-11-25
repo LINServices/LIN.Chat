@@ -1,11 +1,11 @@
 ﻿@page "/"
 
-<!-- Propiedades -->
+@* Propiedades *@
 @rendermode RenderMode.InteractiveWebAssembly
 @inject NavigationManager navigationManager
 @inject IJSRuntime JSRuntime
 
-<!-- Pantalla de carga -->
+@* Pantalla de carga *@
 @{
     Instance = this;
 }
@@ -24,16 +24,16 @@
 }
 
 
-<!-- Drawer Emma -->
+@* Drawer Emma *@
 <Emma @ref="EmmaDrawer" />
 
-<!-- Drawer Nueva conversación -->
+@* Drawer Nueva conversación *@
 <NewGroup OnSuccess="ForceRetrieveData" @ref="NewGroupModal" />
 
-<!--Dropdown menu-->
+@*Dropdown menu*@
 <DropdownMenu />
 
-<!-- Drawer de integrantes -->
+@* Drawer de integrantes *@
 <Members @ref="MemberDrawer" />
 
 
@@ -46,20 +46,20 @@
         <div class="h-screen">
             <div class="flex flex-row h-full">
 
-                <!-- Left -->
+                @* Left *@
                 <div class="w-full lg:w-1/3 flex @(ActualSection != 0 ? "hidden lg:flex" : "") flex-col">
 
-                    <!-- Header -->
+                    @* Header *@
                     <div class="px-5 pt-3 pb-1 flex flex-row justify-between items-center border-r bg-[#F8F7FB] dark:bg-[#141414] dark:border-zinc-600">
                         <div class="flex items-center">
 
-                            <!-- Dropdown Open -->
+                            @* Dropdown Open *@
                             <button @onclick="E" type="button" class="flex bg-white dark:bg-zinc-700 text-sm rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button">
                                 <span class="sr-only">Open</span>
                                 <img class="w-8 h-8 p-1 rounded-full ring-2 ring-gray-300" src="data:image/png;base64,@Img64">
                             </button>
 
-                            <!-- Datos personales -->
+                            @* Datos personales *@
                             <div class="flex flex-col">
                                 <label class="ml-3 text-sm font-bold dark:text-gray-300">@Access.Communication.Session.Instance.Profile.Alias</label>
                                 <label class="ml-3 text-xs dark:text-gray-400" style="margin-top:-3px">@@@(Access.Communication.Session.Instance.Account.Usuario)</label>
@@ -67,17 +67,17 @@
 
                         </div>
 
-                        <!-- Botones de acción -->
+                        @* Botones de acción *@
                         <div class="flex justify-center items-center gap-3">
 
-                            <!-- Emma -->
+                            @* Emma *@
                             <div>
                                 <button class="h-5 w-5 hover:animate-pulse rounded-full">
                                     <img @onclick="OpenEmma" src="./arroba.png" />
                                 </button>
                             </div>
 
-                            <!-- Nuevo grupo -->
+                            @* Nuevo grupo *@
                             <div>
                                 <button @onclick="OpenNewGroup" title="Nueva conversación"
                                         class="group cursor-pointer outline-none hover:rotate-90 duration-300">
@@ -98,15 +98,15 @@
                     </div>
 
 
-                    <!-- Lista de conversaciones -->
+                    @* Lista de conversaciones *@
                     <div class="flex-1 overflow-auto border-r bg-[#F8F7FB] dark:bg-[#141414] dark:border-zinc-600">
 
                         <div class="px-5 mt-4">
 
-                            <!-- Titulo -->
+                            @* Titulo *@
                             <label class="text-base font-bold text-gray-800 dark:text-gray-200">Conversaciones</label>
 
-                            <!-- Entrada de búsqueda -->
+                            @* Entrada de búsqueda *@
                             <div class="mt-2 mb-5">
                                 <input @oninput="Search" type="text" autocomplete="off" required="" class="block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-gray-900 placeholder-gray-400 focus:border-indigo-500 focus:bg-white focus:outline-none focus:ring-indigo-500 sm:text-sm dark:bg-zinc-800 dark:focus:bg-zinc-900 dark:text-gray-200" placeholder="Buscar">
                             </div>
@@ -116,7 +116,7 @@
                                 // Si no hay conversaciones.
                                 if (Conversations.Count <= 0 && !IsSearching)
                                 {
-                                    <div class="flex rounded justify-center items-center border-dashed border-2 border-gray-800 w-full p-3 mt-3 dark:border-gray-400">
+                                    <div class="flex rounded justify-center items-center border-dashed border-2 border-gray-700 w-full p-3 mt-3 dark:border-gray-400">
                                         <label class="text-gray-700 dark:text-gray-200">No tienes ninguna conversación</label>
                                     </div>
                                 }
@@ -158,7 +158,7 @@
                             }
                             else
                             {
-                                <!-- Cargando las conversaciones -->
+                                @* Cargando las conversaciones *@
                                 <ControlSkeleton />
                                 <ControlSkeleton />
                                 <ControlSkeleton />
@@ -171,10 +171,10 @@
 
                 </div>
 
-                <!-- Right -->
+                @* Right *@
                 <div class="w-full @(ActualSection != 1 ? "hidden lg:flex" : "") lg:w-2/3 flex flex-col bg-[#F8F7FB] dark:bg-[#242424]">
 
-                    <!-- Mostrar el chat -->
+                    @* Mostrar el chat *@
                     @if (ChatSection.Hub != null && SelectedConversation != null)
                     {
                         <ChatSection @ref="ChatPage" Drawer="MemberDrawer" Iam="SelectedConversation" OnBackPress="() =>{ ActualSection = 0; SelectedConversation = null; foreach (var c in Conversations) c.Control?.Unselect(); StateHasChanged(); }" />
