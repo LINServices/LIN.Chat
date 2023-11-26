@@ -5,7 +5,7 @@
 
 
 @* Elementos *@
-<LIN.Allo.Client.Pops.EmojiPanel @ref="EmojiPanel"  Press="(e)=>{Message+=e; StateHasChanged();}" />
+<LIN.Allo.Client.Pops.EmojiPanel @ref="EmojiPanel" Press="(e)=>{Message+=e; StateHasChanged();}" />
 
 
 @* Cabecera *@
@@ -14,7 +14,7 @@
 
     @* Nombre y tipo *@
     <div class="flex items-center">
-        <img class="visible lg:hidden h-5 w-5 mr-3" src="./back.png" @onclick="OnBackPress"/>
+        <img class="visible lg:hidden h-5 w-5 mr-3" src="./back.png" @onclick="OnBackPress" />
         <div class="flex flex-col">
             <label class="text-gray-700 font-bold dark:text-gray-100">
                 @Iam.Conversation.Name
@@ -46,7 +46,7 @@
         @* Integrantes *@
         <div @onclick="OpenDrawer" class="ml-6">
             <svg class="h-4 w-4 fill-[#263238] dark:fill-gray-100 hover:fill-indigo-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0">
-                <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
+                <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
             </svg>
 
         </div>
@@ -116,7 +116,7 @@
                 oldTime = message.Time;
             }
 
-            <Message MessageModel="@message"/>
+            <Message MessageModel="@message" />
 
         }
 
@@ -136,10 +136,10 @@
         </svg>
     </div>
     <div class="flex-1 mx-4">
-        <input @bind="Message" class="w-full ring-0 border-0 focus:border-0 focus:ring-0 bg-transparent dark:text-gray-100" placeholder="Escribe tu mensaje..." type="text"/>
+        <input @bind="Message" class="w-full ring-0 border-0 focus:border-0 focus:ring-0 bg-transparent dark:text-gray-100" placeholder="Escribe tu mensaje..." type="text" />
     </div>
 
     <div @onclick="SendMessage">
-        <img class="h-5 w-5 mr-3" src="./send.png"/>
+        <img class="h-5 w-5 mr-3" src="./send.png" />
     </div>
 </div>
