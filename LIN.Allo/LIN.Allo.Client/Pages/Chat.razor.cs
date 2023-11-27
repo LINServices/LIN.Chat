@@ -100,6 +100,9 @@ public partial class Chat
                     return;
 
                 // Establece el control.
+                if (element.Control != null)
+                    value.IsSelect = element.Control.IsSelect;
+
                 element.Control = value;
             }
             catch (Exception)
