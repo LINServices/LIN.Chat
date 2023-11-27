@@ -56,23 +56,41 @@
                 </div>
             </div>
 
-            <div class="flex flex-col gap-2">
+            <div class="flex flex-col gap-2 justify-center">
+
+                @foreach (var e in NewMembers)
+                {
+
+                        <Profile e="@e" @ref=SearchResultControl OnSelect="OnSelect" State="2" />
+                }
+
+                
 
                 @foreach (var e in SearchResult ?? new List<Types.Auth.Abstracts.SessionModel<ProfileModel>>())
                 {
 
                     var x = !MemberModels.Where(T => T.Account.ID == e.Account.ID).Any();
-                    if (x && Access.Communication.Session.Instance.Profile.AccountID != e.Account.ID)
+                    var find = NewMembers.Where(t => t.Profile.ID == e.Profile.ID).Any();
+
+                    if (!find && x && Access.Communication.Session.Instance.Profile.AccountID != e.Account.ID)
                     {
-                        <Profile e="@e" @ref=SearchResultControl />
+
+                        <Profile e="@e" @ref=SearchResultControl OnSelect="OnSelect" />
                     }
                 }
+
+                @if(NewMembers.Count >0)
+                {
+                    <button @onclick="Insert" type="button" class="text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800 w-full">Agregar</button>
+                  
+                    <label class="w-full text-center font-bold mt-3">Integrantes actuales</label>
+                }
+
             </div>
         </div>
+
     }
   
-
-
 
 
     @*Renderizado de controles*@

@@ -246,5 +246,4 @@ public partial class NewGroup
 
 
 
-
 }

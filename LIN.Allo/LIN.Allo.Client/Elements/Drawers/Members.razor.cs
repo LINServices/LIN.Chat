@@ -1,4 +1,6 @@
-﻿namespace LIN.Allo.Client.Elements.Drawers;
+﻿using LIN.Access.Communication;
+
+namespace LIN.Allo.Client.Elements.Drawers;
 
 
 public partial class Members
@@ -68,7 +70,7 @@ public partial class Members
     /// Cargar los miembros.
     /// </summary>
     /// <param name="id">Id de la conversación.</param>
-    public async Task LoadData(int id)
+    public async Task LoadData(int id, bool force = false)
     {
 
         // Busca en el cache.
@@ -77,13 +79,15 @@ public partial class Members
         ConversationContext = Chat.Conversations.Where(t => t.Id == id).FirstOrDefault()?.Chat.Conversation;
 
         // Si no existe en el cache.
-        if (cache.Item2 == null)
+        if (cache.Item2 == null     || force)
         {
             // Respuesta de la API.
             var result = await Access.Communication.Controllers.Conversations.MembersInfo(id, Access.Communication.Session.Instance.Token, Access.Communication.Session.Instance.AccountToken);
 
             // Modelos a la UI.
             MemberModels = result.Models.OrderByDescending(t => t.Profile.Rol).ToList();
+
+            Cache.RemoveAll(t=>t.Item1 == id);
             Cache.Add(new(id, MemberModels));
         }
         else
@@ -147,5 +151,59 @@ public partial class Members
         StateHasChanged();
     }
 
+
+
+    /// <summary>
+    /// Items seleccionados.
+    /// </summary>
+    private List<Types.Auth.Abstracts.SessionModel<ProfileModel>> NewMembers { get; set; } = new();
+
+
+
+    /// <summary>
+    /// Al seleccionar un elemento.
+    /// </summary>
+    /// <param name="model">Modelo seleccionado.</param>
+    private void OnSelect(Types.Auth.Abstracts.SessionModel<ProfileModel> model)
+    {
+        // Si existe.
+        var have = NewMembers.Where(T => T.Account.ID == model.Account.ID).Any();
+
+        if (have)
+        {
+            NewMembers.RemoveAll(T => T.Account.ID == model.Account.ID);
+            StateHasChanged();
+            return;
+        }
+
+        NewMembers.Add(model);
+        StateHasChanged();
+    }
+
+
+    async void Insert()
+    {
+        if(ConversationContext == null)
+        {
+            return;
+        }
+
+        List<Task> tasks = [];
+
+        var token = Session.Instance.Token;
+        foreach(var x in NewMembers)
+        {
+            tasks.Add(Access.Communication.Controllers.Conversations.Insert(ConversationContext.ID, x.Profile.ID, token));
+        }
+
+        await Task.WhenAll(tasks);
+
+        NewMembers = [];
+        IsShowAdd = false;
+        await LoadData(ConversationContext.ID, true);
+
+        StateHasChanged();
+
+    }
 
 }
