@@ -1,8 +1,13 @@
-﻿namespace LIN.Allo.Client.Elements.Drawers;
+﻿using Microsoft.Extensions.FileSystemGlobbing.Internal;
+
+namespace LIN.Allo.Client.Elements.Drawers;
 
 
 public partial class Members
 {
+
+
+    string Pattern;
 
 
     /// <summary>
@@ -85,6 +90,52 @@ public partial class Members
         }
 
     }
+
+
+    private List<Types.Auth.Abstracts.SessionModel<ProfileModel>> SearchResult { get; set; } = new();
+
+    /// <summary>
+    /// Buscar elementos.
+    /// </summary>
+    private async void Search()
+    {
+        string pattern = Pattern;
+
+        if (pattern.Trim() == "")
+        {
+            //AreSearch = false;
+            //IsSearching = false;
+            StateHasChanged();
+            return;
+        }
+
+        //AreSearch = true;
+        //IsSearching = true;
+        StateHasChanged();
+        var result = await Access.Communication.Controllers.Conversations.SearchProfiles(Pattern, Access.Communication.Session.Instance.AccountToken);
+
+        //IsSearching = false;
+        SearchResult = result.Models;
+        StateHasChanged();
+    }
+
+
+
+    /// <summary>
+    /// Lista de controles de integrantes.
+    /// </summary>
+    private List<Profile> SearchControls { get; set; } = new();
+
+
+
+    /// <summary>
+    /// Control de integrante actual.
+    /// </summary>
+    private Profile SearchResultControl
+    {
+        set => SearchControls.Add(value);
+    }
+
 
 
 }
