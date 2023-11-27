@@ -187,6 +187,7 @@ public partial class Chat
     }
 
 
+
     /// <summary>
     /// Evento al recibir un mensaje.
     /// </summary>
@@ -224,6 +225,8 @@ public partial class Chat
             app.Run();
         }
 
+        element.Control?.Render();
+
         // Si la pagina actual es la misma a la cual llego el mensaje
         if (ChatPage?.Iam.Conversation.ID == element.Id)
         {
@@ -231,7 +234,7 @@ public partial class Chat
             ChatPage?.ScrollToBottom();
             return;
         }
-
+        
         // Mostrar badge de nuevo mensaje.
         if (element.Control != null)
         {
@@ -374,7 +377,7 @@ public partial class Chat
 
                 if (other != null)
                 {
-                    var data = accounts.FirstOrDefault(t=>t.ID == other.Profile.AccountID);
+                    var data = accounts.FirstOrDefault(t => t.ID == other.Profile.AccountID);
 
                     if (data != null)
                         conversation.Conversation.Name = data.Nombre;

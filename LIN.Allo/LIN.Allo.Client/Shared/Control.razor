@@ -51,8 +51,8 @@
 }
 
 
-<div @onclick="() =>{OnClick(Member); IsNew = false; StateHasChanged();}" class="flex ring-2 ring-gray-200  bg-white mt-2 p-4 rounded dark:bg-zinc-800 dark:ring-zinc-600 @(IsSelect ? "ring-indigo-500 dark:ring-indigo-500" : "") select-none">
-    <div class="flex items-center">
+<div @onclick="() =>{OnClick(Member); IsNew = false; StateHasChanged();}" class="flex rounded-lg mt-2 p-4 bg-white dark:bg-zinc-800 select-none items-center border border-1 @(IsSelect ? "border-indigo-500 dark:border-indigo-600 ring ring-1 ring-indigo-500 dark:ring-indigo-500" : "border-gray-200 dark:border-zinc-600")">
+    <div class="flex w-full items-center">
 
         @if (Member.Conversation.Members != null && Member.Conversation.Type == Types.Communication.Enumerations.ConversationsTypes.Personal && Member.Conversation.Members.Count >= 1)
         {
@@ -65,25 +65,65 @@
 
             <button type="button" class="flex bg-white dark:bg-zinc-700 text-sm rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button">
                 <span class="sr-only">Open</span>
-                <img class="w-7 h-7 p-1 rounded-full ring-2 ring-gray-300" src="data:image/png;base64,@img64">
+                <img class="w-9 h-9 p-1 rounded-full ring-2 ring-gray-300" src="data:image/png;base64,@img64">
             </button>
 
-            <label class="text-base gilroy-bold ml-2 text-gray-700 dark:text-gray-300">@(profile?.Nombre ?? "Error")</label>
+            <div class="flex flex-col ml-3">
+                <label class="text-base font-bold  text-gray-700 dark:text-gray-300">@(profile?.Nombre ?? "Error")</label>
+
+                @try
+                {
+                    var message = Member.Conversation.Mensajes.LastOrDefault();
+                    string bs64 = Convert.ToBase64String(Chat.accounts.FirstOrDefault(t => t.ID == message.Remitente.AccountID)?.Perfil ?? []);
+                    <div class="flex">
+
+                        @if (bs64 != "")
+                        {
+                            <img class="h-2 w-2 rounded-full mr-1" src="data:image/png;base64,@bs64" />
+                        }
+
+                        <label class="text-xs -mt-1 text-gray-500 dark:text-gray-300">@message.Contenido</label>
+                    </div>
+                }
+                catch
+                {
+                }
+            </div>
         }
         else
         {
-            <img class="h-4 w-4" src="./group (2).png" />
-            <label class="text-base gilroy-bold ml-2 text-gray-700 dark:text-gray-300">@Member.Conversation.Name</label>
+
+            <img class="h-9 w-9" src="./group (2).png" />
+
+            <div class="flex flex-col ml-3">
+                <label class="text-base font-bold  text-gray-700 dark:text-gray-300">@Member.Conversation.Name</label>
+                @try
+                {
+                    var message = Member.Conversation.Mensajes.LastOrDefault();
+                    string bs64 = Convert.ToBase64String(Chat.accounts.FirstOrDefault(t => t.ID == message.Remitente.AccountID)?.Perfil ?? []);
+                    <div class="flex">
+
+                        @if (bs64 != "")
+                        {
+                            <img class="h-2 w-2 rounded-full mr-1" src="data:image/png;base64,@bs64" />
+                        }
+
+                        <label class="text-xs -mt-1 text-gray-500 dark:text-gray-300">@message.Contenido</label>
+                    </div>
+                }
+                catch
+                {
+                }
+            </div>
+           
         }
         
     </div>
 
     @if (IsNew)
     {
-        <span class="ml-3 inline-flex items-center bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
-            <span class="w-2 h-2 mr-1 bg-green-500 rounded-full"></span>
-            Nuevos mensajes
-        </span>
+        <div class="flex items-center justify-center bg-green-500 rounded-full h-5 w-5">
+        </div>
     }
 
 
