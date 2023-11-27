@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.FileSystemGlobbing.Internal;
-
-namespace LIN.Allo.Client.Elements.Drawers;
+﻿namespace LIN.Allo.Client.Elements.Drawers;
 
 
 public partial class Members
@@ -64,6 +62,8 @@ public partial class Members
 
 
 
+    ConversationModel? ConversationContext { get; set; }
+
     /// <summary>
     /// Cargar los miembros.
     /// </summary>
@@ -73,6 +73,8 @@ public partial class Members
 
         // Busca en el cache.
         var cache = Cache.Where(t => t.Item1 == id).FirstOrDefault();
+
+        ConversationContext = Chat.Conversations.Where(t => t.Id == id).FirstOrDefault()?.Chat.Conversation;
 
         // Si no existe en el cache.
         if (cache.Item2 == null)
@@ -136,6 +138,14 @@ public partial class Members
         set => SearchControls.Add(value);
     }
 
+
+
+   bool IsShowAdd = false;
+    void ShowAdd()
+    {
+        IsShowAdd = !IsShowAdd;
+        StateHasChanged();
+    }
 
 
 }

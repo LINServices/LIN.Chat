@@ -30,45 +30,50 @@
 
     @*Botones de acción*@
     <div class="flex justify-center items-center mt-2 gap-2">
-        <img class="h-5 w-5 hover:opacity-25" src="./plus.png" />
+        @if (ConversationContext?.Type != Types.Communication.Enumerations.ConversationsTypes.Personal)
+        {
+            <img @onclick="ShowAdd" class="h-5 w-5 hover:opacity-25" src="./plus.png" />
+        }
         <img class="h-5 w-5 hover:opacity-25" src="./trash-bin.png" />
         <img class="h-5 w-5 hover:opacity-25" src="./write.png" />
     </div>
 
 
     @* Invitados *@
-    <div class="mb-4">
-        <label for="guests" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Invitados</label>
-        <div class="relative">
-            <input @bind="Pattern" type="search" id="guests" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-indigo-500 p-2.5 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500" placeholder="Agregar usuario" required>
-            <button @onclick="Search" type="button" class="absolute inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-indigo-700 rounded-lg right-2 bottom-2 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
-                <svg class="w-3 h-3 mr-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
-                    <path d="M6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Zm11-3h-2V5a1 1 0 0 0-2 0v2h-2a1 1 0 1 0 0 2h2v2a1 1 0 0 0 2 0V9h2a1 1 0 1 0 0-2Z" />
-                </svg>Buscar
-            </button>
+    @if (IsShowAdd)
+    {
+        <div class="mt-4">
+
+            <div class="mb-4">
+                <label for="guests" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Invitados</label>
+                <div class="relative">
+                    <input @bind="Pattern" type="search" id="guests" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-indigo-500 p-2.5 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500" placeholder="Agregar usuario" required>
+                    <button @onclick="Search" type="button" class="absolute inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-indigo-700 rounded-lg right-2 bottom-2 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
+                        <svg class="w-3 h-3 mr-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
+                            <path d="M6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Zm11-3h-2V5a1 1 0 0 0-2 0v2h-2a1 1 0 1 0 0 2h2v2a1 1 0 0 0 2 0V9h2a1 1 0 1 0 0-2Z" />
+                        </svg>Buscar
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-2">
+
+                @foreach (var e in SearchResult ?? new List<Types.Auth.Abstracts.SessionModel<ProfileModel>>())
+                {
+
+                    var x = !MemberModels.Where(T => T.Account.ID == e.Account.ID).Any();
+                    if (x && Access.Communication.Session.Instance.Profile.AccountID != e.Account.ID)
+                    {
+                        <Profile e="@e" @ref=SearchResultControl />
+                    }
+                }
+            </div>
         </div>
-    </div>
+    }
+  
 
-    <div class="flex flex-col gap-2">
 
-        @foreach (var e in SearchResult ?? new List<Types.Auth.Abstracts.SessionModel<ProfileModel>>())
-        {
 
-            var x2 = MemberModels.Where(t => t.Account.ID == e.Account.ID).FirstOrDefault();
-            var x3 = MemberControls;
-
-            var x = !MemberModels.Where(T => T.Account.ID == e.Account.ID).Any();
-            if (x && Access.Communication.Session.Instance.Profile.AccountID != e.Account.ID)
-            {
-                <Profile e="@e" @ref=SearchResultControl OnSelect="(op)=>
-
-{
-var x = MemberModels;
-StateHasChanged();
-}" />
-            }
-        }
-    </div>
 
     @*Renderizado de controles*@
     <div class="mt-5">

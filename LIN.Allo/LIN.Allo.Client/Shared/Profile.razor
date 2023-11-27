@@ -33,47 +33,67 @@
 }
 
 
-<div @onclick="() => Confirm(e.Profile.ID)" class="flex hover:shadow-gray-400 bg-white rounded-lg w-full">
+<div @onclick="() => Confirm(e.Profile.ID)" class="flex hover:bg-gray-100/25 rounded-lg w-full mt-2">
 
 
-    <div class="flex p-2 w-full items-center">
+    <div class="flex p-3 w-full items-center">
 
-        <img class="w-7 h-7 mr-2 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500" src="data:image/png;base64,@Img64" alt="Bordered avatar">
+
+        <div class="relative">
+            <img class="w-9 h-9 mr-2 p-1 rounded-full ring-2 ring-gray-400" src="data:image/png;base64,@Img64" alt="Bordered avatar">
+
+        </div>
+
 
         <div class="flex flex-col">
+
             <label class="text-sm font-bold">@e.Profile.Alias</label>
-            <label class="text-xs -mt-1">@@@e.Account.Usuario</label>
+
+
+                <label class="text-xs text-gray-800">@@@e.Account.Usuario</label>
+          
         </div>
 
     </div>
 
-
     @if (State == 1)
     {
-        <div @onclick="() => OnSelect(e)" class="flex justify-end items-center mr-3">
-            <span class="flex justify-center items-center bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full w-28">
+        <div @onclick="() => OnSelect(e)" class="flex justify-end items-center mr-3 hover:cursor-pointer">
+            <span class="inline-flex justify-center items-center bg-green-100 hover:bg-green-200 text-green-800 hover:text-green-950 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full w-28">
                 <span class="w-2 h-2 mr-1 bg-green-500 rounded-full"></span>
-                Agregar
-            </span>
-        </div>
+            Agregar
+        </span>
+    </div>
     }
     else if (State == 2)
     {
-        <div @onclick="() => OnSelect(e)" class="flex justify-end items-center mr-3">
-            <span class="flex justify-center items-center bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full  w-28">
+        <div @onclick="() => OnSelect(e)" class="flex justify-end items-center mr-3 hover:cursor-pointer">
+            <span class="inline-flex justify-center items-center bg-red-100 hover:bg-red-200 text-red-800 hover:text-red-950 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full w-28">
                 <span class="w-2 h-2 mr-1 bg-red-500 rounded-full"></span>
-                Remover
+               Remover
             </span>
         </div>
     }
 
-
-
-
-
+   
 
 
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 @code {
