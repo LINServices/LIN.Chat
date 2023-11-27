@@ -71,14 +71,20 @@
                         <div class="flex justify-center items-center gap-3">
 
                             @* Emma *@
-                            <div>
                                 <button class="h-5 w-5 hover:animate-pulse rounded-full">
                                     <img @onclick="OpenEmma" src="./arroba.png" />
                                 </button>
-                            </div>
+
+                            @* Actualizar *@
+                            
+                                <div @onclick="ForceRetrieveData"
+                                 class="flex group items-center justify-center border border-[#52525b] border-2 hover:bg-zinc-200 rounded-full group-active:bg-zinc-600">
+
+                                <img class="h-2.5 w-2.5 m-1 group-hover:hover:rotate-90 duration-300" src="./icons/reload.png" />
+
+                                </div>
 
                             @* Nuevo grupo *@
-                            <div>
                                 <button @onclick="OpenNewGroup" title="Nueva conversación"
                                         class="group cursor-pointer outline-none hover:rotate-90 duration-300">
                                     <svg xmlns="http://www.w3.org/2000/svg"
@@ -91,7 +97,6 @@
                                         <path d="M12 16V8" stroke-width="1.5"></path>
                                     </svg>
                                 </button>
-                            </div>
 
                         </div>
 
@@ -106,11 +111,32 @@
                             @* Titulo *@
                             <label class="text-base font-bold text-gray-800 dark:text-gray-200">Conversaciones</label>
 
+
                             @* Entrada de búsqueda *@
                             <div class="mt-2 mb-5">
                                 <input @oninput="Search" type="text" autocomplete="off" required="" class="block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-gray-900 placeholder-gray-400 focus:border-indigo-500 focus:bg-white focus:outline-none focus:ring-indigo-500 sm:text-sm dark:bg-zinc-800 dark:focus:bg-zinc-900 dark:text-gray-200" placeholder="Buscar">
                             </div>
-                           
+
+
+
+                            <div class="mb-5">
+                                <div class="bg-yellow-50 border border-yellow-200 text-sm text-yellow-800 rounded-lg p-4 dark:bg-yellow-800/10 dark:border-yellow-900 dark:text-yellow-500" role="alert">
+                                    <div class="flex">
+                                        <div class="flex-shrink-0">
+                                            <svg class="flex-shrink-0 h-4 w-4 mt-0.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" /><path d="M12 9v4" /><path d="M12 17h.01" /></svg>
+                                        </div>
+                                        <div class="ms-4">
+                                            <h3 class="text-sm font-semibold">
+                                                No se pudo conectar al servidor.
+                                            </h3>
+                                            <div class="mt-1 text-sm text-yellow-700">
+                                                Actualmente tenemos problemas para acceder a LIN Allo.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             @if (IsConversationsLoad)
                             {
                                 // Si no hay conversaciones.
@@ -122,12 +148,14 @@
                                 }
 
                                 // Esta buscando.
-                                else if(IsSearching)
+                                else if (IsSearching)
                                 {
                                     if (SearchResult == null)
                                     {
                                         <div class="flex items-center justify-center">
-                                            <CircleLoader />
+                                            <div class="animate-spin inline-block w-6 h-6 border-[3px] border-current border-t-transparent text-indigo-600 rounded-full dark:text-indigo-500" role="status" aria-label="loading">
+                                                <span class="sr-only">Loading...</span>
+                                            </div>
                                         </div>
                                     }
                                     else if (SearchResult.Count == 0)
@@ -136,19 +164,26 @@
                                     }
                                     else
                                     {
-                                        <label class="dark:text-gray-300">Resultados de búsqueda para "@Pattern" </label>
-                                        <div class="flex flex-col gap-2 mt-3">
-                                            @foreach (var e in SearchResult)
-                                            {
-                                                <NewFriend UserInformation="@e" />
-                                            }
+                                        <div class="select-none">
+                                            <label class="dark:text-gray-300">Resultados de búsqueda para "@Pattern" </label>
+                                            <div class="flex flex-col gap-2 mt-3">
+                                                @foreach (var e in SearchResult)
+                                                {
+                                                    <NewFriend UserInformation="@e" />
+                                                }
+                                            </div>
                                         </div>
+                                        
                                     }
                                 }
 
                                 // Renderizar las conversaciones.
                                 else
                                 {
+
+
+                                   
+
                                     foreach (var conversation in Conversations)
                                     {
                                         <Control Member="@(conversation.Chat)" @ref="ComponentRef" OnClick="Select" />

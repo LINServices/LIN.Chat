@@ -22,8 +22,10 @@
         @* Cargando *@
         @if (Section == Sections.Loading)
         {
-            <div>
-                <BubbleLoader />
+            <div class="flex justify-center items-center">
+                <div class="animate-spin inline-block w-4 h-4 border-[3px] border-current border-t-transparent text-indigo-600 rounded-full" role="status" aria-label="loading">
+                    <span class="sr-only">Loading...</span>
+                </div>
             </div>
         }
 
@@ -42,7 +44,7 @@
         @* Botón de agregar *@
         else
         {
-            <button @onclick="Find" type="button" class="flex justify-center items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 h-8 w-8 dark:focus:ring-indigo-500">
+            <button @onclick="Find" type="button" class="flex justify-center items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center h-8 w-8 dark:focus:ring-indigo-500">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-4 h-4" viewBox="0 0 16 16">
                     <path d="M2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
                 </svg>
