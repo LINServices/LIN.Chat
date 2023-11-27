@@ -93,10 +93,14 @@
         else
         {
 
+            <div class="relative inline-block">
             <span class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-gray-800 font-bold text-white leading-none dark:bg-white dark:text-gray-800">
                 @(GetInitial(Member.Conversation.Name))
-            </span>
+                  </span>
+                <span class="absolute bottom-0 end-0 block h-2.5 w-2.5 rounded-full transform  ring-2 ring-white bg-green-500 text-[8px]">
+                </span>
 
+            </div>
 
             <div class="flex flex-col ml-3">
                 <label class="text-base font-bold  text-gray-700 dark:text-gray-300">@Member.Conversation.Name</label>
