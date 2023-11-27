@@ -35,7 +35,11 @@
             <img @onclick="ShowAdd" class="h-5 w-5 hover:opacity-25" src="./plus.png" />
         }
         <img class="h-5 w-5 hover:opacity-25" src="./trash-bin.png" />
-        <img class="h-5 w-5 hover:opacity-25" src="./write.png" />
+
+        @if (ConversationContext?.Type != Types.Communication.Enumerations.ConversationsTypes.Personal)
+        {
+            <img class="h-5 w-5 hover:opacity-25" src="./write.png" />
+        }
     </div>
 
 

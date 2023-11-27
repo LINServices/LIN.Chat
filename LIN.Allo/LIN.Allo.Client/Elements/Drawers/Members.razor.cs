@@ -72,7 +72,7 @@ public partial class Members
     /// <param name="id">Id de la conversación.</param>
     public async Task LoadData(int id, bool force = false)
     {
-
+        IsShowAdd = false;
         // Busca en el cache.
         var cache = Cache.Where(t => t.Item1 == id).FirstOrDefault();
 
