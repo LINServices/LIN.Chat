@@ -1,65 +1,19 @@
-﻿@code {
-
-
-    [Parameter]
-    public Action<MemberChatModel> OnClick { get; set; }
-
-
-    [Parameter]
-    public MemberChatModel Member { get; set; }
-
-
-
-    public bool IsSelect { get; set; } = false;
-
-
-
-    public bool IsNew = false;
-
-    protected override Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-    //var hub = Hub();
-    // hub?.SuscribeToMe(Member.Conversation.ID.ToString(), (e) =>
-    // {
-    //     IsNew = true;
-    //     base.StateHasChanged();
-    // });
-        }
-
-        return base.OnAfterRenderAsync(firstRender);
-    }
-
-    public void Render()
-    {
-        StateHasChanged();
-    }
-
-    public void Select()
-    {
-        IsSelect = true;
-        Render();
-    }
-
-    public void Unselect()
-    {
-        IsSelect = false;
-        Render();
-    }
-
-}
-
+﻿
 
 <div @onclick="() =>{OnClick(Member); IsNew = false; StateHasChanged();}" class="flex rounded-lg mt-2 p-4 bg-white dark:bg-zinc-800 select-none items-center border border-1 @(IsSelect ? "border-indigo-500 dark:border-indigo-600 ring ring-1 ring-indigo-500 dark:ring-indigo-500" : "border-gray-200 dark:border-zinc-600")">
     <div class="flex w-full items-center">
 
+        @{
+            string conversationName = "";
+        }
+
+        @* Si es un chat personal. *@
         @if (Member.Conversation.Members != null && Member.Conversation.Type == Types.Communication.Enumerations.ConversationsTypes.Personal && Member.Conversation.Members.Count >= 1)
         {
+
             var member = Member.Conversation.Members.FirstOrDefault(t => t.Profile.AccountID != LIN.Access.Communication.Session.Instance.Account.ID);
 
-
-            var profile = LIN.Allo.Client.Pages.Chat.accounts.Where(a=>a.ID == member.Profile.AccountID).FirstOrDefault();
+            var profile = LIN.Allo.Client.Pages.Chat.accounts.Where(a => a.ID == member.Profile.AccountID).FirstOrDefault();
 
             string img64 = Convert.ToBase64String(profile?.Perfil ?? []);
 
@@ -68,75 +22,57 @@
                 <img class="w-9 h-9 p-0.5 rounded-full ring-2 ring-gray-300" src="data:image/png;base64,@img64">
             </button>
 
-            <div class="flex flex-col ml-3">
-                <label class="text-base font-bold  text-gray-700 dark:text-gray-300">@(profile?.Nombre ?? "Error")</label>
+            conversationName = profile?.Nombre ?? "Error";
 
-                @try
-                {
-                    var message = Member.Conversation.Mensajes.LastOrDefault();
-                    string bs64 = Convert.ToBase64String(Chat.accounts.FirstOrDefault(t => t.ID == message.Remitente.AccountID)?.Perfil ?? []);
-                    <div class="flex">
-
-                        @if (bs64 != "")
-                        {
-                            <img class="h-2 w-2 rounded-full mr-1" src="data:image/png;base64,@bs64" />
-                        }
-
-                        @{
-                            string final = "";
-                            message.Contenido.Take(25).ToList().ForEach((a) => final += a);
-                        }
-
-
-                        <label class="text-xs -mt-1 text-gray-500 dark:text-gray-300">@(final + "...")</label>
-                    </div>
-                }
-                catch
-                {
-                }
-            </div>
         }
+
+        @* Si es un grupo. *@
         else
         {
-
             <div class="relative inline-block">
-            <span class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-gray-800 font-bold text-white leading-none dark:bg-white dark:text-gray-800">
-                @(GetInitial(Member.Conversation.Name))
-                  </span>
+                <span class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-gray-800 font-bold text-white leading-none dark:bg-white dark:text-gray-800">
+                    @(GetInitial(Member.Conversation.Name))
+                </span>
                 <span class="absolute bottom-0 end-0 block h-2.5 w-2.5 rounded-full transform  ring-2 ring-white bg-green-500 text-[8px]">
                 </span>
 
             </div>
 
-            <div class="flex flex-col ml-3">
-                <label class="text-base font-bold  text-gray-700 dark:text-gray-300">@Member.Conversation.Name</label>
-                @try
-                {
-                    var message = Member.Conversation.Mensajes.LastOrDefault();
-                    string bs64 = Convert.ToBase64String(Chat.accounts.FirstOrDefault(t => t.ID == message.Remitente.AccountID)?.Perfil ?? []);
-                    <div class="flex">
-
-                        @if (bs64 != "")
-                        {
-                            <img class="h-2 w-2 rounded-full mr-1" src="data:image/png;base64,@bs64" />
-                        }
-
-                        @{
-                            string final = "";
-                            message.Contenido.Take(25).ToList().ForEach((a) => final += a);
-                        }
-
-                        <label class="text-xs -mt-1 text-gray-500 dark:text-gray-300">@(final + "...")</label>
-
-                    </div>
-                }
-                catch
-                {
-                }
-            </div>
-           
+            conversationName = Member.Conversation.Name;
         }
-        
+
+
+
+        <div class="flex flex-col ml-3">
+
+            <label class="text-base font-bold text-gray-700 dark:text-gray-300">@(conversationName)</label>
+
+            @try
+            {
+                var message = Member.Conversation.Mensajes.LastOrDefault();
+                string bs64 = Convert.ToBase64String(Chat.accounts.FirstOrDefault(t => t.ID == message.Remitente.AccountID)?.Perfil ?? []);
+                <div class="flex">
+
+                    @if (bs64 != "")
+                    {
+                        <img class="h-2 w-2 rounded-full mr-1" src="data:image/png;base64,@bs64" />
+                    }
+
+                    @{
+                        string final = "";
+                        message.Contenido.Take(25).ToList().ForEach((a) => final += a);
+                    }
+
+
+                    <label class="text-xs -mt-1 text-gray-500 dark:text-gray-300">@(final + "...")</label>
+                </div>
+            }
+            catch
+            {
+            }
+        </div>
+
+
     </div>
 
     @if (IsNew)
