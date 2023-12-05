@@ -82,7 +82,13 @@
                             <img class="h-2 w-2 rounded-full mr-1" src="data:image/png;base64,@bs64" />
                         }
 
-                        <label class="text-xs -mt-1 text-gray-500 dark:text-gray-300">@message.Contenido</label>
+                        @{
+                            string final = "";
+                            message.Contenido.Take(25).ToList().ForEach((a) => final += a);
+                        }
+
+
+                        <label class="text-xs -mt-1 text-gray-500 dark:text-gray-300">@(final + "...")</label>
                     </div>
                 }
                 catch
@@ -115,7 +121,13 @@
                             <img class="h-2 w-2 rounded-full mr-1" src="data:image/png;base64,@bs64" />
                         }
 
-                        <label class="text-xs -mt-1 text-gray-500 dark:text-gray-300">@message.Contenido</label>
+                        @{
+                            string final = "";
+                            message.Contenido.Take(25).ToList().ForEach((a) => final += a);
+                        }
+
+                        <label class="text-xs -mt-1 text-gray-500 dark:text-gray-300">@(final + "...")</label>
+
                     </div>
                 }
                 catch
