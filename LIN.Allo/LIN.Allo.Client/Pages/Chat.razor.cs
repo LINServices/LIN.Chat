@@ -11,6 +11,8 @@ public partial class Chat
 
     public static List<AccountModel> accounts = new List<AccountModel>();
 
+
+
     //======== Modales =========//
 
     /// <summary>
@@ -522,7 +524,6 @@ public partial class Chat
     {
         StateHasChanged();
     }
-
 
 
 }

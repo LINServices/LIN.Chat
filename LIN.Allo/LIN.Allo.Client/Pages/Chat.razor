@@ -5,6 +5,7 @@
 @inject NavigationManager navigationManager
 @inject IJSRuntime JSRuntime
 
+
 @* Pantalla de carga *@
 @{
     Instance = this;
@@ -181,18 +182,10 @@
                                 // Renderizar las conversaciones.
                                 else
                                 {
-
-
-                                   
-
                                     foreach (var conversation in Conversations)
                                     {
                                         <Control Member="@(conversation.Chat)" @ref="ComponentRef" OnClick="Select" />
                                     }
-
-
-                                  
-
                                 }
 
                             }
@@ -236,4 +229,3 @@
         </div>
     </div>
 </div>
-

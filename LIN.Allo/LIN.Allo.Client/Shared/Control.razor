@@ -59,12 +59,20 @@
                     }
 
                     @{
-                        string final = "";
-                        message.Contenido.Take(25).ToList().ForEach((a) => final += a);
+                        string final = message.Contenido;
+
+                        if(message.Contenido.Length > 25)
+                        {
+                            final = "";
+                            message.Contenido.Take(25).ToList().ForEach((a) => final += a);
+                            final += "...";
+                        }
+
+                        
                     }
 
 
-                    <label class="text-xs -mt-1 text-gray-500 dark:text-gray-300">@(final + "...")</label>
+                    <label class="text-xs -mt-1 text-gray-500 dark:text-gray-300">@(final)</label>
                 </div>
             }
             catch
