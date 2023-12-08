@@ -1,7 +1,7 @@
 ﻿@code {
 
     [Parameter]
-    public Types.Auth.Abstracts.SessionModel<ProfileModel>? e { get; set; } = null;
+    public Types.Identity.Abstracts.SessionModel<ProfileModel>? e { get; set; } = null;
 
 
     public IsOnlineResult? isOnline = null;
@@ -13,7 +13,7 @@
     public int State { get; set; } = 1;
 
     [Parameter]
-    public Action<Types.Auth.Abstracts.SessionModel<ProfileModel>> OnSelect { get; set; } = (e) =>
+    public Action<Types.Identity.Abstracts.SessionModel<ProfileModel>> OnSelect { get; set; } = (e) =>
     {
         Console.WriteLine("None");
     };
@@ -50,7 +50,7 @@
             <label class="text-sm font-bold">@e.Profile.Alias</label>
 
 
-                <label class="text-xs text-gray-800">@@@e.Account.Usuario</label>
+                <label class="text-xs text-gray-800">@@@e.Account.Identity.Unique</label>
           
         </div>
 

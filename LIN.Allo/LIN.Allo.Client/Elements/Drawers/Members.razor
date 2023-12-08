@@ -70,7 +70,7 @@
 
                 
 
-                @foreach (var e in SearchResult ?? new List<Types.Auth.Abstracts.SessionModel<ProfileModel>>())
+                @foreach (var e in SearchResult ?? new List<Types.Identity.Abstracts.SessionModel<ProfileModel>>())
                 {
 
                     var x = !MemberModels.Where(T => T.Account.ID == e.Account.ID).Any();
@@ -99,7 +99,7 @@
 
     @*Renderizado de controles*@
     <div class="mt-5">
-        @foreach (var e in MemberModels ?? new List<Types.Auth.Abstracts.SessionModel<MemberChatModel>>())
+        @foreach (var e in MemberModels ?? new List<Types.Identity.Abstracts.SessionModel<MemberChatModel>>())
         {
             <Member e="@e" @ref=MemberControl />
         }

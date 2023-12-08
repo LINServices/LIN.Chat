@@ -4,11 +4,11 @@
 
 
     [Parameter]
-    public Types.Auth.Abstracts.SessionModel<ProfileModel> Modelo { get; set; } = new();
+    public Types.Identity.Abstracts.SessionModel<ProfileModel> Modelo { get; set; } = new();
 
 
     [Parameter]
-    public Action<Types.Auth.Abstracts.SessionModel<ProfileModel>> OnDelete { get; set; }
+    public Action<Types.Identity.Abstracts.SessionModel<ProfileModel>> OnDelete { get; set; }
 
     string Img64 => Convert.ToBase64String(Modelo.Account.Perfil);
 
@@ -49,7 +49,7 @@
                     </span>
                 </h4>
                 <p class="text-sm text-gray-500 -mt-1">
-                    @@@Modelo.Account.Usuario
+                    @@@Modelo.Account.Identity.Unique
                 </p>
             </div>
         </div>

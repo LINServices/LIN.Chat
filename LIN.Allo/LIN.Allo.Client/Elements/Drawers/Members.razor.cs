@@ -27,14 +27,14 @@ public partial class Members
     /// <summary>
     /// Lista de modelos de miembros.
     /// </summary>
-    private List<Types.Auth.Abstracts.SessionModel<MemberChatModel>> MemberModels { get; set; } = [];
+    private List<Types.Identity.Abstracts.SessionModel<MemberChatModel>> MemberModels { get; set; } = [];
 
 
 
     /// <summary>
     /// Cache de miembros.
     /// </summary>
-    private List<(int, List<Types.Auth.Abstracts.SessionModel<MemberChatModel>>)> Cache { get; set; } = [];
+    private List<(int, List<Types.Identity.Abstracts.SessionModel<MemberChatModel>>)> Cache { get; set; } = [];
 
 
 
@@ -98,7 +98,7 @@ public partial class Members
     }
 
 
-    private List<Types.Auth.Abstracts.SessionModel<ProfileModel>> SearchResult { get; set; } = new();
+    private List<Types.Identity.Abstracts.SessionModel<ProfileModel>> SearchResult { get; set; } = new();
 
     /// <summary>
     /// Buscar elementos.
@@ -156,7 +156,7 @@ public partial class Members
     /// <summary>
     /// Items seleccionados.
     /// </summary>
-    private List<Types.Auth.Abstracts.SessionModel<ProfileModel>> NewMembers { get; set; } = new();
+    private List<Types.Identity.Abstracts.SessionModel<ProfileModel>> NewMembers { get; set; } = new();
 
 
 
@@ -164,7 +164,7 @@ public partial class Members
     /// Al seleccionar un elemento.
     /// </summary>
     /// <param name="model">Modelo seleccionado.</param>
-    private void OnSelect(Types.Auth.Abstracts.SessionModel<ProfileModel> model)
+    private void OnSelect(Types.Identity.Abstracts.SessionModel<ProfileModel> model)
     {
         // Si existe.
         var have = NewMembers.Where(T => T.Account.ID == model.Account.ID).Any();

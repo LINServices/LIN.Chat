@@ -19,7 +19,7 @@
 
                         string user = pair.Remove(0, 1);
 
-                        var account = Chat.accounts.FirstOrDefault(t => t.Usuario.ToLower() == user.ToLower());
+                        var account = Chat.accounts.FirstOrDefault(t => t.Identity.Unique.ToLower() == user.ToLower());
 
                         if (account == null)
                         {

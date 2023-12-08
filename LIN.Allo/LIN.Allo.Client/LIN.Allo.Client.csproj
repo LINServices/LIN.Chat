@@ -13,9 +13,9 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\..\..\Tipos\LIN.Types.Identity\LIN.Types.Identity\LIN.Types.Identity.csproj" />
         <ProjectReference Include="D:\LIN Services\AccesoAPI\LIN.Access.Auth\LIN.Access.Auth.csproj" />
         <ProjectReference Include="D:\LIN Services\AccesoAPI\LIN.Access.Communication\LIN.Access.Communication.csproj" />
-        <ProjectReference Include="D:\LIN Services\Tipos\LIN.Types.Auth\LIN.Types.Auth.csproj" />
         <ProjectReference Include="D:\LIN Services\Tipos\LIN.Types.Communication\LIN.Types.Communication.csproj" />
         <ProjectReference Include="D:\LIN Services\Tipos\LIN.Types.Emma\LIN.Types.Emma.csproj" />
         <ProjectReference Include="D:\LIN Services\Tipos\LIN.Types\LIN.Types.csproj" />

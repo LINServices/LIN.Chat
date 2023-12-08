@@ -139,7 +139,7 @@ public partial class Chat
     /// <summary>
     /// Lista de resultados de búsqueda.
     /// </summary>
-    private List<Types.Auth.Abstracts.SessionModel<ProfileModel>>? SearchResult { get; set; }
+    private List<Types.Identity.Abstracts.SessionModel<ProfileModel>>? SearchResult { get; set; }
 
 
 

@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SILF.Script", "D:\SILF\SILF
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Types", "D:\LIN Services\Tipos\LIN.Types\LIN.Types.csproj", "{07D35645-78F9-40E0-B6DC-3D079224681F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Types.Auth", "D:\LIN Services\Tipos\LIN.Types.Auth\LIN.Types.Auth.csproj", "{7377DD66-4773-4E92-98F3-555DD4A4E43F}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Types.Emma", "D:\LIN Services\Tipos\LIN.Types.Emma\LIN.Types.Emma.csproj", "{9CEAFCF5-1106-47BF-968B-7FC9E5124384}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Types.Communication", "D:\LIN Services\Tipos\LIN.Types.Communication\LIN.Types.Communication.csproj", "{474B3336-09FC-4D7E-8D16-4D01EDC29683}"
@@ -22,6 +20,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Access.Communication", "D:\LIN Services\AccesoAPI\LIN.Access.Communication\LIN.Access.Communication.csproj", "{1AB5A085-CC55-41FE-8B8D-E6AB83070ACD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Modules", "..\..\Tipos\LIN.Modules\LIN.Modules.csproj", "{B2C69174-018A-4C3E-B01B-4C79AEBA57A0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Types.Identity", "..\..\Tipos\LIN.Types.Identity\LIN.Types.Identity\LIN.Types.Identity.csproj", "{4441B9ED-0F5C-481F-B37E-2112FAC9FFA0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,10 +45,6 @@ Global
 		{07D35645-78F9-40E0-B6DC-3D079224681F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{07D35645-78F9-40E0-B6DC-3D079224681F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{07D35645-78F9-40E0-B6DC-3D079224681F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7377DD66-4773-4E92-98F3-555DD4A4E43F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7377DD66-4773-4E92-98F3-555DD4A4E43F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7377DD66-4773-4E92-98F3-555DD4A4E43F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7377DD66-4773-4E92-98F3-555DD4A4E43F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9CEAFCF5-1106-47BF-968B-7FC9E5124384}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9CEAFCF5-1106-47BF-968B-7FC9E5124384}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9CEAFCF5-1106-47BF-968B-7FC9E5124384}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -69,6 +65,10 @@ Global
 		{B2C69174-018A-4C3E-B01B-4C79AEBA57A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2C69174-018A-4C3E-B01B-4C79AEBA57A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2C69174-018A-4C3E-B01B-4C79AEBA57A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4441B9ED-0F5C-481F-B37E-2112FAC9FFA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4441B9ED-0F5C-481F-B37E-2112FAC9FFA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4441B9ED-0F5C-481F-B37E-2112FAC9FFA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4441B9ED-0F5C-481F-B37E-2112FAC9FFA0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

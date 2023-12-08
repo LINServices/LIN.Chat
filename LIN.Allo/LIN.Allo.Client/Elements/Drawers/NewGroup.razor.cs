@@ -55,14 +55,14 @@ public partial class NewGroup
     /// <summary>
     /// Items seleccionados.
     /// </summary>
-    private List<Types.Auth.Abstracts.SessionModel<ProfileModel>> SelectedItems { get; set; } = new();
+    private List<Types.Identity.Abstracts.SessionModel<ProfileModel>> SelectedItems { get; set; } = new();
 
 
 
     /// <summary>
     /// Lista de modelos de integrantes.
     /// </summary>
-    private List<Types.Auth.Abstracts.SessionModel<ProfileModel>> MemberModels { get; set; } = new();
+    private List<Types.Identity.Abstracts.SessionModel<ProfileModel>> MemberModels { get; set; } = new();
 
 
 
@@ -128,7 +128,7 @@ public partial class NewGroup
     /// Al seleccionar un elemento.
     /// </summary>
     /// <param name="model">Modelo seleccionado.</param>
-    private void OnSelect(Types.Auth.Abstracts.SessionModel<ProfileModel> model)
+    private void OnSelect(Types.Identity.Abstracts.SessionModel<ProfileModel> model)
     {
         // Si existe.
         var have = SelectedItems.Where(T => T.Account.ID == model.Account.ID).Any();
@@ -146,7 +146,7 @@ public partial class NewGroup
     /// Al eliminar.
     /// </summary>
     /// <param name="model">Modelo.</param>
-    private void OnRemove(Types.Auth.Abstracts.SessionModel<ProfileModel> model)
+    private void OnRemove(Types.Identity.Abstracts.SessionModel<ProfileModel> model)
     {
         SelectedItems = SelectedItems.Where(T => T.Account.ID != model.Account.ID).ToList();
         StateHasChanged();
