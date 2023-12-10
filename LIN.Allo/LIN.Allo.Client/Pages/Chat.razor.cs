@@ -311,7 +311,7 @@ public partial class Chat
         // Valida el login
         if (!Access.Communication.Session.IsOpen)
         {
-            navigationManager.NavigateTo("/login");
+            //navigationManager.NavigateTo("/login");
             return;
         }
 
