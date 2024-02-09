@@ -1,4 +1,5 @@
 ﻿using LIN.Access.Communication;
+using LIN.Types.Cloud.Identity.Abstracts;
 
 namespace LIN.Allo.Client.Elements.Drawers;
 
@@ -11,7 +12,7 @@ public partial class Members
 
 
     /// <summary>
-    /// Nombre del grupo.
+    /// Name del grupo.
     /// </summary>
     public string Name { get; set; } = string.Empty;
 
@@ -27,14 +28,14 @@ public partial class Members
     /// <summary>
     /// Lista de modelos de miembros.
     /// </summary>
-    private List<Types.Identity.Abstracts.SessionModel<MemberChatModel>> MemberModels { get; set; } = [];
+    private List<SessionModel<MemberChatModel>> MemberModels { get; set; } = [];
 
 
 
     /// <summary>
     /// Cache de miembros.
     /// </summary>
-    private List<(int, List<Types.Identity.Abstracts.SessionModel<MemberChatModel>>)> Cache { get; set; } = [];
+    private List<(int, List<SessionModel<MemberChatModel>>)> Cache { get; set; } = [];
 
 
 
@@ -98,7 +99,7 @@ public partial class Members
     }
 
 
-    private List<Types.Identity.Abstracts.SessionModel<ProfileModel>> SearchResult { get; set; } = new();
+    private List<SessionModel<ProfileModel>> SearchResult { get; set; } = new();
 
     /// <summary>
     /// Buscar elementos.
@@ -156,7 +157,7 @@ public partial class Members
     /// <summary>
     /// Items seleccionados.
     /// </summary>
-    private List<Types.Identity.Abstracts.SessionModel<ProfileModel>> NewMembers { get; set; } = new();
+    private List<SessionModel<ProfileModel>> NewMembers { get; set; } = new();
 
 
 
@@ -164,14 +165,14 @@ public partial class Members
     /// Al seleccionar un elemento.
     /// </summary>
     /// <param name="model">Modelo seleccionado.</param>
-    private void OnSelect(Types.Identity.Abstracts.SessionModel<ProfileModel> model)
+    private void OnSelect(SessionModel<ProfileModel> model)
     {
         // Si existe.
-        var have = NewMembers.Where(T => T.Account.ID == model.Account.ID).Any();
+        var have = NewMembers.Where(T => T.Account.Id == model.Account.Id).Any();
 
         if (have)
         {
-            NewMembers.RemoveAll(T => T.Account.ID == model.Account.ID);
+            NewMembers.RemoveAll(T => T.Account.Id == model.Account.Id);
             StateHasChanged();
             return;
         }

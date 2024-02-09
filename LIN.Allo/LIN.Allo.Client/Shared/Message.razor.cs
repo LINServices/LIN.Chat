@@ -75,9 +75,6 @@ public partial class Message
         return Regex.IsMatch(texto, patron);
     }
 
-
-
-
     private List<string> SepararCadenas()
     {
 

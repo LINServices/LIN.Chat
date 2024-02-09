@@ -1,4 +1,6 @@
-﻿namespace LIN.Allo.Client.Pages;
+﻿using System.Text.Json;
+
+namespace LIN.Allo.Client.Pages;
 
 
 public partial class Chat
@@ -64,7 +66,7 @@ public partial class Chat
     /// <summary>
     /// Imagen de perfil en base64
     /// </summary>
-    private static string Img64 => Convert.ToBase64String(Access.Communication.Session.Instance.Account.Perfil);
+    private static string Img64 => Convert.ToBase64String(Access.Communication.Session.Instance.Account.Profile);
 
 
     /// <summary>
@@ -139,7 +141,7 @@ public partial class Chat
     /// <summary>
     /// Lista de resultados de búsqueda.
     /// </summary>
-    private List<Types.Identity.Abstracts.SessionModel<ProfileModel>>? SearchResult { get; set; }
+    private List<SessionModel<ProfileModel>>? SearchResult { get; set; }
 
 
 
@@ -200,52 +202,61 @@ public partial class Chat
     public static void OnReceiveMessage(MessageModel e)
     {
 
-        // Obtiene la conversación.
-        var element = Conversations.Where(c => c.Id == e.Conversacion.ID).FirstOrDefault();
-
-        // No existe el elemento.
-        if (element == null)
-            return;
-
-        // Obtiene el mensaje.
-        var message = element.Chat.Conversation.Mensajes.FirstOrDefault(m => m.Guid == e.Guid);
-
-        // El mensaje no existía.
-        if (message == null)
-            element.Chat.Conversation.Mensajes.Add(e);
-
-        // El mensaje ya se había enviado.
-        else
+        try
         {
-            // Confirmar el mensaje UI.
-            var inTask = MessageTasker.FirstOrDefault(T => T.MessageModel.Guid == e.Guid);
-            inTask?.UnLocal();
+            // Obtiene la conversación.
+            var element = Conversations.Where(c => c.Id == e.Conversacion.ID).FirstOrDefault();
+
+            // No existe el elemento.
+            if (element == null)
+                return;
+
+            // Obtiene el mensaje.
+            var message = element.Chat.Conversation.Mensajes.FirstOrDefault(m => m.Guid == e.Guid);
+
+            // El mensaje no existía.
+            if (message == null)
+                element.Chat.Conversation.Mensajes.Add(e);
+
+            // El mensaje ya se había enviado.
+            else
+            {
+                // Confirmar el mensaje UI.
+                var inTask = MessageTasker.FirstOrDefault(T => T.MessageModel.Guid == e.Guid);
+                inTask?.UnLocal();
+            }
+
+            // Si el mensaje es un método.
+            if (e.Contenido.StartsWith("#"))
+            {
+                var app = new SILF.Script.App(e.Contenido.Remove(0, 1));
+                //  app.AddDefaultFunctions(Online.Scripts.Actions);
+                app.Run();
+            }
+
+            element.Control?.Render();
+
+            // Si la pagina actual es la misma a la cual llego el mensaje
+            if (ChatPage?.Iam.Conversation.ID == element.Id)
+            {
+                ChatPage?.Render();
+                ChatPage?.ScrollToBottom();
+                return;
+            }
+
+            // Mostrar badge de nuevo mensaje.
+            if (element.Control != null)
+            {
+                element.Control.IsNew = true;
+                element.Control.Render();
+            }
+        }
+        catch
+        {
+
         }
 
-        // Si el mensaje es un método.
-        if (e.Contenido.StartsWith("#"))
-        {
-            var app = new SILF.Script.App(e.Contenido.Remove(0, 1));
-            //  app.AddDefaultFunctions(Online.Scripts.Actions);
-            app.Run();
-        }
 
-        element.Control?.Render();
-
-        // Si la pagina actual es la misma a la cual llego el mensaje
-        if (ChatPage?.Iam.Conversation.ID == element.Id)
-        {
-            ChatPage?.Render();
-            ChatPage?.ScrollToBottom();
-            return;
-        }
-        
-        // Mostrar badge de nuevo mensaje.
-        if (element.Control != null)
-        {
-            element.Control.IsNew = true;
-            element.Control.Render();
-        }
 
     }
 
@@ -333,80 +344,89 @@ public partial class Chat
     private async void ForceRetrieveData()
     {
 
-        ChatSection.Hub!.OnReceiveMessage ??= new();
-        ChatSection.Hub!.OnReceiveMessage.Clear();
-        IsConversationsLoad = false;
-        StateHasChanged();
-
-        // Variables
-        var profile = Access.Communication.Session.Instance.Profile;
-        var token = Access.Communication.Session.Instance.Token ?? string.Empty;
-
-
-        // Obtiene las conversaciones actuales
-        var chats = await Access.Communication.Controllers.Conversations.ReadAll(token, Access.Communication.Session.Instance.AccountToken);
-
-        // 
-        if (chats.AlternativeObject is List<AccountModel> lista)
+        try
         {
-            accounts.AddRange(lista);
-        }
-
-
-        // Si hubo un error
-        if (chats.Response != Responses.Success)
-        {
-            IsConversationsLoad = true;
+            ChatSection.Hub!.OnReceiveMessage ??= new();
+            ChatSection.Hub!.OnReceiveMessage.Clear();
+            IsConversationsLoad = false;
             StateHasChanged();
-            return;
-        }
+
+            // Variables
+            var profile = Access.Communication.Session.Instance.Profile;
+            var token = Access.Communication.Session.Instance.Token ?? string.Empty;
 
 
-        // Lista
-        Conversations.Clear();
+            // Obtiene las conversaciones actuales
+            var chats = await Access.Communication.Controllers.Conversations.ReadAll(token, Access.Communication.Session.Instance.AccountToken);
 
-        ChatSection.Hub!.OnReceiveMessage?.Add(OnReceiveMessage);
-
-
-        // Suscribir los eventos del hub
-        foreach (var conversation in chats.Models)
-        {
-            // Configuración del modelo
-            conversation.Profile = profile;
-            conversation.Conversation.Mensajes ??= new();
-
-            // Cambiar propiedades.
-            if (conversation.Conversation.Type == Types.Communication.Enumerations.ConversationsTypes.Personal && conversation.Conversation.Members.Count == 2)
+            // 
+            chats.AlternativeObject = JsonSerializer.Deserialize<List<AccountModel>>(chats.AlternativeObject.ToString() ?? "");
+            if (chats.AlternativeObject is List<AccountModel> lista)
             {
-                var other = conversation.Conversation.Members.FirstOrDefault(t => t.Profile.ID != Access.Communication.Session.Instance.Profile.ID);
-
-                if (other != null)
-                {
-                    var data = accounts.FirstOrDefault(t => t.ID == other.Profile.AccountID);
-
-                    if (data != null)
-                        conversation.Conversation.Name = data.Nombre;
-                }
-
+                accounts.AddRange(lista);
             }
 
 
-            // Suscribir evento.
-            _ = ChatSection.Hub!.JoinGroup(conversation.Conversation.ID);
-
-            // Agregar los estados.
-            Conversations.Add(new()
+            // Si hubo un error
+            if (chats.Response != Responses.Success)
             {
-                Id = conversation.Conversation.ID,
-                Chat = conversation,
-                Control = null,
-                IsLoad = false
-            });
+                IsConversationsLoad = true;
+                StateHasChanged();
+                return;
+            }
+
+
+            // Lista
+            Conversations.Clear();
+
+            ChatSection.Hub!.OnReceiveMessage?.Add(OnReceiveMessage);
+
+
+            // Suscribir los eventos del hub
+            foreach (var conversation in chats.Models)
+            {
+                // Configuración del modelo
+                conversation.Profile = profile;
+                conversation.Conversation.Mensajes ??= new();
+
+                // Cambiar propiedades.
+                if (conversation.Conversation.Type == Types.Communication.Enumerations.ConversationsTypes.Personal && conversation.Conversation.Members.Count == 2)
+                {
+                    var other = conversation.Conversation.Members.FirstOrDefault(t => t.Profile.ID != Access.Communication.Session.Instance.Profile.ID);
+
+                    if (other != null)
+                    {
+                        var data = accounts.FirstOrDefault(t => t.Id == other.Profile.AccountID);
+
+                        if (data != null)
+                            conversation.Conversation.Name = data.Name;
+                    }
+
+                }
+
+                // Suscribir evento.
+                _ = ChatSection.Hub!.JoinGroup(conversation.Conversation.ID);
+
+                // Agregar los estados.
+                Conversations.Add(new()
+                {
+                    Id = conversation.Conversation.ID,
+                    Chat = conversation,
+                    Control = null,
+                    IsLoad = false
+                });
+            }
+
+            // Actualiza la vista
+            IsConversationsLoad = true;
+            StateHasChanged();
+        }
+        catch (Exception ex)
+        {
+            var s = ex;
         }
 
-        // Actualiza la vista
-        IsConversationsLoad = true;
-        StateHasChanged();
+
 
     }
 

@@ -231,7 +231,7 @@
         if (contraseña.Length < 4)
         {
             ShowControls();
-            ShowError("La contraseña debe tener mas de 4 digitos");
+            ShowError("La contraseña debe tener mas de 4 dígitos");
             return;
         }
 
@@ -241,12 +241,12 @@
         // Model
         AccountModel modelo = new()
             {
-                Nombre = nombre,
+                Name = nombre,
                 Identity= new()
                 {
                     Unique = usuario
                 },
-                Contraseña = contraseña
+                Password = contraseña
             };
 
         // Creacion

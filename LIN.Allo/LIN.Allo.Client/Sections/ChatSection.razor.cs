@@ -72,6 +72,9 @@ public partial class ChatSection
     private void SendMessage()
     {
 
+        if (string.IsNullOrWhiteSpace(Message))
+            return;
+
         // Id único.
         var guid = Guid.NewGuid().ToString();
 

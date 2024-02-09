@@ -32,7 +32,7 @@ public partial class Control
     /// </summary>
     public bool IsNew = false;
 
-  
+
 
 
     /// <summary>
@@ -63,6 +63,32 @@ public partial class Control
     {
         IsSelect = false;
         Render();
+    }
+
+
+
+
+    public string GetPicture(AccountModel? profile)
+    {
+
+        string final;
+
+        if (profile != null && profile.Profile.Length > 0)
+        {
+            final = $"data:image/png;base64,{Convert.ToBase64String(profile.Profile)}" ;
+        }
+        else
+        {
+            final = "./img/people.png";
+        }
+
+        return final;
+
+
+
+
+
+
     }
 
 

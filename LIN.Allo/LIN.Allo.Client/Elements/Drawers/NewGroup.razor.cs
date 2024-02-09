@@ -1,4 +1,6 @@
-﻿namespace LIN.Allo.Client.Elements.Drawers;
+﻿using LIN.Types.Cloud.Identity.Abstracts;
+
+namespace LIN.Allo.Client.Elements.Drawers;
 
 public partial class NewGroup
 {
@@ -55,14 +57,14 @@ public partial class NewGroup
     /// <summary>
     /// Items seleccionados.
     /// </summary>
-    private List<Types.Identity.Abstracts.SessionModel<ProfileModel>> SelectedItems { get; set; } = new();
+    private List<SessionModel<ProfileModel>> SelectedItems { get; set; } = new();
 
 
 
     /// <summary>
     /// Lista de modelos de integrantes.
     /// </summary>
-    private List<Types.Identity.Abstracts.SessionModel<ProfileModel>> MemberModels { get; set; } = new();
+    private List<SessionModel<ProfileModel>> MemberModels { get; set; } = new();
 
 
 
@@ -107,7 +109,7 @@ public partial class NewGroup
 
 
     /// <summary>
-    /// Nombre de la conversación.
+    /// Name de la conversación.
     /// </summary>
     private string Name { get; set; } = string.Empty;
 
@@ -128,10 +130,10 @@ public partial class NewGroup
     /// Al seleccionar un elemento.
     /// </summary>
     /// <param name="model">Modelo seleccionado.</param>
-    private void OnSelect(Types.Identity.Abstracts.SessionModel<ProfileModel> model)
+    private void OnSelect(SessionModel<ProfileModel> model)
     {
         // Si existe.
-        var have = SelectedItems.Where(T => T.Account.ID == model.Account.ID).Any();
+        var have = SelectedItems.Where(T => T.Account.Id == model.Account.Id).Any();
 
         if (have)
             return;
@@ -146,9 +148,9 @@ public partial class NewGroup
     /// Al eliminar.
     /// </summary>
     /// <param name="model">Modelo.</param>
-    private void OnRemove(Types.Identity.Abstracts.SessionModel<ProfileModel> model)
+    private void OnRemove(SessionModel<ProfileModel> model)
     {
-        SelectedItems = SelectedItems.Where(T => T.Account.ID != model.Account.ID).ToList();
+        SelectedItems = SelectedItems.Where(T => T.Account.Id != model.Account.Id).ToList();
         StateHasChanged();
     }
 

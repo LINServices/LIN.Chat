@@ -70,13 +70,13 @@
 
                 
 
-                @foreach (var e in SearchResult ?? new List<Types.Identity.Abstracts.SessionModel<ProfileModel>>())
+                @foreach (var e in SearchResult ?? new List<SessionModel<ProfileModel>>())
                 {
 
-                    var x = !MemberModels.Where(T => T.Account.ID == e.Account.ID).Any();
+                    var x = !MemberModels.Where(T => T.Account.Id == e.Account.Id).Any();
                     var find = NewMembers.Where(t => t.Profile.ID == e.Profile.ID).Any();
 
-                    if (!find && x && Access.Communication.Session.Instance.Profile.AccountID != e.Account.ID)
+                    if (!find && x && Access.Communication.Session.Instance.Profile.AccountID != e.Account.Id)
                     {
 
                         <Profile e="@e" @ref=SearchResultControl OnSelect="OnSelect" />
@@ -99,7 +99,7 @@
 
     @*Renderizado de controles*@
     <div class="mt-5">
-        @foreach (var e in MemberModels ?? new List<Types.Identity.Abstracts.SessionModel<MemberChatModel>>())
+        @foreach (var e in MemberModels ?? new List<SessionModel<MemberChatModel>>())
         {
             <Member e="@e" @ref=MemberControl />
         }

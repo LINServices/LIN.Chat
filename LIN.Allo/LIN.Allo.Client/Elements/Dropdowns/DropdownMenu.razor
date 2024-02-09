@@ -7,7 +7,7 @@
     /// <summary>
     /// Imagen de perfil en base64
     /// </summary>
-    private string Img64 => Convert.ToBase64String(Access.Communication.Session.Instance.Account.Perfil);
+    private string Img64 => Convert.ToBase64String(Access.Communication.Session.Instance.Account.Profile);
 
 
 
@@ -31,40 +31,10 @@
 
 
         <div class="flex flex-row items-center mt-1">
-            <span class="block text-sm text-gray-900">Hola, @Access.Communication.Session.Instance.Account.Nombre</span>
+            <span class="block text-sm text-gray-900">Hola, @Access.Communication.Session.Instance.Account.Name</span>
         </div>
 
-        <div class="flex flex-row items-center">
-
-            <span class="block text-sm text-gray-500 truncate">@@@(Access.Communication.Session.Instance.Account.Identity.Unique)</span>
-
-            @if (Access.Communication.Session.Instance.Account.Insignia == AccountBadges.Verified)
-            {
-                <img class="ml-1 self-center" src="./img/verificado.png" style="width: 10px !important; height: 10px !important"/>
-            }
-            else if (Access.Communication.Session.Instance.Account.Insignia == AccountBadges.VerifiedGold)
-            {
-                <img class="ml-1 self-center" src="./img/verificadogold.png" style="width: 10px !important; height: 10px !important"/>
-            }
-
-        </div>
-
-
-        @if (Access.Communication.Session.Instance.Account.Rol != AccountRoles.Undefined)
-        {
-            <div class="h-6 bg-blue-600 rounded-xl flex items-center justify-center hover:bg-blue-300 mt-2">
-
-                @if (Access.Communication.Session.Instance.Account.Rol == AccountRoles.User)
-                {
-                    <label class="text-xs text-white pl-3 pr-3">Usuario</label>
-                }
-                else if (Access.Communication.Session.Instance.Account.Rol == AccountRoles.Admin)
-                {
-                    <label class="text-xs text-white pl-3 pr-3">Administrador</label>
-                }
-
-            </div>
-        }
+       
 
 
     </div>
@@ -76,12 +46,7 @@
             <img src="img/Products/chat.png"/>
         </button>
 
-        @if (Access.Communication.Session.Instance.Account.OrganizationAccess != null)
-        {
-            <button class="bg-transparent h-7 w-7 rounded-lg hover:bg-gray-100 p-1 hover:p-2">
-                <img src="img/Products/empresa.png"/>
-            </button>
-        }
+     
 
         <button class="bg-transparent h-7 w-7 rounded-lg hover:bg-gray-100 p-1 hover:p-2">
             <img src="img/map.png"/>

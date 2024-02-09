@@ -11,18 +11,17 @@
         @if (Member.Conversation.Members != null && Member.Conversation.Type == Types.Communication.Enumerations.ConversationsTypes.Personal && Member.Conversation.Members.Count >= 1)
         {
 
-            var member = Member.Conversation.Members.FirstOrDefault(t => t.Profile.AccountID != LIN.Access.Communication.Session.Instance.Account.ID);
+            var member = Member.Conversation.Members.FirstOrDefault(t => t.Profile.AccountID != LIN.Access.Communication.Session.Instance.Account.Id);
 
-            var profile = LIN.Allo.Client.Pages.Chat.accounts.Where(a => a.ID == member.Profile.AccountID).FirstOrDefault();
+            var profile = LIN.Allo.Client.Pages.Chat.accounts.Where(a => a.Id == member?.Profile.AccountID).FirstOrDefault();
 
-            string img64 = Convert.ToBase64String(profile?.Perfil ?? []);
 
             <button type="button" class="flex bg-white dark:bg-zinc-700 text-sm rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button">
                 <span class="sr-only">Open</span>
-                <img class="w-9 h-9 p-0.5 rounded-full ring-2 ring-gray-300" src="data:image/png;base64,@img64">
+                <img class="w-9 h-9 p-0.5 rounded-full ring-2 ring-gray-300" src="@GetPicture(profile)">
             </button>
 
-            conversationName = profile?.Nombre ?? "Error";
+           conversationName = profile?.Name ?? "Desconocido";
 
         }
 
@@ -47,10 +46,9 @@
 
             <label class="text-base font-bold text-gray-700 dark:text-gray-300">@(conversationName)</label>
 
-            @try
-            {
+            @{
                 var message = Member.Conversation.Mensajes.LastOrDefault();
-                string bs64 = Convert.ToBase64String(Chat.accounts.FirstOrDefault(t => t.ID == message.Remitente.AccountID)?.Perfil ?? []);
+                string bs64 = Convert.ToBase64String(Chat.accounts.FirstOrDefault(t => t.Id == message?.Remitente.AccountID)?.Profile ?? []);
                 <div class="flex">
 
                     @if (bs64 != "")
@@ -59,25 +57,24 @@
                     }
 
                     @{
-                        string final = message.Contenido;
+                        string final = message?.Contenido ?? "";
 
-                        if(message.Contenido.Length > 25)
+                        if (message?.Contenido.Length > 25)
                         {
                             final = "";
                             message.Contenido.Take(25).ToList().ForEach((a) => final += a);
                             final += "...";
                         }
 
-                        
+
                     }
 
 
                     <label class="text-xs -mt-1 text-gray-500 dark:text-gray-300">@(final)</label>
                 </div>
+
             }
-            catch
-            {
-            }
+               
         </div>
 
 

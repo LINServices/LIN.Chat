@@ -13,13 +13,13 @@
 
 
     [Parameter]
-    public Types.Identity.Abstracts.SessionModel<MemberChatModel>? e { get; set; } = null;
+    public SessionModel<MemberChatModel>? e { get; set; } = null;
 
 
     public IsOnlineResult? isOnline = null;
 
 
-    private string Img64 => Convert.ToBase64String(e.Account.Perfil);
+    private string Img64 => Convert.ToBase64String(e.Account.Profile);
 
 
 
@@ -85,7 +85,7 @@
     <div class="flex justify-end items-center mr-3 hover:cursor-pointer">
         <span class="inline-flex justify-center items-center bg-red-100 hover:bg-red-200 text-red-800 hover:text-red-950 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full w-28">
             <span class="w-2 h-2 mr-1 bg-red-500 rounded-full"></span>
-            @(e.Account.ID == Access.Communication.Session.Instance.Account.ID ? "Salir" : "Expulsar")
+            @(e.Account.Id == Access.Communication.Session.Instance.Account.Id ? "Salir" : "Expulsar")
         </span>
     </div>
 
@@ -109,7 +109,7 @@
             Cache.RemoveAll(t => t.Item1 == Id);
 
             Console.WriteLine("Usando INTERNET");
-            var x = await Access.Communication.Controllers.Conversations.IsOnline(Id);
+            var x = await Access.Communication.Controllers.Conversations.IsOnline(Id, LIN.Access.Communication.Session.Instance.Token);
 
             Cache.Add(new(Id, x.Model, DateTime.Now));
             isOnline = x.Model;

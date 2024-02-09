@@ -1,19 +1,19 @@
 ﻿@code {
 
     [Parameter]
-    public Types.Identity.Abstracts.SessionModel<ProfileModel>? e { get; set; } = null;
+    public Types.Cloud.Identity.Abstracts.SessionModel<ProfileModel>? e { get; set; } = null;
 
 
     public IsOnlineResult? isOnline = null;
 
 
-    private string Img64 => Convert.ToBase64String(e.Account.Perfil);
+    private string Img64 => Convert.ToBase64String(e.Account.Profile);
 
     [Parameter]
     public int State { get; set; } = 1;
 
     [Parameter]
-    public Action<Types.Identity.Abstracts.SessionModel<ProfileModel>> OnSelect { get; set; } = (e) =>
+    public Action<SessionModel<ProfileModel>> OnSelect { get; set; } = (e) =>
     {
         Console.WriteLine("None");
     };
@@ -101,7 +101,7 @@
 
     async void Confirm(int id)
     {
-        var x = await Access.Communication.Controllers.Conversations.IsOnline(id);
+        var x = await Access.Communication.Controllers.Conversations.IsOnline(id, LIN.Access.Communication.Session.Instance.Token);
         isOnline = x.Model;
         StateHasChanged();
     }

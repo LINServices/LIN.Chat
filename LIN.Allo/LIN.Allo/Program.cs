@@ -6,6 +6,18 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
    .AddInteractiveWebAssemblyComponents();
 
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAnyOrigin",
+        builder =>
+        {
+            builder.AllowAnyOrigin()
+                   .AllowAnyHeader()
+                   .AllowAnyMethod();
+        });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -18,6 +30,9 @@ else
     app.UseExceptionHandler("/Error", true);
     app.UseHsts();
 }
+
+
+app.UseCors("AllowAnyOrigin");
 
 app.UseHttpsRedirection();
 

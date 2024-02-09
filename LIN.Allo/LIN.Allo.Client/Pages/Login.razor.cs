@@ -195,7 +195,7 @@ public partial class Login
 
 
 
-    Access.Auth.Hubs.PassKeyHub? hub;
+   Access.Auth.Hubs.PassKeyHub? hub;
 
     /// <summary>
     /// Inicia sesión
@@ -217,7 +217,7 @@ public partial class Login
 
 
         // Suscribir al Hub
-        hub = new(User, "Q333Q");
+        hub = new(User, "Q333Q", "");
 
         await hub.Suscribe();
         var reive = false;

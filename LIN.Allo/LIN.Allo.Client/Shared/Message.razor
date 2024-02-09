@@ -27,7 +27,7 @@
                         }
                         else
                         {
-                            string base64 = Convert.ToBase64String(account.Perfil);
+                            string base64 = Convert.ToBase64String(account.Profile);
                             <span class="flex justify-center items-center h-6 w-6 select-none p-1 rounded-full @(pair.StartsWith("@") && IsOther ? "bg-zinc-300 dark:bg-zinc-700" : "bg-indigo-400")">
                                 <img class="rounded-full h-4" src="data:image/png;base64,@base64" />
                             </span>

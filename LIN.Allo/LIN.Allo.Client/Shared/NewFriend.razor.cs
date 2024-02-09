@@ -1,4 +1,6 @@
-﻿namespace LIN.Allo.Client.Shared;
+﻿using LIN.Types.Cloud.Identity.Abstracts;
+
+namespace LIN.Allo.Client.Shared;
 
 
 public partial class NewFriend
@@ -26,7 +28,7 @@ public partial class NewFriend
     /// <summary>
     /// Obtiene la imagen en Base64.
     /// </summary>
-    private string Img64 => Convert.ToBase64String(UserInformation?.Account.Perfil ?? []);
+    private string Img64 => Convert.ToBase64String(UserInformation?.Account.Profile ?? []);
 
 
 
