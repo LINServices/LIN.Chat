@@ -5,8 +5,24 @@
     <div class="flex p-3 w-full items-center">
 
         @* Imagen de perfil *@
-        <img class="w-9 h-9 mr-2 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-400" src="data:image/png;base64,@Img64" alt="Bordered avatar">
+        @if (LIN.Access.Communication.Session.Instance.Account.Profile.Length <= 0)
+        {
+            <div class="relative inline-block mr-2">
+                <span class="inline-flex items-center justify-center w-9 h-9 border rounded-full bg-zinc-100 font-bold text-zinc-600 leading-none dark:bg-white dark:text-gray-800">
+                    @(LIN.Modules.Text.GetInitials(UserInformation?.Profile?.Alias))
+                </span>
+                <span class="absolute bottom-0 end-0 block h-2.5 w-2.5 rounded-full transform  ring-2 ring-white bg-green-500 text-[8px]">
+                </span>
+            </div>
+        }
+        else
+        {
+            <img class="w-9 h-9 mr-2 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-400" src="data:image/png;base64,@Img64" alt="Bordered avatar">
+        }
 
+
+
+        
         @* Usuario y nombre *@
         <div class="flex flex-col">
             <label class="text-sm font-bold dark:text-white">@UserInformation.Profile.Alias</label>

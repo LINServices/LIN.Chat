@@ -40,11 +40,9 @@
 
 <div>
 
-    <div class="w-full h-32 bg-[#F8F7FB] dark:bg-[#242424]">
-    </div>
 
-    <div class="w-screen" style="margin-top: -128px;">
-        <div class="h-screen">
+    <div class="w-screen">
+        <div class="h-dvh min-h-dvh max-h-dvh">
             <div class="flex flex-row h-full">
 
                 @* Left *@
@@ -55,15 +53,32 @@
                         <div class="flex items-center">
 
                             @* Dropdown Open *@
-                            <button @onclick="E" type="button" class="flex bg-white dark:bg-zinc-700 text-sm rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button">
+                            @if (Img64.Length <= 0)
+                            {
+
+                                <div class="relative inline-flex items-center justify-center w-9 h-9 overflow-hidden bg-zinc-200 rounded-full dark:bg-gray-600 border">
+                                    <span class="font-medium text-gray-600 dark:text-gray-300">@LIN.Modules.Text.GetInitials(LIN.Access.Communication.Session.Instance.Account.Name)</span>
+                                </div>
+
+                            }
+                            else
+                            {
+                                 <button @onclick="E" type="button" class="flex bg-white dark:bg-zinc-700 text-sm rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button">
                                 <span class="sr-only">Open</span>
-                                <img class="w-8 h-8 p-1 rounded-full ring-2 ring-gray-300" src="data:image/png;base64,@Img64">
+
+                             
+                                    <img class="w-8 h-8 p-1 rounded-full ring-2 ring-gray-300" src="data:image/png;base64,@Img64">
+                                
                             </button>
+                            }
+
+
+                           
 
                             @* Datos personales *@
-                            <div class="flex flex-col">
-                                <label class="ml-3 text-sm font-bold dark:text-gray-300">@Access.Communication.Session.Instance.Profile.Alias</label>
-                                <label class="ml-3 text-xs dark:text-gray-400" style="margin-top:-3px">@@@(Access.Communication.Session.Instance.Account.Identity.Unique)</label>
+                            <div class="flex flex-col ml-2">
+                                <label class="text-sm font-bold dark:text-gray-300">@Access.Communication.Session.Instance.Profile.Alias</label>
+                                <label class=" text-xs dark:text-gray-400" style="margin-top:-3px">@@@(Access.Communication.Session.Instance.Account.Identity.Unique)</label>
                             </div>
 
                         </div>
