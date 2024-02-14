@@ -3,7 +3,7 @@
 
 
 @* drawer component *@
-<div id="drawerIG-@UniqueId" class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full w-80 card-blur" tabindex="-1" aria-labelledby="drawer-right-label">
+<div id="drawerIG-@UniqueId" class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full min-w-80 w-80 backdrop-blur-xl bg-white/50 dark:bg-shark-500/50" tabindex="-1" aria-labelledby="drawer-right-label">
 
 
     @* Estado Creando. *@
@@ -57,31 +57,41 @@
         <div class="mb-6">
 
             @* Nombre *@
-            <div class="mb-6">
-                <label for="title" class="block mb-2 text-sm font-medium text-gray-900 ">Titulo</label>
-                <input @bind="Name" type="text" id="title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500" placeholder="Nombre de la conversación" required>
+            <div class="relative mb-5">
+                <div class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
+                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M5 2a.5.5 0 0 1 .5-.5c.862 0 1.573.287 2.06.566.174.099.321.198.44.286.119-.088.266-.187.44-.286A4.17 4.17 0 0 1 10.5 1.5a.5.5 0 0 1 0 1c-.638 0-1.177.213-1.564.434a3.5 3.5 0 0 0-.436.294V7.5H9a.5.5 0 0 1 0 1h-.5v4.272c.1.08.248.187.436.294.387.221.926.434 1.564.434a.5.5 0 0 1 0 1 4.17 4.17 0 0 1-2.06-.566A5 5 0 0 1 8 13.65a5 5 0 0 1-.44.285 4.17 4.17 0 0 1-2.06.566.5.5 0 0 1 0-1c.638 0 1.177-.213 1.564-.434.188-.107.335-.214.436-.294V8.5H7a.5.5 0 0 1 0-1h.5V3.228a3.5 3.5 0 0 0-.436-.294A3.17 3.17 0 0 0 5.5 2.5.5.5 0 0 1 5 2m2.648 10.645" />
+                    </svg>
+                </div>
+                <input @bind="Name" type="text" id="zip-input" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-sky-600 block w-full ps-10 p-2.5 focus:outline-none  dark:bg-shark-950 dark:border-zinc-700 dark:placeholder-gray-400 dark:text-white dark:focus:border-sky-600" placeholder="Nombre la conversación" required>
             </div>
 
-            @* Invitados *@
-            <div class="mb-4">
-                <label for="guests" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Invitados</label>
+
+            <div class="relative">
                 <div class="relative">
-                    <input @bind="Pattern" type="search" id="guests" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-indigo-500 p-2.5 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500" placeholder="Agregar usuario" required>
-                    <button @onclick="Search" type="button" class="absolute inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-indigo-700 rounded-lg right-2 bottom-2 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
-                        <svg class="w-3 h-3 mr-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
-                            <path d="M6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Zm11-3h-2V5a1 1 0 0 0-2 0v2h-2a1 1 0 1 0 0 2h2v2a1 1 0 0 0 2 0V9h2a1 1 0 1 0 0-2Z" />
+                    <input @bind="Pattern" type="text" id="zip-input" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-sky-600 block w-full p-2.5 focus:outline-none  dark:bg-shark-950 dark:border-zinc-700 dark:placeholder-gray-400 dark:text-white dark:focus:border-sky-600" placeholder="Buscar usuarios" required>
+
+                    <button @onclick="Search" type="button" class="absolute inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-sky-600 rounded-lg right-2 bottom-2 hover:bg-sky-800 focus:ring-4 focus:outline-none focus:ring-sky-300 dark:bg-sky-600 dark:hover:bg-sky-700 dark:focus:ring-sky-800">
+                        <svg class="w-3 h-3 mr-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
                         </svg>Buscar
                     </button>
                 </div>
             </div>
 
+
+
+
+
+
+
             @* Imágenes *@
-            <div class="flex mb-4 -space-x-4">
+            <div class="flex mb-4 -space-x-4 mt-5">
 
                 @if (SelectedItems.Count <= 0)
                 {
-                    <div class="flex rounded justify-center items-center border-dashed border-2 border-gray-800 w-full p-4">
-                        <label class="text-gray-700">Sin integrantes</label>
+                    <div class="flex rounded-lg justify-center items-center border-dashed border-2 border-gray-800 w-full py-7 dark:border-shark-300">
+                        <label class="text-gray-700 dark:text-shark-300">Sin integrantes</label>
                     </div>
                 }
                 else
@@ -96,7 +106,7 @@
             </div>
 
             @* Botón crear *@
-            <button @onclick="Crear" type="submit" class="text-white justify-center flex items-center bg-indigo-700 hover:bg-indigo-800 w-full focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2  focus:outline-none">
+            <button @onclick="Crear" type="submit" class="text-white justify-center flex items-center bg-sky-600 hover:bg-sky-800 w-full focus:ring-4 focus:ring-sky-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2  focus:outline-none">
                 Crear
             </button>
 

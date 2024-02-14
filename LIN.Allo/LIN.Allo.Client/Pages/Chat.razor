@@ -6,6 +6,15 @@
 @inject IJSRuntime JSRuntime
 
 
+<style>
+    .bg-image {
+        background-image: url('./img/playa.jpg');
+        background-size: cover;
+        background-position: center center;
+    }
+</style>
+
+
 @* Pantalla de carga *@
 @{
     Instance = this;
@@ -38,26 +47,24 @@
 <Members @ref="MemberDrawer" />
 
 
-<div>
-
-
+<div class="">
     <div class="w-screen">
         <div class="h-dvh min-h-dvh max-h-dvh">
-            <div class="flex flex-row h-full">
+            <div class="flex flex-row h-full ">
 
                 @* Left *@
                 <div class="w-full lg:w-1/3 flex @(ActualSection != 0 ? "hidden lg:flex" : "") flex-col">
 
                     @* Header *@
-                    <div class="px-5 pt-3 pb-1 flex flex-row justify-between items-center border-r bg-[#F8F7FB] dark:bg-[#141414] dark:border-zinc-600">
+                    <div class="px-5 pt-3 pb-1 flex flex-row justify-between items-center border-r bg-[#F8F7FB] dark:bg-shark-950 dark:border-shark-800">
                         <div class="flex items-center">
 
                             @* Dropdown Open *@
                             @if (Img64.Length <= 0)
                             {
 
-                                <div class="relative inline-flex items-center justify-center w-9 h-9 overflow-hidden bg-zinc-200 rounded-full dark:bg-gray-600 border">
-                                    <span class="font-medium text-gray-600 dark:text-gray-300">@LIN.Modules.Text.GetInitials(LIN.Access.Communication.Session.Instance.Account.Name)</span>
+                                <div class="relative inline-flex items-center justify-center w-9 h-9 overflow-hidden bg-zinc-200 rounded-full dark:bg-shark-800 border dark:border-shark-600">
+                                    <span class="font-medium text-gray-600 dark:text-shark-300">@LIN.Modules.Text.GetInitials(LIN.Access.Communication.Session.Instance.Account.Name)</span>
                                 </div>
 
                             }
@@ -77,8 +84,8 @@
 
                             @* Datos personales *@
                             <div class="flex flex-col ml-2">
-                                <label class="text-sm font-bold dark:text-gray-300">@Access.Communication.Session.Instance.Profile.Alias</label>
-                                <label class=" text-xs dark:text-gray-400" style="margin-top:-3px">@@@(Access.Communication.Session.Instance.Account.Identity.Unique)</label>
+                                <label class="text-sm font-bold dark:text-shark-200">@Access.Communication.Session.Instance.Profile.Alias</label>
+                                <label class=" text-xs dark:text-shark-300" style="margin-top:-3px">@@@(Access.Communication.Session.Instance.Account.Identity.Unique)</label>
                             </div>
 
                         </div>
@@ -105,7 +112,7 @@
                                         class="group cursor-pointer outline-none hover:rotate-90 duration-300">
                                     <svg xmlns="http://www.w3.org/2000/svg"
                                          viewBox="0 0 24 24"
-                                         class="stroke-zinc-600 dark:stroke-zinc-400 fill-none dark:group-hover:fill-zinc-800 group-hover:fill-zinc-200 group-active:stroke-zinc-200 group-active:fill-zinc-600 group-active:duration-0 duration-300 w-6 h-6">
+                                         class="stroke-zinc-600 dark:stroke-zinc-200 fill-none dark:group-hover:fill-zinc-800 group-hover:fill-zinc-200 group-active:stroke-zinc-200 group-active:fill-zinc-600 group-active:duration-0 duration-300 w-6 h-6">
                                         <path d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"
                                               stroke-width="1.5"></path>
 
@@ -120,17 +127,17 @@
 
 
                     @* Lista de conversaciones *@
-                    <div class="flex-1 overflow-auto border-r bg-[#F8F7FB] dark:bg-[#141414] dark:border-zinc-600">
+                    <div class="flex-1 overflow-auto border-r bg-[#F8F7FB] dark:bg-shark-950 dark:border-shark-800">
 
                         <div class="px-5 mt-4">
 
                             @* Titulo *@
-                            <label class="text-base font-bold text-gray-800 dark:text-gray-200">Conversaciones</label>
+                            <label class="text-base font-bold text-gray-800 dark:text-shark-200">Conversaciones</label>
 
 
                             @* Entrada de búsqueda *@
                             <div class="mt-2 mb-5">
-                                <input @oninput="Search" type="text" autocomplete="off" required="" class="block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-gray-900 placeholder-gray-400 focus:border-indigo-500 focus:bg-white focus:outline-none focus:ring-indigo-500 sm:text-sm dark:bg-zinc-800 dark:focus:bg-zinc-900 dark:text-gray-200" placeholder="Buscar">
+                                <input @oninput="Search" type="text" autocomplete="off" required="" class="block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-gray-900 placeholder-gray-400 focus:border-sky-600 focus:bg-white focus:outline-none focus:ring-sky-600 sm:text-sm dark:bg-shark-900 dark:focus:bg-shark-900 dark:text-shark-200 dark:border-shark-700" placeholder="Buscar">
                             </div>
 
 
@@ -159,8 +166,8 @@
                                 // Si no hay conversaciones.
                                 if (Conversations.Count <= 0 && !IsSearching)
                                 {
-                                    <div class="flex rounded justify-center items-center border-dashed border-2 border-gray-700 w-full p-3 mt-3 dark:border-gray-400">
-                                        <label class="text-gray-700 dark:text-gray-200">No tienes ninguna conversación</label>
+                                    <div class="flex rounded-lg justify-center items-center border-dashed border-2 border-gray-300 w-full py-10 mt-3 dark:border-shark-400">
+                                        <label class="text-gray-400 dark:text-shark-300">No tienes ninguna conversación</label>
                                     </div>
                                 }
 
@@ -170,7 +177,7 @@
                                     if (SearchResult == null)
                                     {
                                         <div class="flex items-center justify-center">
-                                            <div class="animate-spin inline-block w-6 h-6 border-[3px] border-current border-t-transparent text-indigo-600 rounded-full dark:text-indigo-500" role="status" aria-label="loading">
+                                            <div class="animate-spin inline-block w-6 h-6 border-[3px] border-current border-t-transparent text-sky-600 rounded-full dark:text-sky-500" role="status" aria-label="loading">
                                                 <span class="sr-only">Loading...</span>
                                             </div>
                                         </div>
@@ -220,7 +227,7 @@
                 </div>
 
                 @* Right *@
-                <div class="w-full @(ActualSection != 1 ? "hidden lg:flex" : "") lg:w-2/3 flex flex-col bg-[#F8F7FB] dark:bg-[#242424]">
+                <div class="w-full @(ActualSection != 1 ? "hidden lg:flex" : "") lg:w-2/3 flex flex-col">
 
                     @* Mostrar el chat *@
                     @if (ChatSection.Hub != null && SelectedConversation != null)
@@ -231,8 +238,8 @@
                     // No esta seleccionado.
                     else
                     {
-                        <div class="flex flex-col h-full w-full items-center justify-center bg-[#F8F7FB] dark:bg-[#242424] select-none">
-                            <img class="h-56 w-56" src="./chatdraw.svg" />
+                        <div class="flex flex-col h-full w-full items-center justify-center bg-[#F8F7FB] dark:bg-shark-950 select-none">
+                            <img class="h-56 w-56" src="./presdraw.svg" />
                             <label class="text-3xl font-bold dark:text-white">Bienvenido a LIN Allo</label>
                             <label class="text-gray-600 mt-1 dark:text-gray-400">Puedes usar LIN Allo y los servicios asociados en tu dispositivo <span class="text-blue-600">Windows</span> o <span class="text-green-500">Android</span> </label>
                         </div>

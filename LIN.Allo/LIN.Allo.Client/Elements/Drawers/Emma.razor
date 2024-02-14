@@ -3,7 +3,7 @@
 
 
 @* Componente *@
-<div id="drawerEmma-@UniqueId" class="fixed top-0 right-0 z-40 h-screen max-h-dvh p-4 overflow-y-auto transition-transform translate-x-full w-80 card-blur dark:card-blur-osc" tabindex="-1" aria-labelledby="drawer-right-label">
+<div id="drawerEmma-@UniqueId" class="fixed top-0 right-0 z-40 h-screen max-h-dvh p-4 overflow-y-auto transition-transform translate-x-full min-w-80 w-80 backdrop-blur-xl bg-white/50 dark:bg-shark-500/50 " tabindex="-1" aria-labelledby="drawer-right-label">
 
     <div class="h-full flex flex-col justify-between">
 
@@ -13,7 +13,7 @@
             <img src="./arroba.png" class="h-14 w-14">
 
             <label class="text-2xl mt-2 font-bold">Emma</label>
-            <label class="flex items-center text-gray-600 text-xs mt-1">Con <img class="ml-1 h-2 w-2 mr-1" src="./openIA.png"> GPT 4</label>
+            <label class="flex items-center text-gray-600 text-xs mt-1 dark:text-shark-300">Con <img class="ml-1 h-2 w-2 mr-1" src="./openIA.png"> GPT 4</label>
 
         </div>
 
@@ -38,12 +38,12 @@
                 <div class="relative">
 
                     @* Input del usuario *@
-                    <input @bind="Prompt" type="search" id="search" class="block w-full p-4 pl-5 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500" placeholder="Preguntar a Emma" required>
+                    <input @bind="Prompt" type="search" id="search" class="block w-full p-4 pl-5 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-sky-600 focus:border-sky-600 dark:bg-shark-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500" placeholder="Preguntar a Emma" required>
 
                     @* Botón de enviar *@
                     @if (ActualState == State.Witting)
                     {
-                        <button @onclick="ToEmma" type="submit" class="text-white absolute right-2.5 bottom-2.5 bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">Enviar</button>
+                        <button @onclick="ToEmma" type="submit" class="text-white absolute right-2.5 bottom-2.5 bg-sky-600 hover:bg-sky-800 focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-sky-600 dark:hover:bg-sky-700 dark:focus:ring-sky-800">Enviar</button>
                     }
 
                 </div>

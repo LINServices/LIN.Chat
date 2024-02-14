@@ -1,6 +1,6 @@
 ﻿
 
-<div @onclick="() =>{OnClick(Member); IsNew = false; StateHasChanged();}" class="flex rounded-lg mt-1.5  p-3 bg-white dark:bg-zinc-800 select-none items-center border border-1 @(IsSelect ? "border-indigo-500 dark:border-indigo-600 ring ring-1 ring-indigo-500 dark:ring-indigo-500" : "border-gray-200 dark:border-zinc-600")">
+<div @onclick="() =>{OnClick(Member); IsNew = false; StateHasChanged();}" class="flex rounded-lg mt-1.5  p-3 bg-white dark:bg-zinc-800 select-none items-center border border-1 @(IsSelect ? "border-sky-600 dark:border-sky-600 ring ring-1 ring-sky-600 dark:ring-sky-600" : "border-gray-200 dark:border-zinc-600")">
     <div class="flex w-full items-center">
 
         @{
@@ -20,7 +20,7 @@
             {
 
                 <div class="relative inline-block">
-                    <div class="inline-flex items-center justify-center w-9 h-9 border rounded-full bg-zinc-100 p-2 font-bold text-zinc-600 leading-none dark:bg-white dark:text-gray-800">
+                    <div class="inline-flex items-center justify-center w-9 h-9 border border-shark-100 rounded-full bg-zinc-100 p-2 font-bold text-zinc-600 leading-none dark:border-shark-400 dark:bg-shark-900 dark:text-shark-200">
                         <label class="w-max h-max text-center content-center mt-0.5 lg:mt-0">@(GetInitial(profile.Name))</label>
                     </div>
                     <span class="absolute bottom-0 end-0 block h-2.5 w-2.5 rounded-full transform  ring-2 ring-white bg-green-500 text-[8px]">

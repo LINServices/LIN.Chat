@@ -6,7 +6,7 @@ function ShowDrawer(id, ...idCloseBtn) {
 
     const options = {
         placement: "right",
-        backdropClasses : 'bg-zinc-900 bg-opacity-50 fixed inset-0 z-30'
+        backdropClasses : 'bg-zinc-900 bg-opacity-20 fixed inset-0 z-30'
     };
 
 

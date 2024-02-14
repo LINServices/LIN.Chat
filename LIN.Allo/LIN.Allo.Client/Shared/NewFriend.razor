@@ -1,5 +1,5 @@
 ﻿
-<div class="flex hover:shadow-gray-400 bg-white rounded-lg w-full hover:ring-indigo-500 hover:ring-1 items-center dark:bg-zinc-800">
+<div class="flex hover:shadow-gray-400 bg-white rounded-lg w-full hover:ring-sky-500 hover:ring-1 items-center dark:bg-zinc-800">
 
     @* Información *@
     <div class="flex p-3 w-full items-center">
@@ -8,12 +8,14 @@
         @if (LIN.Access.Communication.Session.Instance.Account.Profile.Length <= 0)
         {
             <div class="relative inline-block mr-2">
-                <span class="inline-flex items-center justify-center w-9 h-9 border rounded-full bg-zinc-100 font-bold text-zinc-600 leading-none dark:bg-white dark:text-gray-800">
-                    @(LIN.Modules.Text.GetInitials(UserInformation?.Profile?.Alias))
-                </span>
-                <span class="absolute bottom-0 end-0 block h-2.5 w-2.5 rounded-full transform  ring-2 ring-white bg-green-500 text-[8px]">
-                </span>
-            </div>
+                    <div class="inline-flex items-center justify-center w-9 h-9 border border-shark-100 rounded-full bg-zinc-100 p-2 font-bold text-zinc-600 leading-none dark:border-shark-400 dark:bg-shark-900 dark:text-shark-200">
+                    <label class="w-max h-max text-center content-center mt-0.5 lg:mt-0">@(LIN.Modules.Text.GetInitials(UserInformation?.Profile?.Alias))</label>
+                    </div>
+                    <span class="absolute bottom-0 end-0 block h-2.5 w-2.5 rounded-full transform  ring-2 ring-white bg-green-500 text-[8px]">
+                    </span>
+                </div>
+
+ 
         }
         else
         {
@@ -39,7 +41,7 @@
         @if (Section == Sections.Loading)
         {
             <div class="flex justify-center items-center">
-                <div class="animate-spin inline-block w-4 h-4 border-[3px] border-current border-t-transparent text-indigo-600 rounded-full" role="status" aria-label="loading">
+                <div class="animate-spin inline-block w-4 h-4 border-[3px] border-current border-t-transparent text-sky-600 rounded-full" role="status" aria-label="loading">
                     <span class="sr-only">Loading...</span>
                 </div>
             </div>
@@ -60,7 +62,7 @@
         @* Botón de agregar *@
         else
         {
-            <button @onclick="Find" type="button" class="flex justify-center items-center text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center h-8 w-8 dark:focus:ring-indigo-500">
+            <button @onclick="Find" type="button" class="flex justify-center items-center text-white bg-sky-700 hover:bg-sky-800 focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center h-8 w-8 dark:focus:ring-sky-500">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-4 h-4" viewBox="0 0 16 16">
                     <path d="M2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
                 </svg>
