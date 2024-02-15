@@ -38,8 +38,13 @@ string errorVisible = "h";
         <div class="flex align-items-center w-max">
 
 
-
-            @if (isLogin)
+              @if (isAnimation)
+            {
+                <div class="flex items-center justify-center">
+                    <LIN.Allo.Client.Elements.Success />
+                </div>
+            }
+            else if (isLogin)
             {
             <center>
                 <CircleLoader />

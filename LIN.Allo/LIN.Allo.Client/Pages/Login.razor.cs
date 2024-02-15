@@ -46,6 +46,7 @@ public partial class Login
     private bool cancelShow = false;
 
     private bool isLogin = false;
+    private bool isAnimation = false;
 
 
 
@@ -255,9 +256,16 @@ public partial class Login
                 }
 
 
+                isAnimation = true;
+                cancelShow = false;
+                LogMessage = "";
+                StateHasChanged();
+                await Task.Delay(4000);
+                isAnimation = false;
                 cancelShow = false;
                 LogMessage = "Iniciando Sesión";
                 StateHasChanged();
+
 
                 // Inicio de sesión
                 var login = await Access.Communication.Session.LoginWith(e.Token);
