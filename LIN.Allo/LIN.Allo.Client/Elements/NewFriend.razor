@@ -1,0 +1,74 @@
+﻿
+<div class="flex hover:shadow-gray-400 bg-white rounded-lg w-full hover:ring-current-500 hover:ring-1 items-center dark:bg-zinc-800">
+
+    @* Información *@
+    <div class="flex p-3 w-full items-center">
+
+        @* Imagen de perfil *@
+        @if (LIN.Access.Communication.Session.Instance.Account.Profile.Length <= 0)
+        {
+            <div class="relative inline-block mr-2">
+                    <div class="inline-flex items-center justify-center w-9 h-9 border border-shark-100 rounded-full bg-zinc-100 p-2 font-bold text-zinc-600 leading-none dark:border-shark-400 dark:bg-shark-900 dark:text-shark-200">
+                    <label class="w-max h-max text-center content-center mt-0.5 lg:mt-0">@(LIN.Modules.Text.GetInitials(UserInformation?.Profile?.Alias))</label>
+                    </div>
+                    <span class="absolute bottom-0 end-0 block h-2.5 w-2.5 rounded-full transform  ring-2 ring-white bg-green-500 text-[8px]">
+                    </span>
+                </div>
+
+ 
+        }
+        else
+        {
+            <img class="w-9 h-9 mr-2 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-400" src="data:image/png;base64,@Img64" alt="Bordered avatar">
+        }
+
+
+
+        
+        @* Usuario y nombre *@
+        <div class="flex flex-col">
+            <label class="text-sm font-bold dark:text-white">@UserInformation.Profile.Alias</label>
+            <label class="text-xs -mt-1 dark:text-gray-300">@@@UserInformation.Account.Identity.Unique</label>
+        </div>
+
+    </div>
+
+
+    @* Sección derecha *@
+    <div class="mr-4">
+
+        @* Cargando *@
+        @if (Section == Sections.Loading)
+        {
+            <div class="flex justify-center items-center">
+                <div class="animate-spin inline-block w-4 h-4 border-[3px] border-current border-t-transparent text-current-600 rounded-full" role="status" aria-label="loading">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        }
+
+        @* Hubo un error *@
+        else if (Section == Sections.Error)
+        {
+            <div class="flex flex-col items-center justify-center">
+
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" class="bi bi-exclamation-triangle-fill fill-orange-400" viewBox="0 0 16 16">
+                    <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
+                </svg>
+
+            </div>
+        }
+
+        @* Botón de agregar *@
+        else
+        {
+            <button @onclick="Find" type="button" class="flex justify-center items-center text-white bg-current-700 hover:bg-current-800 focus:ring-4 focus:outline-none focus:ring-current-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center h-8 w-8 dark:focus:ring-current-500">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-4 h-4" viewBox="0 0 16 16">
+                    <path d="M2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                </svg>
+            </button>
+        }
+
+    </div>
+
+</div>

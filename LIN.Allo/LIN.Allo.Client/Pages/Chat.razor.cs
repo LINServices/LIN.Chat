@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using LIN.Allo.Client.Elements;
+using LIN.Allo.Client.Pages.Sections;
 
 namespace LIN.Allo.Client.Pages;
 
@@ -6,16 +7,6 @@ namespace LIN.Allo.Client.Pages;
 public partial class Chat
 {
 
-
-    public static Chat? Instance { get; set; }
-
-
-
-    public static List<AccountModel> accounts = new List<AccountModel>();
-
-
-
-    //======== Modales =========//
 
     /// <summary>
     /// Drawer de nuevo grupo.
@@ -36,9 +27,40 @@ public partial class Chat
 
 
     /// <summary>
-    /// Sección actual del chat
+    /// Sección actual del chat.
     /// </summary>
     private static ChatSection? ChatPage { get; set; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public static Chat? Instance { get; set; }
+
+
+
+    public static List<AccountModel> accounts = new List<AccountModel>();
+
+
+
+
 
 
 
@@ -70,15 +92,9 @@ public partial class Chat
 
 
     /// <summary>
-    /// Lista de conversaciones.
-    /// </summary>
-    public static List<InteractiveConversation> Conversations { get; set; } = new();
-
-
-    /// <summary>
     /// Conversación seleccionada.
     /// </summary>
-    private MemberChatModel? SelectedConversation { get; set; }
+    private ConversationModel? SelectedConversation { get; set; }
 
 
     /// <summary>
@@ -87,33 +103,6 @@ public partial class Chat
     public bool IsSearching { get; set; }
 
 
-    /// <summary>
-    /// Ref de un componente chat
-    /// </summary>
-    private static Control ComponentRef
-    {
-        set
-        {
-            try
-            {
-                // Obtiene el elemento.
-                var element = Conversations.Where(t => t.Id == value.Member.Conversation.ID).FirstOrDefault();
-
-                // Si no existe.
-                if (element == null)
-                    return;
-
-                // Establece el control.
-                if (element.Control != null)
-                    value.IsSelect = element.Control.IsSelect;
-
-                element.Control = value;
-            }
-            catch (Exception)
-            {
-            }
-        }
-    }
 
 
 
@@ -163,7 +152,7 @@ public partial class Chat
         {
             int save = counter;
             await Task.Delay(300);
-            return (save == counter);
+            return save == counter;
         });
 
         if (!c)
@@ -187,7 +176,7 @@ public partial class Chat
         StateHasChanged();
         var result = await Access.Communication.Controllers.Conversations.SearchProfiles(Pattern, Access.Communication.Session.Instance.AccountToken);
 
-        SearchResult = result.Models.Where(t => t.Profile.ID != LIN.Access.Communication.Session.Instance.Profile.ID).ToList();
+        SearchResult = result.Models.Where(t => t.Profile.ID != Access.Communication.Session.Instance.Profile.ID).ToList();
         counter = 0;
         StateHasChanged();
 
@@ -204,52 +193,9 @@ public partial class Chat
 
         try
         {
-            // Obtiene la conversación.
-            var element = Conversations.Where(c => c.Id == e.Conversacion.ID).FirstOrDefault();
 
-            // No existe el elemento.
-            if (element == null)
-                return;
+            ConversationsObserver.PushMessage(e.Conversacion.ID, e);
 
-            // Obtiene el mensaje.
-            var message = element.Chat.Conversation.Mensajes.FirstOrDefault(m => m.Guid == e.Guid);
-
-            // El mensaje no existía.
-            if (message == null)
-                element.Chat.Conversation.Mensajes.Add(e);
-
-            // El mensaje ya se había enviado.
-            else
-            {
-                // Confirmar el mensaje UI.
-                var inTask = MessageTasker.FirstOrDefault(T => T.MessageModel.Guid == e.Guid);
-                inTask?.UnLocal();
-            }
-
-            // Si el mensaje es un método.
-            if (e.Contenido.StartsWith("#"))
-            {
-                var app = new SILF.Script.App(e.Contenido.Remove(0, 1));
-                //  app.AddDefaultFunctions(Online.Scripts.Actions);
-                app.Run();
-            }
-
-            element.Control?.Render();
-
-            // Si la pagina actual es la misma a la cual llego el mensaje
-            if (ChatPage?.Iam.Conversation.ID == element.Id)
-            {
-                ChatPage?.Render();
-                ChatPage?.ScrollToBottom();
-                return;
-            }
-
-            // Mostrar badge de nuevo mensaje.
-            if (element.Control != null)
-            {
-                element.Control.IsNew = true;
-                element.Control.Render();
-            }
         }
         catch
         {
@@ -359,12 +305,20 @@ public partial class Chat
             // Obtiene las conversaciones actuales
             var chats = await Access.Communication.Controllers.Conversations.ReadAll(token, Access.Communication.Session.Instance.AccountToken);
 
-            // 
-            chats.AlternativeObject = JsonSerializer.Deserialize<List<AccountModel>>(chats.AlternativeObject.ToString() ?? "");
-            if (chats.AlternativeObject is List<AccountModel> lista)
+            try
             {
-                accounts.AddRange(lista);
+                chats.AlternativeObject = System.Text.Json.JsonSerializer.Deserialize<List<AccountModel>>(chats.AlternativeObject.ToString() ?? "");
+                if (chats.AlternativeObject is List<AccountModel> lista)
+                {
+                    accounts.AddRange(lista);
+                }
+
             }
+            catch
+            {
+
+            }
+            // 
 
 
             // Si hubo un error
@@ -376,45 +330,20 @@ public partial class Chat
             }
 
 
-            // Lista
-            Conversations.Clear();
-
+            // Lista.
             ChatSection.Hub!.OnReceiveMessage?.Add(OnReceiveMessage);
 
 
             // Suscribir los eventos del hub
             foreach (var conversation in chats.Models)
             {
-                // Configuración del modelo
-                conversation.Profile = profile;
-                conversation.Conversation.Mensajes ??= new();
 
-                // Cambiar propiedades.
-                if (conversation.Conversation.Type == Types.Communication.Enumerations.ConversationsTypes.Personal && conversation.Conversation.Members.Count == 2)
-                {
-                    var other = conversation.Conversation.Members.FirstOrDefault(t => t.Profile.ID != Access.Communication.Session.Instance.Profile.ID);
 
-                    if (other != null)
-                    {
-                        var data = accounts.FirstOrDefault(t => t.Id == other.Profile.AccountID);
-
-                        if (data != null)
-                            conversation.Conversation.Name = data.Name;
-                    }
-
-                }
+                ConversationsObserver.Create(conversation.Conversation);
 
                 // Suscribir evento.
                 _ = ChatSection.Hub!.JoinGroup(conversation.Conversation.ID);
 
-                // Agregar los estados.
-                Conversations.Add(new()
-                {
-                    Id = conversation.Conversation.ID,
-                    Chat = conversation,
-                    Control = null,
-                    IsLoad = false
-                });
             }
 
             // Actualiza la vista
@@ -430,7 +359,7 @@ public partial class Chat
 
     }
 
-    public static List<Shared.Message> MessageTasker { get; set; } = new();
+    public static List<Message> MessageTasker { get; set; } = new();
 
 
 
@@ -460,27 +389,27 @@ public partial class Chat
     /// Seleccionar un chat
     /// </summary>
     /// <param name="chat"></param>
-    private async void Select(MemberChatModel chat)
+    private async void Select(ConversationModel chat)
     {
 
         // Consulta al cache
-        var cache = (from C in Conversations
-                     where C.Id == chat.Conversation.ID
+        var cache = (from C in ConversationsObserver.Data.Values
+                     where C.Conversation.ID == chat.ID
                      select C).FirstOrDefault();
 
 
         if (cache == null)
             return;
 
-        foreach (var c in Conversations)
-            c.Control?.Unselect();
+        //foreach (var c in Conversations)
+        //    c.Control?.Unselect();
 
 
 
 
-        if (SelectedConversation?.Conversation.ID == cache.Id)
+        if (SelectedConversation?.ID == cache.Conversation.ID)
         {
-            cache.Control?.Unselect();
+            //  cache.Control?.Unselect();
             SelectedConversation = null;
             ActualSection = 0;
             StateHasChanged();
@@ -488,17 +417,21 @@ public partial class Chat
         }
 
         // Member
-        SelectedConversation = cache.Chat;
-        cache.Control?.Select();
+        SelectedConversation = null;
+        StateHasChanged();
+        //  await Task.Delay(50);
+
+        SelectedConversation = cache.Conversation;
+        // cache.Control?.Select();
 
         // Si los chats (mensajes) no se han cargado.
-        if (!cache.IsLoad)
+        if (!false)
         {
-            var oldMessages = await Access.Communication.Controllers.Messages.ReadAll(SelectedConversation.Conversation.ID, 0, Access.Communication.Session.Instance.Token);
+            var oldMessages = await Access.Communication.Controllers.Messages.ReadAll(SelectedConversation.ID, 0, Access.Communication.Session.Instance.Token);
 
             // Establece los mensajes
-            SelectedConversation.Conversation.Mensajes.AddRange(oldMessages.Models);
-            cache.IsLoad = true;
+            SelectedConversation?.Mensajes.AddRange(oldMessages.Models);
+            // cache.IsLoad = true;
         }
 
         // Cambia la sección a (1)
@@ -516,27 +449,10 @@ public partial class Chat
     public async void Select(int chat)
     {
 
-        Select(new MemberChatModel()
-        {
-            Conversation = new()
-            {
-                ID = chat,
-            }
-        });
+
 
     }
 
-
-
-
-
-    public class InteractiveConversation
-    {
-        public int Id { get; set; }
-        public MemberChatModel Chat { get; set; }
-        public bool IsLoad { get; set; }
-        public Control? Control { get; set; }
-    }
 
 
 
@@ -545,5 +461,10 @@ public partial class Chat
         StateHasChanged();
     }
 
+    void Close()
+    {
+        Access.Communication.Session.CloseSession();
+        navigationManager.NavigateTo("/");
+    }
 
 }

@@ -4,7 +4,7 @@ namespace LIN.Allo.Client.Elements.Drawers;
 
 public partial class NewGroup
 {
-   
+
     /// <summary>
     /// Correcto.
     /// </summary>
@@ -231,7 +231,7 @@ public partial class NewGroup
             Rol = Types.Communication.Enumerations.MemberRoles.Admin
         });
 
-        var res = await Access.Communication.Controllers.Conversations.Create(modelo, LIN.Access.Communication.Session.Instance.Token);
+        var res = await Access.Communication.Controllers.Conversations.Create(modelo, Access.Communication.Session.Instance.Token);
         if (res.Response == Responses.Success)
         {
             ActualState = State.Success;

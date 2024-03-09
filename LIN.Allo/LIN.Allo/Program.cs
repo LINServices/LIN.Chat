@@ -31,6 +31,8 @@ else
     app.UseHsts();
 }
 
+LIN.Access.Auth.Build.Init();
+LIN.Access.Communication.Build.Init();
 
 app.UseCors("AllowAnyOrigin");
 

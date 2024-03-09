@@ -1,5 +1,4 @@
 ﻿@inject IJSRuntime js
-@rendermode RenderMode.InteractiveWebAssembly
 
 
 @* drawer component *@
@@ -63,15 +62,15 @@
                         <path d="M5 2a.5.5 0 0 1 .5-.5c.862 0 1.573.287 2.06.566.174.099.321.198.44.286.119-.088.266-.187.44-.286A4.17 4.17 0 0 1 10.5 1.5a.5.5 0 0 1 0 1c-.638 0-1.177.213-1.564.434a3.5 3.5 0 0 0-.436.294V7.5H9a.5.5 0 0 1 0 1h-.5v4.272c.1.08.248.187.436.294.387.221.926.434 1.564.434a.5.5 0 0 1 0 1 4.17 4.17 0 0 1-2.06-.566A5 5 0 0 1 8 13.65a5 5 0 0 1-.44.285 4.17 4.17 0 0 1-2.06.566.5.5 0 0 1 0-1c.638 0 1.177-.213 1.564-.434.188-.107.335-.214.436-.294V8.5H7a.5.5 0 0 1 0-1h.5V3.228a3.5 3.5 0 0 0-.436-.294A3.17 3.17 0 0 0 5.5 2.5.5.5 0 0 1 5 2m2.648 10.645" />
                     </svg>
                 </div>
-                <input @bind="Name" type="text" id="zip-input" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-sky-600 block w-full ps-10 p-2.5 focus:outline-none  dark:bg-shark-950 dark:border-zinc-700 dark:placeholder-gray-400 dark:text-white dark:focus:border-sky-600" placeholder="Nombre la conversación" required>
+                <input @bind="Name" type="text" id="zip-input" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-current-600 block w-full ps-10 p-2.5 focus:outline-none  dark:bg-shark-950 dark:border-zinc-700 dark:placeholder-gray-400 dark:text-white dark:focus:border-current-600" placeholder="Nombre la conversación" required>
             </div>
 
 
             <div class="relative">
                 <div class="relative">
-                    <input @bind="Pattern" type="text" id="zip-input" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-sky-600 block w-full p-2.5 focus:outline-none  dark:bg-shark-950 dark:border-zinc-700 dark:placeholder-gray-400 dark:text-white dark:focus:border-sky-600" placeholder="Buscar usuarios" required>
+                    <input @bind="Pattern" type="text" id="zip-input" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-current-600 block w-full p-2.5 focus:outline-none  dark:bg-shark-950 dark:border-zinc-700 dark:placeholder-gray-400 dark:text-white dark:focus:border-current-600" placeholder="Buscar usuarios" required>
 
-                    <button @onclick="Search" type="button" class="absolute inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-sky-600 rounded-lg right-2 bottom-2 hover:bg-sky-800 focus:ring-4 focus:outline-none focus:ring-sky-300 dark:bg-sky-600 dark:hover:bg-sky-700 dark:focus:ring-sky-800">
+                    <button @onclick="Search" type="button" class="absolute inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-current-600 rounded-lg right-2 bottom-2 hover:bg-current-800 focus:ring-4 focus:outline-none focus:ring-current-300 dark:bg-current-600 dark:hover:bg-current-700 dark:focus:ring-current-800">
                         <svg class="w-3 h-3 mr-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
                             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
                         </svg>Buscar
@@ -106,7 +105,7 @@
             </div>
 
             @* Botón crear *@
-            <button @onclick="Crear" type="submit" class="text-white justify-center flex items-center bg-sky-600 hover:bg-sky-800 w-full focus:ring-4 focus:ring-sky-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2  focus:outline-none">
+            <button @onclick="Crear" type="submit" class="text-white justify-center flex items-center bg-current-600 hover:bg-current-800 w-full focus:ring-4 focus:ring-current-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2  focus:outline-none">
                 Crear
             </button>
 

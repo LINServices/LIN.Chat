@@ -1,4 +1,3 @@
-global using LIN.Allo.Client.Sections;
 global using LIN.Types.Cloud.Identity.Enumerations;
 global using LIN.Types.Cloud.Identity.Models;
 global using LIN.Types.Communication.Models;
@@ -13,5 +12,9 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
+
+LIN.Allo.Client.Services.Scripts.Build();
+LIN.Access.Auth.Build.Init();
+LIN.Access.Communication.Build.Init();
 
 await builder.Build().RunAsync();

@@ -1,0 +1,155 @@
+﻿
+
+@code {
+
+
+    // Cache
+    private static List<(int, IsOnlineResult, DateTime)> Cache { get; set; } = [];
+
+
+    private int Id => (e?.Profile.Profile.ID) ?? 0;
+
+
+
+
+    [Parameter]
+    public SessionModel<MemberChatModel>? e { get; set; } = null;
+
+
+    public IsOnlineResult? isOnline = null;
+
+
+    private string Img64 => Convert.ToBase64String(e.Account.Profile);
+
+
+
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
+    }
+
+
+    public void Con()
+    {
+        Confirm();
+    }
+
+
+}
+
+<div @onclick="() => Confirm()" class="flex hover:bg-gray-100/25 rounded-lg w-full mt-2">
+
+
+    <div class="flex p-3 w-full items-center">
+
+
+        <div class="">
+
+
+            @* Imagen de perfil *@
+            @if (e.Account.Profile.Length <= 0)
+            {
+                <div class="relative inline-block mr-2">
+                <div class="inline-flex items-center justify-center w-9 h-9 border border-shark-100 rounded-full bg-zinc-100 p-2 font-bold text-zinc-600 leading-none dark:border-shark-400 dark:bg-shark-700 dark:text-shark-200">
+                    <label class="w-max h-max text-center content-center mt-0.5 lg:mt-0">@(LIN.Modules.Text.GetInitials(e.Profile.Profile.Alias))</label>
+                </div>
+                @if (isOnline != null && isOnline.IsOnline)
+                {
+                    <span class="absolute bottom-0 end-0 block h-2.5 w-2.5 rounded-full transform  ring-2 ring-white bg-green-500 text-[8px]">
+                    </span>
+                }
+                else if (isOnline != null && isOnline.LastTime != default)
+                {
+                    <span class="absolute bottom-0 end-0 block h-2.5 w-2.5 rounded-full transform  ring-2 ring-white bg-orange-500 text-[8px]">
+                    </span>
+                }
+                else
+                {
+                    <span class="absolute bottom-0 end-0 block h-2.5 w-2.5 rounded-full transform  ring-2 ring-white bg-red-500 text-[8px]">
+                    </span>
+                }
+
+            </div>
+            }
+            else
+            {
+                <img class="w-9 h-9 mr-2 p-1 rounded-full ring-2 ring-gray-400" src="data:image/png;base64,@Img64" alt="Bordered avatar">
+            }
+
+
+
+         
+
+        </div>
+
+
+        <div class="flex flex-col">
+
+            <label class="text-sm font-bold dark:text-shark-200">@e.Profile.Profile.Alias</label>
+
+
+            @if (e.Profile.Rol == Types.Communication.Enumerations.MemberRoles.Admin)
+            {
+                <label class="text-xs text-gray-800 dark:text-shark-300">Administrador</label>
+            }
+            else
+            {
+                <label class="text-xs text-gray-800 dark:text-shark-300">Integrante</label>
+            }
+
+        </div>
+
+    </div>
+
+
+    <div class="flex justify-end items-center mr-3 hover:cursor-pointer">
+        <span class="inline-flex justify-center items-center bg-red-100 hover:bg-red-200 text-red-800 hover:text-red-950 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full w-28">
+            <span class="w-2 h-2 mr-1 bg-red-500 rounded-full"></span>
+            @(e.Account.Id == Access.Communication.Session.Instance.Account.Id ? "Salir" : "Expulsar")
+        </span>
+    </div>
+
+
+</div>
+
+
+@code {
+
+
+    public async void Confirm()
+    {
+
+        Console.WriteLine("Confirm "+Id);
+        var inCache = Cache.Where(t => t.Item1 == Id).FirstOrDefault();
+
+
+        if (inCache.Item2 == null || inCache.Item3 < DateTime.Now.AddMinutes(-1))
+        {
+
+            Cache.RemoveAll(t => t.Item1 == Id);
+
+            Console.WriteLine("Usando INTERNET");
+            var x = await Access.Communication.Controllers.Conversations.IsOnline(Id, LIN.Access.Communication.Session.Instance.Token);
+
+            Cache.Add(new(Id, x.Model, DateTime.Now));
+            isOnline = x.Model;
+        }
+        else
+        {
+            isOnline = inCache.Item2;
+        }
+
+        StateHasChanged();
+    }
+
+
+
+    protected override void OnParametersSet()
+    {
+        Confirm();
+        base.OnParametersSet();
+    }
+
+
+}

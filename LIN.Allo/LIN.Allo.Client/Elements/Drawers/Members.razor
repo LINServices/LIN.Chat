@@ -1,5 +1,4 @@
 ﻿@inject IJSRuntime jsRuntime
-@rendermode RenderMode.InteractiveWebAssembly
 
 
 @* Componente *@
@@ -51,8 +50,8 @@
             <div class="mb-4">
                 <label for="guests" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Invitados</label>
                 <div class="relative">
-                    <input @bind="Pattern" type="search" id="guests" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-sky-500 p-2.5 focus:border-sky-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500" placeholder="Agregar usuario" required>
-                    <button @onclick="Search" type="button" class="absolute inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-sky-700 rounded-lg right-2 bottom-2 hover:bg-sky-800 focus:ring-4 focus:outline-none focus:ring-sky-300 dark:bg-sky-600 dark:hover:bg-sky-700 dark:focus:ring-sky-800">
+                    <input @bind="Pattern" type="search" id="guests" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-current-500 p-2.5 focus:border-current-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-current-500 dark:focus:border-current-500" placeholder="Agregar usuario" required>
+                    <button @onclick="Search" type="button" class="absolute inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-current-700 rounded-lg right-2 bottom-2 hover:bg-current-800 focus:ring-4 focus:outline-none focus:ring-current-300 dark:bg-current-600 dark:hover:bg-current-700 dark:focus:ring-current-800">
                         <svg class="w-3 h-3 mr-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
                             <path d="M6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Zm11-3h-2V5a1 1 0 0 0-2 0v2h-2a1 1 0 1 0 0 2h2v2a1 1 0 0 0 2 0V9h2a1 1 0 1 0 0-2Z" />
                         </svg>Buscar
@@ -85,7 +84,7 @@
 
                 @if(NewMembers.Count >0)
                 {
-                    <button @onclick="Insert" type="button" class="text-white bg-sky-700 hover:bg-sky-800 focus:ring-4 focus:ring-sky-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-sky-600 dark:hover:bg-sky-700 focus:outline-none dark:focus:ring-sky-800 w-full">Agregar</button>
+                    <button @onclick="Insert" type="button" class="text-white bg-current-700 hover:bg-current-800 focus:ring-4 focus:ring-current-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-current-600 dark:hover:bg-current-700 focus:outline-none dark:focus:ring-current-800 w-full">Agregar</button>
                   
                     <label class="w-full text-center font-bold mt-3">Integrantes actuales</label>
                 }

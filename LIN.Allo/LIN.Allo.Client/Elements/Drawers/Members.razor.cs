@@ -77,24 +77,24 @@ public partial class Members
         // Busca en el cache.
         var cache = Cache.Where(t => t.Item1 == id).FirstOrDefault();
 
-        ConversationContext = Chat.Conversations.Where(t => t.Id == id).FirstOrDefault()?.Chat.Conversation;
+        //ConversationContext = Chat.Conversations.Where(t => t.Id == id).FirstOrDefault()?.Chat.Conversation;
 
-        // Si no existe en el cache.
-        if (cache.Item2 == null     || force)
-        {
-            // Respuesta de la API.
-            var result = await Access.Communication.Controllers.Conversations.MembersInfo(id, Access.Communication.Session.Instance.Token, Access.Communication.Session.Instance.AccountToken);
+        //// Si no existe en el cache.
+        //if (cache.Item2 == null || force)
+        //{
+        //    // Respuesta de la API.
+        //    var result = await Access.Communication.Controllers.Conversations.MembersInfo(id, Session.Instance.Token, Session.Instance.AccountToken);
 
-            // Modelos a la UI.
-            MemberModels = result.Models.OrderByDescending(t => t.Profile.Rol).ToList();
+        //    // Modelos a la UI.
+        //    MemberModels = result.Models.OrderByDescending(t => t.Profile.Rol).ToList();
 
-            Cache.RemoveAll(t=>t.Item1 == id);
-            Cache.Add(new(id, MemberModels));
-        }
-        else
-        {
-            MemberModels = cache.Item2;
-        }
+        //    Cache.RemoveAll(t => t.Item1 == id);
+        //    Cache.Add(new(id, MemberModels));
+        //}
+        //else
+        //{
+        //    MemberModels = cache.Item2;
+        //}
 
     }
 
@@ -119,7 +119,7 @@ public partial class Members
         //AreSearch = true;
         //IsSearching = true;
         StateHasChanged();
-        var result = await Access.Communication.Controllers.Conversations.SearchProfiles(Pattern, Access.Communication.Session.Instance.AccountToken);
+        var result = await Access.Communication.Controllers.Conversations.SearchProfiles(Pattern, Session.Instance.AccountToken);
 
         //IsSearching = false;
         SearchResult = result.Models;
@@ -145,7 +145,7 @@ public partial class Members
 
 
 
-   bool IsShowAdd = false;
+    bool IsShowAdd = false;
     void ShowAdd()
     {
         IsShowAdd = !IsShowAdd;
@@ -184,7 +184,7 @@ public partial class Members
 
     async void Insert()
     {
-        if(ConversationContext == null)
+        if (ConversationContext == null)
         {
             return;
         }
@@ -192,7 +192,7 @@ public partial class Members
         List<Task> tasks = [];
 
         var token = Session.Instance.Token;
-        foreach(var x in NewMembers)
+        foreach (var x in NewMembers)
         {
             tasks.Add(Access.Communication.Controllers.Conversations.Insert(ConversationContext.ID, x.Profile.ID, token));
         }

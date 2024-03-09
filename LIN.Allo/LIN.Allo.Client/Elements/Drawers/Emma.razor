@@ -1,5 +1,4 @@
 ﻿@inject IJSRuntime js
-@rendermode RenderMode.InteractiveWebAssembly
 
 
 @* Componente *@
@@ -10,15 +9,15 @@
         @* Descripción de la sección *@
         <div class="flex flex-col justify-center items-center w-full mt-10">
 
-            <img src="./arroba.png" class="h-14 w-14">
+            <img src="./img/arroba.png" class="h-14 w-14">
 
             <label class="text-2xl mt-2 font-bold">Emma</label>
-            <label class="flex items-center text-gray-600 text-xs mt-1 dark:text-shark-300">Con <img class="ml-1 h-2 w-2 mr-1" src="./openIA.png"> GPT 4</label>
+            <label class="flex items-center text-gray-600 text-xs mt-1 dark:text-shark-300">Con tecnología GPT</label>
 
         </div>
 
         @* Información *@
-        <div class="border border-gray-500 border-2 rounded-lg p-5 w-full">
+        <div class="border-2 border-gray-500  rounded-lg p-5 w-full">
             @if (ActualState == State.Witting)
             {
                 <p class="text-justify">@EmmaResponse</p>
@@ -26,7 +25,7 @@
             else
             {
                 <div class="flex justify-center items-center">
-                    <CircleLoader></CircleLoader>
+                    <LIN.Allo.App.Components.Shared.CircleLoader></LIN.Allo.App.Components.Shared.CircleLoader>
                 </div>
             }
         </div>
@@ -38,12 +37,12 @@
                 <div class="relative">
 
                     @* Input del usuario *@
-                    <input @bind="Prompt" type="search" id="search" class="block w-full p-4 pl-5 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-sky-600 focus:border-sky-600 dark:bg-shark-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500" placeholder="Preguntar a Emma" required>
+                    <input @bind="Prompt" type="search" id="search" class="block w-full p-4 pl-5 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-current-600 focus:border-current-600 dark:bg-shark-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-current-500 dark:focus:border-current-500" placeholder="Preguntar a Emma" required>
 
                     @* Botón de enviar *@
                     @if (ActualState == State.Witting)
                     {
-                        <button @onclick="ToEmma" type="submit" class="text-white absolute right-2.5 bottom-2.5 bg-sky-600 hover:bg-sky-800 focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-sky-600 dark:hover:bg-sky-700 dark:focus:ring-sky-800">Enviar</button>
+                        <button @onclick="ToEmma" type="submit" class="text-white absolute right-2.5 bottom-2.5 bg-current-600 hover:bg-current-800 focus:ring-4 focus:outline-none focus:ring-current-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-current-600 dark:hover:bg-current-700 dark:focus:ring-current-800">Enviar</button>
                     }
 
                 </div>

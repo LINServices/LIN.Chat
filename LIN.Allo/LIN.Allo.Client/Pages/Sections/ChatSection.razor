@@ -1,0 +1,161 @@
+﻿@rendermode RenderMode.InteractiveWebAssembly
+
+@* Dependencias *@
+@inject IJSRuntime JSRuntime
+
+
+
+@* Elementos *@
+<LIN.Allo.Client.Elements.Popups.EmojiPanel @ref="EmojiPanel" Press="(e)=>{Message+=e; StateHasChanged();}" />
+
+
+
+@* Cabecera *@
+<div class="py-3 px-3 flex flex-row justify-between items-center border-b border-gray-300 dark:border-zinc-600">
+
+
+    @* Nombre y tipo *@
+    <div class="flex items-center">
+        <img class="visible lg:hidden h-5 w-5 mr-3" src="./back.png" @onclick="OnBackPress" />
+        <div class="flex flex-col">
+            <label class="text-gray-700 font-bold dark:text-gray-100">
+                @Iam.Conversation.Name
+            </label>
+            <label style="margin-top:-2px" class="text-gray-500 text-xs dark:text-gray-300">
+                Grupo personal.
+            </label>
+        </div>
+    </div>
+
+
+    @* Botones *@
+    <div class="flex justify-center items-center">
+
+        @* Buscar *@
+        <div>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" class="fill-[#263238] dark:fill-gray-100 hover:fill-current-500">
+                <path d="M15.9 14.3H15l-.3-.3c1-1.1 1.6-2.7 1.6-4.3 0-3.7-3-6.7-6.7-6.7S3 6 3 9.7s3 6.7 6.7 6.7c1.6 0 3.2-.6 4.3-1.6l.3.3v.8l5.1 5.1 1.5-1.5-5-5.2zm-6.2 0c-2.6 0-4.6-2.1-4.6-4.6s2.1-4.6 4.6-4.6 4.6 2.1 4.6 4.6-2 4.6-4.6 4.6z"></path>
+            </svg>
+        </div>
+
+        @* Adjuntos *@
+        <div class="ml-6">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" class="fill-[#263238] dark:fill-gray-100 hover:fill-current-500">
+                <path d="M1.816 15.556v.002c0 1.502.584 2.912 1.646 3.972s2.472 1.647 3.974 1.647a5.58 5.58 0 0 0 3.972-1.645l9.547-9.548c.769-.768 1.147-1.767 1.058-2.817-.079-.968-.548-1.927-1.319-2.698-1.594-1.592-4.068-1.711-5.517-.262l-7.916 7.915c-.881.881-.792 2.25.214 3.261.959.958 2.423 1.053 3.263.215l5.511-5.512c.28-.28.267-.722.053-.936l-.244-.244c-.191-.191-.567-.349-.957.04l-5.506 5.506c-.18.18-.635.127-.976-.214-.098-.097-.576-.613-.213-.973l7.915-7.917c.818-.817 2.267-.699 3.23.262.5.501.802 1.1.849 1.685.051.573-.156 1.111-.589 1.543l-9.547 9.549a3.97 3.97 0 0 1-2.829 1.171 3.975 3.975 0 0 1-2.83-1.173 3.973 3.973 0 0 1-1.172-2.828c0-1.071.415-2.076 1.172-2.83l7.209-7.211c.157-.157.264-.579.028-.814L11.5 4.36a.572.572 0 0 0-.834.018l-7.205 7.207a5.577 5.577 0 0 0-1.645 3.971z"></path>
+            </svg>
+        </div>
+
+        @* Integrantes *@
+        <div @onclick="OpenDrawer" class="ml-6">
+            <svg class="h-4 w-4 fill-[#263238] dark:fill-gray-100 hover:fill-current-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0">
+                <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
+            </svg>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@* Mensajes *@
+<div id="CM-@Iam.Conversation.ID" class="flex-1 overflow-auto  [&::-webkit-scrollbar]:w-2
+  [&::-webkit-scrollbar-track]:rounded-full
+  [&::-webkit-scrollbar-track]:bg-gray-100
+  [&::-webkit-scrollbar-thumb]:rounded-full
+  [&::-webkit-scrollbar-thumb]:bg-gray-300
+  dark:[&::-webkit-scrollbar-track]:bg-zinc-900
+  dark:[&::-webkit-scrollbar-thumb]:bg-current-800 ">
+
+    <div id="CM-@Iam.Conversation.ID" class="py-2 px-3">
+
+
+        @* Creación del chat *@
+        <div class="flex justify-center mb-2">
+            <div class="rounded py-2 px-4 bg-current-200 dark:bg-current-600" >
+                <p class="text-sm uppercase dark:text-shark-200">
+                    @DateTime.Now.ToString("MMMM dd, yyyy")
+                </p>
+            </div>
+        </div>
+
+
+        @* Recomendación *@
+        <div class="flex justify-center mb-4">
+            <div class="rounded-lg py-2 px-4 bg-yellow-100">
+                <p class="text-xs">
+                    Tus mensajes están protegidos y cifrados, sin embargo LIN IA puede analizarlos para mostrarte recomendaciones.
+                </p>
+            </div>
+        </div>
+
+
+
+        @* Renderizado de mensajes *@
+        @foreach (var message in Iam.Messages)
+        {
+            oldTime ??= message.Time;
+
+            if (new DateTime(oldTime.Value.Year, oldTime.Value.Month, oldTime.Value.Day) < new DateTime(message.Time.Year, message.Time.Month, message.Time.Day))
+            {
+
+                var dateMess = new DateTime(message.Time.Year, message.Time.Month, message.Time.Day);
+                var isToday = dateMess == Today;
+
+
+                <div class="flex justify-center mb-2">
+                    <div class="rounded-lg py-2 px-4 bg-current-100">
+                        <p class="text-sm uppercase">
+                            @if (isToday)
+                            {
+                                @("Hoy")
+                            }
+                            else if (dateMess == Today.AddDays(-1))
+                            {
+                                @("Ayer")
+                            }
+                            else
+                            {
+                                @message.Time.ToString("MMMM dd, yyyy")
+                            }
+                        </p>
+                    </div>
+                </div>
+                oldTime = message.Time;
+            }
+
+            <Message MessageModel="@message" />
+
+        }
+
+        @(oldTime = null)
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+@* Entrada *@
+<div class="rounded-lg m-3 px-4 py-4 flex items-center drop-shadow-2xl bg-[#F8F7FB] dark:bg-[#2b2c30] dark:drop-shadow-gray-900">
+    <div @onclick="()=> EmojiPanel?.Show()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" class="fill-[#263238] dark:fill-white">
+            <path opacity=".45" d="M9.153 11.603c.795 0 1.439-.879 1.439-1.962s-.644-1.962-1.439-1.962-1.439.879-1.439 1.962.644 1.962 1.439 1.962zm-3.204 1.362c-.026-.307-.131 5.218 6.063 5.551 6.066-.25 6.066-5.551 6.066-5.551-6.078 1.416-12.129 0-12.129 0zm11.363 1.108s-.669 1.959-5.051 1.959c-3.505 0-5.388-1.164-5.607-1.959 0 0 5.912 1.055 10.658 0zM11.804 1.011C5.609 1.011.978 6.033.978 12.228s4.826 10.761 11.021 10.761S23.02 18.423 23.02 12.228c.001-6.195-5.021-11.217-11.216-11.217zM12 21.354c-5.273 0-9.381-3.886-9.381-9.159s3.942-9.548 9.215-9.548 9.548 4.275 9.548 9.548c-.001 5.272-4.109 9.159-9.382 9.159zm3.108-9.751c.795 0 1.439-.879 1.439-1.962s-.644-1.962-1.439-1.962-1.439.879-1.439 1.962.644 1.962 1.439 1.962z"></path>
+        </svg>
+    </div>
+    <div class="flex-1 mx-4">
+        <input @oninput="GetValue" @bind="Message" class="w-full ring-0 border-0 focus:border-0 focus:ring-0 bg-transparent dark:text-gray-100 focus:outline-none" placeholder="Escribe tu mensaje..." type="text" />
+    </div>
+    <div @onclick="SendMessage">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-send-fill h-5 w-5 mr-3 fill-zinc-500 dark:fill-300" viewBox="0 0 16 16">
+            <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471z" />
+        </svg>
+    </div>
+    </div>
+

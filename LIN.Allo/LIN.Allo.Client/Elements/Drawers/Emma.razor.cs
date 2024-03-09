@@ -1,4 +1,7 @@
-﻿namespace LIN.Allo.Client.Elements.Drawers;
+﻿using SILF.Script.Enums;
+using SILF.Script.Interfaces;
+
+namespace LIN.Allo.Client.Elements.Drawers;
 
 
 public partial class Emma
@@ -77,9 +80,10 @@ public partial class Emma
         // Es un comando.
         if (response.Model.Content.StartsWith("#"))
         {
-            var app = new SILF.Script.App(response.Model.Content.Remove(0, 1));
-            //app.AddDefaultFunctions(Online.Scripts.Actions);
+            var app = new SILF.Script.App(response.Model.Content.Remove(0, 1), new A());
+            app.AddDefaultFunctions(Services.Scripts.Actions);
             app.Run();
+
             EmmaResponse = "Perfecto";
             StateHasChanged();
             return;
@@ -89,8 +93,6 @@ public partial class Emma
         EmmaResponse = response.Model.Content;
         StateHasChanged();
 
-        // Hablar
-        await js.InvokeVoidAsync("Speech", response.Model.Content);
     }
 
 
@@ -108,4 +110,14 @@ public partial class Emma
 
 
 
+}
+
+class A : IConsole
+{
+    
+
+    public void InsertLine(string result, SILF.Script.Enums.LogLevel logLevel)
+    {
+       
+    }
 }
