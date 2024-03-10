@@ -1,7 +1,9 @@
 ﻿using LIN.Allo.Client.Pages.Sections;
 using SILF.Script;
+using SILF.Script.Elements;
 using SILF.Script.Elements.Functions;
 using SILF.Script.Interfaces;
+using SILF.Script.Runtime;
 
 namespace LIN.Allo.Client.Services;
 
@@ -15,7 +17,7 @@ internal class Scripts
         public Tipo? Type { get; set; }
         public string Name { get; set; } = string.Empty;
         public List<Parameter> Parameters { get; set; } = new();
-
+        public Context Context { get ; set; }
 
         Action<List<SILF.Script.Elements.ParameterValue>> Action;
 
@@ -26,7 +28,7 @@ internal class Scripts
 
 
 
-        public FuncContext Run(Instance instance, List<SILF.Script.Elements.ParameterValue> values)
+        public FuncContext Run(Instance instance, List<SILF.Script.Elements.ParameterValue> values, ObjectContext objectContext)
         {
             Action.Invoke(values);
             return new();
@@ -59,7 +61,7 @@ internal class Scripts
             var content = param.Where(T => T.Name == "contenido").FirstOrDefault();
 
             // Obtener la conversación.
-            _ = int.TryParse(id?.Value.ToString(), out int idInt);
+            _ = int.TryParse(id.Objeto.Value.ToString(), out int idInt);
 
             // Obtener el observador.
 
@@ -88,7 +90,7 @@ internal class Scripts
             */
             ConversationsObserver.PushMessage(conversation.Conversation.ID, new()
             {
-                Contenido = content?.Value.ToString(),
+                Contenido = content?.Objeto.Value.ToString(),
                 Time = DateTime.Now,
                 Guid = guid,
                 IsLocal = true,
@@ -97,7 +99,7 @@ internal class Scripts
             });
 
             // Enviar el mensaje al servicio.
-            await ChatSection.Hub!.SendMessage(conversation.Conversation.ID, content?.Value.ToString() ?? "", guid);
+            await ChatSection.Hub!.SendMessage(conversation.Conversation.ID, content?.Objeto.Value.ToString() ?? "", guid);
 
         })
         {
@@ -109,8 +111,58 @@ internal class Scripts
             ]
         };
 
+
+
+
+        // Acción.
+        SILFFunction search =
+        new(async (param) =>
+        {
+
+            var content = param.Where(T => T.Name == "contenido").FirstOrDefault();
+
+            string uri = LIN.Modules.Web.AddParameters("https://www.google.com/search", new()
+            {
+                {"q",content?.Objeto?.Value?.ToString() ?? "" }
+            });
+
+            await Launcher.Default.OpenAsync(uri);
+
+        })
+        {
+            Name = "search",
+            Parameters =
+            [
+                new Parameter("contenido", new("string"))
+            ]
+        };
+
+
+        // Acción.
+        SILFFunction actionSelect =
+        new(async (param) =>
+        {
+
+            // Propiedades.
+            var id = param.Where(T => T.Name == "id").FirstOrDefault();
+
+            // Obtener la conversación.
+            _ = int.TryParse(id?.Objeto.Value.ToString(), out int idInt);
+
+
+            Chat.Instance?.Select(idInt);
+
+        })
+        {
+            Name = "select",
+            Parameters =
+            [
+                new Parameter("id", new("number"))
+            ]
+        };
+
         // Agregar.
-        Actions.AddRange([actionMessage]);
+        Actions.AddRange([actionMessage, actionSelect, search]);
 
     }
 

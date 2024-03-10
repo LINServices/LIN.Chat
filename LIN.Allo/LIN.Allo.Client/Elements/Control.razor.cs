@@ -8,7 +8,7 @@ public partial class Control
     /// Evento al darle click.
     /// </summary>
     [Parameter]
-    public Action<ConversationModel> OnClick { get; set; } = (e) => { };
+    public Action<ConversationLocal> OnClick { get; set; } = (e) => { };
 
 
 
@@ -16,7 +16,7 @@ public partial class Control
     /// Modelo.
     /// </summary>
     [Parameter]
-    public ConversationModel Member { get; set; }
+    public ConversationLocal Member { get; set; }
 
 
 

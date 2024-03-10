@@ -1,7 +1,10 @@
-﻿using SILF.Script.Enums;
+﻿using SILF.Script.Elements.Functions;
+using SILF.Script.Enums;
 using SILF.Script.Interfaces;
+using static LIN.Allo.Client.Services.Scripts;
 
 namespace LIN.Allo.Client.Elements.Drawers;
+
 
 
 public partial class Emma
@@ -42,11 +45,7 @@ public partial class Emma
     /// <summary>
     /// Respuesta de Emma.
     /// </summary>
-    private string EmmaResponse { get; set; } = string.Empty;
-
-
-
-
+    private ReadOneResponse<Types.Emma.Models.ResponseIAModel>? EmmaResponse { get; set; } = null;
 
 
 
@@ -82,15 +81,26 @@ public partial class Emma
         {
             var app = new SILF.Script.App(response.Model.Content.Remove(0, 1), new A());
             app.AddDefaultFunctions(Services.Scripts.Actions);
-            app.Run();
+            app.AddDefaultFunctions(Load());
 
-            EmmaResponse = "Perfecto";
+
+            EmmaResponse = new()
+            {
+                Response = Responses.Success,
+                Model = new()
+                {
+                    Content = "Perfecto"
+                }
+            };
+
+            app.Run();
             StateHasChanged();
+
             return;
         }
 
         // Establece la respuesta de Emma.
-        EmmaResponse = response.Model.Content;
+        EmmaResponse = response;
         StateHasChanged();
 
     }
@@ -110,14 +120,56 @@ public partial class Emma
 
 
 
+
+    IEnumerable<SILFFunction> Load()
+    {
+
+
+        // Acción.
+        SILFFunction actionMessage =
+        new((param) =>
+        {
+
+            // Propiedades.
+            var content = param.Where(T => T.Name == "contenido").FirstOrDefault();
+
+            EmmaResponse = new()
+            {
+                Message = content?.Objeto.Value.ToString(),
+                Response = Responses.Success,
+                Model = new()
+                {
+                    Content = content?.Objeto.Value.ToString(),
+                    IsSuccess = true
+                }
+            };
+
+            StateHasChanged();
+
+
+        })
+        {
+            Name = "say",
+            Parameters =
+            [
+                new Parameter("contenido", new("string"))
+            ]
+        };
+
+        return [actionMessage];
+
+
+
+    }
+
+
+
 }
 
 class A : IConsole
 {
-    
-
-    public void InsertLine(string result, SILF.Script.Enums.LogLevel logLevel)
+    public void InsertLine(string error, string result, SILF.Script.Enums.LogLevel logLevel)
     {
-       
+        var s = "";
     }
 }

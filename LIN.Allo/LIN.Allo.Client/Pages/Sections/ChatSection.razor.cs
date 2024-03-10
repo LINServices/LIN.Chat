@@ -141,8 +141,18 @@ public partial class ChatSection : IDisposable, IMessageChanger
     }
 
 
-    
-    
+    /// <summary>
+    /// Enviar un mensaje.
+    /// </summary>
+    private void SendMessageKey(Microsoft.AspNetCore.Components.Web.KeyboardEventArgs e)
+    {
+
+        if (e.Key == "Enter")
+            SendMessage();
+
+
+    }
+
 
 
     /// <summary>

@@ -81,13 +81,11 @@ public partial class Login
     private PassKeyHub? hub = null;
 
 
-    
+   
 
-
-
-    /// <summary>
-    /// Evento.
-    /// </summary>
+   /// <summary>
+   /// Evento.
+   /// </summary>
     protected override async Task OnInitializedAsync()
     {
 
@@ -197,7 +195,7 @@ public partial class Login
 
 
         // Iniciar sesión.
-        var (Session, Response) = await Access.Communication.Session.LoginWith(User, Password);
+        var (Session, Response) = await LIN.Access.Communication.Session.LoginWith(User, Password);
 
         // Validar respuesta.
         switch (Response)

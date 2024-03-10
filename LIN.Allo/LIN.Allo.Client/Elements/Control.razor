@@ -1,5 +1,7 @@
 ﻿
-<div @onclick="() =>{OnClick(Member); IsNew = false; StateHasChanged();}" class="flex rounded-lg mt-1.5  p-3 bg-white dark:bg-zinc-950 select-none items-center border border-1 @(IsSelect ? "border-current-500 dark:border-current-600 ring ring-1 ring-current-500 dark:ring-current-600" : "border-gray-200 dark:border-zinc-800") fade-in">
+
+<div @onclick="() =>{OnClick(Member); IsNew = false; StateHasChanged();}" class="flex py-3 px-5 select-none items-center @(IsSelect ? "bg-gray-200 dark:bg-gray-100/10" : "") fade-in transition-transform">
+
     <div class="flex w-full items-center">
 
         @{
@@ -7,10 +9,10 @@
         }
 
         @* Si es un chat personal. *@
-        @if (Member.Members != null && Member.Type == Types.Communication.Enumerations.ConversationsTypes.Personal && Member.Members.Count >= 1)
+        @if (Member.Conversation.Members != null && Member.Conversation.Type == Types.Communication.Enumerations.ConversationsTypes.Personal && Member.Conversation.Members.Count >= 1)
         {
 
-            var member = Member.Members.FirstOrDefault(t => t.Profile.AccountID != LIN.Access.Communication.Session.Instance.Account.Id);
+            var member = Member.Conversation.Members.FirstOrDefault(t => t.Profile.AccountID != LIN.Access.Communication.Session.Instance.Account.Id);
 
             var profile = Chat.accounts.Where(a => a.Id == member?.Profile.AccountID).FirstOrDefault();
 
@@ -19,7 +21,7 @@
             {
 
                 <div class="relative inline-block">
-                    <div class="inline-flex items-center justify-center w-9 h-9 border border-shark-100 rounded-full bg-zinc-100 p-2 font-bold text-zinc-600 leading-none dark:border-shark-400 dark:bg-shark-900 dark:text-shark-200">
+                    <div class="inline-flex items-center justify-center w-10 h-10 border border-shark-100 rounded-full bg-zinc-100 p-2 font-bold text-zinc-600 leading-none dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-200">
                         <label class="w-max h-max text-center content-center mt-0.5 lg:mt-0">@(LIN.Modules.Text.GetInitials(profile?.Name))</label>
                     </div>
                     <span class="absolute bottom-0 end-0 block h-2.5 w-2.5 rounded-full transform  ring-2 ring-white bg-green-500 text-[8px]">
@@ -31,7 +33,7 @@
             {
                 <button type="button" class="flex bg-white dark:bg-zinc-700 text-sm rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button">
                     <span class="sr-only">Open</span>
-                    <img class="w-9 h-9 p-0.5 rounded-full ring-2 ring-gray-300" src="@GetPicture(profile)">
+                    <img class="w-10 h-10 p-0.5 rounded-full ring-2 ring-gray-300" src="@GetPicture(profile)">
                 </button>
             }
 
@@ -45,13 +47,13 @@
         {
 
             <div class="relative inline-block">
-                <div class="inline-flex items-center justify-center w-9 h-9 border rounded-full bg-zinc-100 p-2 font-bold text-zinc-600 leading-none dark:bg-white dark:text-gray-800">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="fill-zinc-500 w-full h-full" viewBox="0 0 16 16"><path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"></path></svg>
+                <div class="inline-flex items-center justify-center w-10 h-10 border rounded-full bg-zinc-100 p-2.5 font-bold text-zinc-600 leading-none dark:border-zinc-600 dark:bg-zinc-900 ">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="fill-zinc-500 w-full h-full dark:fill-zinc-200" viewBox="0 0 16 16"><path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"></path></svg>
 
                 </div>
             </div>
 
-            conversationName = Member.Name;
+            conversationName = Member.Conversation.Name;
         }
 
 
@@ -61,8 +63,8 @@
             <label class="text-base font-bold text-gray-700 dark:text-gray-300">@(conversationName)</label>
 
             @{
-                var message = Member.Mensajes.LastOrDefault();
-                string bs64 = Convert.ToBase64String( Chat.accounts.FirstOrDefault(t => t.Id == message?.Remitente.AccountID)?.Profile ?? []);
+                var message = Member.Messages?.LastOrDefault();
+                string bs64 = Convert.ToBase64String(Chat.accounts.FirstOrDefault(t => t.Id == message?.Remitente.AccountID)?.Profile ?? []);
                 <div class="flex">
 
                     @if (bs64 != "")
@@ -73,10 +75,10 @@
                     @{
                         string final = message?.Contenido ?? "";
 
-                        if (message?.Contenido.Length > 25)
+                        if (message?.Contenido.Length > 18)
                         {
                             final = "";
-                            message.Contenido.Take(25).ToList().ForEach((a) => final += a);
+                            message.Contenido.Take(17).ToList().ForEach((a) => final += a);
                             final += "...";
                         }
 
@@ -93,11 +95,17 @@
 
     </div>
 
-    @if (IsNew)
-    {
-        <div class="flex items-center justify-center bg-green-500 rounded-full h-5 w-5">
-        </div>
-    }
+
+    <div class="flex w-full justify-end">
+        <span class=" text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded-xl me-2 dark:text-gray-400 border-2 border-zinc-500 ">
+            <svg class="w-2.5 h-2.5 me-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z" />
+            </svg>
+
+            Hoy
+
+        </span>
+    </div>
 
 
 </div>

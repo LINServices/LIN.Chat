@@ -1,17 +1,21 @@
-﻿<label class="text-gray-500 hover:text-current-500 @(IsOther ? "" : "flex self-center justify-end mr-2")" style="font-size: 10px">@(!IsOther ? "" : MessageModel.Remitente.Alias + " • ")@(MessageModel.Time.ToString("HH:mm"))</label>
+﻿
 
 
-<div class="flex @(IsOther ? "" : "justify-end") mb-2 items-center select">
+<label class="text-gray-500 hover:text-current-500 @(IsOther ? "" : "flex self-center justify-end mr-2") " style="font-size: 10px">@(!IsOther ? "" : MessageModel.Remitente.Alias + " • ")@(MessageModel.Time.ToString("HH:mm"))</label>
+
+
+<div class="flex @(IsOther ? "" : "justify-end") mb-2 items-center">
 
 
     @{
-        string classes = (MessageModel.IsLocal ? "bg-gray-300 text-black" : (!IsOther ? "bg-gradient-to-r from-current-500 to-current-400 text-white" : "bg-[#EAE8ED] dark:bg-[#292929] dark:text-gray-300"));
+        string classes = (MessageModel.IsLocal ? "bg-gray-300 text-black" : (!IsOther ? "bg-current-500 text-white" : "bg-[#EAE8ED] dark:bg-[#292929] dark:text-gray-300"));
     }
 
     @if (MessageType == 0)
     {
-        <div class="rounded-xl py-2.5 px-4 @(classes)">
+        <div class="py-2.5 px-4 rounded-xl @(classes) max-w-[75%]">
             <p class="flex items-center text-sm gap-1">
+
                 @foreach (var pair in SepararCadenas())
                 {
 
@@ -34,14 +38,14 @@
                             </span>
                         }
 
-                             }
+                    }
                     else
                     {
                         <span class="@(pair.StartsWith("@") && IsOther ? "text-current-600" : "")">@pair</span>
                     }
 
 
-                    
+
                 }
             </p>
         </div>
@@ -49,10 +53,10 @@
 
     else if (MessageType == 1)
     {
-        <div class="rounded-xl p-4 @(classes) select-none">
+        <div class="p-4 rounded-xl @(classes) max-w-[75%] select-none">
 
             <div class="flex bg-red justify-center items-center">
-                <img class="h-5 w-5 mt-1" src="@(IsOther ? "./meet.png" : "./meet_white.png")"/>
+                <img class="h-5 w-5 mt-1" src="@(IsOther ? "./img/meet.png" : "./meet_white.png")" />
             </div>
 
             <a href="@MessageModel.Contenido" target="_blank" class="text-sm hover:text-current-600">Unirme</a>
@@ -62,7 +66,7 @@
 
     else if (MessageType == 2)
     {
-        <div class="rounded-xl mmm p-7 @(classes) select-none">
+        <div class="rounded-xl mmm p-7 @(classes) select-none max-w-[75%]">
             <p class="text-4xl animate-ping">
                 @MessageModel.Contenido
             </p>

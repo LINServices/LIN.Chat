@@ -1,11 +1,15 @@
-﻿using LIN.Allo.Client.Elements;
-using LIN.Allo.Client.Pages.Sections;
+﻿
+using LIN.Allo.Client.Elements;
 
 namespace LIN.Allo.Client.Pages;
 
 
 public partial class Chat
 {
+
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public int Id { get; set; }
 
 
     /// <summary>
@@ -36,9 +40,32 @@ public partial class Chat
 
 
 
+    protected override Task OnParametersSetAsync()
+    {
+
+
+        if (Id <= 0)
+        {
+            SelectedConversation = null;
+            ActualSection = 0;
+            StateHasChanged();
+            return Task.Run(() => { });
+        }
 
 
 
+        Select(Id);
+
+        return base.OnParametersSetAsync();
+
+
+    }
+
+
+    void Nav()
+    {
+        navigationManager.NavigateTo("/home");
+    }
 
 
 
@@ -248,17 +275,6 @@ public partial class Chat
 
 
 
-
-
-
-
-
-
-
-
-
-
-
     /// <summary>
     /// Cuando la pagina se inicia
     /// </summary>
@@ -389,12 +405,36 @@ public partial class Chat
     /// Seleccionar un chat
     /// </summary>
     /// <param name="chat"></param>
-    private async void Select(ConversationModel chat)
+    private void Go(ConversationLocal chat)
     {
+        var uri = navigationManager.GetUriWithQueryParameter("Id", chat.Conversation.ID);
+        navigationManager.NavigateTo(uri);
+    }
+
+
+
+    /// <summary>
+    /// Seleccionar un chat
+    /// </summary>
+    /// <param name="chat"></param>
+    private void Select(ConversationModel chat)
+    {
+        Select(chat.ID);
+    }
+
+
+
+    /// <summary>
+    /// Seleccionar un chat
+    /// </summary>
+    /// <param name="chat"></param>
+    public async void Select(int chat)
+    {
+
 
         // Consulta al cache
         var cache = (from C in ConversationsObserver.Data.Values
-                     where C.Conversation.ID == chat.ID
+                     where C.Conversation.ID == chat
                      select C).FirstOrDefault();
 
 
@@ -425,32 +465,18 @@ public partial class Chat
         // cache.Control?.Select();
 
         // Si los chats (mensajes) no se han cargado.
-        if (!false)
+        if (cache.Messages == null)
         {
             var oldMessages = await Access.Communication.Controllers.Messages.ReadAll(SelectedConversation.ID, 0, Access.Communication.Session.Instance.Token);
 
             // Establece los mensajes
-            SelectedConversation?.Mensajes.AddRange(oldMessages.Models);
+            cache.Messages = oldMessages.Models;
             // cache.IsLoad = true;
         }
 
         // Cambia la sección a (1)
         ActualSection = 1;
         StateHasChanged();
-
-    }
-
-
-
-    /// <summary>
-    /// Seleccionar un chat
-    /// </summary>
-    /// <param name="chat"></param>
-    public async void Select(int chat)
-    {
-
-
-
     }
 
 
@@ -463,7 +489,7 @@ public partial class Chat
 
     void Close()
     {
-        Access.Communication.Session.CloseSession();
+        LIN.Access.Communication.Session.CloseSession();
         navigationManager.NavigateTo("/");
     }
 

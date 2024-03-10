@@ -19,134 +19,112 @@
 
     Task.Run(async () =>
     {
-        navigationManager.NavigateTo("/login");
+        navigationManager.NavigateTo("/");
     });
     return;
 }
 
 
-@* Drawer Emma *@
-<Emma @ref="EmmaDrawer" />
+<div class="w-screen">
+    <div class="h-dvh min-h-dvh max-h-dvh">
 
-@* Drawer Nueva conversación *@
-<NewGroup OnSuccess="ForceRetrieveData" @ref="NewGroupModal" />
+        <div class="flex flex-row h-full ">
 
-@*Dropdown menu*@
-<DropdownMenu />
+            @* Left *@
+            <div class="w-full h-full lg:w-1/3 flex @(ActualSection != 0 ? "hidden lg:flex" : "") flex-col">
 
-@* Drawer de integrantes *@
-<Members @ref="MemberDrawer" />
+                @* Header *@
+                <div class="px-5 pt-3 pb-1 flex flex-row justify-between items-center border-r-0 lg:border-r dark:border-zinc-800">
+                   
+                    <div @onclick="Close" class="flex items-center">
 
-
-<div class="">
-    <div class="w-screen">
-        <div class="h-dvh min-h-dvh max-h-dvh">
-            <div class="flex flex-row h-full ">
-
-                @* Left *@
-                <div class="w-full lg:w-1/3 flex @(ActualSection != 0 ? "hidden lg:flex" : "") flex-col">
-
-                    @* Header *@
-                    <div class="px-5 pt-3 pb-1 flex flex-row justify-between items-center border-r-0 lg:border-r dark:border-zinc-800">
-                        <div @onclick="Close" class="flex items-center">
-
-                            @* Dropdown Open *@
-                            @if (Img64.Length <= 0)
-                            {
-
-                                <div class="relative inline-flex items-center justify-center w-9 h-9 overflow-hidden bg-zinc-200 rounded-full dark:bg-shark-800 border dark:border-shark-600">
-                                    <span class="font-medium text-gray-600 dark:text-shark-300">@LIN.Modules.Text.GetInitials(LIN.Access.Communication.Session.Instance.Account.Name)</span>
-                                </div>
-
-                            }
-                            else
-                            {
-                                <button @onclick="E" type="button" class="flex bg-white dark:bg-zinc-700 text-sm rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button">
-                                    <span class="sr-only">Open</span>
-                                    <img class="w-8 h-8 p-1 rounded-full ring-2 ring-gray-300" src="data:image/png;base64,@Img64">
-                                </button>
-                            }
-
-
-                            @* Datos personales *@
-                            <div class="flex flex-col ml-2">
-                                <label class="text-sm font-bold dark:text-zinc-200">@Access.Communication.Session.Instance.Profile.Alias</label>
-                                <label class=" text-xs dark:text-zinc-300" style="margin-top:-3px">@@@(Access.Communication.Session.Instance.Account.Identity.Unique)</label>
+                        @* Dropdown Open *@
+                        @if (Img64.Length <= 0)
+                        {
+                            <div class="relative inline-flex items-center justify-center w-9 h-9 overflow-hidden bg-zinc-200 rounded-full dark:bg-shark-800 border dark:border-shark-600">
+                                <span class="font-medium text-gray-600 dark:text-shark-300">@LIN.Modules.Text.GetInitials(LIN.Access.Communication.Session.Instance.Account.Name)</span>
                             </div>
-
-                        </div>
-
-                        @* Botones de acción *@
-                        <div class="flex justify-center items-center gap-3">
-
-                            @* Emma *@
-                            <button class="h-5 w-5 hover:animate-pulse rounded-full">
-                                <img @onclick="OpenEmma" src="./img/arroba.png" />
+                        }
+                        else
+                        {
+                            <button @onclick="E" type="button" class="flex bg-white dark:bg-zinc-700 text-sm rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button">
+                                <span class="sr-only">Open</span>
+                                <img class="w-8 h-8 p-1 rounded-full ring-2 ring-gray-300" src="data:image/png;base64,@Img64">
                             </button>
+                        }
 
-                            @* Actualizar *@
 
-                            <div @onclick="ForceRetrieveData"
-                                 class="flex group items-center justify-center border-2 border-[#52525b] hover:bg-zinc-200 rounded-full group-active:bg-zinc-600">
-
-                                <img class="h-2.5 w-2.5 m-1 group-hover:hover:rotate-90 duration-300" src="./icons/reload.png" />
-
-                            </div>
-
-                            @* Nuevo grupo *@
-                            <button @onclick="OpenNewGroup" title="Nueva conversación"
-                                    class="group cursor-pointer outline-none hover:rotate-90 duration-300">
-                                <svg xmlns="http://www.w3.org/2000/svg"
-                                     viewBox="0 0 24 24"
-                                     class="stroke-zinc-600 dark:stroke-zinc-200 fill-none dark:group-hover:fill-zinc-800 group-hover:fill-zinc-200 group-active:stroke-zinc-200 group-active:fill-zinc-600 group-active:duration-0 duration-300 w-6 h-6">
-                                    <path d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"
-                                          stroke-width="1.5"></path>
-
-                                    <path d="M8 12H16" stroke-width="1.5"></path>
-                                    <path d="M12 16V8" stroke-width="1.5"></path>
-                                </svg>
-                            </button>
-
+                        @* Datos personales *@
+                        <div class="flex flex-col ml-2">
+                            <label class="text-sm font-bold dark:text-zinc-200">@Access.Communication.Session.Instance.Profile.Alias</label>
+                            <label class=" text-xs dark:text-zinc-300" style="margin-top:-3px">@@@(Access.Communication.Session.Instance.Account.Identity.Unique)</label>
                         </div>
 
                     </div>
 
+                    @* Botones de acción *@
+                    <div class="flex justify-center items-center gap-4">
 
-                    @* Lista de conversaciones *@
-                    <div class="flex-1 overflow-auto border-r-0 lg:border-r dark:bg-shark-950 dark:border-zinc-800">
+                        @* Emma *@
+                        <button @onclick="OpenEmma" class="h-5 w-5 rounded-full">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" version="1.1" class="h-full w-full fill-current-500 hover:fill-current-600">
+                                <path d="M0 0 C4.16347012 3.4964018 8.08707008 7.22822917 12 11 C12.71800781 11.65484375 13.43601563 12.3096875 14.17578125 12.984375 C20.46536293 18.88322115 25.23469978 25.86116307 30 33 C30.63035156 33.93457031 31.26070312 34.86914062 31.91015625 35.83203125 C35.7340925 41.92071334 38.54590444 48.33466425 41.1875 55 C41.5086377 55.78705322 41.82977539 56.57410645 42.16064453 57.38500977 C48.6288079 74.43121085 49.67462486 91.80175574 49.57641602 109.8659668 C49.56242094 113.45778943 49.59692837 117.04706214 49.63476562 120.63867188 C49.68776871 136.25709347 48.87201094 148.4825821 38.23046875 160.78125 C28.96355273 169.99947819 17.860369 174.80542246 4.875 175.25 C-10.19188737 175.04556462 -21.57652502 168.42347498 -32 158 C-32.49886719 158.43570313 -32.99773437 158.87140625 -33.51171875 159.3203125 C-48.45835388 171.71770106 -66.90325934 176.07394758 -86 175 C-106.74423628 172.30621881 -124.68493664 162.80990927 -137.6875 146.3125 C-149.37303444 130.11997933 -154.07200926 110.95610279 -151.50390625 91.1796875 C-147.76831018 70.6233566 -137.42180191 53.37910891 -120.390625 41.140625 C-103.18523362 29.86672628 -82.97767463 26.69260778 -62.93286133 30.58935547 C-44.40527851 34.57048897 -29.07285795 45.54836525 -18.07421875 60.7890625 C-9.53900252 74.00177011 -5.9616891 88.2787713 -5.75390625 103.85546875 C-5.72100081 105.54622978 -5.68778867 107.23698486 -5.65429688 108.92773438 C-5.60674745 111.56758995 -5.56220569 114.20741592 -5.52319336 116.84741211 C-5.48349868 119.41282909 -5.4319924 121.97779881 -5.37890625 124.54296875 C-5.36628502 125.72586739 -5.36628502 125.72586739 -5.35340881 126.93266296 C-5.28407371 132.30005618 -5.28407371 132.30005618 -3 137 C0.97359497 139.33740881 3.14743812 140.11367492 7.75 139.5 C11.61801829 137.71476079 12.29203486 136.84812686 14 133 C14.42813783 129.94718701 14.42054199 126.93039162 14.3984375 123.8515625 C14.40130768 122.96197845 14.40417786 122.07239441 14.40713501 121.15585327 C14.4091738 119.27137619 14.40365689 117.38687785 14.39111328 115.50244141 C14.3752469 112.66909092 14.39086863 109.83720876 14.41015625 107.00390625 C14.43976104 82.05995118 8.02657023 58.9819184 -9 40 C-10.21816406 38.64068359 -10.21816406 38.64068359 -11.4609375 37.25390625 C-27.21858553 20.59516104 -49.90474495 9.49742734 -72.96875 8.796875 C-98.36863393 8.437259 -121.66216292 14.65417467 -141 32 C-141.90621094 32.81210937 -142.81242187 33.62421875 -143.74609375 34.4609375 C-160.40483896 50.21858553 -171.50257266 72.90474495 -172.203125 95.96875 C-172.562741 121.36863393 -166.34582533 144.66216292 -149 164 C-148.18789062 164.90621094 -147.37578125 165.81242188 -146.5390625 166.74609375 C-130.78141447 183.40483896 -108.09525505 194.50257266 -85.03125 195.203125 C-66.81047411 195.46109793 -51.0602898 192.94547037 -34.75 184.25 C-28.74664439 181.18032302 -23.29352783 180.01611583 -16.75 182.0625 C-11.76043988 184.23922045 -9.25162652 187.67555074 -6.6875 192.4375 C-5.07948464 198.43101178 -5.96192076 202.70083577 -8.63671875 208.10546875 C-15.45998365 217.58765636 -30.52610223 222.14794361 -41.25 225.375 C-42.04027588 225.61331543 -42.83055176 225.85163086 -43.64477539 226.09716797 C-55.20582142 229.39488164 -66.500627 230.4101794 -78.5 230.375 C-79.2007666 230.37445618 -79.9015332 230.37391235 -80.62353516 230.37335205 C-114.50027068 230.25291428 -144.53992616 217.41833304 -169 194 C-170.11955078 192.97519531 -170.11955078 192.97519531 -171.26171875 191.9296875 C-177.88236958 185.66722196 -182.97963336 178.55651738 -188 171 C-188.6290625 170.06671875 -189.258125 169.1334375 -189.90625 168.171875 C-207.23601593 140.60179284 -211.95805078 104.20535241 -204.83911133 72.62255859 C-198.84333447 48.87776111 -186.91829939 28.55146928 -170 11 C-169.34515625 10.28199219 -168.6903125 9.56398437 -168.015625 8.82421875 C-162.11677885 2.53463707 -155.13883693 -2.23469978 -148 -7 C-147.06542969 -7.63035156 -146.13085938 -8.26070312 -145.16796875 -8.91015625 C-101.47012457 -36.35415281 -40.12596623 -31.83598863 0 0 Z M-105 73 C-113.38986507 81.30497604 -117.32161833 90.20330202 -117.5 102 C-117.34479768 113.11587703 -113.85480178 122.07039058 -106 130 C-96.56584786 137.91052888 -86.85020159 141.82209573 -74.42578125 140.78515625 C-64.57531663 139.16145329 -55.68814842 134.43446541 -49 127 C-42.53553519 117.94974926 -39.15852384 108.80853685 -40.36328125 97.62890625 C-42.23011296 87.17235806 -46.47441613 77.87106878 -55.07421875 71.2734375 C-71.11443989 60.66671926 -89.86046432 60.30001036 -105 73 Z " fill="#8" transform="translate(207,26)" />
+                            </svg>
+                        </button>
 
-                        <div class="px-5 mt-4">
-
-                            @* Titulo *@
-                            <label class="text-base font-bold text-gray-800 dark:text-zinc-200">Conversaciones</label>
-
-
-                            @* Entrada de búsqueda *@
-                            <div class="mt-2 mb-5">
-                                <input @oninput="Search" type="text" autocomplete="off" required="" class="block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-gray-900 placeholder-gray-400 focus:border-current-600 focus:bg-white focus:outline-none focus:ring-current-600 sm:text-sm dark:bg-zinc-950 dark:focus:bg-zinc-900 dark:text-zinc-200 dark:border-zinc-800" placeholder="Buscar">
-                            </div>
-
-
-
-                            <div class="mb-5 hidden">
-                                <div class="bg-yellow-50 border border-yellow-200 text-sm text-yellow-800 rounded-lg p-4 dark:bg-yellow-800/10 dark:border-yellow-900 dark:text-yellow-500" role="alert">
-                                    <div class="flex">
-                                        <div class="flex-shrink-0">
-                                            <svg class="flex-shrink-0 h-4 w-4 mt-0.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" /><path d="M12 9v4" /><path d="M12 17h.01" /></svg>
-                                        </div>
-                                        <div class="ms-4">
-                                            <h3 class="text-sm font-bold">
-                                                No se pudo conectar al servidor.
-                                            </h3>
-                                            <div class="mt-1 text-sm text-yellow-700">
-                                                Actualmente tenemos problemas para acceder a LIN Allo.
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        @* Actualizar *@
+                        <div @onclick="ForceRetrieveData" class="flex items-center justify-center h-5 w-5">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="fill-zinc-800 hover:fill-current-500 w-full h-full dark:fill-zinc-200"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M105.1 202.6c7.7-21.8 20.2-42.3 37.8-59.8c62.5-62.5 163.8-62.5 226.3 0L386.3 160H352c-17.7 0-32 14.3-32 32s14.3 32 32 32H463.5c0 0 0 0 0 0h.4c17.7 0 32-14.3 32-32V80c0-17.7-14.3-32-32-32s-32 14.3-32 32v35.2L414.4 97.6c-87.5-87.5-229.3-87.5-316.8 0C73.2 122 55.6 150.7 44.8 181.4c-5.9 16.7 2.9 34.9 19.5 40.8s34.9-2.9 40.8-19.5zM39 289.3c-5 1.5-9.8 4.2-13.7 8.2c-4 4-6.7 8.8-8.1 14c-.3 1.2-.6 2.5-.8 3.8c-.3 1.7-.4 3.4-.4 5.1V432c0 17.7 14.3 32 32 32s32-14.3 32-32V396.9l17.6 17.5 0 0c87.5 87.4 229.3 87.4 316.7 0c24.4-24.4 42.1-53.1 52.9-83.7c5.9-16.7-2.9-34.9-19.5-40.8s-34.9 2.9-40.8 19.5c-7.7 21.8-20.2 42.3-37.8 59.8c-62.5 62.5-163.8 62.5-226.3 0l-.1-.1L125.6 352H160c17.7 0 32-14.3 32-32s-14.3-32-32-32H48.4c-1.6 0-3.2 .1-4.8 .3s-3.1 .5-4.6 1z" /></svg>
+                        </div>
 
 
+                        <div @onclick="OpenNewGroup" class="flex items-center justify-center h-5 w-5">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="fill-zinc-800 hover:fill-current-500 dark:fill-zinc-200">
+                                <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z" />
+                            </svg>
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+
+                @* Búsqueda *@
+                <div class="px-5 pt-3 border-r-0 lg:border-r dark:border-zinc-800">
+
+                    @* Titulo *@
+                    <label class="text-base font-bold text-gray-800 dark:text-zinc-200">Conversaciones</label>
+
+                    @* Entrada de búsqueda *@
+                    <div class="mt-2 mb-5">
+                        <input @oninput="Search" type="text" autocomplete="off" required="" class="block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-gray-900 placeholder-gray-400 focus:ring-1 focus:border-current-500 focus:bg-white focus:outline-none focus:ring-current-600 sm:text-sm dark:bg-zinc-950 dark:focus:bg-zinc-900 dark:text-zinc-200 dark:border-zinc-800" placeholder="Buscar">
+                    </div>
+
+                </div>
+
+
+
+
+                @* Lista de conversaciones *@
+                <div class="flex w-full h-full lg:border-r dark:bg-shark-950 dark:border-zinc-800 overflow-auto [&::-webkit-scrollbar]:w-2
+  [&::-webkit-scrollbar-track]:rounded-full
+  [&::-webkit-scrollbar-track]:bg-gray-100
+  [&::-webkit-scrollbar-thumb]:rounded-full
+  [&::-webkit-scrollbar-thumb]:bg-gray-300
+  dark:[&::-webkit-scrollbar-track]:bg-transparent
+  dark:[&::-webkit-scrollbar-thumb]:bg-zinc-800">
+
+                    <div class="overflow-auto flex flex-col w-full h-max">
+
+
+                       
+
+                        @* Elementos *@
+                        <div class="h-full">
+
+
+                              
                             @if (IsConversationsLoad)
                             {
                                 // Si no hay conversaciones.
@@ -162,19 +140,17 @@
                                 {
                                     if (SearchResult == null)
                                     {
-                                        <div class="flex items-center justify-center">
-                                            <div class="animate-spin inline-block w-6 h-6 border-[3px] border-current border-t-transparent text-current-600 rounded-full dark:text-current-500" role="status" aria-label="loading">
-                                                <span class="sr-only">Loading...</span>
-                                            </div>
+                                        <div class="flex items-center justify-center h-20">
+                                            <CircleLoader></CircleLoader>
                                         </div>
                                     }
                                     else if (SearchResult.Count == 0)
                                     {
-                                        <label>Sin resultados</label>
+                                        <label class="dark:text-zinc-300 ml-5">Sin resultados</label>
                                     }
                                     else
                                     {
-                                        <div class="select-none">
+                                        <div class="px-5 select-none py-1">
                                             <label class="dark:text-gray-300">Resultados de búsqueda para "@Pattern" </label>
                                             <div class="flex flex-col gap-2 mt-3">
                                                 @foreach (var e in SearchResult)
@@ -192,7 +168,7 @@
                                 {
                                     foreach (var conversation in ConversationsObserver.Data.Values)
                                     {
-                                        <Control Member="@(conversation.Conversation)" OnClick="Select" IsSelect=@(SelectedConversation?.ID == conversation.Conversation.ID) />
+                                        <Control Member="@(conversation)" OnClick="Go" IsSelect=@(SelectedConversation?.ID == conversation.Conversation.ID) />
                                     }
                                 }
 
@@ -206,34 +182,54 @@
                                 <ControlSkeleton />
                             }
 
-
                         </div>
+
+
+
+                           
+
+
+
+
                     </div>
-
-                </div>
-
-                @* Right *@
-                <div class="w-full @(ActualSection != 1 ? "hidden lg:flex" : "") lg:w-2/3 flex flex-col">
-
-                    @* Mostrar el chat *@
-                    @if (ChatSection.Hub != null && SelectedConversation != null)
-                    {
-                        <ChatSection @ref="ChatPage" Drawer="MemberDrawer" Iam="ConversationsObserver.Get(SelectedConversation.ID)" OnBackPress="() =>{ ActualSection = 0; SelectedConversation = null;}" />
-                    }
-
-                    // No esta seleccionado.
-                    else
-                    {
-                        <div class="flex flex-col h-full w-full items-center justify-center dark:bg-shark-950 select-none">
-                            <img class="h-56 w-56" src="./img/presdraw.svg" />
-                            <label class="text-3xl font-bold dark:text-white">Bienvenido a LIN Allo</label>
-                            <label class="text-gray-600 mt-1 dark:text-gray-400">Bienvenido a LIN Allo para <span class="text-blue-600">Windows</span> </label>
-                        </div>
-                    }
-
                 </div>
 
             </div>
+
+            @* Right *@
+            <div class="w-full @(ActualSection != 1 ? "hidden lg:flex" : "") lg:w-2/3 flex flex-col">
+
+                @* Mostrar el chat *@
+                @if (ChatSection.Hub != null && SelectedConversation != null)
+                {
+                    <ChatSection @ref="ChatPage" Drawer="MemberDrawer" Iam="ConversationsObserver.Get(SelectedConversation.ID)" OnBackPress="Nav" />
+                }
+
+                // No esta seleccionado.
+                else
+                {
+                    <div class="flex flex-col h-full w-full items-center justify-center dark:bg-shark-950 select-none">
+                        <img class="h-56 w-56" src="./img/presdraw.svg" />
+                        <label class="text-3xl font-bold dark:text-white">Bienvenido a LIN Allo</label>
+                        <label class="text-gray-600 mt-1 dark:text-gray-400">LIN Allo tambien esta disponible como app en <span class="text-blue-600">Windows</span> y <span class="text-green-500">Android</span></label>
+                    </div>
+                }
+
+            </div>
+
         </div>
     </div>
 </div>
+
+
+@* Drawer Emma *@
+<Emma @ref="EmmaDrawer" />
+
+@* Drawer Nueva conversación *@
+<NewGroup OnSuccess="ForceRetrieveData" @ref="NewGroupModal" />
+
+@*Dropdown menu*@
+<DropdownMenu />
+
+@* Drawer de integrantes *@
+<Members @ref="MemberDrawer" />

@@ -98,11 +98,13 @@ public static class ConversationsObserver
 
         if (local == null)
         {
+
+            conversation.Mensajes = null;
+
             Data.Add(conversation.ID, new()
             {
-
                 Conversation = conversation,
-                Messages = conversation.Mensajes ?? []
+                Messages = null!
             }); ;
             return;
         }
@@ -127,6 +129,7 @@ public static class ConversationsObserver
         if (local == null || trackers == null)
             return;
 
+        local.Messages ??= [];
 
         var exist = local.Messages.Where(t => t.Guid == message.Guid);
 

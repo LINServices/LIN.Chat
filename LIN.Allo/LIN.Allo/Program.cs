@@ -4,7 +4,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
+    .AddInteractiveServerComponents()
    .AddInteractiveWebAssemblyComponents();
+
 
 
 builder.Services.AddCors(options =>
@@ -43,6 +45,8 @@ app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
    .AddInteractiveWebAssemblyRenderMode()
+   .AddInteractiveServerRenderMode()
    .AddAdditionalAssemblies(typeof(LIN.Allo.Client.Pages.Login).Assembly);
+
 
 app.Run();

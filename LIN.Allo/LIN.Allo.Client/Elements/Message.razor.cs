@@ -2,7 +2,6 @@
 
 namespace LIN.Allo.Client.Elements;
 
-
 public partial class Message
 {
 
