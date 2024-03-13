@@ -1,6 +1,8 @@
-﻿using SILF.Script.Elements.Functions;
+﻿using LIN.Types.Exp.Search.Models;
+using SILF.Script.Elements.Functions;
 using SILF.Script.Enums;
 using SILF.Script.Interfaces;
+using System.Reflection;
 using static LIN.Allo.Client.Services.Scripts;
 
 namespace LIN.Allo.Client.Elements.Drawers;
@@ -21,6 +23,15 @@ public partial class Emma
     /// Actual estado.
     /// </summary>
     private State ActualState { get; set; } = State.Witting;
+    private HeaderState HeaderActualState { get; set; } = HeaderState.Titles;
+
+
+
+
+    ReadAllResponse<SearchResult> SearchModels { get; set; } = new();
+
+
+    public ReadOneResponse<Weather> Modelo { get; set; }
 
 
 
@@ -32,6 +43,19 @@ public partial class Emma
         Witting,
         Responding
     }
+
+
+    /// <summary>
+    /// Lista de estados.
+    /// </summary>
+    private enum HeaderState
+    {
+        Titles,
+        Weather,
+        Search
+    }
+
+
 
 
 
@@ -144,6 +168,8 @@ public partial class Emma
                 }
             };
 
+            HeaderActualState = HeaderState.Titles;
+
             StateHasChanged();
 
 
@@ -156,9 +182,68 @@ public partial class Emma
             ]
         };
 
-        return [actionMessage];
+
+        // Acción.
+        SILFFunction weather =
+        new(async (param) =>
+        {
+
+            Modelo = new()
+            {
+                Response = Responses.IsLoading
+            };
+
+            StateHasChanged();
+
+            // Propiedades.
+            var content = param.Where(T => T.Name == "contenido").FirstOrDefault();
+
+            var city = await LIN.Access.Search.Controllers.Weather.Get(content.Objeto.Value.ToString());
+
+            Modelo = city;
+
+            HeaderActualState = HeaderState.Weather;
+
+            StateHasChanged();
 
 
+        })
+        {
+            Name = "weather",
+            Parameters =
+            [
+                new Parameter("contenido", new("string"))
+            ]
+        };
+
+
+        // Acción.
+        SILFFunction search =
+        new(async (param) =>
+        {
+
+            // Propiedades.
+            var content = param.Where(T => T.Name == "contenido").FirstOrDefault();
+
+            var city = await LIN.Access.Search.Controllers.Search.Get(content.Objeto.Value.ToString());
+
+            SearchModels = city;
+
+            HeaderActualState = HeaderState.Search;
+
+            StateHasChanged();
+
+
+        })
+        {
+            Name = "search",
+            Parameters =
+            [
+                new Parameter("contenido", new("string"))
+            ]
+        };
+
+        return [actionMessage, weather, search];
 
     }
 

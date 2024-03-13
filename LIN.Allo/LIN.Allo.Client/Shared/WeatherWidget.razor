@@ -1,0 +1,188 @@
+﻿
+@code{
+
+    [Parameter]
+    public Weather? Model { get; set; }
+
+
+    public string Img()
+    {
+        if (Model == null)
+            return ("");
+
+
+        switch (Model.Condition)
+        {
+            case Condition.ThunderStorm:
+                return "./img/weather/storm.png";
+
+            case Condition.Clear:
+                return "./img/weather/clear.png";
+
+            case Condition.ScatteredClouds:
+                return "./img/weather/cloud.png";
+            case Condition.FewClouds:
+                return "./img/weather/fewClouds.png";
+            case Condition.Haze:
+                return "./img/weather/haze.png";
+            case Condition.Mist:
+                return "./img/weather/haze.png";
+            case Condition.Smoke:
+                return "./img/weather/haze.png";
+            case Condition.Dust:
+                return "./img/weather/haze.png";
+            case Condition.Fog:
+                return "./img/weather/haze.png";
+            case Condition.Sand:
+                return "./img/weather/haze.png";
+            case Condition.Ash:
+                return "./img/weather/haze.png";
+            case Condition.OvercastClouds:
+                return "./img/weather/Overcast.png";
+
+            case Condition.Rain:
+                return "./img/weather/rain.png";
+            case Condition.Snow:
+                return "./img/weather/snow.png";
+            case Condition.BrokenClouds:
+                return "./img/weather/brokenClouds.png";
+            case Condition.Tornado:
+                return "./img/weather/tornado.png";
+
+
+        }
+
+        return "";
+
+    }
+
+
+    public string Text()
+    {
+        if (Model == null)
+            return ("");
+
+
+        switch (Model.Condition)
+        {
+            case Condition.ThunderStorm:
+                return "Tormenta";
+
+            case Condition.Clear:
+                return "Despejado";
+
+            case Condition.ScatteredClouds:
+                return "Nubes dispersas";
+
+            case Condition.FewClouds:
+                return "Pocas nubes";
+            case Condition.Haze:
+                return "Niebla";
+            case Condition.Mist:
+                return "Niebla";
+            case Condition.Smoke:
+                return "Humo";
+            case Condition.Dust:
+                return "Polvo";
+            case Condition.Fog:
+                return "Niebla";
+            case Condition.Sand:
+                return "Arena";
+            case Condition.Ash:
+                return "Ceniza";
+            case Condition.OvercastClouds:
+                return "Nubes cubiertas";
+
+            case Condition.Rain:
+                return "Lluvia";
+            case Condition.Snow:
+                return "Nevando";
+            case Condition.BrokenClouds:
+                return "Lloviendo";
+            case Condition.Tornado:
+                return "Tornado";
+
+
+        }
+
+        return "Desconocido";
+
+    }
+
+
+
+}
+
+
+@* Si esta cargando *@
+@if(Model == null || Model.Temperature == null)
+{
+    <div class="flex h-10 w-full justify-center items-end">
+        <CircleLoader />
+    </div>
+    return;
+}
+
+
+<div class="w-full mx-auto bg-white/35 dark:bg-zinc-600/30 rounded-3xl p-6 shadow-lg">
+
+    <div class="flex justify-between items-center">
+        <div class="text-6xl font-semibold dark:text-zinc-300">
+            @Model.Temperature.Value.ToString("00")°
+        </div>
+        <div class="w-12 h-12 bg-white rounded-full flex justify-center items-center">
+            <img alt="Partly cloudy with sun and clouds" class="w-8 h-8" height="50" src="@Img()" width="50" />
+        </div>
+    </div>
+    <div class="mt-4 text-xl font-medium dark:text-zinc-300">
+        @(Model.CityName)
+    </div>
+
+    <div class="flex gap-2 w-full  mt-4">
+
+        <div class="flex flex-col items-center justify-center bg-white/80 dark:bg-zinc-600/50 rounded-lg w-full py-1">
+
+            <img class="h-5 w-5" src="./img/weather/haze.png" />
+            <label class="dark:text-zinc-300">@Model.Wind.Speed.ToString("#0.#")</label>
+
+        </div>
+
+
+        <div class="flex flex-col items-center justify-center bg-white/80 dark:bg-zinc-600/50 rounded-lg w-full py-1">
+
+            <img class="h-5 w-5" src="./img/weather/raindrop.png" />
+            <label class="dark:text-zinc-300">@Model.Temperature.Humidity</label>
+
+        </div>
+
+        <div class="flex flex-col items-center justify-center bg-white/80 dark:bg-zinc-600/50 rounded-lg w-full py-2">
+
+            <img class="h-5 w-5" src="./img/weather/thermometerPlus.png" />
+            <label class="dark:text-zinc-300">@Model.Temperature.Max.ToString("#0")°</label>
+
+        </div>
+
+        <div class="flex flex-col items-center justify-center bg-white/80 dark:bg-zinc-600/50 rounded-lg w-full py-1">
+
+            <img class="h-5 w-5" src="./img/weather/thermometer.png" />
+            <label class="dark:text-zinc-300">@Model.Temperature.Min.ToString("#0")°</label>
+
+        </div>
+
+
+    </div>
+
+    <div class="mt-4 bg-white/80 dark:bg-zinc-600/50 rounded-xl p-4">
+        <div class="flex items-center text-blue-800">
+            <span class="font-medium dark:text-current-500">En este momento</span>
+        </div>
+        
+        <div class="flex items-center mt-2">
+           
+            <span class="text-2xl font-semibold dark:text-zinc-300">
+               @Text()
+            </span>
+        </div>
+    </div>
+
+</div>

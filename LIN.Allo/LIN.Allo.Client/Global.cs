@@ -23,3 +23,5 @@ global using Microsoft.JSInterop;
 
 global using LIN.Allo.Client.Pages;
 global using LIN.Allo.Client.Pages.Sections;
+
+global using LIN.Types.Exp.Search.Models;

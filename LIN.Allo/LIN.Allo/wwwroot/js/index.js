@@ -9,3 +9,8 @@
         });
     }
 };
+
+
+function GoLaunch (url) {
+    window.open(url, '_blank', 'noopener,noreferrer');
+};

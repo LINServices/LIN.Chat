@@ -16,5 +16,6 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 LIN.Allo.Client.Services.Scripts.Build();
 LIN.Access.Auth.Build.Init();
 LIN.Access.Communication.Build.Init();
+LIN.Access.Search.Build.Init();
 
 await builder.Build().RunAsync();

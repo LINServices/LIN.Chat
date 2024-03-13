@@ -35,6 +35,7 @@ else
 
 LIN.Access.Auth.Build.Init();
 LIN.Access.Communication.Build.Init();
+LIN.Access.Search.Build.Init();
 
 app.UseCors("AllowAnyOrigin");
 

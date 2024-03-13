@@ -23,6 +23,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Modules", "..\..\Tipos\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Types.Cloud.Identity", "..\..\Tipos\LIN.Types.Cloud.Identity\LIN.Types.Cloud.Identity.csproj", "{FE47FA39-3AC5-4B67-B47E-7B7892A1DB03}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Access.Search", "..\..\AccesoAPI\LIN.Access.Search\LIN.Access.Search.csproj", "{95E67378-8526-4809-83F8-C8E902748A06}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Access", "..\..\AccesoAPI\LIN.Access\LIN.Access\LIN.Access.csproj", "{E3F8BE84-4E15-4B4C-A638-33B13362CC57}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +73,14 @@ Global
 		{FE47FA39-3AC5-4B67-B47E-7B7892A1DB03}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE47FA39-3AC5-4B67-B47E-7B7892A1DB03}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE47FA39-3AC5-4B67-B47E-7B7892A1DB03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95E67378-8526-4809-83F8-C8E902748A06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95E67378-8526-4809-83F8-C8E902748A06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95E67378-8526-4809-83F8-C8E902748A06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95E67378-8526-4809-83F8-C8E902748A06}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3F8BE84-4E15-4B4C-A638-33B13362CC57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3F8BE84-4E15-4B4C-A638-33B13362CC57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3F8BE84-4E15-4B4C-A638-33B13362CC57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3F8BE84-4E15-4B4C-A638-33B13362CC57}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

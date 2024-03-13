@@ -112,32 +112,6 @@ internal class Scripts
         };
 
 
-
-
-        // Acción.
-        SILFFunction search =
-        new(async (param) =>
-        {
-
-            var content = param.Where(T => T.Name == "contenido").FirstOrDefault();
-
-            string uri = LIN.Modules.Web.AddParameters("https://www.google.com/search", new()
-            {
-                {"q",content?.Objeto?.Value?.ToString() ?? "" }
-            });
-
-            await Launcher.Default.OpenAsync(uri);
-
-        })
-        {
-            Name = "search",
-            Parameters =
-            [
-                new Parameter("contenido", new("string"))
-            ]
-        };
-
-
         // Acción.
         SILFFunction actionSelect =
         new(async (param) =>
@@ -162,7 +136,7 @@ internal class Scripts
         };
 
         // Agregar.
-        Actions.AddRange([actionMessage, actionSelect, search]);
+        Actions.AddRange([actionMessage, actionSelect]);
 
     }
 
