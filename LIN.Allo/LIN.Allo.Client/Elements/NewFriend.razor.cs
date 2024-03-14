@@ -45,6 +45,7 @@ public partial class NewFriend
     /// </summary>
     private async void Find()
     {
+
         // Sesión.
         var session = Access.Communication.Session.Instance;
 
@@ -79,8 +80,23 @@ public partial class NewFriend
             return;
         }
 
-    }
 
+        // Crear o encontrar la conversación en la API.
+        var apiConversation = await Access.Communication.Controllers.Conversations.Read(conversation.LastID, session.Token, session.AccountToken);
+
+        // Agregar información de las cuentas.
+        if (apiConversation.AlternativeObject is List<AccountModel> Accounts)
+            Chat.Accounts.AddRange(Accounts);
+
+        // Modelo de conversación.
+
+
+        Chat.Suscribe(apiConversation.Model.Conversation);
+
+        Chat.Instance.IsSearching = false;
+        Chat.Instance.Go(apiConversation.Model.Conversation.ID);
+
+    }
 
 
     /// <summary>

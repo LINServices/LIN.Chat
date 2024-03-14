@@ -35,6 +35,10 @@ public partial class ChatSection : IDisposable, IMessageChanger
             InvokeAsync(() =>
             {
                 ConversationsObserver.UnSuscribe(this);
+
+                if (value == null)
+                    return;
+
                 ConversationsObserver.Suscribe(value.Conversation.ID, this);
 
                 Message = string.Empty;
@@ -104,7 +108,7 @@ public partial class ChatSection : IDisposable, IMessageChanger
 
 
 
-        if (string.IsNullOrWhiteSpace(Message))
+        if (string.IsNullOrWhiteSpace(Message) || Iam == null)
             return;
 
         // Id único.
@@ -188,7 +192,7 @@ public partial class ChatSection : IDisposable, IMessageChanger
     /// </summary>
     public async Task ScrollToBottom()
     {
-        await JSRuntime.InvokeVoidAsync("scrollToBottom", $"CM-{Iam.Conversation.ID}");
+        await JSRuntime.InvokeVoidAsync("scrollToBottom", $"CM-{Iam?.Conversation?.ID}");
     }
 
 
