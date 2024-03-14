@@ -45,7 +45,6 @@ public partial class NewFriend
     /// </summary>
     private async void Find()
     {
-
         // Sesión.
         var session = Access.Communication.Session.Instance;
 
@@ -68,42 +67,17 @@ public partial class NewFriend
             return;
         }
 
-        // Encuentra la conversación local.
-        //var localConversation = Chat.Conversations.FirstOrDefault(c => c.Id == conversation.LastID);
+        //Encuentra la conversación local.
+        var localConversation = ConversationsObserver.Get(conversation.LastID);
 
-        //// Si existe local.
-        //if (localConversation != null)
-        //{
-        //    // Seleccionar la conversación.
-        //    Chat.Instance.IsSearching = false;
-        //    Chat.Instance.Select(localConversation.Id);
-        //    return;
-        //}
-
-
-        //// Crear o encontrar la conversación en la API.
-        //var apiConversation = await Access.Communication.Controllers.Conversations.Read(conversation.LastID, session.Token, session.AccountToken);
-
-        //// Agregar información de las cuentas.
-        //if (apiConversation.AlternativeObject is List<AccountModel> accounts)
-        //    Chat.accounts.AddRange(accounts);
-
-        //// Modelo de conversación.
-        //Chat.Conversations.Add(new()
-        //{
-        //    Control = null,
-        //    IsLoad = false,
-        //    Id = conversation.LastID,
-        //    Chat = apiConversation.Model
-        //});
-
-        //// Suscribir el evento.
-        //_ = ChatSection.Hub!.JoinGroup(conversation.LastID);
-
-        //// Cambiar los estados.
-        //Chat.Instance.IsSearching = false;
-        //Chat.Instance?.StateChange();
-        //Chat.Instance?.Select(conversation.LastID);
+        // Si existe local.
+        if (localConversation != null)
+        {
+            // Seleccionar la conversación.
+            Chat.Instance.IsSearching = false;
+            Chat.Instance.Go(localConversation.Conversation.ID);
+            return;
+        }
 
     }
 

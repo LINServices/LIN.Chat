@@ -1160,6 +1160,10 @@ video {
   width: 0.75rem;
 }
 
+.w-36 {
+  width: 9rem;
+}
+
 .w-4 {
   width: 1rem;
 }
@@ -1223,10 +1227,6 @@ video {
 
 .w-screen {
   width: 100vw;
-}
-
-.w-36 {
-  width: 9rem;
 }
 
 .min-w-80 {
@@ -1846,6 +1846,10 @@ video {
 
 .gap-4 {
   gap: 1rem;
+}
+
+.gap-5 {
+  gap: 1.25rem;
 }
 
 .gap-x-1 {
@@ -2474,11 +2478,6 @@ video {
   background-color: rgb(249 250 251 / var(--tw-bg-opacity));
 }
 
-.bg-gray-700 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(55 65 81 / var(--tw-bg-opacity));
-}
-
 .bg-gray-800 {
   --tw-bg-opacity: 1;
   background-color: rgb(31 41 55 / var(--tw-bg-opacity));
@@ -2685,10 +2684,6 @@ video {
 
 .fill-current-500 {
   fill: #6366f1;
-}
-
-.fill-gray-600 {
-  fill: #4b5563;
 }
 
 .fill-orange-400 {
@@ -3885,10 +3880,6 @@ h1:focus {
   color: rgb(241 245 249 / var(--tw-text-opacity));
 }
 
-.hover\:opacity-25:hover {
-  opacity: 0.25;
-}
-
 .hover\:shadow-gray-400:hover {
   --tw-shadow-color: #9ca3af;
   --tw-shadow: var(--tw-shadow-colored);
@@ -4194,11 +4185,6 @@ h1:focus {
     background-color: rgb(243 244 246 / 0.1);
   }
 
-  .dark\:bg-gray-300 {
-    --tw-bg-opacity: 1;
-    background-color: rgb(209 213 219 / var(--tw-bg-opacity));
-  }
-
   .dark\:bg-gray-700 {
     --tw-bg-opacity: 1;
     background-color: rgb(55 65 81 / var(--tw-bg-opacity));
@@ -4258,11 +4244,6 @@ h1:focus {
     background-color: rgb(9 9 11 / var(--tw-bg-opacity));
   }
 
-  .dark\:bg-zinc-600 {
-    --tw-bg-opacity: 1;
-    background-color: rgb(82 82 91 / var(--tw-bg-opacity));
-  }
-
   .dark\:fill-black {
     fill: #000;
   }
@@ -4309,6 +4290,11 @@ h1:focus {
     color: rgb(156 163 175 / var(--tw-text-opacity));
   }
 
+  .dark\:text-gray-500 {
+    --tw-text-opacity: 1;
+    color: rgb(107 114 128 / var(--tw-text-opacity));
+  }
+
   .dark\:text-gray-600 {
     --tw-text-opacity: 1;
     color: rgb(75 85 99 / var(--tw-text-opacity));
@@ -4347,11 +4333,6 @@ h1:focus {
   .dark\:text-zinc-400 {
     --tw-text-opacity: 1;
     color: rgb(161 161 170 / var(--tw-text-opacity));
-  }
-
-  .dark\:text-gray-500 {
-    --tw-text-opacity: 1;
-    color: rgb(107 114 128 / var(--tw-text-opacity));
   }
 
   .dark\:placeholder-gray-400::-moz-placeholder {

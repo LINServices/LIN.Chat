@@ -203,7 +203,7 @@
                 @* Mostrar el chat *@
                 @if (ChatSection.Hub != null && SelectedConversation != null)
                 {
-                    <ChatSection @ref="ChatPage" Drawer="MemberDrawer" Iam="ConversationsObserver.Get(SelectedConversation.ID)" OnBackPress="Nav" />
+                    <ChatSection Drawer="MemberDrawer" Iam="ConversationsObserver.Get(SelectedConversation.ID)" OnBackPress="Nav" />
                 }
 
                 // No esta seleccionado.

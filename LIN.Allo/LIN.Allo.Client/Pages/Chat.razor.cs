@@ -30,20 +30,17 @@ public partial class Chat
     private Members? MemberDrawer { get; set; }
 
 
+
+
+
+
     /// <summary>
-    /// Sección actual del chat.
+    /// Al establecer los parámetros.
     /// </summary>
-    private static ChatSection? ChatPage { get; set; }
-
-
-
-
-
-
     protected override Task OnParametersSetAsync()
     {
 
-
+        // Si el id es 0.
         if (Id <= 0)
         {
             SelectedConversation = null;
@@ -52,20 +49,27 @@ public partial class Chat
             return Task.Run(() => { });
         }
 
-
-
-        Select(Id);
+        // Seleccionar una conversación.
+        Select(Id, true);
 
         return base.OnParametersSetAsync();
 
-
     }
 
 
-    void Nav()
-    {
-        navigationManager.NavigateTo("/home");
-    }
+
+    /// <summary>
+    /// Navegar al home.
+    /// </summary>
+    void Nav() => navigationManager.NavigateTo("/home");
+
+
+
+    /// <summary>
+    /// Cuentas.
+    /// </summary>
+    public static List<AccountModel> Accounts { get; set; } = [];
+
 
 
 
@@ -405,9 +409,26 @@ public partial class Chat
     /// Seleccionar un chat
     /// </summary>
     /// <param name="chat"></param>
-    private void Go(ConversationLocal chat)
+    public void Go(ConversationLocal chat)
     {
-        var uri = navigationManager.GetUriWithQueryParameter("Id", chat.Conversation.ID);
+        Go(chat.Conversation.ID);
+    }
+
+
+    /// <summary>
+    /// Seleccionar un chat
+    /// </summary>
+    /// <param name="chat"></param>
+    public void Go(int chat)
+    {
+
+        if (chat == SelectedConversation?.ID)
+        {
+            navigationManager.NavigateTo(navigationManager.GetUriWithQueryParameter("Id", 0));
+            return;
+        }
+
+        var uri = navigationManager.GetUriWithQueryParameter("Id", chat);
         navigationManager.NavigateTo(uri);
     }
 
@@ -417,18 +438,7 @@ public partial class Chat
     /// Seleccionar un chat
     /// </summary>
     /// <param name="chat"></param>
-    private void Select(ConversationModel chat)
-    {
-        Select(chat.ID);
-    }
-
-
-
-    /// <summary>
-    /// Seleccionar un chat
-    /// </summary>
-    /// <param name="chat"></param>
-    public async void Select(int chat)
+    public async void Select(int chat, bool force = false)
     {
 
 
@@ -441,18 +451,27 @@ public partial class Chat
         if (cache == null)
             return;
 
-        //foreach (var c in Conversations)
-        //    c.Control?.Unselect();
+
+        IsSearching = false;
+        StateHasChanged();
+
+
+        if ((SelectedConversation?.ID == cache.Conversation.ID) && force)
+        {
+
+            return;
+        }
 
 
 
 
         if (SelectedConversation?.ID == cache.Conversation.ID)
         {
-            //  cache.Control?.Unselect();
-            SelectedConversation = null;
-            ActualSection = 0;
-            StateHasChanged();
+            navigationManager.NavigateTo(navigationManager.GetUriWithQueryParameter("Id", 0));
+            ////  cache.Control?.Unselect();
+            //SelectedConversation = null;
+            //ActualSection = 0;
+            //StateHasChanged();
             return;
         }
 
@@ -462,7 +481,6 @@ public partial class Chat
         //  await Task.Delay(50);
 
         SelectedConversation = cache.Conversation;
-        // cache.Control?.Select();
 
         // Si los chats (mensajes) no se han cargado.
         if (cache.Messages == null)

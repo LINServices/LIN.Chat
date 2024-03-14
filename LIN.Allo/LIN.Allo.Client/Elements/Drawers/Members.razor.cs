@@ -73,28 +73,33 @@ public partial class Members
     /// <param name="id">Id de la conversación.</param>
     public async Task LoadData(int id, bool force = false)
     {
+
         IsShowAdd = false;
+
         // Busca en el cache.
         var cache = Cache.Where(t => t.Item1 == id).FirstOrDefault();
 
-        //ConversationContext = Chat.Conversations.Where(t => t.Id == id).FirstOrDefault()?.Chat.Conversation;
+        ConversationContext = new()
+        {
+            ID = id
+        };
 
-        //// Si no existe en el cache.
-        //if (cache.Item2 == null || force)
-        //{
-        //    // Respuesta de la API.
-        //    var result = await Access.Communication.Controllers.Conversations.MembersInfo(id, Session.Instance.Token, Session.Instance.AccountToken);
+        // Si no existe en el cache.
+        if (cache.Item2 == null || force)
+        {
+            // Respuesta de la API.
+            var result = await Access.Communication.Controllers.Conversations.MembersInfo(id, Session.Instance.Token, Session.Instance.AccountToken);
 
-        //    // Modelos a la UI.
-        //    MemberModels = result.Models.OrderByDescending(t => t.Profile.Rol).ToList();
+            // Modelos a la UI.
+            MemberModels = result.Models.OrderByDescending(t => t.Profile.Rol).ToList();
 
-        //    Cache.RemoveAll(t => t.Item1 == id);
-        //    Cache.Add(new(id, MemberModels));
-        //}
-        //else
-        //{
-        //    MemberModels = cache.Item2;
-        //}
+            Cache.RemoveAll(t => t.Item1 == id);
+            Cache.Add(new(id, MemberModels));
+        }
+        else
+        {
+            MemberModels = cache.Item2;
+        }
 
     }
 
