@@ -4,42 +4,18 @@
 
     <div class="flex w-full items-center">
 
-        @{
-            string conversationName = "";
-        }
-
         @* Si es un chat personal. *@
-        @if (Member.Conversation.Members != null && Member.Conversation.Type == Types.Communication.Enumerations.ConversationsTypes.Personal && Member.Conversation.Members.Count >= 1)
+        @if (Member.Conversation.Type == Types.Communication.Enumerations.ConversationsTypes.Personal)
         {
 
-            var member = Member.Conversation.Members.FirstOrDefault(t => t.Profile.AccountID != LIN.Access.Communication.Session.Instance.Account.Id);
 
-            var profile = Chat.accounts.Where(a => a.Id == member?.Profile.AccountID).FirstOrDefault();
-
-
-            @if (profile?.Profile == null || profile.Profile.Length <= 0)
-            {
-
-                <div class="relative inline-block">
-                    <div class="inline-flex items-center justify-center w-10 h-10 border border-shark-100 rounded-full bg-zinc-100 p-2 font-bold text-zinc-600 leading-none dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-200">
-                        <label class="w-max h-max text-center content-center mt-0.5 lg:mt-0">@(LIN.Modules.Text.GetInitials(profile?.Name))</label>
-                    </div>
-                    <span class="absolute bottom-0 end-0 block h-2.5 w-2.5 rounded-full transform  ring-2 ring-white bg-green-500 text-[8px]">
-                    </span>
+            <div class="relative inline-block">
+                <div class="inline-flex items-center justify-center w-10 h-10 border border-shark-100 rounded-full bg-zinc-100 p-2 font-bold text-zinc-600 leading-none dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-200">
+                    <label class="w-max h-max text-center content-center mt-0.5 lg:mt-0">@(LIN.Modules.Text.GetInitials(Member.Conversation.Name))</label>
                 </div>
-
-            }
-            else
-            {
-                <button type="button" class="flex bg-white dark:bg-zinc-700 text-sm rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button">
-                    <span class="sr-only">Open</span>
-                    <img class="w-10 h-10 p-0.5 rounded-full ring-2 ring-gray-300" src="@GetPicture(profile)">
-                </button>
-            }
-
-
-            conversationName = profile?.Name ?? "Desconocido";
-
+                <span class="absolute bottom-0 end-0 block h-2.5 w-2.5 rounded-full transform  ring-2 ring-white bg-green-500 text-[8px]">
+                </span>
+            </div>
         }
 
         @* Si es un grupo. *@
@@ -52,15 +28,13 @@
 
                 </div>
             </div>
-
-            conversationName = Member.Conversation.Name;
         }
 
 
 
         <div class="flex flex-col ml-3">
 
-            <label class="text-base font-bold text-gray-700 dark:text-gray-300">@(conversationName)</label>
+            <label class="text-base font-bold text-gray-700 dark:text-gray-300">@(Member.Conversation.Name)</label>
 
             @{
                 var message = Member.Messages?.LastOrDefault();

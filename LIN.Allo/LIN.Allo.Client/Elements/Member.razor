@@ -13,6 +13,10 @@
 
 
     [Parameter]
+    public Action<int> OnDelete { get; set; }
+
+
+    [Parameter]
     public SessionModel<MemberChatModel>? e { get; set; } = null;
 
 
@@ -116,7 +120,7 @@
 
 
     <div class="flex justify-end items-center mr-3 hover:cursor-pointer">
-        <span class="inline-flex justify-center items-center bg-red-100 hover:bg-red-200 text-red-800 hover:text-red-950 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full w-28">
+        <span @onclick="()=>OnDelete(Id)" class="inline-flex justify-center items-center bg-red-100 hover:bg-red-200 text-red-800 hover:text-red-950 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full w-28">
             <span class="w-2 h-2 mr-1 bg-red-500 rounded-full"></span>
             @(e.Account.Id == Access.Communication.Session.Instance.Account.Id ? "Salir" : "Expulsar")
         </span>

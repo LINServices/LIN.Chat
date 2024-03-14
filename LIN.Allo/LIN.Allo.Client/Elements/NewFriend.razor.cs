@@ -84,6 +84,14 @@ public partial class NewFriend
         // Crear o encontrar la conversación en la API.
         var apiConversation = await Access.Communication.Controllers.Conversations.Read(conversation.LastID, session.Token, session.AccountToken);
 
+        // Error.
+        if (apiConversation.Response != Responses.Success)
+        {
+            Section = Sections.Error;
+            StateHasChanged();
+            return;
+        }
+
         // Agregar información de las cuentas.
         if (apiConversation.AlternativeObject is List<AccountModel> Accounts)
             Chat.Accounts.AddRange(Accounts);

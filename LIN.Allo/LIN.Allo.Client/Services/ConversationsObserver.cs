@@ -94,6 +94,9 @@ public static class ConversationsObserver
     public static void Create(ConversationModel conversation)
     {
 
+        if (conversation == null)
+            return;
+
         Data.TryGetValue(conversation.ID, out var local);
 
         if (local == null)
@@ -162,6 +165,17 @@ public static class ConversationsObserver
     {
         Data.TryGetValue(id, out var local);
         return local;
+    }
+
+
+
+    /// <summary>
+    /// ELiminar la conversación.
+    /// </summary>
+    /// <param name="id">Id de la conversación.</param>
+    public static void Remove(int id)
+    {
+        Data.Remove(id);
     }
 
 
