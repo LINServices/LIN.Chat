@@ -14,6 +14,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\..\..\AccesoAPI\LIN.Access.Search\LIN.Access.Search.csproj" />
+        <ProjectReference Include="..\..\..\..\Components\LIN.Emma.UI\LIN.Emma.UI\LIN.Emma.UI.csproj" />
         <ProjectReference Include="..\..\..\..\Tipos\LIN.Types.Cloud.Identity\LIN.Types.Cloud.Identity.csproj" />
         <ProjectReference Include="D:\LIN Services\AccesoAPI\LIN.Access.Auth\LIN.Access.Auth.csproj" />
         <ProjectReference Include="D:\LIN Services\AccesoAPI\LIN.Access.Communication\LIN.Access.Communication.csproj" />

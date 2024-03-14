@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-    content: ["../**/*{html,razor,js,cs}"],
+    content: ["D:/LIN Services/Components/LIN.Emma.UI/**/*{html,razor,js,cs}", "../**/*{html,razor,js,cs}"],
     theme: {
         screens: {
             'sm': '640px',

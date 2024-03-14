@@ -21,7 +21,7 @@ public partial class Chat
     /// <summary>
     /// Drawer de Emma.
     /// </summary>
-    private Emma? EmmaDrawer { get; set; }
+    private EmmaDrawer? EmmaDrawer { get; set; }
 
 
     /// <summary>
