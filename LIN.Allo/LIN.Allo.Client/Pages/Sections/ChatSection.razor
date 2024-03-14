@@ -27,7 +27,18 @@
                 @(Iam?.Conversation?.Name ?? "")
             </label>
             <label style="margin-top:-2px" class="text-gray-500 text-xs dark:text-gray-500">
-                Grupo personal.
+                                @switch(Iam?.Conversation?.Type)
+{
+    case ConversationsTypes.Personal:
+        @("Chat personal")
+        break;
+    case ConversationsTypes.Work:
+        @("Grupo profesional")
+        break;
+    default:
+        @("Grupo")
+        break;
+}
             </label>
         </div>
     </div>
