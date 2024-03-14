@@ -1,10 +1,10 @@
-﻿
-using LIN.Allo.Client.Elements;
+﻿using LIN.Allo.Shared.Components.Elements.Drawers;
+using LIN.Allo.Shared.Services;
 
 namespace LIN.Allo.Client.Pages;
 
 
-public partial class Chat
+public partial class Chat : IChatViewer
 {
 
     [Parameter]
@@ -82,8 +82,6 @@ public partial class Chat
 
 
 
-
-    public static Chat? Instance { get; set; }
 
 
 
@@ -293,8 +291,8 @@ public partial class Chat
         }
 
         // Crear el hub
-        ChatSection.Hub = new(Access.Communication.Session.Instance.Profile);
-        await ChatSection.Hub.Suscribe();
+        RealTime.Hub = new(Access.Communication.Session.Instance.Profile);
+        await RealTime.Hub.Suscribe();
 
         // Obtiene la data
         RetrieveData();
@@ -314,8 +312,8 @@ public partial class Chat
         {
             Nav();
 
-            ChatSection.Hub!.OnReceiveMessage ??= new();
-            ChatSection.Hub!.OnReceiveMessage.Clear();
+            RealTime.Hub!.OnReceiveMessage ??= new();
+            RealTime.Hub!.OnReceiveMessage.Clear();
             ConversationsObserver.Data.Clear();
             IsConversationsLoad = false;
             StateHasChanged();
@@ -354,7 +352,7 @@ public partial class Chat
 
 
             // Lista.
-            ChatSection.Hub!.OnReceiveMessage?.Add(OnReceiveMessage);
+            RealTime.Hub!.OnReceiveMessage?.Add(OnReceiveMessage);
 
 
             // Suscribir los eventos del hub
@@ -380,22 +378,18 @@ public partial class Chat
 
 
 
-    public static void Suscribe(ConversationModel conversation)
+    public void Suscribe(ConversationModel conversation)
     {
         // Lista.
-        ChatSection.Hub!.OnReceiveMessage?.Add(OnReceiveMessage);
+        RealTime.Hub!.OnReceiveMessage?.Add(OnReceiveMessage);
 
 
         ConversationsObserver.Create(conversation);
 
         // Suscribir evento.
-        _ = ChatSection.Hub!.JoinGroup(conversation.ID);
+        _ = RealTime.Hub!.JoinGroup(conversation.ID);
 
     }
-
-
-
-    public static List<Message> MessageTasker { get; set; } = new();
 
 
 

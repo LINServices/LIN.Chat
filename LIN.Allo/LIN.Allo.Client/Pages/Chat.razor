@@ -8,7 +8,7 @@
 
 @* Pantalla de carga *@
 @{
-    Instance = this;
+    LIN.Allo.Shared.Services.ChatPage.ChatViewer = this;
 }
 
 @if (!Access.Communication.Session.IsOpen)
@@ -203,7 +203,7 @@
             <div class="w-full @(ActualSection != 1 ? "hidden lg:flex" : "") lg:w-2/3 flex flex-col">
 
                 @* Mostrar el chat *@
-                @if (ChatSection.Hub != null && SelectedConversation != null)
+                @if (RealTime.Hub != null && SelectedConversation != null)
                 {
                     <ChatSection Drawer="MemberDrawer" Iam="ConversationsObserver.Get(SelectedConversation.ID)" OnBackPress="Nav" />
                 }
@@ -214,7 +214,7 @@
                     <div class="flex flex-col h-full w-full items-center justify-center dark:bg-shark-950 select-none">
                         <img class="h-56 w-56" src="./img/presdraw.svg" />
                         <label class="text-3xl font-bold dark:text-white">Bienvenido a LIN Allo</label>
-                        <label class="text-gray-600 mt-1 dark:text-gray-400">LIN Allo tambien esta disponible como app en <span class="text-blue-600">Windows</span> y <span class="text-green-500">Android</span></label>
+                        <label class="text-gray-600 mt-1 dark:text-gray-400">LIN Allo también esta disponible como app en <span class="text-blue-600">Windows</span> y <span class="text-green-500">Android</span></label>
                     </div>
                 }
 

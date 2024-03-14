@@ -1,5 +1,5 @@
-﻿
-using LIN.Allo.Client.Elements.Popups;
+﻿using LIN.Allo.Shared.Components.Elements.Popups;
+using LIN.Allo.Shared.Services;
 
 namespace LIN.Allo.Client.Pages.Sections;
 
@@ -63,12 +63,6 @@ public partial class ChatSection : IDisposable, IMessageChanger
 
 
 
-    /// <summary>
-    /// Hub de conexión.
-    /// </summary>
-    public static Access.Communication.Hubs.ChatHub? Hub { get; set; }
-
-
 
     /// <summary>
     /// Mensaje a enviar.
@@ -129,9 +123,8 @@ public partial class ChatSection : IDisposable, IMessageChanger
         });
 
 
-
         // Envía el mensaje al hub
-        Hub?.SendMessage(Iam.Conversation.ID, Message, guid);
+        RealTime.Hub?.SendMessage(Iam.Conversation.ID, Message, guid);
 
         // Reestablece el texto
         Message = "";

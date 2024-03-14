@@ -29,6 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Access", "..\..\AccesoA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Emma.UI", "..\..\Components\LIN.Emma.UI\LIN.Emma.UI\LIN.Emma.UI.csproj", "{4D0AA813-96F6-4524-9106-C1F3CCF104DA}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Allo.Shared", "..\..\Components\LIN.Allo.Shared\LIN.Allo.Shared\LIN.Allo.Shared.csproj", "{184AE61D-DF20-46C9-A1CB-FB7FEE7FA51D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{4D0AA813-96F6-4524-9106-C1F3CCF104DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D0AA813-96F6-4524-9106-C1F3CCF104DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D0AA813-96F6-4524-9106-C1F3CCF104DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{184AE61D-DF20-46C9-A1CB-FB7FEE7FA51D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{184AE61D-DF20-46C9-A1CB-FB7FEE7FA51D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{184AE61D-DF20-46C9-A1CB-FB7FEE7FA51D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{184AE61D-DF20-46C9-A1CB-FB7FEE7FA51D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
