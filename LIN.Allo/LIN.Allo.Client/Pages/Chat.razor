@@ -128,7 +128,7 @@
                             @if (IsConversationsLoad)
                             {
                                 // Si no hay conversaciones.
-                                if (ConversationsObserver.Data.Values.Count <= 0 && !IsSearching)
+                                if (ConversationsObserver.Data.Count <= 0 && !IsSearching)
                                 {
                                     <div class="px-5">
                                         <div class="flex rounded-lg justify-center items-center border-dashed border-2 border-gray-300 w-full py-10 mt-3 dark:border-zinc-600">
@@ -168,9 +168,9 @@
                                 // Renderizar las conversaciones.
                                 else
                                 {
-                                    foreach (var conversation in ConversationsObserver.Data.Values)
+                                    foreach (var conversation in ConversationsObserver.Data)
                                     {
-                                        <Control Member="@(conversation)" OnClick="Go" IsSelect=@(SelectedConversation?.ID == conversation.Conversation.ID) />
+                                        <Control Member="@(conversation.Item2)" OnClick="Go" IsSelect=@(SelectedConversation?.ID == conversation.Item2.Conversation.ID) />
                                     }
                                 }
 
@@ -205,7 +205,7 @@
                 @* Mostrar el chat *@
                 @if (RealTime.Hub != null && SelectedConversation != null)
                 {
-                    <ChatSection Drawer="MemberDrawer" Iam="ConversationsObserver.Get(SelectedConversation.ID)" OnBackPress="Nav" />
+                    <ChatSection EmmaClick="OpenEmma" Drawer="MemberDrawer" Iam="ConversationsObserver.Get(SelectedConversation.ID)" OnBackPress="Nav" />
                 }
 
                 // No esta seleccionado.

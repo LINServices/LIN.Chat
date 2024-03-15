@@ -22,6 +22,10 @@ public partial class ChatSection : IDisposable, IMessageChanger, IConversationVi
     public Members? Drawer { get; set; }
 
 
+    [Parameter]
+    public Action EmmaClick { get; set; }
+
+
 
     /// <summary>
     /// Integrante del chat.

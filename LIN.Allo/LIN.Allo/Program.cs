@@ -48,6 +48,7 @@ app.MapRazorComponents<App>()
    .AddInteractiveWebAssemblyRenderMode()
    .AddInteractiveServerRenderMode()
    .AddAdditionalAssemblies(typeof(LIN.Allo.Client.Pages.Login).Assembly)
+   .AddAdditionalAssemblies(typeof(LIN.Allo.Shared._Imports).Assembly)
    .AddAdditionalAssemblies(typeof(LIN.Emma.UI.Emma).Assembly);
 
 
