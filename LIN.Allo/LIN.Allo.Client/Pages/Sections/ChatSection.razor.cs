@@ -4,7 +4,7 @@ using LIN.Allo.Shared.Services;
 namespace LIN.Allo.Client.Pages.Sections;
 
 
-public partial class ChatSection : IDisposable, IMessageChanger
+public partial class ChatSection : IDisposable, IMessageChanger, IConversationViewer
 {
 
     /// <summary>
@@ -34,15 +34,17 @@ public partial class ChatSection : IDisposable, IMessageChanger
             _iam = value;
             InvokeAsync(() =>
             {
-                ConversationsObserver.UnSuscribe(this);
+                ConversationsObserver.UnSuscribe((IMessageChanger)this);
+                ConversationsObserver.UnSuscribe((IConversationViewer)this);
 
                 if (value == null)
                     return;
 
-                ConversationsObserver.Suscribe(value.Conversation.ID, this);
+
+                ConversationsObserver.Suscribe(value.Conversation.ID, (IMessageChanger)this);
+                ConversationsObserver.Suscribe(value.Conversation.ID, (IConversationViewer)this);
 
                 Message = string.Empty;
-
                 StateHasChanged();
             });
         }
@@ -176,7 +178,8 @@ public partial class ChatSection : IDisposable, IMessageChanger
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        ConversationsObserver.Suscribe(Iam.Conversation.ID, this);
+        ConversationsObserver.Suscribe(Iam.Conversation.ID, (IMessageChanger)this);
+        ConversationsObserver.Suscribe(Iam.Conversation.ID, (IConversationViewer)this);
     }
 
 
@@ -201,18 +204,28 @@ public partial class ChatSection : IDisposable, IMessageChanger
             return;
 
         // Establecer las propiedades.
-        Drawer.Name = Iam.Conversation.Name;
+        Drawer.SetDefault(Iam.Conversation.Name, Iam.Conversation.Type);
+
         await Drawer.LoadData(Iam.Conversation.ID);
         Drawer?.Show();
     }
 
     public void Dispose()
     {
-        ConversationsObserver.UnSuscribe(this);
+        ConversationsObserver.UnSuscribe((IConversationViewer)this);
+        ConversationsObserver.UnSuscribe((IMessageChanger)this);
     }
 
     public void Change()
     {
         InvokeAsync(StateHasChanged);
     }
+
+
+    public void Change(string newName)
+    {
+        Iam.Conversation.Name = newName;
+        StateHasChanged();
+    }
+
 }
