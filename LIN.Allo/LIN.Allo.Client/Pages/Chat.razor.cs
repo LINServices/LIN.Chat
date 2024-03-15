@@ -520,4 +520,6 @@ public partial class Chat : IChatViewer
     {
         StateHasChanged();
     }
+
+
 }
