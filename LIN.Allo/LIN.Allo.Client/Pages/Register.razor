@@ -1,0 +1,165 @@
+﻿@page "/register"
+
+<PageTitle>Nueva cuenta</PageTitle>
+
+@inject NavigationManager nav;
+
+
+@* Pantalla *@
+<div class="grid grid-cols-1 dl:grid-cols-2 h-dvh max-h-dvh w-full p-3">
+
+
+    @* Contenido *@
+    <div class="flex items-center justify-center w-full">
+
+        @* Secciones *@
+        <div class="flex align-items-center w-max">
+
+            @* Entradas *@
+            @if (Section == 0)
+            {
+                @*Contenedor*@
+                <div class="relative z-10 flex flex-1 flex-col px-4 py-10 sm:justify-center md:flex-none md:px-28">
+                    <div class="mx-auto w-full max-w-md sm:px-4 md:w-96 md:max-w-sm md:px-0">
+
+                        @* Header *@
+                        <div class="flex flex-col">
+
+                            @* Nombre *@
+                            <div class="flex flex-row items-center">
+
+                                <img class="self-center" src="./favicon.svg" style="height:30px; width: 30px" />
+                                <label class="text-xl self-center ml-3 font-bold dark:text-gray-200">
+                                    LIN
+                                    <span class="text-transparent bg-clip-text bg-gradient-to-r to-current-500 from-current-500">
+                                        Allo
+                                    </span>
+
+                                </label>
+                            </div>
+
+                            @*Mensaje de cuenta*@
+                            <div class="mt-10">
+
+                               
+                                    <h2 class="text-lg font-bold text-gray-900  dark:text-white">
+                                        Crear cuenta
+                                    </h2>
+                                
+
+                                <p class="mt-2 text-sm text-gray-700  dark:text-gray-300">
+                                    Ya tienes una cuenta?@* *@ <a style="text-decoration: none !important;"
+                                                                  class="font-medium text-current-500 hover:text-current-800"
+                                                                  href="/">iniciar sesión</a> @* *@para iniciar a disfrutar
+                                </p>
+                            </div>
+
+                        </div>
+
+                        @* Cuerpo *@
+                        <div class="mt-6 grid grid-cols-1 gap-4">
+
+
+
+                            @*Nombre*@
+                            <div class="">
+                                <label for="name" class="mb-2 block text-sm font-medium text-gray-700  dark:text-gray-300">
+                                    Nombre
+                                </label>
+                                <input @onkeypress="HideError" @bind="Name" type="text" autocomplete="off" required=""
+                                       class="block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-gray-900 placeholder-gray-400 focus:ring-1 focus:border-current-500 focus:bg-white focus:outline-none focus:ring-current-500 sm:text-sm dark:bg-zinc-900 dark:focus:bg-zinc-900 dark:text-zinc-200 dark:border-zinc-700">
+                            </div>
+
+                            @*Usuario*@
+                            <div class="">
+                                <label for="user" class="mb-2 block text-sm font-medium text-gray-700  dark:text-gray-300">
+                                    Usuario
+                                </label>
+                                <input @onkeypress="HideError" @bind="User" type="text" autocomplete="off" required=""
+                                       class="block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-gray-900 placeholder-gray-400 focus:ring-1 focus:border-current-500 focus:bg-white focus:outline-none focus:ring-current-500 sm:text-sm dark:bg-zinc-900 dark:focus:bg-zinc-900 dark:text-zinc-200 dark:border-zinc-700">
+                            </div>
+
+
+
+
+                           
+                                @*Contraseña*@
+                                <div class="">
+                                    <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">Contraseña</label>
+                                    <input @onkeypress="HideError"
+                                           @bind="Password" type="password"
+                                           autocomplete="off"
+                                           class="block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-gray-900 placeholder-gray-400 focus:ring-1 focus:border-current-500 focus:bg-white focus:outline-none focus:ring-current-500 sm:text-sm dark:bg-zinc-900 dark:focus:bg-zinc-900 dark:text-zinc-200 dark:border-zinc-700">
+                                </div>
+                          
+
+                            @* Mensaje de error *@
+                            <center class="@(ErrorVisible ? "visible":"hidden")" style="margin-bottom: -10px;">
+                                <label class="text-red-500 font-bold text-sm">@ErrorMessage</label>
+                            </center>
+
+
+                            @* Botón *@
+                            <div class="flex flex-row mt-1">
+
+                                @* Botón iniciar *@
+                                <button @onclick="Start"
+                                        class="group inline-flex items-center justify-center rounded-full py-2 px-4 text-sm font-bold focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 bg-current-500 dark:bg-current-600 text-white hover:text-slate-100 hover:bg-current-800 active:bg-current-800 active:text-current-100 focus-visible:outline-current-500 w-full">
+                                    <span>Iniciar <span aria-hidden="true">→</span></span>
+                                </button>
+
+                            </div>
+
+                            
+                        </div>
+
+                    </div>
+                </div>
+
+            }
+
+            @* Correcto *@
+            else if (Section == 1)
+            {
+                <div class="flex items-center justify-center">
+                    <Success />
+                </div>
+            }
+
+            @* Fallido *@
+            else if (Section == 2)
+            {
+                <div class="flex flex-col items-center justify-center">
+                    <Failure />
+                    <label class="text-red-500">@ErrorMessage</label>
+                </div>
+            }
+
+            @* Cargando *@
+            else
+            {
+
+                <div class="flex flex-col items-center justify-center">
+                    <CircleLoader />
+                    <h5 class="mt-2 font-bold text-sm text-gray-600 dark:text-gray-300">Cargando</h5>
+                   
+                </div>
+
+            }
+
+        </div>
+
+    </div>
+
+
+    @* Imagen *@
+    <div class="hidden dl:block dl:w-full rounded-lg max-h-full">
+
+        <div class="w-full h-full bg-image rounded-lg">
+        </div>
+
+    </div>
+
+
+</div>
+

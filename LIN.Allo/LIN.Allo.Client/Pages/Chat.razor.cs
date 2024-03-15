@@ -515,11 +515,6 @@ public partial class Chat : IChatViewer
         StateHasChanged();
     }
 
-    void Close()
-    {
-        LIN.Access.Communication.Session.CloseSession();
-        navigationManager.NavigateTo("/");
-    }
 
     public void RefreshUI()
     {

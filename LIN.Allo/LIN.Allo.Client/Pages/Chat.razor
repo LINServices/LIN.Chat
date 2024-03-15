@@ -36,22 +36,10 @@
                 @* Header *@
                 <div class="px-5 pt-3 pb-1 flex flex-row justify-between items-center border-r-0 lg:border-r dark:border-zinc-800">
                    
-                    <div @onclick="Close" class="flex items-center">
+                    <div class="flex items-center">
 
                         @* Dropdown Open *@
-                        @if (Img64.Length <= 0)
-                        {
-                            <div class="relative inline-flex items-center justify-center w-9 h-9 overflow-hidden bg-zinc-200 rounded-full dark:bg-shark-800 border dark:border-shark-600">
-                                <span class="font-medium text-gray-600 dark:text-shark-300">@LIN.Modules.Text.GetInitials(LIN.Access.Communication.Session.Instance.Account.Name)</span>
-                            </div>
-                        }
-                        else
-                        {
-                            <button @onclick="E" type="button" class="flex bg-white dark:bg-zinc-700 text-sm rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button">
-                                <span class="sr-only">Open</span>
-                                <img class="w-8 h-8 p-1 rounded-full ring-2 ring-gray-400" src="data:image/png;base64,@Img64">
-                            </button>
-                        }
+                       <LIN.Allo.Client.Pages.UI.PopSession />
 
 
                         @* Datos personales *@
