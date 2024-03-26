@@ -85,8 +85,15 @@
                     <label class="text-base font-bold text-gray-800 dark:text-zinc-200">Conversaciones</label>
 
                     @* Entrada de búsqueda *@
-                    <div class="mt-2 mb-5">
-                        <input @oninput="Search" type="text" autocomplete="off" required="" class="block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-gray-900 placeholder-gray-400 focus:ring-1 focus:border-current-500 focus:bg-white focus:outline-none focus:ring-current-600 sm:text-sm dark:bg-zinc-950 dark:focus:bg-zinc-900 dark:text-zinc-200 dark:border-zinc-800" placeholder="Buscar">
+                    <div class="w-full mt-2 mb-5">
+                        <div class="relative">
+                            <div class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
+
+                                <svg class="w-4 h-4 fill-zinc-400 dark:fill-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z" /></svg>
+
+                            </div>
+                            <input @oninput="Search" type="text" autocomplete="off" required="" class="block w-full appearance-none rounded-xl border border-gray-200 bg-gray-50 px-3 py-2 text-gray-900 placeholder-gray-400 focus:ring-1 focus:border-current-500 focus:bg-white focus:outline-none focus:ring-current-600 sm:text-sm dark:bg-zinc-950 dark:focus:bg-zinc-900 dark:text-zinc-200 dark:border-zinc-800 ps-10" placeholder="Buscar">
+                        </div>
                     </div>
 
                 </div>
