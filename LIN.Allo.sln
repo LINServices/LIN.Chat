@@ -19,8 +19,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Access.Auth", "D:\LIN S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Access.Communication", "D:\LIN Services\AccesoAPI\LIN.Access.Communication\LIN.Access.Communication.csproj", "{1AB5A085-CC55-41FE-8B8D-E6AB83070ACD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Modules", "..\..\Tipos\LIN.Modules\LIN.Modules.csproj", "{B2C69174-018A-4C3E-B01B-4C79AEBA57A0}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Types.Cloud.Identity", "..\..\Tipos\LIN.Types.Cloud.Identity\LIN.Types.Cloud.Identity.csproj", "{FE47FA39-3AC5-4B67-B47E-7B7892A1DB03}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Access.Search", "..\..\AccesoAPI\LIN.Access.Search\LIN.Access.Search.csproj", "{95E67378-8526-4809-83F8-C8E902748A06}"
@@ -69,10 +67,6 @@ Global
 		{1AB5A085-CC55-41FE-8B8D-E6AB83070ACD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1AB5A085-CC55-41FE-8B8D-E6AB83070ACD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1AB5A085-CC55-41FE-8B8D-E6AB83070ACD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B2C69174-018A-4C3E-B01B-4C79AEBA57A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B2C69174-018A-4C3E-B01B-4C79AEBA57A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B2C69174-018A-4C3E-B01B-4C79AEBA57A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B2C69174-018A-4C3E-B01B-4C79AEBA57A0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FE47FA39-3AC5-4B67-B47E-7B7892A1DB03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FE47FA39-3AC5-4B67-B47E-7B7892A1DB03}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE47FA39-3AC5-4B67-B47E-7B7892A1DB03}.Release|Any CPU.ActiveCfg = Release|Any CPU

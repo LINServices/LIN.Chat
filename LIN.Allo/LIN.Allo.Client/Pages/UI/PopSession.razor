@@ -43,7 +43,7 @@
 @if (string.IsNullOrWhiteSpace(Img64))
 {
     <div id="img-prof-@Key" class="relative inline-flex items-center justify-center w-9 h-9 overflow-hidden bg-zinc-200 rounded-full dark:bg-zinc-800 border dark:border-zinc-600">
-        <span class="font-medium text-gray-600 dark:text-zinc-300">@LIN.Modules.Text.GetInitials(LIN.Access.Communication.Session.Instance.Account.Name)</span>
+        <span class="font-medium text-gray-600 dark:text-zinc-300">@Global.Utilities.Strings.GetInitials(LIN.Access.Communication.Session.Instance.Account.Name)</span>
     </div>
 }
 else
@@ -66,7 +66,7 @@ else
             @if (string.IsNullOrWhiteSpace(Img64))
             {
                 <div id="img-prof-@Key" class="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-zinc-200 rounded-full dark:bg-zinc-800 border dark:border-shark-600">
-                    <span class="font-medium text-gray-600 dark:text-zinc-300">@LIN.Modules.Text.GetInitials(LIN.Access.Communication.Session.Instance.Account.Name)</span>
+                    <span class="font-medium text-gray-600 dark:text-zinc-300">@Global.Utilities.Strings.GetInitials(LIN.Access.Communication.Session.Instance.Account.Name)</span>
                 </div>
             }
             else
