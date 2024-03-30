@@ -23,8 +23,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Types.Cloud.Identity", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Access.Search", "..\..\AccesoAPI\LIN.Access.Search\LIN.Access.Search.csproj", "{95E67378-8526-4809-83F8-C8E902748A06}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Access", "..\..\AccesoAPI\LIN.Access\LIN.Access\LIN.Access.csproj", "{E3F8BE84-4E15-4B4C-A638-33B13362CC57}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Emma.UI", "..\..\Components\LIN.Emma.UI\LIN.Emma.UI\LIN.Emma.UI.csproj", "{4D0AA813-96F6-4524-9106-C1F3CCF104DA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIN.Allo.Shared", "..\..\Components\LIN.Allo.Shared\LIN.Allo.Shared\LIN.Allo.Shared.csproj", "{184AE61D-DF20-46C9-A1CB-FB7FEE7FA51D}"
@@ -75,10 +73,6 @@ Global
 		{95E67378-8526-4809-83F8-C8E902748A06}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{95E67378-8526-4809-83F8-C8E902748A06}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{95E67378-8526-4809-83F8-C8E902748A06}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E3F8BE84-4E15-4B4C-A638-33B13362CC57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E3F8BE84-4E15-4B4C-A638-33B13362CC57}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E3F8BE84-4E15-4B4C-A638-33B13362CC57}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E3F8BE84-4E15-4B4C-A638-33B13362CC57}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4D0AA813-96F6-4524-9106-C1F3CCF104DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4D0AA813-96F6-4524-9106-C1F3CCF104DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D0AA813-96F6-4524-9106-C1F3CCF104DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
