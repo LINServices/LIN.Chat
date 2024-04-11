@@ -25,7 +25,5 @@ Asegúrate de tener instalado lo siguiente:
 ![Buscador](./Img/Buscador.png)
 
 
-LIN Allo es completamente responsive.
-Puede ser usado desde cualquier dispositivo.
 
 [Pagina Principal](http://allo.linapps.co/)
