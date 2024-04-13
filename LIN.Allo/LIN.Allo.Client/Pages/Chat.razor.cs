@@ -203,7 +203,7 @@ public partial class Chat : IChatViewer
         SearchResult = null;
         IsSearching = true;
         StateHasChanged();
-        var result = await Access.Communication.Controllers.Conversations.SearchProfiles(Pattern, Access.Communication.Session.Instance.AccountToken);
+        var result = await Access.Communication.Controllers.Members.SearchProfiles(Pattern, Access.Communication.Session.Instance.AccountToken);
 
         SearchResult = result.Models.Where(t => t.Profile.ID != Access.Communication.Session.Instance.Profile.ID).ToList();
         counter = 0;
