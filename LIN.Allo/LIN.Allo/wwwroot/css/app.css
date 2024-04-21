@@ -22,10 +22,6 @@ html, body {
     overflow: hidden !important;
 }
 
-a[href*="http://somee.com"] {
-    visibility: hidden;
-    display: none;
-}
 
 a, .btn-link {
     color: #006bb7;
