@@ -12,3 +12,7 @@ div[style="height: 65px;"] {
     visibility: hidden !important;
     display: none !important;
 }
+div[onmouseover="S_ssac();"][onmouseout="D_ssac();"] {
+    visibility: hidden !important;
+    display: none !important;
+}
