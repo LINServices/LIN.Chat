@@ -61,7 +61,7 @@ public partial class Chat : IChatViewer
     /// <summary>
     /// Navegar al home.
     /// </summary>
-    void Nav() => navigationManager.NavigateTo("/home");
+    void Nav() => navigationManager.NavigateTo("/");
 
 
 

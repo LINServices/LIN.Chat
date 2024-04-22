@@ -27,7 +27,7 @@
     {
         LIN.Access.Communication.Session.CloseSession();
 
-        nav.NavigateTo("/");
+        nav.NavigateTo("/", true);
     }
 
     /// <summary>
@@ -42,38 +42,38 @@
 @* Dropdown Open *@
 @if (string.IsNullOrWhiteSpace(Img64))
 {
-    <div id="img-prof-@Key" class="relative inline-flex items-center justify-center w-9 h-9 overflow-hidden bg-zinc-200 rounded-full dark:bg-zinc-800 border dark:border-zinc-600">
+    <div id="img-prof-@Key" class="relative inline-flex h-9 w-9 items-center justify-center overflow-hidden rounded-full border bg-zinc-200 dark:bg-zinc-800 dark:border-zinc-600">
         <span class="font-medium text-gray-600 dark:text-zinc-300">@Global.Utilities.Strings.GetInitials(LIN.Access.Communication.Session.Instance.Account.Name)</span>
     </div>
 }
 else
 {
-    <button id="img-prof-@Key" type="button" class="flex bg-white dark:bg-zinc-700 text-sm rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600">
+    <button id="img-prof-@Key" type="button" class="flex rounded-full bg-white text-sm focus:ring-4 focus:ring-gray-300 dark:bg-zinc-700 dark:focus:ring-gray-600">
         <span class="sr-only">Open</span>
-        <img class="w-8 h-8 p-1 rounded-full ring-2 ring-gray-400" src="data:image/png;base64,@Img64">
+        <img class="ring-2 h-8 w-8 rounded-full p-1 ring-gray-400" src="data:image/png;base64,@Img64">
     </button>
 }
 
 
-<div id="popover-user-profile-@Key" role="tooltip" class="absolute z-10 invisible inline-block w-64 text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 dark:text-gray-400 dark:bg-zinc-800 dark:border-zinc-600 overflow-hidden">
+<div id="popover-user-profile-@Key" role="tooltip" class="z-10 opacity-0 invisible absolute inline-block w-64 overflow-hidden rounded-lg border border-gray-200 bg-white text-sm text-gray-500 shadow-sm transition-opacity duration-300 dark:text-gray-400 dark:bg-zinc-800 dark:border-zinc-600">
 
     <!-- Header -->
-    <div class="py-3 px-4 border-b border-gray-200 dark:border-gray-700">
+    <div class="border-b border-gray-200 px-4 py-3 dark:border-gray-700">
         <div class="flex items-center gap-x-3">
 
 
             @* Dropdown Open *@
             @if (string.IsNullOrWhiteSpace(Img64))
             {
-                <div id="img-prof-@Key" class="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-zinc-200 rounded-full dark:bg-zinc-800 border dark:border-shark-600">
+                <div id="img-prof-@Key" class="relative inline-flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border bg-zinc-200 dark:bg-zinc-800 dark:border-shark-600">
                     <span class="font-medium text-gray-600 dark:text-zinc-300">@Global.Utilities.Strings.GetInitials(LIN.Access.Communication.Session.Instance.Account.Name)</span>
                 </div>
             }
             else
             {
-                <button id="img-prof-@Key" type="button" class="flex bg-white dark:bg-zinc-700 text-sm rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600">
+                <button id="img-prof-@Key" type="button" class="flex rounded-full bg-white text-sm focus:ring-4 focus:ring-gray-300 dark:bg-zinc-700 dark:focus:ring-gray-600">
                     <span class="sr-only">Open</span>
-                    <img class="w-9 h-9 p-1 rounded-full ring-2 ring-gray-400" src="data:image/png;base64,@Img64">
+                    <img class="ring-2 h-9 w-9 rounded-full p-1 ring-gray-400" src="data:image/png;base64,@Img64">
                 </button>
             }
 
@@ -83,7 +83,7 @@ else
                     @LIN.Access.Communication.Session.Instance.Account.Name
 
                 </h4>
-                <p class="text-sm text-gray-500 -mt-1">
+                <p class="-mt-1 text-sm text-gray-500">
                     @LIN.Access.Communication.Session.Instance.Account.Identity.Unique
                 </p>
             </div>
@@ -91,9 +91,9 @@ else
     </div>
     <!-- End Header -->
     <!-- Footer -->
-    <div class="py-2 px-4 flex justify-between items-center bg-gray-100 dark:bg-zinc-800">
+    <div class="flex items-center justify-between bg-gray-100 px-4 py-2 dark:bg-zinc-800">
 
-        <button @onclick="Close" type="button" class="flex py-1.5 px-3 w-full justify-center items-center gap-x-2 text-sm font-medium rounded-full border border-transparent bg-red-600 text-white hover:bg-red-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 text-center">
+        <button @onclick="Close" type="button" class="flex w-full items-center justify-center gap-x-2 rounded-full border border-transparent bg-red-600 px-3 py-1.5 text-center text-sm font-medium text-white hover:bg-red-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
             Cerrar Sesión
         </button>
     </div>

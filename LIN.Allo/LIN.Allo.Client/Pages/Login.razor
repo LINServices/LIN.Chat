@@ -1,4 +1,4 @@
-﻿@page "/"
+﻿@page "/login"
 @rendermode RenderMode.InteractiveWebAssembly
 
 @* Propiedades *@
@@ -6,20 +6,20 @@
 
 
 @* Pantalla *@
-<div class="grid grid-cols-1 dl:grid-cols-2 min-h-dvh max-h-dvh w-full px-[-20px]">
+<div class="grid-cols-1 px-[-20px] grid max-h-dvh min-h-dvh w-full dl:grid-cols-2">
 
 
     @* Contenido *@
-    <div class="flex items-center justify-center w-full p-3">
+    <div class="flex w-full items-center justify-center p-3">
 
         @* Secciones *@
-        <div class="flex align-items-center w-max">
+        <div class="align-items-center flex w-max">
 
             @* Entradas *@
             @if (Section == 0)
             {
                 @*Contenedor*@
-                <div class="relative z-10 flex flex-1 flex-col px-4 py-10 sm:justify-center md:flex-none md:px-28">
+                <div class="z-10 flex-1 relative flex flex-col px-4 py-10 sm:justify-center md:flex-none md:px-28">
                     <div class="mx-auto w-full max-w-md sm:px-4 md:w-96 md:max-w-sm md:px-0">
 
                         @* Header *@
@@ -29,9 +29,9 @@
                             <div class="flex flex-row items-center">
 
                                 <img class="self-center" src="./favicon.svg" style="height:30px; width: 30px" />
-                                <label class="text-xl self-center ml-3 font-bold dark:text-gray-200">
+                                <label class="ml-3 self-center text-xl font-bold dark:text-gray-200">
                                     LIN
-                                    <span class="text-transparent bg-clip-text bg-gradient-to-r to-current-500 from-current-500">
+                                    <span class="bg-gradient-to-r from-current-500 to-current-500 bg-clip-text text-transparent">
                                         Allo
                                     </span>
 
@@ -52,12 +52,12 @@
                                 @* Si es con contraseña *@
                                 else
                                 {
-                                    <h2 class="text-lg font-bold text-gray-900  dark:text-white">
+                                    <h2 class="text-lg font-bold text-gray-900 dark:text-white">
                                         Iniciar sesión en tu cuenta
                                     </h2>
                                 }
 
-                                <p class="mt-2 text-sm text-gray-700  dark:text-gray-300">
+                                <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">
                                     No tienes una cuenta?@* *@ <a style="text-decoration: none !important;"
                                                                   class="font-medium text-current-500 hover:text-current-800"
                                                                   href="/register">Regístrate</a> @* *@para iniciar a disfrutar
@@ -68,16 +68,16 @@
                         </div>
 
                         @* Cuerpo *@
-                        <div class="mt-6 grid grid-cols-1 gap-4">
+                        <div class="grid-cols-1 mt-6 grid gap-4">
 
 
                             @*Usuario*@
                             <div class="">
-                                <label for="email" class="mb-2 block text-sm font-medium text-gray-700  dark:text-gray-300">
+                                <label for="email" class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                                     Usuario
                                 </label>
                                 <input @onkeypress="HideError" @bind="User" type="text" autocomplete="off" required=""
-                                       class="block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-gray-900 placeholder-gray-400 focus:ring-1 focus:border-current-500 focus:bg-white focus:outline-none focus:ring-current-500 sm:text-sm dark:bg-zinc-900 dark:focus:bg-zinc-900 dark:text-zinc-200 dark:border-zinc-700">
+                                       class="block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-gray-900 placeholder-gray-400 focus:ring-1 focus:border-current-500 focus:bg-white focus:outline-none focus:ring-current-500 dark:bg-zinc-900 dark:text-zinc-200 dark:border-zinc-700 sm:text-sm dark:focus:bg-zinc-900">
                             </div>
 
 
@@ -92,30 +92,30 @@
                                     <input @onkeypress="HideError"
                                            @bind="                                                Password" type="password"
                                            autocomplete="off"
-                                           class="block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-gray-900 placeholder-gray-400 focus:ring-1 focus:border-current-500 focus:bg-white focus:outline-none focus:ring-current-500 sm:text-sm dark:bg-zinc-900 dark:focus:bg-zinc-900 dark:text-zinc-200 dark:border-zinc-700">
+                                           class="block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-gray-900 placeholder-gray-400 focus:ring-1 focus:border-current-500 focus:bg-white focus:outline-none focus:ring-current-500 dark:bg-zinc-900 dark:text-zinc-200 dark:border-zinc-700 sm:text-sm dark:focus:bg-zinc-900">
                                 </div>
                             }
 
 
                             @* Mensaje de error *@
                             <center class="@(ErrorVisible ? "visible":"hidden")" style="margin-bottom: -10px;">
-                                <label class="text-red-500 font-bold text-sm">@ErrorMessage</label>
+                                <label class="text-sm font-bold text-red-500">@ErrorMessage</label>
                             </center>
 
 
                             @* Botón *@
-                            <div class="flex flex-row mt-1">
+                            <div class="mt-1 flex flex-row">
 
                                 @* Botón iniciar *@
                                 <button @onclick="Start"
-                                        class="group inline-flex items-center justify-center rounded-full py-2 px-4 text-sm font-bold focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 bg-current-500 dark:bg-current-600 text-white hover:text-slate-100 hover:bg-current-800 active:bg-current-800 active:text-current-100 focus-visible:outline-current-500 w-full">
+                                        class="group inline-flex w-full items-center justify-center rounded-full bg-current-500 px-4 py-2 text-sm font-bold text-white hover:text-slate-100 hover:bg-current-800 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current-500 active:bg-current-800 active:text-current-100 dark:bg-current-600">
                                     <span>Iniciar <span aria-hidden="true">→</span></span>
                                 </button>
 
 
                                 @* Botón de iniciar con llave *@
                                 <button @onclick="GotoLoginKey" type="button"
-                                        class="flex text-white bg-current-500 dark:bg-current-600 w-20 hover:bg-current-800 focus:ring-4 focus:outline-none focus:ring-current-300 font-medium rounded-full text-sm p-2.5 text-center items-center ml-2  justify-center">
+                                        class="ml-2 flex w-20 items-center justify-center rounded-full bg-current-500 p-2.5 text-center text-sm font-medium text-white hover:bg-current-800 focus:ring-4 focus:outline-none focus:ring-current-300 dark:bg-current-600">
 
                                     @if (IsWithKey)
                                     {
@@ -138,7 +138,7 @@
                             </div>
 
                             @* Olvide mi contraseña *@
-                            <div class="flex flex-row justify-end items-end">
+                            <div class="flex flex-row items-end justify-end">
                                 <label @onclick="GoToForget" class="text-sm text-current-500 hover:text-current-800">
                                     Olvide mi
                                     contraseña
@@ -176,10 +176,10 @@
 
                 <div class="flex flex-col items-center justify-center">
                     <CircleLoader />
-                    <h5 class="mt-2 font-bold text-sm text-gray-600 dark:text-gray-300">@LogMessage</h5>
+                    <h5 class="mt-2 text-sm font-bold text-gray-600 dark:text-gray-300">@LogMessage</h5>
                     @if (ShowButtonCancel)
                     {
-                        <label @onclick="CancelPasskey" class="hover:text-current-500 text-sm dark:text-gray-400">Cancelar</label>
+                        <label @onclick="CancelPasskey" class="text-sm hover:text-current-500 dark:text-gray-400">Cancelar</label>
                     }
                 </div>
 
@@ -191,9 +191,9 @@
 
 
     @* Imagen *@
-    <div class="hidden dl:block dl:w-full rounded-lg p-3">
+    <div class="hidden rounded-lg p-3 dl:block dl:w-full">
 
-        <div class="w-full h-full bg-image rounded-lg">
+        <div class="bg-image h-full w-full rounded-lg">
         </div>
 
     </div>

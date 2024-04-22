@@ -94,7 +94,7 @@ public partial class Login
 
         if (Access.Auth.SessionAuth.IsOpen)
         {
-            NavigationManager?.NavigateTo("/home");
+            NavigationManager?.NavigateTo("/");
             return;
         }
 
@@ -205,7 +205,7 @@ public partial class Login
             case Responses.Success:
 
                 // Navegar.
-                NavigationManager?.NavigateTo("/home");
+                NavigationManager?.NavigateTo("/");
                 return;
 
             // Contraseña incorrecta.
@@ -347,7 +347,7 @@ public partial class Login
 
             // Correcto.
             case Responses.Success:
-                NavigationManager?.NavigateTo("/home");
+                NavigationManager?.NavigateTo("/");
                 return;
 
             // Otros.
