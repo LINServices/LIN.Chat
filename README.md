@@ -1,11 +1,11 @@
 <div align="center">
   <p align="center">
-    <img alt="heyform logo" height="60" src="./Img/icon.svg">
+    <img alt="logo" height="60" src="./assets/icon.svg">
   </p>
   <p>Esta es una aplicación de chat en tiempo real desarrollada con Blazor, LIN Auth para la autenticación, LIN Communication Services como servidor en tiempo real y LIN Maps para la integración de mapas. La aplicación permite a los usuarios enviar mensajes, crear grupos, enviar imágenes, ubicaciones y mapas.</p>
  <p align="center">
-    <img alt="heyform logo" height="20" src="./Img/computer.png">
-    <img alt="heyform logo" height="20" src="./Img/android.png">
+    <img alt="windows logo" height="20" src="./assets/computer.png">
+    <img alt="android logo" height="20" src="./assets/android.png">
   </p>
 </div>
 
@@ -25,9 +25,9 @@ Asegúrate de tener instalado lo siguiente:
 - .NET 8 SDK
 - Servidores de LIN Auth y Communication y tipos asociados.
 
-![Login](./Img/login.png)
+![Login](./assets/login.png)
 
-![Chat](./Img/chat.png)
+![Chat](./assets/chat.png)
 
 
 
