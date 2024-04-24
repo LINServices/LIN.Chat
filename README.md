@@ -18,11 +18,9 @@ Asegúrate de tener instalado lo siguiente:
 - .NET 8 SDK
 - Servidores de LIN Auth y Communication y tipos asociados.
 
-![Login](./Img/Login.png)
+![Login](./Img/login.png)
 
-![Chat](./Img/Chat.png)
-
-![Buscador](./Img/Buscador.png)
+![Chat](./Img/chat.png)
 
 
 
