@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
-
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
@@ -7,11 +6,9 @@
         <NoDefaultLaunchSettingsFile>true</NoDefaultLaunchSettingsFile>
         <StaticWebAssetProjectMode>Default</StaticWebAssetProjectMode>
     </PropertyGroup>
-
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.3" />
     </ItemGroup>
-
     <ItemGroup>
         <ProjectReference Include="..\..\..\..\AccesoAPI\LIN.Access.Search\LIN.Access.Search.csproj" />
         <ProjectReference Include="..\..\..\..\Components\LIN.Allo.Shared\LIN.Allo.Shared\LIN.Allo.Shared.csproj" />
@@ -24,5 +21,4 @@
         <ProjectReference Include="D:\LIN Services\Tipos\LIN.Types\LIN.Types.csproj" />
         <ProjectReference Include="D:\SILF\SILF\SILF.Script\SILF.Script.csproj" />
     </ItemGroup>
-
 </Project>
