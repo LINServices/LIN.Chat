@@ -1,7 +1,4 @@
-﻿@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
+﻿
 @font-face {
     font-family: 'Gilroy';
     src: url('../fonts/Gilroy-Medium.ttf') format('truetype'); /* La fuente por defecto ser� la negrita */

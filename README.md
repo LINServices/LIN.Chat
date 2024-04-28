@@ -26,7 +26,6 @@ Asegúrate de tener instalado lo siguiente:
 - Servidores de LIN Auth y Communication y tipos asociados.
 
 ![Login](./assets/login.jpeg)
-
 ![Chat](./assets/home.jpeg)
 
 
