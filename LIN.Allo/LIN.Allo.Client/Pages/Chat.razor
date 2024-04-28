@@ -14,7 +14,7 @@
 @if (!Access.Communication.Session.IsOpen)
 {
     <div class="flex h-screen w-full items-center justify-center">
-        <CircleLoader />
+        <BarLoader />
     </div>
 
     Task.Run(async () =>
