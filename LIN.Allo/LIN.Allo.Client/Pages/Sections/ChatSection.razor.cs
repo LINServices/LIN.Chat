@@ -7,6 +7,15 @@ namespace LIN.Allo.Client.Pages.Sections;
 public partial class ChatSection : IDisposable, IMessageChanger, IConversationViewer
 {
 
+
+
+
+
+    MessageModel? lastMessage = null;
+
+
+
+
     /// <summary>
     /// Solo la fecha de hoy.
     /// </summary>
@@ -114,6 +123,8 @@ public partial class ChatSection : IDisposable, IMessageChanger, IConversationVi
         // Id único.
         var guid = Guid.NewGuid().ToString();
 
+
+        var now = DateTime.Now;
         // Generar evento.
         ConversationsObserver.PushMessage(Iam.Conversation.ID, new()
         {
@@ -123,11 +134,10 @@ public partial class ChatSection : IDisposable, IMessageChanger, IConversationVi
                 ID = Iam.Conversation.ID
             },
             Remitente = Access.Communication.Session.Instance.Profile,
-            Time = DateTime.Now,
+            Time = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0),
             Guid = guid,
             IsLocal = true
         });
-
 
         // Envía el mensaje al hub
         RealTime.Hub?.SendMessage(Iam.Conversation.ID, Message, guid);
