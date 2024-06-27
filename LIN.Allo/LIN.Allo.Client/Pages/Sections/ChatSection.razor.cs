@@ -109,49 +109,6 @@ public partial class ChatSection : IDisposable, IMessageChanger, IConversationVi
 
 
 
-    /// <summary>
-    /// Enviar un mensaje.
-    /// </summary>
-    private void SendMessage()
-    {
-
-
-
-        if (string.IsNullOrWhiteSpace(Message) || Iam == null)
-            return;
-
-        // Id único.
-        var guid = Guid.NewGuid().ToString();
-
-
-        var now = DateTime.Now;
-        // Generar evento.
-        ConversationsObserver.PushMessage(Iam.Conversation.ID, new()
-        {
-            Contenido = Message,
-            Conversacion = new()
-            {
-                ID = Iam.Conversation.ID
-            },
-            Remitente = Access.Communication.Session.Instance.Profile,
-            Time = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0),
-            Guid = guid,
-            IsLocal = true
-        });
-
-        // Envía el mensaje al hub
-        RealTime.Hub?.SendMessage(Iam.Conversation.ID, Message, guid);
-
-        // Reestablece el texto
-        Message = "";
-
-        // Actualiza la vista
-        StateHasChanged();
-
-        // Scroll al final
-        _ = ScrollToBottom();
-
-    }
 
 
     /// <summary>
@@ -165,6 +122,81 @@ public partial class ChatSection : IDisposable, IMessageChanger, IConversationVi
 
 
     }
+
+
+
+
+
+    /// <summary>
+    /// Enviar un mensaje.
+    /// </summary>
+    private async void SendMessage()
+    {
+        await SendMessage(Message);
+
+        // Reestablece el texto
+        Message = "";
+    }
+
+
+
+
+
+
+    /// <summary>
+    /// Enviar un mensaje.
+    /// </summary>
+    private async Task SendMessage(string value)
+    {
+
+        if (string.IsNullOrWhiteSpace(value) || Iam == null)
+            return;
+
+        // Id único.
+        var guid = Guid.NewGuid().ToString();
+
+        var now = DateTime.Now;
+        // Generar evento.
+        ConversationsObserver.PushMessage(Iam.Conversation.ID, new()
+        {
+            Contenido = value,
+            Conversacion = new()
+            {
+                ID = Iam.Conversation.ID
+            },
+            Remitente = Access.Communication.Session.Instance.Profile,
+            Time = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0),
+            Guid = guid,
+            IsLocal = true
+        });
+
+        // Envía el mensaje al hub
+        var responseMessage = await RealTime.Hub?.SendMessage(Iam.Conversation.ID, value, guid, LIN.Access.Communication.Session.Instance.Token);
+
+        if (responseMessage)
+        {
+            ConversationsObserver.PushMessage(Iam.Conversation.ID, new()
+            {
+                Contenido = value,
+                Conversacion = new()
+                {
+                    ID = Iam.Conversation.ID
+                },
+                Remitente = Access.Communication.Session.Instance.Profile,
+                Time = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0),
+                Guid = guid,
+                IsLocal = true
+            });
+        }
+
+        // Actualiza la vista
+        StateHasChanged();
+
+        // Scroll al final
+        _ = ScrollToBottom();
+
+    }
+
 
 
 
