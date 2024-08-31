@@ -78,22 +78,17 @@ public partial class Register
         Section = 3;
         StateHasChanged();
 
-        // Sin informacion
         if (User.Length <= 0 || Password.Length <= 0 || Name.Length <= 0)
         {
             await ShowError("Completa todos los campos");
             return;
         }
 
-        // Sin informacion
         if (Password.Length < 4)
         {
             await ShowError("La contraseña debe tener mas de 4 dígitos");
             return;
         }
-
-
-
 
         // Model
         AccountModel modelo = new()
@@ -142,7 +137,7 @@ public partial class Register
 
         if (Response == Responses.Success)
         {
-            nav.NavigateTo("/home");
+            nav.NavigateTo("/");
         }
         else
         {
