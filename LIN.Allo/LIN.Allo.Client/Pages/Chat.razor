@@ -65,14 +65,11 @@
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="h-full w-full fill-zinc-800 hover:fill-current-500 dark:fill-zinc-200"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M105.1 202.6c7.7-21.8 20.2-42.3 37.8-59.8c62.5-62.5 163.8-62.5 226.3 0L386.3 160H352c-17.7 0-32 14.3-32 32s14.3 32 32 32H463.5c0 0 0 0 0 0h.4c17.7 0 32-14.3 32-32V80c0-17.7-14.3-32-32-32s-32 14.3-32 32v35.2L414.4 97.6c-87.5-87.5-229.3-87.5-316.8 0C73.2 122 55.6 150.7 44.8 181.4c-5.9 16.7 2.9 34.9 19.5 40.8s34.9-2.9 40.8-19.5zM39 289.3c-5 1.5-9.8 4.2-13.7 8.2c-4 4-6.7 8.8-8.1 14c-.3 1.2-.6 2.5-.8 3.8c-.3 1.7-.4 3.4-.4 5.1V432c0 17.7 14.3 32 32 32s32-14.3 32-32V396.9l17.6 17.5 0 0c87.5 87.4 229.3 87.4 316.7 0c24.4-24.4 42.1-53.1 52.9-83.7c5.9-16.7-2.9-34.9-19.5-40.8s-34.9 2.9-40.8 19.5c-7.7 21.8-20.2 42.3-37.8 59.8c-62.5 62.5-163.8 62.5-226.3 0l-.1-.1L125.6 352H160c17.7 0 32-14.3 32-32s-14.3-32-32-32H48.4c-1.6 0-3.2 .1-4.8 .3s-3.1 .5-4.6 1z" /></svg>
                         </div>
 
-
                         <div @onclick="OpenNewGroup" class="flex h-5 w-5 items-center justify-center">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="fill-zinc-800 hover:fill-current-500 dark:fill-zinc-200">
                                 <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z" />
                             </svg>
                         </div>
-
-
 
                     </div>
 
@@ -95,25 +92,16 @@
                             <input @oninput="Search" type="text" autocomplete="off" required="" class="block w-full appearance-none rounded-xl border border-gray-200 bg-gray-50 px-3 py-2 ps-10 text-gray-900 placeholder-gray-400 focus:ring-1 focus:border-current-500 focus:bg-white focus:outline-none focus:ring-current-600 dark:bg-zinc-950 dark:text-zinc-200 dark:border-zinc-800 sm:text-sm dark:focus:bg-zinc-900" placeholder="Buscar">
                         </div>
                     </div>
-
                 </div>
-
-
-
 
                 @* Lista de conversaciones *@
                 <div class="flex h-full w-full overflow-auto dark:bg-shark-950 dark:border-zinc-800 lg:border-r [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-transparent dark:[&::-webkit-scrollbar-thumb]:bg-zinc-800">
 
                     <div class="flex h-max w-full flex-col overflow-auto">
 
-
-                       
-
                         @* Elementos *@
                         <div class="h-full">
 
-
-                              
                             @if (IsConversationsLoad)
                             {
                                 // Si no hay conversaciones.
@@ -176,13 +164,6 @@
 
                         </div>
 
-
-
-                           
-
-
-
-
                     </div>
                 </div>
 
@@ -218,7 +199,7 @@
 <EmmaDrawer @ref="EmmaDrawer" />
 
 @* Drawer Nueva conversación *@
-<NewGroup OnSuccess="ForceRetrieveData" @ref="NewGroupModal" />
+<NewGroup OnSuccess="OnSuccess" @ref="NewGroupModal" />
 
 @*Dropdown menu*@
 <DropdownMenu />

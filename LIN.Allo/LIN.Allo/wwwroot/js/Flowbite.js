@@ -33,6 +33,17 @@ function ShowDrawer(id, ...idCloseBtn) {
 
 }
 
+
+
+function ClickElement(id) {
+
+    // Control
+    const control = document.getElementById(id);
+    control.click();
+}
+
+
+
 // Abre
 function ForceClick(id) {
 

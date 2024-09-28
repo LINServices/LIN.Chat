@@ -1,8 +1,4 @@
-﻿using LIN.Allo.Shared.Components.Elements.Drawers;
-using LIN.Allo.Shared.Services;
-
-namespace LIN.Allo.Client.Pages;
-
+﻿namespace LIN.Allo.Client.Pages;
 
 public partial class Chat : IChatViewer
 {
@@ -28,10 +24,6 @@ public partial class Chat : IChatViewer
     /// Drawer de Miembros.
     /// </summary>
     private Members? MemberDrawer { get; set; }
-
-
-
-
 
 
     /// <summary>
@@ -85,7 +77,7 @@ public partial class Chat : IChatViewer
 
 
 
-    public static List<AccountModel> accounts = new List<AccountModel>();
+    public static List<AccountModel> accounts = new();
 
 
 
@@ -238,6 +230,11 @@ public partial class Chat : IChatViewer
 
 
 
+    public void OnSuccess()
+    {
+        NewGroupModal?.Hide();
+        ForceRetrieveData();
+    }
 
 
 
