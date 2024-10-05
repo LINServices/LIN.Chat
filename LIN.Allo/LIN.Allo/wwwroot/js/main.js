@@ -9,7 +9,11 @@
         });
     }
 };
+function forceClick(id) {
 
+    const control = document.getElementById(id);
+    control.click();
+}
 
 function GoLaunch (url) {
     window.open(url, '_blank', 'noopener,noreferrer');
