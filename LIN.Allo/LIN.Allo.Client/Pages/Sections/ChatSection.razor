@@ -1,10 +1,7 @@
 ﻿@rendermode RenderMode.InteractiveWebAssembly
 
-
 @* Dependencias *@
 @inject IJSRuntime JSRuntime
-
-
 
 @* Elementos *@
 <LIN.Allo.Shared.Components.Elements.Popups.EmojiPanel @ref="EmojiPanel" Press="(e)=>{Message+=e; StateHasChanged();}" />
@@ -77,9 +74,9 @@
 
 
 @* Mensajes *@
-<div id="CM-@(Iam?.Conversation?.ID ?? 0)" class="flex-1 bg-[#F5F0EA] scroll-ui overflow-auto dark:bg-black">
+<div id="CM-@(Iam?.Conversation?.Id ?? 0)" class="flex-1 scroll-ui overflow-auto bg-[#F5F0EA] dark:bg-black">
 
-    <div id="CM-@(Iam?.Conversation?.ID ?? 0)" class="px-3 py-2">
+    <div id="CM-@(Iam?.Conversation?.Id ?? 0)" class="px-3 py-2">
 
 
         @* Creación del chat *@
@@ -137,7 +134,7 @@
                 oldTime = message.Time;
             }
 
-            <LIN.Allo.Shared.Components.Elements.Message MessageModel="@message" ShowTittle="(lastMessage?.Time != message.Time) || lastMessage == null || lastMessage.Remitente.ID != message.Remitente.ID" />
+            <LIN.Allo.Shared.Components.Elements.Message MessageModel="@message" ShowTittle="(lastMessage?.Time != message.Time) || lastMessage == null || lastMessage.Remitente.Id != message.Remitente.Id" />
 
             lastMessage = message;
         }
@@ -162,7 +159,7 @@
         @foreach (var emoji in emojis)
         {
             <div @onclick="()=>SendMessage(emoji)" class="group flex h-8 w-8 items-center justify-center rounded-full hover:bg-gray-100">
-                <label class="text-xl group-hover:animate-pulse">@emoji</label>
+                <label class="group-hover:animate-pulse text-xl">@emoji</label>
             </div>
         }
     </div>
@@ -175,6 +172,11 @@
         </div>
         <div class="flex-1 mx-4">
             <input @oninput="GetValue" @bind=Message @onkeydown="SendMessageKey" class="ring-0 border-0 w-full bg-transparent focus:border-0 focus:ring-0 focus:outline-none dark:text-gray-100" placeholder="Escribe tu mensaje..." type="text" />
+        </div>
+        <div @onclick="SendMessage">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-send-fill mr-3 h-5 w-5 fill-zinc-500 hover:fill-current-500 dark:fill-300" viewBox="0 0 16 16">
+                <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471z" />
+            </svg>
         </div>
         <div @onclick="SendMessage">
             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-send-fill mr-3 h-5 w-5 fill-zinc-500 hover:fill-current-500 dark:fill-300" viewBox="0 0 16 16">

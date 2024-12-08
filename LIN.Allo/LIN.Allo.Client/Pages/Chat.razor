@@ -147,7 +147,7 @@
                                 {
                                     foreach (var conversation in ConversationsObserver.Data)
                                     {
-                                        <Control Member="@(conversation.Item2)" OnClick="Go" IsSelect=@(SelectedConversation?.ID == conversation.Item2.Conversation.ID) />
+                                        <Control Member="@(conversation.Item2)" OnClick="Go" IsSelect=@(SelectedConversation?.Id == conversation.Item2.Conversation.Id) />
                                     }
                                 }
 
@@ -175,7 +175,7 @@
                 @* Mostrar el chat *@
                 @if (RealTime.Hub != null && SelectedConversation != null)
                 {
-                    <ChatSection EmmaClick="OpenEmma" Drawer="MemberDrawer" Iam="ConversationsObserver.Get(SelectedConversation.ID)" OnBackPress="Nav" />
+                    <ChatSection EmmaClick="OpenEmma" Drawer="MemberDrawer" Iam="ConversationsObserver.Get(SelectedConversation.Id)" OnBackPress="Nav" />
                 }
 
                 // No esta seleccionado.

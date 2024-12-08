@@ -54,8 +54,8 @@ public partial class ChatSection : IDisposable, IMessageChanger, IConversationVi
                     return;
 
 
-                ConversationsObserver.Suscribe(value.Conversation.ID, (IMessageChanger)this);
-                ConversationsObserver.Suscribe(value.Conversation.ID, (IConversationViewer)this);
+                ConversationsObserver.Suscribe(value.Conversation.Id, (IMessageChanger)this);
+                ConversationsObserver.Suscribe(value.Conversation.Id, (IConversationViewer)this);
 
                 Message = string.Empty;
                 StateHasChanged();
@@ -157,12 +157,12 @@ public partial class ChatSection : IDisposable, IMessageChanger, IConversationVi
 
         var now = DateTime.Now;
         // Generar evento.
-        ConversationsObserver.PushMessage(Iam.Conversation.ID, new()
+        ConversationsObserver.PushMessage(Iam.Conversation.Id, new()
         {
             Contenido = value,
             Conversacion = new()
             {
-                ID = Iam.Conversation.ID
+                Id = Iam.Conversation.Id
             },
             Remitente = Access.Communication.Session.Instance.Profile,
             Time = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0),
@@ -171,16 +171,16 @@ public partial class ChatSection : IDisposable, IMessageChanger, IConversationVi
         });
 
         // Envía el mensaje al hub
-        var responseMessage = await RealTime.Hub?.SendMessage(Iam.Conversation.ID, value, guid, LIN.Access.Communication.Session.Instance.Token);
+        var responseMessage = await RealTime.Hub?.SendMessage(Iam.Conversation.Id, value, guid, LIN.Access.Communication.Session.Instance.Token);
 
         if (responseMessage)
         {
-            ConversationsObserver.PushMessage(Iam.Conversation.ID, new()
+            ConversationsObserver.PushMessage(Iam.Conversation.Id, new()
             {
                 Contenido = value,
                 Conversacion = new()
                 {
-                    ID = Iam.Conversation.ID
+                    Id = Iam.Conversation.Id
                 },
                 Remitente = Access.Communication.Session.Instance.Profile,
                 Time = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0),
@@ -224,8 +224,8 @@ public partial class ChatSection : IDisposable, IMessageChanger, IConversationVi
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        ConversationsObserver.Suscribe(Iam.Conversation.ID, (IMessageChanger)this);
-        ConversationsObserver.Suscribe(Iam.Conversation.ID, (IConversationViewer)this);
+        ConversationsObserver.Suscribe(Iam.Conversation.Id, (IMessageChanger)this);
+        ConversationsObserver.Suscribe(Iam.Conversation.Id, (IConversationViewer)this);
     }
 
 
@@ -234,7 +234,7 @@ public partial class ChatSection : IDisposable, IMessageChanger, IConversationVi
     /// </summary>
     public async Task ScrollToBottom()
     {
-        await JSRuntime.InvokeVoidAsync("scrollToBottom", $"CM-{Iam?.Conversation?.ID}");
+        await JSRuntime.InvokeVoidAsync("scrollToBottom", $"CM-{Iam?.Conversation?.Id}");
     }
 
 
@@ -252,7 +252,7 @@ public partial class ChatSection : IDisposable, IMessageChanger, IConversationVi
         // Establecer las propiedades.
         Drawer.SetDefault(Iam.Conversation.Name, Iam.Conversation.Type);
 
-        await Drawer.LoadData(Iam.Conversation.ID);
+        await Drawer.LoadData(Iam.Conversation.Id);
         Drawer?.Show();
     }
 

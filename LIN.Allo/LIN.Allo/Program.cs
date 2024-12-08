@@ -1,5 +1,6 @@
 using LIN.Allo.Components;
 using LIN.Access.Auth;
+using LIN.Access.Communication;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,7 @@ builder.Services.AddRazorComponents()
    .AddInteractiveWebAssemblyComponents();
 
 builder.Services.AddAuthenticationService();
+builder.Services.AddCommunicationService();
 
 builder.Services.AddCors(options =>
 {
@@ -33,8 +35,6 @@ else
     app.UseHsts();
 }
 
-
-LIN.Access.Communication.Build.Init();
 LIN.Access.Search.Build.Init();
 
 app.UseCors("AllowAnyOrigin");

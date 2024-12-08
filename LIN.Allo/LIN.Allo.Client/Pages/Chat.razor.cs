@@ -197,7 +197,7 @@ public partial class Chat : IChatViewer
         StateHasChanged();
         var result = await Access.Communication.Controllers.Members.SearchProfiles(Pattern, Access.Communication.Session.Instance.AccountToken);
 
-        SearchResult = result.Models.Where(t => t.Profile.ID != Access.Communication.Session.Instance.Profile.ID).ToList();
+        SearchResult = result.Models.Where(t => t.Profile.Id != Access.Communication.Session.Instance.Profile.Id).ToList();
         counter = 0;
         StateHasChanged();
 
@@ -215,7 +215,7 @@ public partial class Chat : IChatViewer
         try
         {
 
-            ConversationsObserver.PushMessage(e.Conversacion.ID, e);
+            ConversationsObserver.PushMessage(e.Conversacion.Id, e);
 
         }
         catch
@@ -384,7 +384,7 @@ public partial class Chat : IChatViewer
         ConversationsObserver.Create(conversation);
 
         // Suscribir evento.
-        _ = RealTime.Hub!.JoinGroup(conversation.ID);
+        _ = RealTime.Hub!.JoinGroup(conversation.Id);
 
     }
 
@@ -418,7 +418,7 @@ public partial class Chat : IChatViewer
     /// <param name="chat"></param>
     public void Go(ConversationLocal chat)
     {
-        Go(chat.Conversation.ID);
+        Go(chat.Conversation.Id);
     }
 
 
@@ -429,7 +429,7 @@ public partial class Chat : IChatViewer
     public void Go(int chat)
     {
 
-        if (chat == SelectedConversation?.ID)
+        if (chat == SelectedConversation?.Id)
         {
             navigationManager.NavigateTo(navigationManager.GetUriWithQueryParameter("Id", 0));
             return;
@@ -451,7 +451,7 @@ public partial class Chat : IChatViewer
 
         // Consulta al cache
         var cache = (from C in ConversationsObserver.Data
-                     where C.Item2.Conversation.ID == chat
+                     where C.Item2.Conversation.Id == chat
                      select C).FirstOrDefault().Item2;
 
 
@@ -463,7 +463,7 @@ public partial class Chat : IChatViewer
         StateHasChanged();
 
 
-        if ((SelectedConversation?.ID == cache.Conversation.ID) && force)
+        if ((SelectedConversation?.Id == cache.Conversation.Id) && force)
         {
 
             return;
@@ -472,7 +472,7 @@ public partial class Chat : IChatViewer
 
 
 
-        if (SelectedConversation?.ID == cache.Conversation.ID)
+        if (SelectedConversation?.Id == cache.Conversation.Id)
         {
             navigationManager.NavigateTo(navigationManager.GetUriWithQueryParameter("Id", 0));
             ////  cache.Control?.Unselect();
@@ -492,7 +492,7 @@ public partial class Chat : IChatViewer
         // Si los chats (mensajes) no se han cargado.
         if (cache.Messages == null)
         {
-            var oldMessages = await Access.Communication.Controllers.Messages.ReadAll(SelectedConversation.ID, 0, Access.Communication.Session.Instance.Token);
+            var oldMessages = await Access.Communication.Controllers.Messages.ReadAll(SelectedConversation.Id, 0, Access.Communication.Session.Instance.Token);
 
             // Establece los mensajes
             cache.Messages = oldMessages.Models;
