@@ -105,13 +105,6 @@ public partial class Chat : IChatViewer
     /// </summary>
     private static bool IsConversationsLoad { get; set; }
 
-
-    /// <summary>
-    /// Imagen de perfil en base64
-    /// </summary>
-    private static string Img64 => Convert.ToBase64String(Access.Communication.Session.Instance.Account.Profile);
-
-
     /// <summary>
     /// Conversación seleccionada.
     /// </summary>
