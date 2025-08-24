@@ -1,4 +1,6 @@
-﻿namespace LIN.Allo.Client.Pages;
+﻿using LIN.Types.Cloud.Identity.Models.Identities;
+
+namespace LIN.Allo.Client.Pages;
 
 public partial class Chat : IChatViewer
 {
@@ -318,12 +320,11 @@ public partial class Chat : IChatViewer
 
             try
             {
-                chats.AlternativeObject = System.Text.Json.JsonSerializer.Deserialize<List<AccountModel>>(chats.AlternativeObject.ToString() ?? "");
-                if (chats.AlternativeObject is List<AccountModel> lista)
-                {
-                    accounts.AddRange(lista);
-                }
-
+            //    chats.Alternatives = System.Text.Json.JsonSerializer.Deserialize<List<AccountModel>>(chats.Alternatives.ToString() ?? "");
+            //    if (chats.AlternativeObject is List<AccountModel> lista)
+            //    {
+            //        accounts.AddRange(lista);
+            //    }
             }
             catch
             {

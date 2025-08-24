@@ -50,5 +50,4 @@ app.MapRazorComponents<App>()
    .AddAdditionalAssemblies(typeof(LIN.Allo.Shared._Imports).Assembly)
    .AddAdditionalAssemblies(typeof(LIN.Emma.UI.Emma).Assembly);
 
-
 app.Run();

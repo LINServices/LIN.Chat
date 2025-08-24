@@ -6,6 +6,6 @@
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\LIN.Allo.Client\LIN.Allo.Client.csproj" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="9.0.4" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="9.0.8" />
     </ItemGroup>
 </Project>
