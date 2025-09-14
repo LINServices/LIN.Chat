@@ -7,14 +7,7 @@ namespace LIN.Allo.Client.Pages.Sections;
 public partial class ChatSection : IDisposable, IMessageChanger, IConversationViewer
 {
 
-
-
-
-
     MessageModel? lastMessage = null;
-
-
-
 
     /// <summary>
     /// Solo la fecha de hoy.
@@ -22,19 +15,14 @@ public partial class ChatSection : IDisposable, IMessageChanger, IConversationVi
 
     public static DateTime Today = new(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
 
-
-
     /// <summary>
     /// Drawer de integrantes
     /// </summary>
     [Parameter]
     public Members? Drawer { get; set; }
 
-
     [Parameter]
     public Action EmmaClick { get; set; }
-
-
 
     /// <summary>
     /// Integrante del chat.
@@ -53,7 +41,6 @@ public partial class ChatSection : IDisposable, IMessageChanger, IConversationVi
                 if (value == null)
                     return;
 
-
                 ConversationsObserver.Suscribe(value.Conversation.Id, (IMessageChanger)this);
                 ConversationsObserver.Suscribe(value.Conversation.Id, (IConversationViewer)this);
 
@@ -68,64 +55,40 @@ public partial class ChatSection : IDisposable, IMessageChanger, IConversationVi
 
     public ConversationLocal _iam;
 
-
-
     /// <summary>
     /// Acciona a ejecutar cuando se presione sobre el back button.
     /// </summary>
     [Parameter]
     public Action? OnBackPress { get; set; }
 
-
-
-
     /// <summary>
     /// Mensaje a enviar.
     /// </summary>
     private string Message { get; set; } = string.Empty;
-
-
 
     /// <summary>
     /// Fecha.
     /// </summary>
     private DateTime? oldTime = null;
 
-
-
     /// <summary>
     /// Panel de emojis.
     /// </summary>
     private EmojiPanel? EmojiPanel { get; set; }
-
-
-
 
     void GetValue(dynamic e)
     {
         Message = e.Value;
     }
 
-
-
-
-
-
     /// <summary>
     /// Enviar un mensaje.
     /// </summary>
     private void SendMessageKey(Microsoft.AspNetCore.Components.Web.KeyboardEventArgs e)
     {
-
         if (e.Key == "Enter")
             SendMessage();
-
-
     }
-
-
-
-
 
     /// <summary>
     /// Enviar un mensaje.
@@ -137,11 +100,11 @@ public partial class ChatSection : IDisposable, IMessageChanger, IConversationVi
         // Reestablece el texto
         Message = "";
     }
-
-
-
-
-
+    
+    private void Call()
+    {
+        Navigation.NavigateTo($"/room/{Iam.Conversation.Id}");
+    }
 
     /// <summary>
     /// Enviar un mensaje.
@@ -197,9 +160,6 @@ public partial class ChatSection : IDisposable, IMessageChanger, IConversationVi
 
     }
 
-
-
-
     /// <summary>
     /// Ciclo de vida: Después de renderizar
     /// </summary>
@@ -209,8 +169,6 @@ public partial class ChatSection : IDisposable, IMessageChanger, IConversationVi
         _ = ScrollToBottom();
         base.OnAfterRender(firstRender);
     }
-
-
 
     /// <summary>
     /// El estado ha cambiado

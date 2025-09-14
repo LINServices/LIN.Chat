@@ -2,14 +2,13 @@
 
 @* Dependencias *@
 @inject IJSRuntime JSRuntime
+@inject NavigationManager Navigation
 
 @* Elementos *@
 <LIN.Allo.Shared.Components.Elements.Popups.EmojiPanel @ref="EmojiPanel" Press="(e)=>{Message+=e; StateHasChanged();}" />
 
-
 @* Cabecera *@
 <div class="flex flex-row items-center justify-between border-gray-300 px-3 py-3 dark:border-zinc-600">
-
 
     @* Nombre y tipo *@
     <div class="flex items-center">
@@ -63,8 +62,15 @@
             </svg>
         </button>
 
+        @* Llamadas *@
+        <button @onclick="Call" class="ml-6 h-5 w-5 lg:h-4 lg:w-4">
+            <svg class="h-full w-full fill-primaryDark hover:fill-current-500 dark:fill-zinc-200" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z" />
+            </svg>
+        </button>
+
         @* Integrantes *@
-        <button @onclick="OpenDrawer" class="ml-6 h-5 w-5 lg:w-4 lg:h-4">
+        <button @onclick="OpenDrawer" class="ml-6 h-5 w-5 lg:h-4 lg:w-4">
             <svg class="h-full w-full fill-primaryDark hover:fill-current-500 dark:fill-zinc-200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3zM609.3 512H471.4c5.4-9.4 8.6-20.3 8.6-32v-8c0-60.7-27.1-115.2-69.8-151.8c2.4-.1 4.7-.2 7.1-.2h61.4C567.8 320 640 392.2 640 481.3c0 17-13.8 30.7-30.7 30.7zM432 256c-31 0-59-12.6-79.3-32.9C372.4 196.5 384 163.6 384 128c0-26.8-6.6-52.1-18.3-74.3C384.3 40.1 407.2 32 432 32c61.9 0 112 50.1 112 112s-50.1 112-112 112z" /></svg>
         </button>
 
@@ -74,10 +80,9 @@
 
 
 @* Mensajes *@
-<div id="CM-@(Iam?.Conversation?.Id ?? 0)" class="flex-1 scroll-ui overflow-auto bg-[#F5F0EA] dark:bg-black">
+<div id="CM-@(Iam?.Conversation?.Id ?? 0)" class="scroll-ui flex-1 overflow-auto bg-[#F5F0EA] dark:bg-black">
 
     <div id="CM-@(Iam?.Conversation?.Id ?? 0)" class="px-3 py-2">
-
 
         @* Creación del chat *@
         <div class="my-7 mb-2 flex justify-center">
@@ -88,7 +93,6 @@
             </div>
         </div>
 
-
         @* Recomendación *@
         <div class="mb-4 flex justify-center">
             <div class="rounded-lg bg-yellow-100 px-4 py-2">
@@ -97,8 +101,6 @@
                 </p>
             </div>
         </div>
-
-
 
         @* Renderizado de mensajes *@
         @foreach (var message in Iam?.Messages ?? [])
@@ -159,7 +161,7 @@
         @foreach (var emoji in emojis)
         {
             <div @onclick="()=>SendMessage(emoji)" class="group flex h-8 w-8 items-center justify-center rounded-full hover:bg-gray-100">
-                <label class="group-hover:animate-pulse text-xl">@emoji</label>
+                <label class="text-xl group-hover:animate-pulse">@emoji</label>
             </div>
         }
     </div>
@@ -170,8 +172,8 @@
                 <path opacity=".45" d="M9.153 11.603c.795 0 1.439-.879 1.439-1.962s-.644-1.962-1.439-1.962-1.439.879-1.439 1.962.644 1.962 1.439 1.962zm-3.204 1.362c-.026-.307-.131 5.218 6.063 5.551 6.066-.25 6.066-5.551 6.066-5.551-6.078 1.416-12.129 0-12.129 0zm11.363 1.108s-.669 1.959-5.051 1.959c-3.505 0-5.388-1.164-5.607-1.959 0 0 5.912 1.055 10.658 0zM11.804 1.011C5.609 1.011.978 6.033.978 12.228s4.826 10.761 11.021 10.761S23.02 18.423 23.02 12.228c.001-6.195-5.021-11.217-11.216-11.217zM12 21.354c-5.273 0-9.381-3.886-9.381-9.159s3.942-9.548 9.215-9.548 9.548 4.275 9.548 9.548c-.001 5.272-4.109 9.159-9.382 9.159zm3.108-9.751c.795 0 1.439-.879 1.439-1.962s-.644-1.962-1.439-1.962-1.439.879-1.439 1.962.644 1.962 1.439 1.962z"></path>
             </svg>
         </div>
-        <div class="flex-1 mx-4">
-            <input @oninput="GetValue" @bind=Message @onkeydown="SendMessageKey" class="ring-0 border-0 w-full bg-transparent focus:border-0 focus:ring-0 focus:outline-none dark:text-gray-100" placeholder="Escribe tu mensaje..." type="text" />
+        <div class="mx-4 flex-1">
+            <input @oninput="GetValue" @bind=Message @onkeydown="SendMessageKey" class="w-full border-0 bg-transparent ring-0 focus:border-0 focus:outline-none focus:ring-0 dark:text-gray-100" placeholder="Escribe tu mensaje..." type="text" />
         </div>
         <div @onclick="SendMessage">
             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-send-fill mr-3 h-5 w-5 fill-zinc-500 hover:fill-current-500 dark:fill-300" viewBox="0 0 16 16">

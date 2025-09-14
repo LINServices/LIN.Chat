@@ -1,0 +1,154 @@
+﻿@page "/room/{RoomId}"
+@inject IJSRuntime JS
+@inject NavigationManager NavigationContext
+@rendermode RenderMode.InteractiveWebAssembly
+
+<div class="min-h-screen bg-zinc-900 text-white">
+
+    <!-- MAIN -->
+    <main class="relative mx-auto max-w-6xl px-4 pb-28 pt-6">
+      
+        <!-- Header simple (opcional) -->
+        <div class="mb-4 flex items-center justify-between gap-4">
+            <h1 class="text-lg font-semibold opacity-90">Llamada de equipo</h1>
+            <span class="text-sm text-zinc-400">@(DateTime.Now.ToString("hh:mm"))</span>
+        </div>
+
+        <!-- GRID DE VIDEOS -->
+        <section class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3" id="grid-llamada">
+        </section>
+
+        <!-- TU VIDEO FLOTANTE (encima del grid, pero sin tapar la barra) -->
+        <div class="fixed bottom-28 right-4 z-30 grid aspect-video w-28 place-items-center overflow-hidden rounded-xl border-2 border-zinc-400 bg-zinc-700 shadow-xl sm:w-36 md:w-xs"
+             aria-label="Tu video">
+            <div class="absolute inset-0 grid place-items-center">
+                <video id="localVideo" autoplay="" playsinline="" class="h-full w-full object-cover"></video>
+
+            </div>
+        </div>
+
+    </main>
+
+    <!-- BARRA DE ACCIONES (SIEMPRE VISIBLE y FUERA del área de videos) -->
+    <footer class="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-zinc-900/90 backdrop-blur">
+        <div class="mx-auto flex max-w-6xl items-center justify-center gap-3 px-4 py-3 sm:gap-4">
+            <!-- Botón: colgar -->
+            <button @onclick="Hang" class="grid h-12 w-12 place-items-center rounded-full bg-red-600 shadow hover:bg-red-700"
+                    aria-label="Colgar">
+
+                <svg class="h-5 w-5 fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M183.1 137.4C170.6 124.9 150.3 124.9 137.8 137.4C125.3 149.9 125.3 170.2 137.8 182.7L275.2 320L137.9 457.4C125.4 469.9 125.4 490.2 137.9 502.7C150.4 515.2 170.7 515.2 183.2 502.7L320.5 365.3L457.9 502.6C470.4 515.1 490.7 515.1 503.2 502.6C515.7 490.1 515.7 469.8 503.2 457.3L365.8 320L503.1 182.6C515.6 170.1 515.6 149.8 503.1 137.3C490.6 124.8 470.3 124.8 457.8 137.3L320.5 274.7L183.1 137.4z" /></svg>
+
+            </button>
+
+            <!-- Botones secundarios -->
+            <button @onclick="ToggleMute" class="grid h-12 w-12 place-items-center rounded-full bg-zinc-700 shadow hover:bg-zinc-600"
+                    aria-label="Micrófono">
+                <svg class="h-4 w-4 @(MicroState ? "fill-zinc-400" : "fill-red-500")" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 19">
+                    <path d="M15 5a1 1 0 0 0-1 1v3a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V6a1 1 0 0 0-2 0v3a6.006 6.006 0 0 0 6 6h1v2H5a1 1 0 0 0 0 2h6a1 1 0 0 0 0-2H9v-2h1a6.006 6.006 0 0 0 6-6V6a1 1 0 0 0-1-1Z" />
+                    <path d="M9 0H7a3 3 0 0 0-3 3v5a3 3 0 0 0 3 3h2a3 3 0 0 0 3-3V3a3 3 0 0 0-3-3Z" />
+                </svg>
+            </button>
+            <button @onclick="ToggleCamera" class="grid h-12 w-12 place-items-center rounded-full bg-zinc-700 shadow hover:bg-zinc-600"
+                    aria-label="Cámara">
+                <svg class="h-4 w-4 @(CamState ? "fill-zinc-400" : "fill-red-500")" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 14">
+                    <path d="M11 0H2a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm8.585 1.189a.994.994 0 0 0-.9-.138l-2.965.983a1 1 0 0 0-.685.949v8a1 1 0 0 0 .675.946l2.965 1.02a1.013 1.013 0 0 0 1.032-.242A1 1 0 0 0 20 12V2a1 1 0 0 0-.415-.811Z" />
+                </svg>
+            </button>
+            <button @onclick="ToggleShare" class="grid h-12 w-12 place-items-center rounded-full bg-zinc-700 shadow hover:bg-zinc-600"
+                    aria-label="Compartir pantalla">
+                <svg class="h-5 w-5 @(IsSharingScreen ? "fill-red-500" : "fill-zinc-400")" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M128 96C92.7 96 64 124.7 64 160L64 416C64 451.3 92.7 480 128 480L272 480L256 528L184 528C170.7 528 160 538.7 160 552C160 565.3 170.7 576 184 576L456 576C469.3 576 480 565.3 480 552C480 538.7 469.3 528 456 528L384 528L368 480L512 480C547.3 480 576 451.3 576 416L576 160C576 124.7 547.3 96 512 96L128 96zM160 160L480 160C497.7 160 512 174.3 512 192L512 352C512 369.7 497.7 384 480 384L160 384C142.3 384 128 369.7 128 352L128 192C128 174.3 142.3 160 160 160z" /></svg>
+            </button>
+            <button class="grid h-12 w-12 place-items-center rounded-full bg-zinc-700 shadow hover:bg-zinc-600"
+                    aria-label="Chat">
+                <svg class="h-5 w-5 fill-zinc-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M342.6 73.4C330.1 60.9 309.8 60.9 297.3 73.4L169.3 201.4C156.8 213.9 156.8 234.2 169.3 246.7C181.8 259.2 202.1 259.2 214.6 246.7L288 173.3L288 384C288 401.7 302.3 416 320 416C337.7 416 352 401.7 352 384L352 173.3L425.4 246.7C437.9 259.2 458.2 259.2 470.7 246.7C483.2 234.2 483.2 213.9 470.7 201.4L342.7 73.4zM160 416C160 398.3 145.7 384 128 384C110.3 384 96 398.3 96 416L96 480C96 533 139 576 192 576L448 576C501 576 544 533 544 480L544 416C544 398.3 529.7 384 512 384C494.3 384 480 398.3 480 416L480 480C480 497.7 465.7 512 448 512L192 512C174.3 512 160 497.7 160 480L160 416z" /></svg>
+            </button>
+            <button class="grid h-12 w-12 place-items-center rounded-full bg-zinc-700 shadow hover:bg-zinc-600"
+                    aria-label="Más">
+                ⋯
+            </button>
+        </div>
+    </footer>
+
+</div>
+
+@code {
+
+
+    public static bool IsThisDeviceOnCall { get; set; } = false;
+
+
+    [Parameter]
+    public string RoomId { get; set; } = "demo";
+
+    public bool IsSharingScreen { get; set; } = false;
+
+
+    protected override async Task OnAfterRenderAsync(bool first)
+    {
+        if (first)
+        {
+            await JS.InvokeVoidAsync("webrtc.init", "https://api.linplatform.com/Communication/hub/calls"); // tu ruta del Hub
+            //await JS.InvokeVoidAsync("webrtc.setEls", new { grid = "videoGrid", localVideo = "localVideo" });
+            await JS.InvokeVoidAsync("webrtc.join", RoomId); // asegura que RoomId está seteado
+        }
+        IsThisDeviceOnCall = true;
+        //await  Join();
+    }
+
+    async Task Join()
+    {
+        await JS.InvokeVoidAsync("webrtc.setEls", new { grid = "videoGrid", localVideo = "localVideo" });
+        await JS.InvokeVoidAsync("webrtc.join", RoomId);
+    }
+
+
+    async void ToggleShare()
+    {
+        if (IsSharingScreen)
+        {
+            await StopShare();
+        }
+        else
+        {
+            await ShareScreen();
+        }
+    }
+
+    async Task ShareScreen()
+    {
+        IsSharingScreen = await JS.InvokeAsync<bool>("webrtc.startScreenShare");
+        StateHasChanged();
+    }
+
+
+    async Task StopShare()
+    {
+        IsSharingScreen =   await JS.InvokeAsync<bool>("webrtc.stopScreenShare");
+        StateHasChanged();
+    }
+
+
+    bool MicroState { get; set; } = true;
+    bool CamState { get; set; } = true;
+
+    async Task ToggleMute()
+    {
+        var state = await JS.InvokeAsync<bool>("webrtc.toggleMute");
+
+        MicroState = !state;
+        StateHasChanged();
+    }
+
+    async Task ToggleCamera()
+    {
+        var state = await JS.InvokeAsync<bool>("webrtc.toggleCamera");
+        CamState = !state;
+        StateHasChanged();
+    }
+
+    void Hang() { 
+        JS.InvokeVoidAsync("webrtc.hangup");
+        NavigationContext.NavigateTo("/");
+        IsThisDeviceOnCall = true;
+    }
+}
