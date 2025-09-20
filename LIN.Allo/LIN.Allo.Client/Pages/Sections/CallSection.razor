@@ -89,7 +89,7 @@
         {
             await JS.InvokeVoidAsync("webrtc.init", "https://api.linplatform.com/Communication/hub/calls"); // tu ruta del Hub
             //await JS.InvokeVoidAsync("webrtc.setEls", new { grid = "videoGrid", localVideo = "localVideo" });
-            await JS.InvokeVoidAsync("webrtc.join", RoomId); // asegura que RoomId está seteado
+            await JS.InvokeVoidAsync("webrtc.join", int.Parse(RoomId), LIN.Access.Communication.Session.Instance.Token); // asegura que RoomId está seteado
         }
         IsThisDeviceOnCall = true;
         //await  Join();

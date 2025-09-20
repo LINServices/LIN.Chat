@@ -136,8 +136,21 @@
                 oldTime = message.Time;
             }
 
-            <LIN.Allo.Shared.Components.Elements.Message MessageModel="@message" ShowTittle="(lastMessage?.Time != message.Time) || lastMessage == null || lastMessage.Remitente.Id != message.Remitente.Id" />
-
+            @if (message.Type == MessageTypes.Call)
+            {
+                <div class="mb-4 flex justify-center">
+                    <div class="rounded-lg bg-current-100 px-4 py-2">
+                        <p class="text-xs">
+                            @message.Contenido
+                        </p>
+                    </div>
+                </div>
+            }
+            else
+            {
+                 <LIN.Allo.Shared.Components.Elements.Message MessageModel="@message" ShowTittle="(lastMessage?.Time != message.Time) || lastMessage == null || lastMessage?.Remitente?.Id != message.Remitente?.Id" />
+            }
+           
             lastMessage = message;
         }
 
