@@ -156,7 +156,7 @@
     void Hang() { 
         JS.InvokeVoidAsync("webrtc.hangup");
         NavigationContext.NavigateTo("/");
-        IsThisDeviceOnCall = true;
+        IsThisDeviceOnCall = false;
     }
 
     /// <summary>
@@ -164,6 +164,7 @@
     /// </summary>
     private void ContinueOn(DeviceOnAccountModel device)
     {
+        Hang();
         HubClient.SendCommand(device.ConnectionId, RoomId);
     }
 }

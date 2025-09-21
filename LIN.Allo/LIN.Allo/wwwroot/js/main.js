@@ -23,22 +23,22 @@ function GoLaunch (url) {
 function getOperativeSystem() {
     const ua = navigator.userAgent.toLowerCase();
 
-    if (/iphone|ipad|ipod/.test(ua)) return "ios";
-    if (/windows/.test(ua)) return "windows";
-    if (/macintosh|mac os x/.test(ua)) return "macos";
-    if (/android/.test(ua)) return "android";
-    if (/linux/.test(ua)) return "linux";
+    if (/iphone|ipad|ipod/.test(ua)) return 5;
+    if (/windows/.test(ua)) return 1;
+    if (/macintosh|mac os x/.test(ua)) return 3;
+    if (/android/.test(ua)) return 2;
+    if (/linux/.test(ua)) return 4;
 
-    return "otro";
+    return 0;
 }
 
 function getBrowserName() {
     const ua = navigator.userAgent.toLowerCase();
 
-    if (/edg\//.test(ua)) return "edge";
-    if (/chrome/.test(ua) && !/edg\//.test(ua) && !/opr\//.test(ua)) return "chrome";
-    if (/firefox/.test(ua)) return "firefox";
-    if (/safari/.test(ua) && !/chrome/.test(ua)) return "safari";
+    if (/edg\//.test(ua)) return 2;
+    if (/chrome/.test(ua) && !/edg\//.test(ua) && !/opr\//.test(ua)) return 1;
+    if (/firefox/.test(ua)) return 3;
+    if (/safari/.test(ua) && !/chrome/.test(ua)) return 4;
 
-    return "otro";
+    return 0;
 }

@@ -292,11 +292,12 @@ public partial class Chat : IChatViewer
         }
 
         // Obtener info del so.
-        var so = await JSRuntime.InvokeAsync<string>("getOperativeSystem");
-        var browser = await JSRuntime.InvokeAsync<string>("getBrowserName");
+        var so = await JSRuntime.InvokeAsync<int>("getOperativeSystem");
+        var browser = await JSRuntime.InvokeAsync<int>("getBrowserName");
 
-        Device.OperativeSystem = so;
-        Device.SurfaceFrom = browser;
+        Device.Platform = (Types.Enumerations.Platforms)so;
+        Device.SurfaceFrom  = Types.Enumerations.SurfaceFrom.WebApp;
+        Device.Browser = (Types.Enumerations.Browsers)browser;
         Device.Name = "Dispositivo web";
 
         // Iniciar el hub.
