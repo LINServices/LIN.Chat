@@ -1,6 +1,7 @@
 ﻿@page "/room/{RoomId}"
 @inject IJSRuntime JS
 @inject NavigationManager NavigationContext
+@inject IRealtimeHubClient HubClient
 @rendermode RenderMode.InteractiveWebAssembly
 
 <div class="min-h-screen bg-zinc-900 text-white">
@@ -71,7 +72,7 @@
 
 </div>
 
-<DevicesDrawer @ref="devicesDrawer"></DevicesDrawer>
+<DevicesDrawer @ref="devicesDrawer" OnInvoke="ContinueOn"></DevicesDrawer>
 
 @code {
     DevicesDrawer devicesDrawer;
@@ -156,5 +157,13 @@
         JS.InvokeVoidAsync("webrtc.hangup");
         NavigationContext.NavigateTo("/");
         IsThisDeviceOnCall = true;
+    }
+
+    /// <summary>
+    /// Enviar evento para pasar la llamada.
+    /// </summary>
+    private void ContinueOn(DeviceOnAccountModel device)
+    {
+        HubClient.SendCommand(device.ConnectionId, RoomId);
     }
 }

@@ -134,9 +134,9 @@ public partial class ChatSection : IDisposable, IMessageChanger, IConversationVi
         });
 
         // Envía el mensaje al hub
-        var responseMessage = await RealTime.Hub?.SendMessage(Iam.Conversation.Id, value, guid, LIN.Access.Communication.Session.Instance.Token);
+        var response = await Access.Communication.Controllers.Messages.Send(Iam.Conversation.Id, guid, value, LIN.Access.Communication.Session.Instance.Token);
 
-        if (responseMessage)
+        if (response.Response == Responses.Success)
         {
             ConversationsObserver.PushMessage(Iam.Conversation.Id, new()
             {

@@ -1,5 +1,6 @@
 ﻿using LIN.Allo.Shared.Components.Shared;
 using LIN.Types.Cloud.Identity.Models.Identities;
+using System.Net;
 
 namespace LIN.Allo.Client.Pages;
 
@@ -298,9 +299,11 @@ public partial class Chat : IChatViewer
         Device.SurfaceFrom = browser;
         Device.Name = "Dispositivo web";
 
-        // Crear el hub
-        RealTime.Hub = new(Access.Communication.Session.Instance.Profile, Device);
-        await RealTime.Hub.Suscribe();
+        // Iniciar el hub.
+        if (!HubClient.Started)
+        {
+            await HubClient.SubscribeAsync(Access.Communication.Session.Instance.Profile);
+        }
 
         // Obtiene la data
         RetrieveData();
@@ -319,12 +322,6 @@ public partial class Chat : IChatViewer
         try
         {
             Nav();
-
-            RealTime.Hub!.OnReceiveMessage ??= new();
-            RealTime.Hub!.OnReceiveCall ??= new();
-
-            RealTime.Hub!.OnReceiveMessage.Clear();
-            RealTime.Hub!.OnReceiveCall.Clear();
 
             ConversationsObserver.Data.Clear();
             IsConversationsLoad = false;
@@ -362,8 +359,9 @@ public partial class Chat : IChatViewer
             }
 
             // Lista.
-            RealTime.Hub!.OnReceiveMessage?.Add(OnReceiveMessage);
-            RealTime.Hub!.OnReceiveCall?.Add(OnReceiveCall);
+            HubClient.OnCall(OnReceiveCall);
+            HubClient.OnMessage(OnReceiveMessage);
+            HubClient.OnCommand(OnCommand);
 
             // Suscribir los eventos del hub
             foreach (var conversation in chats.Models)
@@ -389,17 +387,27 @@ public partial class Chat : IChatViewer
 
     public void Suscribe(ConversationModel conversation)
     {
-        // Lista.
-        RealTime.Hub!.OnReceiveMessage?.Add(OnReceiveMessage);
-
-
         ConversationsObserver.Create(conversation);
 
         // Suscribir evento.
-        _ = RealTime.Hub!.JoinGroup(conversation.Id);
+        HubClient.JoinGroupAsync(conversation.Id);
 
     }
 
+
+    public async void OnCommand(string s)
+    {
+        try
+        {
+            if (CallSection.IsThisDeviceOnCall)
+                return;
+
+            navigationManager.NavigateTo("/room/" + s);
+        }
+        catch
+        {
+        }
+    }
 
 
 
