@@ -23,10 +23,10 @@ function GoLaunch (url) {
 function getOperativeSystem() {
     const ua = navigator.userAgent.toLowerCase();
 
+    if (/iphone|ipad|ipod/.test(ua)) return "ios";
     if (/windows/.test(ua)) return "windows";
     if (/macintosh|mac os x/.test(ua)) return "macos";
     if (/android/.test(ua)) return "android";
-    if (/iphone|ipad|ipod/.test(ua)) return "ios";
     if (/linux/.test(ua)) return "linux";
 
     return "otro";
