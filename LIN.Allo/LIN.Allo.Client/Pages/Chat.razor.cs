@@ -1,6 +1,5 @@
 ﻿using LIN.Allo.Shared.Components.Shared;
 using LIN.Types.Cloud.Identity.Models.Identities;
-using System.Threading.Tasks;
 
 namespace LIN.Allo.Client.Pages;
 
@@ -237,7 +236,7 @@ public partial class Chat : IChatViewer
 
             notif.OnAccept = () =>
             {
-               navigationManager.NavigateTo("/room/" + s);
+                navigationManager.NavigateTo("/room/" + s);
             };
             await notif.Open();
         }
@@ -291,8 +290,16 @@ public partial class Chat : IChatViewer
             return;
         }
 
+        // Obtener info del so.
+        var so = await JSRuntime.InvokeAsync<string>("getOperativeSystem");
+        var browser = await JSRuntime.InvokeAsync<string>("getBrowserName");
+
+        Device.OperativeSystem = so;
+        Device.SurfaceFrom = browser;
+        Device.Name = "Dispositivo web";
+
         // Crear el hub
-        RealTime.Hub = new(Access.Communication.Session.Instance.Profile);
+        RealTime.Hub = new(Access.Communication.Session.Instance.Profile, Device);
         await RealTime.Hub.Suscribe();
 
         // Obtiene la data
@@ -333,11 +340,11 @@ public partial class Chat : IChatViewer
 
             try
             {
-            //    chats.Alternatives = System.Text.Json.JsonSerializer.Deserialize<List<AccountModel>>(chats.Alternatives.ToString() ?? "");
-            //    if (chats.AlternativeObject is List<AccountModel> lista)
-            //    {
-            //        accounts.AddRange(lista);
-            //    }
+                //    chats.Alternatives = System.Text.Json.JsonSerializer.Deserialize<List<AccountModel>>(chats.Alternatives.ToString() ?? "");
+                //    if (chats.AlternativeObject is List<AccountModel> lista)
+                //    {
+                //        accounts.AddRange(lista);
+                //    }
             }
             catch
             {

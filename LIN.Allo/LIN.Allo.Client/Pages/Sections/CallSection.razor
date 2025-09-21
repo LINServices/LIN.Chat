@@ -58,7 +58,7 @@
                     aria-label="Compartir pantalla">
                 <svg class="h-5 w-5 @(IsSharingScreen ? "fill-red-500" : "fill-zinc-400")" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M128 96C92.7 96 64 124.7 64 160L64 416C64 451.3 92.7 480 128 480L272 480L256 528L184 528C170.7 528 160 538.7 160 552C160 565.3 170.7 576 184 576L456 576C469.3 576 480 565.3 480 552C480 538.7 469.3 528 456 528L384 528L368 480L512 480C547.3 480 576 451.3 576 416L576 160C576 124.7 547.3 96 512 96L128 96zM160 160L480 160C497.7 160 512 174.3 512 192L512 352C512 369.7 497.7 384 480 384L160 384C142.3 384 128 369.7 128 352L128 192C128 174.3 142.3 160 160 160z" /></svg>
             </button>
-            <button class="grid h-12 w-12 place-items-center rounded-full bg-zinc-700 shadow hover:bg-zinc-600"
+            <button @onclick="ContinueOn" class="grid h-12 w-12 place-items-center rounded-full bg-zinc-700 shadow hover:bg-zinc-600"
                     aria-label="Chat">
                 <svg class="h-5 w-5 fill-zinc-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M342.6 73.4C330.1 60.9 309.8 60.9 297.3 73.4L169.3 201.4C156.8 213.9 156.8 234.2 169.3 246.7C181.8 259.2 202.1 259.2 214.6 246.7L288 173.3L288 384C288 401.7 302.3 416 320 416C337.7 416 352 401.7 352 384L352 173.3L425.4 246.7C437.9 259.2 458.2 259.2 470.7 246.7C483.2 234.2 483.2 213.9 470.7 201.4L342.7 73.4zM160 416C160 398.3 145.7 384 128 384C110.3 384 96 398.3 96 416L96 480C96 533 139 576 192 576L448 576C501 576 544 533 544 480L544 416C544 398.3 529.7 384 512 384C494.3 384 480 398.3 480 416L480 480C480 497.7 465.7 512 448 512L192 512C174.3 512 160 497.7 160 480L160 416z" /></svg>
             </button>
@@ -71,9 +71,10 @@
 
 </div>
 
+<DevicesDrawer @ref="devicesDrawer"></DevicesDrawer>
+
 @code {
-
-
+    DevicesDrawer devicesDrawer;
     public static bool IsThisDeviceOnCall { get; set; } = false;
 
 
@@ -93,6 +94,11 @@
         }
         IsThisDeviceOnCall = true;
         //await  Join();
+    }
+
+    void ContinueOn()
+    {
+        devicesDrawer.Show();
     }
 
     async Task Join()
