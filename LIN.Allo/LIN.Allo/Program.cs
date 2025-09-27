@@ -1,6 +1,6 @@
-using LIN.Allo.Components;
 using LIN.Access.Auth;
 using LIN.Access.Communication;
+using LIN.Allo.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 

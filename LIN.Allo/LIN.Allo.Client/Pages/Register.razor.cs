@@ -27,13 +27,13 @@ public partial class Register
     /// <summary>
     /// Error es visible.
     /// </summary>
-    bool ErrorVisible { get; set; }
+    private bool ErrorVisible { get; set; }
 
 
     /// <summary>
     /// Mensaje de error.
     /// </summary>
-    string ErrorMessage { get; set; } = string.Empty;
+    private string ErrorMessage { get; set; } = string.Empty;
 
 
     /// <summary>
@@ -46,7 +46,7 @@ public partial class Register
     /// <summary>
     /// Oculta los errores
     /// </summary>
-    void HideError()
+    private void HideError()
     {
         ErrorVisible = false;
         StateHasChanged();
@@ -56,7 +56,7 @@ public partial class Register
     /// <summary>
     /// Muestra un mensaje
     /// </summary>
-    async Task ShowError(string message)
+    private async Task ShowError(string message)
     {
         ErrorVisible = true;
         ErrorMessage = message;
@@ -74,7 +74,7 @@ public partial class Register
     /// <summary>
     /// Crear cuenta.
     /// </summary>
-    async void Start()
+    private async void Start()
     {
 
         Section = 3;

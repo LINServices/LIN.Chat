@@ -1,6 +1,5 @@
 ﻿using LIN.Allo.Shared.Components.Shared;
 using LIN.Types.Cloud.Identity.Models.Identities;
-using System.Net;
 
 namespace LIN.Allo.Client.Pages;
 
@@ -57,7 +56,7 @@ public partial class Chat : IChatViewer
     /// <summary>
     /// Navegar al home.
     /// </summary>
-    void Nav() => navigationManager.NavigateTo("/");
+    private void Nav() => navigationManager.NavigateTo("/");
 
 
 
@@ -155,7 +154,7 @@ public partial class Chat : IChatViewer
     /// <summary>
     /// Contador.
     /// </summary>
-    int counter = 0;
+    private int counter = 0;
 
 
     /// <summary>
@@ -296,7 +295,7 @@ public partial class Chat : IChatViewer
         var browser = await JSRuntime.InvokeAsync<int>("getBrowserName");
 
         Device.Platform = (Types.Enumerations.Platforms)so;
-        Device.SurfaceFrom  = Types.Enumerations.SurfaceFrom.WebApp;
+        Device.SurfaceFrom = Types.Enumerations.SurfaceFrom.WebApp;
         Device.Browser = (Types.Enumerations.Browsers)browser;
         Device.Name = "Dispositivo web";
 

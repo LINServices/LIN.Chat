@@ -1,15 +1,12 @@
-﻿using LIN.Allo.Shared.Components.Elements.Popups;
-using LIN.Allo.Shared.Services;
-
-namespace LIN.Allo.Client.Pages.Sections;
+﻿namespace LIN.Allo.Client.Pages.Sections;
 
 
 public partial class ChatSection : IDisposable, IMessageChanger, IConversationViewer
 {
 
-    MessageModel? lastMessage = null;
+    private MessageModel? lastMessage = null;
 
-    Allo.Shared.Components.Elements.Dropdowns.Gifts GiftPanel;
+    private Allo.Shared.Components.Elements.Dropdowns.Gifts GiftPanel;
 
     /// <summary>
     /// Solo la fecha de hoy.
@@ -73,12 +70,7 @@ public partial class ChatSection : IDisposable, IMessageChanger, IConversationVi
     /// </summary>
     private DateTime? oldTime = null;
 
-    /// <summary>
-    /// Panel de emojis.
-    /// </summary>
-    private EmojiPanel? EmojiPanel { get; set; }
-
-    void GetValue(dynamic e)
+    private void GetValue(dynamic e)
     {
         Message = e.Value;
     }
@@ -102,7 +94,7 @@ public partial class ChatSection : IDisposable, IMessageChanger, IConversationVi
         // Reestablece el texto
         Message = "";
     }
-    
+
     private void Call()
     {
         Navigation.NavigateTo($"/room/{Iam.Conversation.Id}");
@@ -234,13 +226,13 @@ public partial class ChatSection : IDisposable, IMessageChanger, IConversationVi
         StateHasChanged();
     }
 
-    void OpenGift()
+    private void OpenGift()
     {
         GiftPanel.Show("gift-panel");
     }
 
 
-    async void GiftSelect(string url)
+    private async void GiftSelect(string url)
     {
         await SendMessage(url, MessageTypes.Gif);
     }
