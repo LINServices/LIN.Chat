@@ -3,39 +3,24 @@
 
 @code {
 
-
-
     string Key = Guid.NewGuid().ToString();
-
-
-    void A()
-    {
-
-    }
 
     protected override void OnAfterRender(bool firstRender)
     {
-        js.InvokeVoidAsync("ShopPop", $"popover-user-profile-{Key}", $"img-prof-{Key}");
+        js.InvokeVoidAsync("ShopPop", $"popover-user-profile-{Key}", DotNetObjectReference.Create(this), $"img-prof-{Key}");
     }
-
-    void Send()
-    {
-    }
-
 
     void Close()
     {
         LIN.Access.Communication.Session.CloseSession();
-
         nav.NavigateTo("/", true);
     }
 }
 
-
 @* Dropdown Open *@
 @if (string.IsNullOrWhiteSpace(""))
 {
-    <div id="img-prof-@Key" class="relative inline-flex h-9 w-9 items-center justify-center overflow-hidden rounded-full border bg-zinc-200 dark:bg-zinc-800 dark:border-zinc-600">
+    <div id="img-prof-@Key" class="relative inline-flex h-9 w-9 items-center justify-center overflow-hidden rounded-full border bg-zinc-200 dark:border-zinc-600 dark:bg-zinc-800">
         <span class="font-medium text-gray-600 dark:text-zinc-300">@Global.Utilities.Strings.GetInitials(LIN.Access.Communication.Session.Instance.Account.Name)</span>
     </div>
 }
@@ -43,22 +28,17 @@ else
 {
     <button id="img-prof-@Key" type="button" class="flex rounded-full bg-white text-sm focus:ring-4 focus:ring-gray-300 dark:bg-zinc-700 dark:focus:ring-gray-600">
         <span class="sr-only">Open</span>
-        <img class="ring-2 h-8 w-8 rounded-full p-1 ring-gray-400">
+        <img class="h-8 w-8 rounded-full p-1 ring-2 ring-gray-400">
     </button>
 }
 
-
-<div id="popover-user-profile-@Key" role="tooltip" class="z-10 opacity-0 invisible absolute inline-block w-64 overflow-hidden rounded-lg border border-gray-200 bg-white text-sm text-gray-500 shadow-sm transition-opacity duration-300 dark:text-gray-400 dark:bg-zinc-800 dark:border-zinc-600">
-
-    <!-- Header -->
+<div id="popover-user-profile-@Key" role="tooltip" class="invisible absolute z-10 inline-block w-64 overflow-hidden rounded-lg border border-gray-200 bg-white text-sm text-gray-500 opacity-0 shadow-sm transition-opacity duration-300 dark:border-zinc-600 dark:bg-zinc-800 dark:text-gray-400">
     <div class="border-b border-gray-200 px-4 py-3 dark:border-gray-700">
         <div class="flex items-center gap-x-3">
 
-
-            @* Dropdown Open *@
             @if (string.IsNullOrWhiteSpace(""))
             {
-                <div id="img-prof-@Key" class="relative inline-flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border bg-zinc-200 dark:bg-zinc-800 dark:border-shark-600">
+                <div id="img-prof-@Key" class="relative inline-flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border bg-zinc-200 dark:border-shark-600 dark:bg-zinc-800">
                     <span class="font-medium text-gray-600 dark:text-zinc-300">@Global.Utilities.Strings.GetInitials(LIN.Access.Communication.Session.Instance.Account.Name)</span>
                 </div>
             }
@@ -66,10 +46,9 @@ else
             {
                 <button id="img-prof-@Key" type="button" class="flex rounded-full bg-white text-sm focus:ring-4 focus:ring-gray-300 dark:bg-zinc-700 dark:focus:ring-gray-600">
                     <span class="sr-only">Open</span>
-                    <img class="ring-2 h-9 w-9 rounded-full p-1 ring-gray-400">
+                    <img class="h-9 w-9 rounded-full p-1 ring-2 ring-gray-400">
                 </button>
             }
-
 
             <div class="grow">
                 <h4 class="font-semibold text-gray-800 dark:text-white">
@@ -82,14 +61,10 @@ else
             </div>
         </div>
     </div>
-    <!-- End Header -->
-    <!-- Footer -->
-    <div class="flex items-center justify-between bg-gray-100 px-4 py-2 dark:bg-zinc-800">
 
-        <button @onclick="Close" type="button" class="flex w-full items-center justify-center gap-x-2 rounded-full border border-transparent bg-red-600 px-3 py-1.5 text-center text-sm font-medium text-white hover:bg-red-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
+    <div class="flex items-center justify-between bg-gray-100 px-4 py-2 dark:bg-zinc-800">
+        <button @onclick="Close" type="button" class="flex w-full items-center justify-center gap-x-2 rounded-full border border-transparent bg-red-600 px-3 py-1.5 text-center text-sm font-medium text-white hover:bg-red-700 disabled:pointer-events-none disabled:opacity-50 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
             Cerrar Sesión
         </button>
     </div>
-    <!-- End Footer -->
-
 </div>
