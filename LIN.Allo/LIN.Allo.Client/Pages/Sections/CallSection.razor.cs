@@ -110,7 +110,7 @@ public partial class CallSection
     private async void Hang()
     {
         await JSRuntime.InvokeVoidAsync("webrtc.hangup");
-        NavigationContext.NavigateTo("/home");
+        NavigationContext.NavigateTo("/");
         IsThisDeviceOnCall = false;
     }
 
