@@ -224,7 +224,7 @@ public partial class Chat : IChatViewer
     }
 
 
-    public async void OnReceiveCall(string s)
+    public async void OnReceiveCall(Types.Communication.DTO.ReceiveCallDTO receiveCall)
     {
         try
         {
@@ -234,9 +234,10 @@ public partial class Chat : IChatViewer
             if (CallSection.IsThisDeviceOnCall)
                 return;
 
+            notif.Title = receiveCall.Caller;
             notif.OnAccept = () =>
             {
-                navigationManager.NavigateTo("/room/" + s);
+                navigationManager.NavigateTo("/room/" + receiveCall.RoomId);
             };
             await notif.Open();
         }
