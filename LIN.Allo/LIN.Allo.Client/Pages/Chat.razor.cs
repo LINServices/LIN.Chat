@@ -234,12 +234,15 @@ public partial class Chat : IChatViewer
             if (CallSection.IsThisDeviceOnCall)
                 return;
 
-            notif.Title = receiveCall.Caller;
+            // Si es la persona la que esta llamando.
+            if (receiveCall.CallerProfileId == Access.Communication.Session.Instance.Profile.Id)
+                return;
+
             notif.OnAccept = () =>
             {
                 navigationManager.NavigateTo("/room/" + receiveCall.RoomId);
             };
-            await notif.Open();
+            await notif.Open(receiveCall.Caller);
         }
         catch
         {
