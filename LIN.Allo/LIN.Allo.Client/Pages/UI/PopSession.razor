@@ -7,7 +7,7 @@
 
     protected override void OnAfterRender(bool firstRender)
     {
-        js.InvokeVoidAsync("ShopPop", $"popover-user-profile-{Key}", DotNetObjectReference.Create(this), $"img-prof-{Key}");
+        js.InvokeVoidAsync("showPopover", $"popover-user-profile-{Key}", DotNetObjectReference.Create(this), $"img-prof-{Key}");
     }
 
     void Close()
