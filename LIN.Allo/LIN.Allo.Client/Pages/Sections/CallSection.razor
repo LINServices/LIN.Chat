@@ -1,75 +1,112 @@
-﻿@page "/room/{RoomId}"
+@page "/room/{RoomId}"
 @inject IJSRuntime JSRuntime
 @inject NavigationManager NavigationContext
 @inject IRealtimeHubClient HubClient
 @rendermode RenderMode.InteractiveWebAssembly
 
-<div class="min-h-screen bg-zinc-900 text-white">
+<div class="h-dvh bg-zinc-950 text-white flex flex-col overflow-hidden">
 
-    <!-- MAIN -->
-    <main class="relative mx-auto max-w-6xl px-4 pb-28 pt-6">
+    @* ── Header ── *@
+    <div class="shrink-0 flex items-center justify-between px-5 py-3 bg-zinc-950 border-b border-white/5 z-10">
+        <div class="flex items-center gap-2.5">
+            <span class="h-2 w-2 rounded-full bg-red-500 animate-pulse"></span>
+            <span class="text-sm font-medium text-zinc-300">En llamada</span>
+        </div>
+        <span class="text-xs text-zinc-500">Sala #@RoomId</span>
+    </div>
 
-        <!-- Header simple (opcional) -->
-        <div class="mb-4 flex items-center justify-between gap-4">
-            <h1 class="text-lg font-semibold opacity-90">Llamada de equipo</h1>
-            <span class="text-sm text-zinc-400">@(DateTime.Now.ToString("hh:mm"))</span>
+    @* ── Área de videos ── *@
+    <div class="flex-1 flex flex-col overflow-hidden min-h-0">
+
+        @* SPOTLIGHT: oculto por defecto; visible cuando se fija un video *@
+        <div id="call-main" style="display:none;" class="relative min-h-0">
+            <video id="spotlight-video" autoplay playsinline class="h-full w-full object-contain bg-zinc-950"></video>
+
+            @* Botón desanclar *@
+            <button onclick="window.callGrid.unpin()"
+                    class="absolute top-3 right-3 z-20 flex items-center gap-1.5 rounded-full bg-black/50 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm transition-colors hover:bg-black/70">
+                <svg class="h-3 w-3 fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                    <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
+                </svg>
+                Volver a la grilla
+            </button>
         </div>
 
-        <!-- GRID DE VIDEOS -->
-        <section class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3" id="grid-llamada">
+        @* GRID DE VIDEOS REMOTOS *@
+        @* Default: cuadrícula responsive. Spotlight activo: tira de miniaturas horizontal. *@
+        <section id="grid-llamada"
+                 class="flex-1 grid gap-3 p-4 content-start overflow-hidden min-h-0
+                        grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+            @* WebRTC inyecta <video> aquí; call.js los envuelve y añade el click para fijar *@
         </section>
 
-        <!-- TU VIDEO FLOTANTE (encima del grid, pero sin tapar la barra) -->
-        <div class="fixed bottom-28 right-4 z-30 grid aspect-video w-28 place-items-center overflow-hidden rounded-xl border-2 border-zinc-400 bg-zinc-700 shadow-xl sm:w-36 md:w-xs"
-             aria-label="Tu video">
-            <div class="absolute inset-0 grid place-items-center">
-                <video id="localVideo" autoplay="" playsinline="" class="h-full w-full object-cover"></video>
+    </div>
 
-            </div>
-        </div>
+    @* ── Tu video (flotante, esquina inferior derecha) ── *@
+    <div class="fixed bottom-24 right-4 z-30 aspect-video w-32 overflow-hidden rounded-xl border-2 border-zinc-600 bg-zinc-800 shadow-xl sm:w-40"
+         aria-label="Tu video">
+        <video id="localVideo" autoplay playsinline class="h-full w-full object-cover"></video>
+    </div>
 
-    </main>
+    @* ── Barra de controles ── *@
+    <footer class="shrink-0 z-40 border-t border-white/5 bg-zinc-900/95 backdrop-blur">
+        <div class="mx-auto flex max-w-lg items-center justify-center gap-3 px-4 py-4">
 
-    <!-- BARRA DE ACCIONES (SIEMPRE VISIBLE y FUERA del área de videos) -->
-    <footer class="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-zinc-900/90 backdrop-blur">
-        <div class="mx-auto flex max-w-6xl items-center justify-center gap-3 px-4 py-3 sm:gap-4">
-            <!-- Botón: colgar -->
-            <button @onclick="Hang" class="grid h-12 w-12 place-items-center rounded-full bg-red-600 shadow hover:bg-red-700"
+            @* Colgar *@
+            <button @onclick="Hang"
+                    class="grid h-12 w-12 place-items-center rounded-full bg-red-600 shadow-lg transition-all hover:scale-105 hover:bg-red-700 active:scale-95"
                     aria-label="Colgar">
-
-                <svg class="h-5 w-5 fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M183.1 137.4C170.6 124.9 150.3 124.9 137.8 137.4C125.3 149.9 125.3 170.2 137.8 182.7L275.2 320L137.9 457.4C125.4 469.9 125.4 490.2 137.9 502.7C150.4 515.2 170.7 515.2 183.2 502.7L320.5 365.3L457.9 502.6C470.4 515.1 490.7 515.1 503.2 502.6C515.7 490.1 515.7 469.8 503.2 457.3L365.8 320L503.1 182.6C515.6 170.1 515.6 149.8 503.1 137.3C490.6 124.8 470.3 124.8 457.8 137.3L320.5 274.7L183.1 137.4z" /></svg>
-
+                <svg class="h-5 w-5 fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+                    <path d="M183.1 137.4C170.6 124.9 150.3 124.9 137.8 137.4C125.3 149.9 125.3 170.2 137.8 182.7L275.2 320L137.9 457.4C125.4 469.9 125.4 490.2 137.9 502.7C150.4 515.2 170.7 515.2 183.2 502.7L320.5 365.3L457.9 502.6C470.4 515.1 490.7 515.1 503.2 502.6C515.7 490.1 515.7 469.8 503.2 457.3L365.8 320L503.1 182.6C515.6 170.1 515.6 149.8 503.1 137.3C490.6 124.8 470.3 124.8 457.8 137.3L320.5 274.7L183.1 137.4z" />
+                </svg>
             </button>
 
-            <!-- Botones secundarios -->
-            <button @onclick="ToggleMute" class="grid h-12 w-12 place-items-center rounded-full bg-zinc-700 shadow hover:bg-zinc-600"
+            @* Micrófono *@
+            <button @onclick="ToggleMute"
+                    class="grid h-12 w-12 place-items-center rounded-full transition-all hover:scale-105 active:scale-95
+                           @(MicroState ? "bg-zinc-700 hover:bg-zinc-600" : "bg-red-500/20 hover:bg-red-500/30")"
                     aria-label="Micrófono">
-                <svg class="h-4 w-4 @(MicroState ? "fill-zinc-400" : "fill-red-500")" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 19">
+                <svg class="h-4 w-4 @(MicroState ? "fill-zinc-300" : "fill-red-400")"
+                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 19">
                     <path d="M15 5a1 1 0 0 0-1 1v3a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V6a1 1 0 0 0-2 0v3a6.006 6.006 0 0 0 6 6h1v2H5a1 1 0 0 0 0 2h6a1 1 0 0 0 0-2H9v-2h1a6.006 6.006 0 0 0 6-6V6a1 1 0 0 0-1-1Z" />
                     <path d="M9 0H7a3 3 0 0 0-3 3v5a3 3 0 0 0 3 3h2a3 3 0 0 0 3-3V3a3 3 0 0 0-3-3Z" />
                 </svg>
             </button>
-            <button @onclick="ToggleCamera" class="grid h-12 w-12 place-items-center rounded-full bg-zinc-700 shadow hover:bg-zinc-600"
+
+            @* Cámara *@
+            <button @onclick="ToggleCamera"
+                    class="grid h-12 w-12 place-items-center rounded-full transition-all hover:scale-105 active:scale-95
+                           @(CamState ? "bg-zinc-700 hover:bg-zinc-600" : "bg-red-500/20 hover:bg-red-500/30")"
                     aria-label="Cámara">
-                <svg class="h-4 w-4 @(CamState ? "fill-zinc-400" : "fill-red-500")" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 14">
+                <svg class="h-4 w-4 @(CamState ? "fill-zinc-300" : "fill-red-400")"
+                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 14">
                     <path d="M11 0H2a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm8.585 1.189a.994.994 0 0 0-.9-.138l-2.965.983a1 1 0 0 0-.685.949v8a1 1 0 0 0 .675.946l2.965 1.02a1.013 1.013 0 0 0 1.032-.242A1 1 0 0 0 20 12V2a1 1 0 0 0-.415-.811Z" />
                 </svg>
             </button>
+
+            @* Compartir pantalla (solo si el dispositivo lo soporta) *@
             @if (SupportShareScreen)
             {
-                <button @onclick="ToggleShare" class="grid h-12 w-12 place-items-center rounded-full bg-zinc-700 shadow hover:bg-zinc-600"
+                <button @onclick="ToggleShare"
+                        class="grid h-12 w-12 place-items-center rounded-full transition-all hover:scale-105 active:scale-95
+                               @(IsSharingScreen ? "bg-current-500/20 hover:bg-current-500/30" : "bg-zinc-700 hover:bg-zinc-600")"
                         aria-label="Compartir pantalla">
-                    <svg class="h-5 w-5 @(IsSharingScreen ? "fill-red-500" : "fill-zinc-400")" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M128 96C92.7 96 64 124.7 64 160L64 416C64 451.3 92.7 480 128 480L272 480L256 528L184 528C170.7 528 160 538.7 160 552C160 565.3 170.7 576 184 576L456 576C469.3 576 480 565.3 480 552C480 538.7 469.3 528 456 528L384 528L368 480L512 480C547.3 480 576 451.3 576 416L576 160C576 124.7 547.3 96 512 96L128 96zM160 160L480 160C497.7 160 512 174.3 512 192L512 352C512 369.7 497.7 384 480 384L160 384C142.3 384 128 369.7 128 352L128 192C128 174.3 142.3 160 160 160z" /></svg>
+                    <svg class="h-5 w-5 @(IsSharingScreen ? "fill-current-400" : "fill-zinc-300")"
+                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+                        <path d="M128 96C92.7 96 64 124.7 64 160L64 416C64 451.3 92.7 480 128 480L272 480L256 528L184 528C170.7 528 160 538.7 160 552C160 565.3 170.7 576 184 576L456 576C469.3 576 480 565.3 480 552C480 538.7 469.3 528 456 528L384 528L368 480L512 480C547.3 480 576 451.3 576 416L576 160C576 124.7 547.3 96 512 96L128 96zM160 160L480 160C497.7 160 512 174.3 512 192L512 352C512 369.7 497.7 384 480 384L160 384C142.3 384 128 369.7 128 352L128 192C128 174.3 142.3 160 160 160z" />
+                    </svg>
                 </button>
             }
-            <button @onclick="ContinueOn" class="grid h-12 w-12 place-items-center rounded-full bg-zinc-700 shadow hover:bg-zinc-600"
-                    aria-label="Chat">
-                <svg class="h-5 w-5 fill-zinc-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M342.6 73.4C330.1 60.9 309.8 60.9 297.3 73.4L169.3 201.4C156.8 213.9 156.8 234.2 169.3 246.7C181.8 259.2 202.1 259.2 214.6 246.7L288 173.3L288 384C288 401.7 302.3 416 320 416C337.7 416 352 401.7 352 384L352 173.3L425.4 246.7C437.9 259.2 458.2 259.2 470.7 246.7C483.2 234.2 483.2 213.9 470.7 201.4L342.7 73.4zM160 416C160 398.3 145.7 384 128 384C110.3 384 96 398.3 96 416L96 480C96 533 139 576 192 576L448 576C501 576 544 533 544 480L544 416C544 398.3 529.7 384 512 384C494.3 384 480 398.3 480 416L480 480C480 497.7 465.7 512 448 512L192 512C174.3 512 160 497.7 160 480L160 416z" /></svg>
+
+            @* Continuar en otro dispositivo *@
+            <button @onclick="ContinueOn"
+                    class="grid h-12 w-12 place-items-center rounded-full bg-zinc-700 transition-all hover:scale-105 hover:bg-zinc-600 active:scale-95"
+                    aria-label="Continuar en otro dispositivo">
+                <svg class="h-5 w-5 fill-zinc-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+                    <path d="M342.6 73.4C330.1 60.9 309.8 60.9 297.3 73.4L169.3 201.4C156.8 213.9 156.8 234.2 169.3 246.7C181.8 259.2 202.1 259.2 214.6 246.7L288 173.3L288 384C288 401.7 302.3 416 320 416C337.7 416 352 401.7 352 384L352 173.3L425.4 246.7C437.9 259.2 458.2 259.2 470.7 246.7C483.2 234.2 483.2 213.9 470.7 201.4L342.7 73.4zM160 416C160 398.3 145.7 384 128 384C110.3 384 96 398.3 96 416L96 480C96 533 139 576 192 576L448 576C501 576 544 533 544 480L544 416C544 398.3 529.7 384 512 384C494.3 384 480 398.3 480 416L480 480C480 497.7 465.7 512 448 512L192 512C174.3 512 160 497.7 160 480L160 416z" />
+                </svg>
             </button>
-            <button class="grid h-12 w-12 place-items-center rounded-full bg-zinc-700 shadow hover:bg-zinc-600"
-                    aria-label="Más">
-                ⋯
-            </button>
+
         </div>
     </footer>
 

@@ -1,4 +1,4 @@
-﻿@inject IJSRuntime js
+@inject IJSRuntime js
 @inject NavigationManager nav
 
 @code {
@@ -15,45 +15,58 @@
         LIN.Access.Communication.Session.CloseSession();
         nav.NavigateTo("/", true);
     }
+
+    private bool HasProfileImage =>
+        !string.IsNullOrEmpty(LIN.Access.Communication.Session.Instance.Account.Profile);
+
+    private string ProfileImageSrc =>
+        LIN.Access.Communication.Session.Instance.Account.Profile;
 }
 
-@* Dropdown Open *@
-@if (string.IsNullOrWhiteSpace(""))
+@* Trigger button *@
+@if (!HasProfileImage)
 {
-    <div id="img-prof-@Key" class="relative inline-flex h-9 w-9 items-center justify-center overflow-hidden rounded-full border bg-zinc-200 dark:border-zinc-600 dark:bg-zinc-800">
-        <span class="font-medium text-gray-600 dark:text-zinc-300">@Global.Utilities.Strings.GetInitials(LIN.Access.Communication.Session.Instance.Account.Name)</span>
+    <div id="img-prof-@Key"
+         class="relative inline-flex h-9 w-9 cursor-pointer items-center justify-center overflow-hidden rounded-full border bg-zinc-200 dark:border-zinc-600 dark:bg-zinc-800">
+        <span class="font-medium text-gray-600 dark:text-zinc-300">
+            @Global.Utilities.Strings.GetInitials(LIN.Access.Communication.Session.Instance.Account.Name)
+        </span>
     </div>
 }
 else
 {
-    <button id="img-prof-@Key" type="button" class="flex rounded-full bg-white text-sm focus:ring-4 focus:ring-gray-300 dark:bg-zinc-700 dark:focus:ring-gray-600">
-        <span class="sr-only">Open</span>
-        <img class="h-8 w-8 rounded-full p-1 ring-2 ring-gray-400">
-    </button>
+    <div id="img-prof-@Key" class="cursor-pointer">
+        <img src="@ProfileImageSrc"
+             class="h-9 w-9 rounded-full object-cover ring-2 ring-current-200 dark:ring-zinc-600"
+             alt="@LIN.Access.Communication.Session.Instance.Account.Name" />
+    </div>
 }
 
-<div id="popover-user-profile-@Key" role="tooltip" class="invisible absolute z-10 inline-block w-64 overflow-hidden rounded-lg border border-gray-200 bg-white text-sm text-gray-500 opacity-0 shadow-sm transition-opacity duration-300 dark:border-zinc-600 dark:bg-zinc-800 dark:text-gray-400">
-    <div class="border-b border-gray-200 px-4 py-3 dark:border-gray-700">
+@* Popover dropdown *@
+<div id="popover-user-profile-@Key" role="tooltip"
+     class="invisible absolute z-10 inline-block w-64 overflow-hidden rounded-lg border border-gray-200 bg-white text-sm text-gray-500 opacity-0 shadow-sm transition-opacity duration-300 dark:border-zinc-600 dark:bg-zinc-800 dark:text-gray-400">
+
+    <div class="border-b border-gray-200 px-4 py-3 dark:border-zinc-700">
         <div class="flex items-center gap-x-3">
 
-            @if (string.IsNullOrWhiteSpace(""))
+            @if (!HasProfileImage)
             {
-                <div id="img-prof-@Key" class="relative inline-flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border bg-zinc-200 dark:border-shark-600 dark:bg-zinc-800">
-                    <span class="font-medium text-gray-600 dark:text-zinc-300">@Global.Utilities.Strings.GetInitials(LIN.Access.Communication.Session.Instance.Account.Name)</span>
+                <div class="relative inline-flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border bg-zinc-200 dark:border-zinc-600 dark:bg-zinc-800">
+                    <span class="font-medium text-gray-600 dark:text-zinc-300">
+                        @Global.Utilities.Strings.GetInitials(LIN.Access.Communication.Session.Instance.Account.Name)
+                    </span>
                 </div>
             }
             else
             {
-                <button id="img-prof-@Key" type="button" class="flex rounded-full bg-white text-sm focus:ring-4 focus:ring-gray-300 dark:bg-zinc-700 dark:focus:ring-gray-600">
-                    <span class="sr-only">Open</span>
-                    <img class="h-9 w-9 rounded-full p-1 ring-2 ring-gray-400">
-                </button>
+                <img src="@ProfileImageSrc"
+                     class="h-10 w-10 rounded-full object-cover ring-2 ring-current-200 dark:ring-zinc-600"
+                     alt="@LIN.Access.Communication.Session.Instance.Account.Name" />
             }
 
             <div class="grow">
                 <h4 class="font-semibold text-gray-800 dark:text-white">
                     @LIN.Access.Communication.Session.Instance.Account.Name
-
                 </h4>
                 <p class="-mt-1 text-sm text-gray-500">
                     @LIN.Access.Communication.Session.Instance.Account.Identity.Unique
@@ -63,8 +76,10 @@ else
     </div>
 
     <div class="flex items-center justify-between bg-gray-100 px-4 py-2 dark:bg-zinc-800">
-        <button @onclick="Close" type="button" class="flex w-full items-center justify-center gap-x-2 rounded-full border border-transparent bg-red-600 px-3 py-1.5 text-center text-sm font-medium text-white hover:bg-red-700 disabled:pointer-events-none disabled:opacity-50 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
+        <button @onclick="Close" type="button"
+                class="flex w-full items-center justify-center gap-x-2 rounded-full border border-transparent bg-red-600 px-3 py-1.5 text-center text-sm font-medium text-white transition-colors hover:bg-red-700">
             Cerrar Sesión
         </button>
     </div>
+
 </div>

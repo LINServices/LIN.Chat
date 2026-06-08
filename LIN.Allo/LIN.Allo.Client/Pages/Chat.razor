@@ -1,192 +1,253 @@
-﻿@page "/"
+@page "/"
 @rendermode RenderMode.InteractiveWebAssembly
 
-@* Propiedades *@
 @inject NavigationManager navigationManager
 @inject IJSRuntime JSRuntime
 @inject DeviceOnAccountModel Device
 @inject IRealtimeHubClient HubClient
 
-
-@* Pantalla de carga *@
 @{
     LIN.Allo.Shared.Services.ChatPage.ChatViewer = this;
 }
 
+@* Pantalla de carga *@
 @if (!Access.Communication.Session.IsOpen)
 {
     <div class="flex h-screen w-full items-center justify-center">
         <BarLoader />
     </div>
-
-    Task.Run(async () =>
-    {
-        navigationManager.NavigateTo("/login");
-    });
+    Task.Run(async () => { navigationManager.NavigateTo("/login"); });
     return;
 }
 
+@{
+    var personalConvs = ConversationsObserver.Data.Where(c => c.Item2.Conversation.Type == ConversationsTypes.Personal).ToList();
+    var groupConvs = ConversationsObserver.Data.Where(c => c.Item2.Conversation.Type != ConversationsTypes.Personal).ToList();
+}
 
 <div class="w-screen">
     <div class="h-dvh max-h-dvh min-h-dvh">
-
         <div class="flex h-full flex-row">
 
-            @* Left *@
-            <div class="flex h-full w-full flex-col lg:w-1/3 @(ActualSection != 0 ? "hidden lg:flex" : "")">
+            @* ─────────────── Panel izquierdo ─────────────── *@
+            <div class="flex h-full w-full flex-col bg-white dark:bg-zinc-900 lg:w-1/3 @(ActualSection != 0 ? "hidden lg:flex" : "")">
 
-                @* Header *@
-                <div class="flex flex-row items-center justify-between border-r-0 px-5 pb-1 pt-3 dark:border-zinc-800 lg:border-r">
-                   
-                    <div class="flex items-center">
+                @* Perfil y acciones *@
+                <div class="flex items-center justify-between border-b border-gray-100 px-4 pb-3 pt-4 dark:border-zinc-800">
 
-                        @* Dropdown Open *@
-                       <LIN.Allo.Client.Pages.UI.PopSession />
-
-
-                        @* Datos personales *@
-                        <div class="ml-2 flex flex-col">
-                            <label class="text-sm font-bold dark:text-zinc-200">@Access.Communication.Session.Instance.Profile.Alias</label>
-                            <label class="text-xs dark:text-zinc-300" style="margin-top:-3px">@@@(Access.Communication.Session.Instance.Account.Identity.Unique)</label>
+                    <div class="flex items-center gap-2.5">
+                        <LIN.Allo.Client.Pages.UI.PopSession />
+                        <div class="flex flex-col">
+                            <span class="text-sm font-bold text-gray-900 dark:text-zinc-100">@Access.Communication.Session.Instance.Profile.Alias</span>
+                            <span class="text-xs text-gray-400 dark:text-zinc-400" style="margin-top:-2px">@@@(Access.Communication.Session.Instance.Account.Identity.Unique)</span>
                         </div>
-
                     </div>
 
-                    @* Botones de acción *@
-                    <div class="flex items-center justify-center gap-4">
+                    <div class="flex items-center gap-1">
 
                         @* Emma *@
-                        <button @onclick="OpenEmma" class="h-5 w-5 rounded-full">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" version="1.1" class="h-full w-full fill-current-500 hover:fill-current-600">
-                                <path d="M0 0 C4.16347012 3.4964018 8.08707008 7.22822917 12 11 C12.71800781 11.65484375 13.43601563 12.3096875 14.17578125 12.984375 C20.46536293 18.88322115 25.23469978 25.86116307 30 33 C30.63035156 33.93457031 31.26070312 34.86914062 31.91015625 35.83203125 C35.7340925 41.92071334 38.54590444 48.33466425 41.1875 55 C41.5086377 55.78705322 41.82977539 56.57410645 42.16064453 57.38500977 C48.6288079 74.43121085 49.67462486 91.80175574 49.57641602 109.8659668 C49.56242094 113.45778943 49.59692837 117.04706214 49.63476562 120.63867188 C49.68776871 136.25709347 48.87201094 148.4825821 38.23046875 160.78125 C28.96355273 169.99947819 17.860369 174.80542246 4.875 175.25 C-10.19188737 175.04556462 -21.57652502 168.42347498 -32 158 C-32.49886719 158.43570313 -32.99773437 158.87140625 -33.51171875 159.3203125 C-48.45835388 171.71770106 -66.90325934 176.07394758 -86 175 C-106.74423628 172.30621881 -124.68493664 162.80990927 -137.6875 146.3125 C-149.37303444 130.11997933 -154.07200926 110.95610279 -151.50390625 91.1796875 C-147.76831018 70.6233566 -137.42180191 53.37910891 -120.390625 41.140625 C-103.18523362 29.86672628 -82.97767463 26.69260778 -62.93286133 30.58935547 C-44.40527851 34.57048897 -29.07285795 45.54836525 -18.07421875 60.7890625 C-9.53900252 74.00177011 -5.9616891 88.2787713 -5.75390625 103.85546875 C-5.72100081 105.54622978 -5.68778867 107.23698486 -5.65429688 108.92773438 C-5.60674745 111.56758995 -5.56220569 114.20741592 -5.52319336 116.84741211 C-5.48349868 119.41282909 -5.4319924 121.97779881 -5.37890625 124.54296875 C-5.36628502 125.72586739 -5.36628502 125.72586739 -5.35340881 126.93266296 C-5.28407371 132.30005618 -5.28407371 132.30005618 -3 137 C0.97359497 139.33740881 3.14743812 140.11367492 7.75 139.5 C11.61801829 137.71476079 12.29203486 136.84812686 14 133 C14.42813783 129.94718701 14.42054199 126.93039162 14.3984375 123.8515625 C14.40130768 122.96197845 14.40417786 122.07239441 14.40713501 121.15585327 C14.4091738 119.27137619 14.40365689 117.38687785 14.39111328 115.50244141 C14.3752469 112.66909092 14.39086863 109.83720876 14.41015625 107.00390625 C14.43976104 82.05995118 8.02657023 58.9819184 -9 40 C-10.21816406 38.64068359 -10.21816406 38.64068359 -11.4609375 37.25390625 C-27.21858553 20.59516104 -49.90474495 9.49742734 -72.96875 8.796875 C-98.36863393 8.437259 -121.66216292 14.65417467 -141 32 C-141.90621094 32.81210937 -142.81242187 33.62421875 -143.74609375 34.4609375 C-160.40483896 50.21858553 -171.50257266 72.90474495 -172.203125 95.96875 C-172.562741 121.36863393 -166.34582533 144.66216292 -149 164 C-148.18789062 164.90621094 -147.37578125 165.81242188 -146.5390625 166.74609375 C-130.78141447 183.40483896 -108.09525505 194.50257266 -85.03125 195.203125 C-66.81047411 195.46109793 -51.0602898 192.94547037 -34.75 184.25 C-28.74664439 181.18032302 -23.29352783 180.01611583 -16.75 182.0625 C-11.76043988 184.23922045 -9.25162652 187.67555074 -6.6875 192.4375 C-5.07948464 198.43101178 -5.96192076 202.70083577 -8.63671875 208.10546875 C-15.45998365 217.58765636 -30.52610223 222.14794361 -41.25 225.375 C-42.04027588 225.61331543 -42.83055176 225.85163086 -43.64477539 226.09716797 C-55.20582142 229.39488164 -66.500627 230.4101794 -78.5 230.375 C-79.2007666 230.37445618 -79.9015332 230.37391235 -80.62353516 230.37335205 C-114.50027068 230.25291428 -144.53992616 217.41833304 -169 194 C-170.11955078 192.97519531 -170.11955078 192.97519531 -171.26171875 191.9296875 C-177.88236958 185.66722196 -182.97963336 178.55651738 -188 171 C-188.6290625 170.06671875 -189.258125 169.1334375 -189.90625 168.171875 C-207.23601593 140.60179284 -211.95805078 104.20535241 -204.83911133 72.62255859 C-198.84333447 48.87776111 -186.91829939 28.55146928 -170 11 C-169.34515625 10.28199219 -168.6903125 9.56398437 -168.015625 8.82421875 C-162.11677885 2.53463707 -155.13883693 -2.23469978 -148 -7 C-147.06542969 -7.63035156 -146.13085938 -8.26070312 -145.16796875 -8.91015625 C-101.47012457 -36.35415281 -40.12596623 -31.83598863 0 0 Z M-105 73 C-113.38986507 81.30497604 -117.32161833 90.20330202 -117.5 102 C-117.34479768 113.11587703 -113.85480178 122.07039058 -106 130 C-96.56584786 137.91052888 -86.85020159 141.82209573 -74.42578125 140.78515625 C-64.57531663 139.16145329 -55.68814842 134.43446541 -49 127 C-42.53553519 117.94974926 -39.15852384 108.80853685 -40.36328125 97.62890625 C-42.23011296 87.17235806 -46.47441613 77.87106878 -55.07421875 71.2734375 C-71.11443989 60.66671926 -89.86046432 60.30001036 -105 73 Z " fill="#8" transform="translate(207,26)" />
+                        <button @onclick="OpenEmma"
+                                class="flex h-9 w-9 items-center justify-center rounded-full transition-colors hover:bg-gray-100 dark:hover:bg-zinc-800">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" version="1.1"
+                                 class="h-5 w-5 fill-current-500 hover:fill-current-700 dark:fill-current-400">
+                                <path d="M0 0 C4.16347012 3.4964018 8.08707008 7.22822917 12 11 C12.71800781 11.65484375 13.43601563 12.3096875 14.17578125 12.984375 C20.46536293 18.88322115 25.23469978 25.86116307 30 33 C30.63035156 33.93457031 31.26070312 34.86914062 31.91015625 35.83203125 C35.7340925 41.92071334 38.54590444 48.33466425 41.1875 55 C41.5086377 55.78705322 41.82977539 56.57410645 42.16064453 57.38500977 C48.6288079 74.43121085 49.67462486 91.80175574 49.57641602 109.8659668 C49.56242094 113.45778943 49.59692837 117.04706214 49.63476562 120.63867188 C49.68776871 136.25709347 48.87201094 148.4825821 38.23046875 160.78125 C28.96355273 169.99947819 17.860369 174.80542246 4.875 175.25 C-10.19188737 175.04556462 -21.57652502 168.42347498 -32 158 C-32.49886719 158.43570313 -32.99773437 158.87140625 -33.51171875 159.3203125 C-48.45835388 171.71770106 -66.90325934 176.07394758 -86 175 C-106.74423628 172.30621881 -124.68493664 162.80990927 -137.6875 146.3125 C-149.37303444 130.11997933 -154.07200926 110.95610279 -151.50390625 91.1796875 C-147.76831018 70.6233566 -137.42180191 53.37910891 -120.390625 41.140625 C-103.18523362 29.86672628 -82.97767463 26.69260778 -62.93286133 30.58935547 C-44.40527851 34.57048897 -29.07285795 45.54836525 -18.07421875 60.7890625 C-9.53900252 74.00177011 -5.9616891 88.2787713 -5.75390625 103.85546875 C-5.72100081 105.54622978 -5.68778867 107.23698486 -5.65429688 108.92773438 C-5.60674745 111.56758995 -5.56220569 114.20741592 -5.52319336 116.84741211 C-5.48349868 119.41282909 -5.4319924 121.97779881 -5.37890625 124.54296875 C-5.36628502 125.72586739 -5.36628502 125.72586739 -5.35340881 126.93266296 C-5.28407371 132.30005618 -5.28407371 132.30005618 -3 137 C0.97359497 139.33740881 3.14743812 140.11367492 7.75 139.5 C11.61801829 137.71476079 12.29203486 136.84812686 14 133 C14.42813783 129.94718701 14.42054199 126.93039162 14.3984375 123.8515625 C14.40130768 122.96197845 14.40417786 122.07239441 14.40713501 121.15585327 C14.4091738 119.27137619 14.40365689 117.38687785 14.39111328 115.50244141 C14.3752469 112.66909092 14.39086863 109.83720876 14.41015625 107.00390625 C14.43976104 82.05995118 8.02657023 58.9819184 -9 40 C-10.21816406 38.64068359 -10.21816406 38.64068359 -11.4609375 37.25390625 C-27.21858553 20.59516104 -49.90474495 9.49742734 -72.96875 8.796875 C-98.36863393 8.437259 -121.66216292 14.65417467 -141 32 C-141.90621094 32.81210937 -142.81242187 33.62421875 -143.74609375 34.4609375 C-160.40483896 50.21858553 -171.50257266 72.90474495 -172.203125 95.96875 C-172.562741 121.36863393 -166.34582533 144.66216292 -149 164 C-148.18789062 164.90621094 -147.37578125 165.81242188 -146.5390625 166.74609375 C-130.78141447 183.40483896 -108.09525505 194.50257266 -85.03125 195.203125 C-66.81047411 195.46109793 -51.0602898 192.94547037 -34.75 184.25 C-28.74664439 181.18032302 -23.29352783 180.01611583 -16.75 182.0625 C-11.76043988 184.23922045 -9.25162652 187.67555074 -6.6875 192.4375 C-5.07948464 198.43101178 -5.96192076 202.70083577 -8.63671875 208.10546875 C-15.45998365 217.58765636 -30.52610223 222.14794361 -41.25 225.375 C-42.04027588 225.61331543 -42.83055176 225.85163086 -43.64477539 226.09716797 C-55.20582142 229.39488164 -66.500627 230.4101794 -78.5 230.375 C-79.2007666 230.37445618 -79.9015332 230.37391235 -80.62353516 230.37335205 C-114.50027068 230.25291428 -144.53992616 217.41833304 -169 194 C-170.11955078 192.97519531 -170.11955078 192.97519531 -171.26171875 191.9296875 C-177.88236958 185.66722196 -182.97963336 178.55651738 -188 171 C-188.6290625 170.06671875 -189.258125 169.1334375 -189.90625 168.171875 C-207.23601593 140.60179284 -211.95805078 104.20535241 -204.83911133 72.62255859 C-198.84333447 48.87776111 -186.91829939 28.55146928 -170 11 C-169.34515625 10.28199219 -168.6903125 9.56398437 -168.015625 8.82421875 C-162.11677885 2.53463707 -155.13883693 -2.23469978 -148 -7 C-147.06542969 -7.63035156 -146.13085938 -8.26070312 -145.16796875 -8.91015625 C-101.47012457 -36.35415281 -40.12596623 -31.83598863 0 0 Z M-105 73 C-113.38986507 81.30497604 -117.32161833 90.20330202 -117.5 102 C-117.34479768 113.11587703 -113.85480178 122.07039058 -106 130 C-96.56584786 137.91052888 -86.85020159 141.82209573 -74.42578125 140.78515625 C-64.57531663 139.16145329 -55.68814842 134.43446541 -49 127 C-42.53553519 117.94974926 -39.15852384 108.80853685 -40.36328125 97.62890625 C-42.23011296 87.17235806 -46.47441613 77.87106878 -55.07421875 71.2734375 C-71.11443989 60.66671926 -89.86046432 60.30001036 -105 73 Z "
+                                  fill="#8" transform="translate(207,26)" />
                             </svg>
                         </button>
 
                         @* Actualizar *@
-                        <div @onclick="ForceRetrieveData" class="flex h-5 w-5 items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="h-full w-full fill-zinc-800 hover:fill-current-500 dark:fill-zinc-200"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M105.1 202.6c7.7-21.8 20.2-42.3 37.8-59.8c62.5-62.5 163.8-62.5 226.3 0L386.3 160H352c-17.7 0-32 14.3-32 32s14.3 32 32 32H463.5c0 0 0 0 0 0h.4c17.7 0 32-14.3 32-32V80c0-17.7-14.3-32-32-32s-32 14.3-32 32v35.2L414.4 97.6c-87.5-87.5-229.3-87.5-316.8 0C73.2 122 55.6 150.7 44.8 181.4c-5.9 16.7 2.9 34.9 19.5 40.8s34.9-2.9 40.8-19.5zM39 289.3c-5 1.5-9.8 4.2-13.7 8.2c-4 4-6.7 8.8-8.1 14c-.3 1.2-.6 2.5-.8 3.8c-.3 1.7-.4 3.4-.4 5.1V432c0 17.7 14.3 32 32 32s32-14.3 32-32V396.9l17.6 17.5 0 0c87.5 87.4 229.3 87.4 316.7 0c24.4-24.4 42.1-53.1 52.9-83.7c5.9-16.7-2.9-34.9-19.5-40.8s-34.9 2.9-40.8 19.5c-7.7 21.8-20.2 42.3-37.8 59.8c-62.5 62.5-163.8 62.5-226.3 0l-.1-.1L125.6 352H160c17.7 0 32-14.3 32-32s-14.3-32-32-32H48.4c-1.6 0-3.2 .1-4.8 .3s-3.1 .5-4.6 1z" /></svg>
-                        </div>
-
-                        <div @onclick="OpenNewGroup" class="flex h-5 w-5 items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="fill-zinc-800 hover:fill-current-500 dark:fill-zinc-200">
-                                <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z" />
+                        <button @onclick="ForceRetrieveData"
+                                class="flex h-9 w-9 items-center justify-center rounded-full transition-colors hover:bg-gray-100 dark:hover:bg-zinc-800">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                 class="h-4 w-4 fill-gray-500 transition-colors hover:fill-current-500 dark:fill-zinc-400">
+                                <path d="M105.1 202.6c7.7-21.8 20.2-42.3 37.8-59.8c62.5-62.5 163.8-62.5 226.3 0L386.3 160H352c-17.7 0-32 14.3-32 32s14.3 32 32 32H463.5c0 0 0 0 0 0h.4c17.7 0 32-14.3 32-32V80c0-17.7-14.3-32-32-32s-32 14.3-32 32v35.2L414.4 97.6c-87.5-87.5-229.3-87.5-316.8 0C73.2 122 55.6 150.7 44.8 181.4c-5.9 16.7 2.9 34.9 19.5 40.8s34.9-2.9 40.8-19.5zM39 289.3c-5 1.5-9.8 4.2-13.7 8.2c-4 4-6.7 8.8-8.1 14c-.3 1.2-.6 2.5-.8 3.8c-.3 1.7-.4 3.4-.4 5.1V432c0 17.7 14.3 32 32 32s32-14.3 32-32V396.9l17.6 17.5 0 0c87.5 87.4 229.3 87.4 316.7 0c24.4-24.4 42.1-53.1 52.9-83.7c5.9-16.7-2.9-34.9-19.5-40.8s-34.9 2.9-40.8 19.5c-7.7 21.8-20.2 42.3-37.8 59.8c-62.5 62.5-163.8 62.5-226.3 0l-.1-.1L125.6 352H160c17.7 0 32-14.3 32-32s-14.3-32-32-32H48.4c-1.6 0-3.2 .1-4.8 .3s-3.1 .5-4.6 1z" />
                             </svg>
-                        </div>
+                        </button>
 
                     </div>
-
                 </div>
 
-                @* Búsqueda *@
-                <div class="border-r-0 px-5 pt-3 dark:border-zinc-800 lg:border-r">
-
-                    @* Titulo *@
-                    <label class="text-base font-bold text-gray-800 dark:text-zinc-200">Conversaciones</label>
-
-                    @* Entrada de búsqueda *@
-                    <div class="mb-5 mt-2 w-full">
-                        <div class="relative">
-                            <div class="pointer-events-none absolute inset-y-0 start-0 top-0 flex items-center ps-3.5">
-
-                                <svg class="h-4 w-4 fill-zinc-400 dark:fill-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z" /></svg>
-
-                            </div>
-                            <input @oninput="Search" type="text" autocomplete="off" required="" class="block w-full appearance-none rounded-xl border border-gray-200 bg-gray-50 px-3 py-2 ps-10 text-gray-900 placeholder-gray-400 focus:border-current-500 focus:bg-white focus:outline-none focus:ring-1 focus:ring-current-600 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-200 sm:text-sm dark:focus:bg-zinc-900" placeholder="Buscar">
-                        </div>
+                @* Barra de búsqueda *@
+                <div class="px-4 pt-3 pb-2 border-b border-gray-100 dark:border-zinc-800">
+                    <div class="flex items-center gap-2 rounded-xl bg-gray-100 px-3 py-2 dark:bg-zinc-800">
+                        <svg class="h-4 w-4 shrink-0 fill-gray-400 dark:fill-zinc-400"
+                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                            <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z" />
+                        </svg>
+                        <input @oninput="Search" type="text" autocomplete="off"
+                               class="flex-1 bg-transparent text-sm text-gray-800 placeholder-gray-400 outline-none dark:text-zinc-200 dark:placeholder-zinc-500"
+                               placeholder="Buscar..." />
                     </div>
+                </div>
+
+                @* Tabs: Mensajes / Grupos *@
+                <div class="flex items-center gap-2 px-4 py-3 border-b border-gray-100 dark:border-zinc-800">
+
+                    @* Tab Mensajes *@
+                    <div class="flex items-center gap-1.5 rounded-full bg-current-500 px-3.5 py-1.5">
+                        <svg class="h-3.5 w-3.5 fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
+                            <path d="M96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z" />
+                        </svg>
+                        <span class="text-xs font-semibold text-white">Mensajes</span>
+                        @if (IsConversationsLoad && personalConvs.Count > 0)
+                        {
+                            <span class="rounded-full bg-white/25 px-1.5 py-0.5 text-[10px] font-bold text-white">@personalConvs.Count</span>
+                        }
+                    </div>
+
+                    @* Tab Grupos *@
+                    <div class="flex items-center gap-1.5 rounded-full bg-gray-100 px-3.5 py-1.5 dark:bg-zinc-800">
+                        <svg class="h-3.5 w-3.5 fill-gray-500 dark:fill-zinc-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
+                            <path d="M96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3zM609.3 512H471.4c5.4-9.4 8.6-20.3 8.6-32v-8c0-60.7-27.1-115.2-69.8-151.8c2.4-.1 4.7-.2 7.1-.2h61.4C567.8 320 640 392.2 640 481.3c0 17-13.8 30.7-30.7 30.7zM432 256c-31 0-59-12.6-79.3-32.9C372.4 196.5 384 163.6 384 128c0-26.8-6.6-52.1-18.3-74.3C384.3 40.1 407.2 32 432 32c61.9 0 112 50.1 112 112s-50.1 112-112 112z" />
+                        </svg>
+                        <span class="text-xs font-semibold text-gray-500 dark:text-zinc-400">Grupos</span>
+                        @if (IsConversationsLoad && groupConvs.Count > 0)
+                        {
+                            <span class="rounded-full bg-gray-200 px-1.5 py-0.5 text-[10px] font-bold text-gray-500 dark:bg-zinc-700 dark:text-zinc-400">@groupConvs.Count</span>
+                        }
+                    </div>
+
                 </div>
 
                 @* Lista de conversaciones *@
-                <div class="flex h-full w-full overflow-auto dark:bg-shark-950 dark:border-zinc-800 lg:border-r [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-transparent dark:[&::-webkit-scrollbar-thumb]:bg-zinc-800">
+                <div class="flex h-full w-full flex-col overflow-auto
+                            [&::-webkit-scrollbar]:w-1.5
+                            [&::-webkit-scrollbar-track]:bg-transparent
+                            [&::-webkit-scrollbar-thumb]:rounded-full
+                            [&::-webkit-scrollbar-thumb]:bg-gray-200
+                            dark:[&::-webkit-scrollbar-thumb]:bg-zinc-800">
 
-                    <div class="flex h-max w-full flex-col overflow-auto">
+                    @if (IsConversationsLoad)
+                    {
+                        @* Estado vacío *@
+                        if (ConversationsObserver.Data.Count <= 0 && !IsSearching)
+                        {
+                            <div class="px-4 pt-4">
+                                <div class="flex w-full items-center justify-center rounded-2xl border-2 border-dashed border-gray-200 py-10 dark:border-zinc-700">
+                                    <span class="text-sm text-gray-400 dark:text-zinc-500">No tienes ninguna conversación</span>
+                                </div>
+                            </div>
+                        }
 
-                        @* Elementos *@
-                        <div class="h-full">
-
-                            @if (IsConversationsLoad)
+                        @* Resultados de búsqueda *@
+                        else if (IsSearching)
+                        {
+                            if (SearchResult == null)
                             {
-                                // Si no hay conversaciones.
-                                if (ConversationsObserver.Data.Count <= 0 && !IsSearching)
-                                {
-                                    <div class="px-5">
-                                        <div class="mt-3 flex w-full items-center justify-center rounded-lg border-2 border-dashed border-gray-300 py-10 dark:border-zinc-600">
-                                            <label class="text-gray-400 dark:text-zinc-400">No tienes ninguna conversación</label>
-                                        </div>
-                                    </div>
-                                }
-
-                                // Esta buscando.
-                                else if (IsSearching)
-                                {
-                                    if (SearchResult == null)
-                                    {
-                                        <div class="flex h-20 items-center justify-center">
-                                            <CircleLoader></CircleLoader>
-                                        </div>
-                                    }
-                                    else if (SearchResult.Count == 0)
-                                    {
-                                        <label class="ml-5 dark:text-zinc-300">Sin resultados</label>
-                                    }
-                                    else
-                                    {
-                                        <div class="select-none px-5 py-1">
-                                            <label class="text-zinc-600 dark:text-gray-300">Resultados de búsqueda para "@Pattern" </label>
-                                            <div class="mt-3 flex flex-col gap-2">
-                                                @foreach (var e in SearchResult)
-                                                {
-                                                    <NewFriend UserInformation="@e" />
-                                                }
-                                            </div>
-                                        </div>
-
-                                    }
-                                }
-
-                                // Renderizar las conversaciones.
-                                else
-                                {
-                                    foreach (var conversation in ConversationsObserver.Data)
-                                    {
-                                        <Control Member="@(conversation.Item2)" OnClick="Go" IsSelect=@(SelectedConversation?.Id == conversation.Item2.Conversation.Id) />
-                                    }
-                                }
-
+                                <div class="flex h-20 items-center justify-center">
+                                    <CircleLoader />
+                                </div>
+                            }
+                            else if (SearchResult.Count == 0)
+                            {
+                                <div class="px-4 pt-4">
+                                    <span class="text-sm text-gray-400 dark:text-zinc-500">Sin resultados para "@Pattern"</span>
+                                </div>
                             }
                             else
                             {
-                                @* Cargando las conversaciones *@
-                                <ControlSkeleton />
-                                <ControlSkeleton />
-                                <ControlSkeleton />
-                                <ControlSkeleton />
-                                <ControlSkeleton />
+                                <div class="px-4 py-3">
+                                    <span class="text-xs font-medium text-gray-400 dark:text-zinc-500">
+                                        Resultados para "@Pattern"
+                                    </span>
+                                    <div class="mt-3 flex flex-col gap-2">
+                                        @foreach (var e in SearchResult)
+                                        {
+                                            <NewFriend UserInformation="@e" />
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        }
+
+                        @* Lista agrupada *@
+                        else
+                        {
+                            @* Sección Mensajes (personales) *@
+                            @if (personalConvs.Count > 0)
+                            {
+                                <div class="flex items-center justify-between px-4 pb-1 pt-4">
+                                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-400 dark:text-zinc-500">Mensajes</span>
+                                    <button @onclick="OpenNewGroup"
+                                            class="flex items-center gap-1 rounded-full bg-current-500 px-3 py-1 text-xs font-semibold text-white transition-colors hover:bg-current-600">
+                                        <svg class="h-3 w-3 fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                            <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z" />
+                                        </svg>
+                                        Crear grupo
+                                    </button>
+                                </div>
+
+                                @foreach (var conversation in personalConvs)
+                                {
+                                    <Control Member="@(conversation.Item2)"
+                                             OnClick="Go"
+                                             IsSelect=@(SelectedConversation?.Id == conversation.Item2.Conversation.Id) />
+                                }
+                            }
+                            else
+                            {
+                                <div class="flex items-center justify-between px-4 pb-1 pt-4">
+                                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-400 dark:text-zinc-500">Mensajes</span>
+                                    <button @onclick="OpenNewGroup"
+                                            class="flex items-center gap-1 rounded-full bg-current-500 px-3 py-1 text-xs font-semibold text-white transition-colors hover:bg-current-600">
+                                        <svg class="h-3 w-3 fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                            <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z" />
+                                        </svg>
+                                        Crear grupo
+                                    </button>
+                                </div>
                             }
 
-                        </div>
+                            @* Sección Grupos *@
+                            @if (groupConvs.Count > 0)
+                            {
+                                <div class="px-4 pb-1 pt-4">
+                                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-400 dark:text-zinc-500">Grupos</span>
+                                </div>
 
-                    </div>
+                                @foreach (var conversation in groupConvs)
+                                {
+                                    <Control Member="@(conversation.Item2)"
+                                             OnClick="Go"
+                                             IsSelect=@(SelectedConversation?.Id == conversation.Item2.Conversation.Id) />
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        @* Skeletons de carga *@
+                        <ControlSkeleton />
+                        <ControlSkeleton />
+                        <ControlSkeleton />
+                        <ControlSkeleton />
+                        <ControlSkeleton />
+                    }
+
                 </div>
 
             </div>
 
-            @* Right *@
+            @* ─────────────── Panel derecho ─────────────── *@
             <div class="flex w-full flex-col lg:w-2/3 @(ActualSection != 1 ? "hidden lg:flex" : "")">
 
-                @* Mostrar el chat *@
                 @if (SelectedConversation != null)
                 {
-                    <ChatSection EmmaClick="OpenEmma" Drawer="MemberDrawer" Iam="ConversationsObserver.Get(SelectedConversation.Id)" OnBackPress="Nav" />
+                    <ChatSection EmmaClick="OpenEmma"
+                                 Drawer="MemberDrawer"
+                                 Iam="ConversationsObserver.Get(SelectedConversation.Id)"
+                                 OnBackPress="Nav" />
                 }
-
-                // No esta seleccionado.
                 else
                 {
-                    <div class="flex h-full w-full select-none flex-col items-center justify-center dark:bg-shark-950">
-                        <img class="h-56 w-56" src="./img/presdraw.svg" />
-                        <label class="text-3xl font-bold dark:text-white">Bienvenido a LIN Allo</label>
-                        <label class="mt-1 text-gray-600 dark:text-gray-400">LIN Allo también esta disponible como app en <span class="text-blue-600">Windows</span> y <span class="text-green-500">Android</span></label>
+                    <div class="flex h-full w-full select-none flex-col items-center justify-center bg-gray-50 dark:bg-zinc-950">
+                        <img class="h-48 w-48 opacity-80" src="./img/presdraw.svg" />
+                        <span class="mt-4 text-2xl font-bold text-gray-800 dark:text-white">Bienvenido a LIN Allo</span>
+                        <span class="mt-1.5 text-sm text-gray-400 dark:text-gray-500">
+                            LIN Allo también está disponible en
+                            <span class="font-medium text-current-500">Windows</span> y
+                            <span class="font-medium text-green-500">Android</span>
+                        </span>
                     </div>
                 }
 
@@ -197,18 +258,11 @@
 </div>
 
 
-@* Drawer Emma *@
+@* Drawers y overlays *@
 <EmmaDrawer @ref="EmmaDrawer" />
-
-@* Drawer Nueva conversación *@
 <NewGroup OnSuccess="OnSuccess" @ref="NewGroupModal" />
-
-@*Dropdown menu*@
 <DropdownMenu />
-
-@* Drawer de integrantes *@
 <Members @ref="MemberDrawer" />
-
 <NotificationBubble @ref="notif"
                     Title="Alguien"
                     Subtitle="Esta llamando"
